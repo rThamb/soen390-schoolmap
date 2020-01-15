@@ -21,6 +21,6 @@ Concordia School Map project built with Ionic Framework.
 5. Run the application. "ionic serve"
 
 
-The project will be deploy on localhost:8100. If you run into problems, message the team.
+The project will be deployed onto localhost:8100. If you run into problems, message the team.
 
 
