@@ -1,13 +1,5 @@
 {
-  "name": "todo",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic1",
-  "watchPatterns": [
-    "scss/**/*",
-    "www/**/*",
-    "!www/lib/**/*",
-    "!www/**/*.map"
-  ]
+  "name": "concordia-schoolmap",
+  "integrations": {},
+  "type": "angular"
 }
