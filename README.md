@@ -41,4 +41,15 @@ ON MAC:
 The project will be deployed onto localhost:8101. If you run into problems, message the team.
 
 
+## Learn Ionic Framework 
+
+Please watch the following video to learn the fundamentals of the ionic framework. https://www.youtube.com/watch?v=r2ga-iXS5i4&t=1339s. 
+If you're familiar with Angular 2+, the first hour should be enough.
+
+## Generating Components
+
+Similar to Angular, components are generated using a command. (ng generate ... ). Ionic comes with a similar command to generate ionic components. (ionic generate type name).
+
+Please read https://ionicframework.com/docs/cli/commands/generate for more info.
+
 
