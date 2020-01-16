@@ -52,4 +52,9 @@ Similar to Angular, components are generated using a command. (ng generate ... )
 
 Please read https://ionicframework.com/docs/cli/commands/generate for more info.
 
+## Prebuilt UI Components
+
+Ionic comes built with some existing UI components that will make it easier for us to build our UI. 
+Visit: https://ionicframework.com/docs/components
+
 
