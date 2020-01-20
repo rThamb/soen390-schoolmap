@@ -1,5 +1,7 @@
 {
   "name": "concordia-schoolmap",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
