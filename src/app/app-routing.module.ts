@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+
 import { MapComponent } from './components/map/map.component';
 import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component'
 
 
 const routes: Routes = [
+ /*
   {
     path: '', 
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
-   {path: "map", component: MapComponent},
+  */
+   {path: '', component: HomeComponent},
    {path: "dir", component: DirectionControlsComponent},
 ];
 @NgModule({
