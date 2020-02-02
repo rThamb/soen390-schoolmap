@@ -17,13 +17,14 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './components/map/map.component';
 import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
 import { HomeComponent } from './components/home/home.component'
+import { MenubarComponent } from './components/menubar/menubar.component';
 
 
 
 
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent],
+  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [
