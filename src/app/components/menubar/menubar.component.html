@@ -1,24 +1,28 @@
-<ion-split-pane>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>ConcordiaGo</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-menu contenId="content" side="start">
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-title>Menu</ion-title>
-        </ion-buttons>
-      </ion-toolbar>
-      <ion-content>
-        <ion-list>
-          <ion-item>Menu Item</ion-item>
-          <ion-item>Menu Item</ion-item>
-          <ion-item>Menu Item</ion-item>
-          <ion-item>Menu Item</ion-item>
-          <ion-item>Menu Item</ion-item>
-        </ion-list>
-      </ion-content>
-    </ion-header>
+<ion-menu side="start" menuId="custom" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Custom Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-  </ion-menu>
 
-  <ion-router-outlet id="content" main></ion-router-outlet>
-</ion-split-pane>
+<ion-router-outlet main></ion-router-outlet>
