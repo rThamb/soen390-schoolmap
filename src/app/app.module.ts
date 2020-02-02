@@ -1,3 +1,5 @@
+
+import { ToggleComponent } from './components/toggle/toggle.component';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -24,8 +26,9 @@ import { ShapesComponent } from './components/shapes/shapes.component';
 
 
 
+
 @NgModule({
-  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent, ShapesComponent],
+  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent, ShapesComponent,ToggleComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [
