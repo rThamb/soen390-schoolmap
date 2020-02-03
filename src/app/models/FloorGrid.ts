@@ -9,6 +9,7 @@
  * 1 = unwalkable position (walls for example)
  */
 
+ declare var require :any;
 const FP = require('pathfinding');
 
 export class FloorGrid 
