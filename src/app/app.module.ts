@@ -18,6 +18,7 @@ import { AppComponent } from './app.component';
 
 import { MapComponent } from './components/map/map.component';
 import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
+import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { HomeComponent } from './components/home/home.component'
 import { MenubarComponent } from './components/menubar/menubar.component';
 import { ShapesComponent } from './components/shapes/shapes.component';
@@ -28,7 +29,7 @@ import { ShapesComponent } from './components/shapes/shapes.component';
 
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent, ShapesComponent,ToggleComponent],
+  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent, ShapesComponent, ToggleComponent, LocateMeComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [
