@@ -685,6 +685,31 @@ export class MapComponent implements AfterViewInit {
     this.map.data.setStyle({
       fillColor: 'blue'
     });
+
+    //Hall Building Marker and info window
+    var hallMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.497290, lng: -73.578908},
+      map: this.map,
+      icon: '../res/img/empty.png',
+      label: 
+      {
+          color: 'black',
+          fontWeight: 'bold',
+          text: 'HALL',
+          fontSize: '15px',
+      },
+    });
+
+    hallMarker.setMap(this.map);
+
+    var hallInfo = new google.maps.InfoWindow({content:"HALL BUILDING, HOME OF COCKROACHES"});
+
+    google.maps.event.addListener(hallMarker, 'click', function() 
+    {
+      hallInfo.open(this.map, hallMarker);
+    });
+
   }
 
   NavigateMap(location:Location){  
@@ -702,5 +727,6 @@ export class MapComponent implements AfterViewInit {
 
     });
   }
+  
 
 }
