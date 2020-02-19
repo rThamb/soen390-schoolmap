@@ -12,14 +12,13 @@
  */
 import {Tile} from './Tile';
 
-declare var require: any;
-
-const FP = require('pathfinding');
+//declare var require: any;
 
 export class Floor 
 {
     public width:number;
     public height: number;
+    public binaryFloorGrid: number[][];
     public floorGrid: Tile[][];
 
     constructor(floorFile: string)
