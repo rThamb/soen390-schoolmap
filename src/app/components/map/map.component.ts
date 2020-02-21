@@ -706,13 +706,35 @@ export class MapComponent implements AfterViewInit {
 
     hallMarker.setMap(this.map);
 
-    var hallInfo = new google.maps.InfoWindow({content:"HALL BUILDING, HOME OF COCKROACHES"});
+    var hallInfo = new google.maps.InfoWindow({content:""});
 
     google.maps.event.addListener(hallMarker, 'click', function() 
     {
+      //Probably put this in html file
+      hallInfo.setContent('<h4 align="center">Henry F. Hall Building </h4>' +
+            '<p ><b>Address: </b>1455 de Maisonneuve Boulevard West</p>' +
+            '<p><b>#Floors: </b> 12 </p>' +
+            '<p><b>Departments: </b></p>' +
+            '<p><b>Services: </b></p>' +
+            '<ion-button onclick="inBuilding()">Enter Building</ion-button>');
+
       hallInfo.open(this.map, hallMarker);
     });
 
+    //Maybe Use a drop down for Department and Services
+          //   <div class="dropdown">
+          //   <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+          //   <div id="myDropdown" class="dropdown-content">
+          //     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+          //     <a href="#about">About</a>
+          //     <a href="#base">Base</a>
+          //     <a href="#blog">Blog</a>
+          //     <a href="#contact">Contact</a>
+          //     <a href="#custom">Custom</a>
+          //     <a href="#support">Support</a>
+          //     <a href="#tools">Tools</a>
+          //   </div>
+          // </div>
   }
 
   
