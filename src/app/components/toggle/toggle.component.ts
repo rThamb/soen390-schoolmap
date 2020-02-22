@@ -1,45 +1,29 @@
-import { Component, NgModule, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Location } from '../../models/Location';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import {FormsModule} from '@angular/forms';
-import {MapComponent} from '../map/map.component';
-import { ComponentFixture } from '@angular/core/testing';
-import { FormControl } from '@angular/forms';
-
+import { Component,ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-toggle',
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss'],
 })
+export class ToggleComponent{
 
-export class ToggleComponent implements OnInit {
-
-  status = false;
+@ViewChild('map') mapElement;
+map:any;
 
   constructor() { }
 
   ngOnInit() {
-  
+  this.LoyolaMap();
   }
 
-  onChange()
-  { 
-    if(!this.status)
-    {
-      console.log("true")
-      this.status = true;
-
-      
-    }
-    else
-    {
-      console.log("false")
-      this.status = false;
-    }
-  }
+LoyolaMap(){
+let latLng = new google.maps.LatLng(45.458233, -73.640472);
+    let mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP, 
+   }
+this.map= new google.maps.Map(this.map.nativeElement,mapOptions);
 }
-
-
-
+}
 
