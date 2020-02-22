@@ -11,18 +11,21 @@
  * see documentation of pathfindingjs for more info
  */
 import {Tile} from './Tile';
+declare var require: any;
 
-//declare var require: any;
+
 
 export class Floor 
 {
-    public width:number;
+    public width: number;
     public height: number;
-    public binaryFloorGrid: number[][];
-    public floorGrid: Tile[][];
+    public pathfindingFloorGrid: number[][];
+    public schoolFloorGrid: Tile[][];
 
     constructor(floorFile: string)
     {
         
     }
+
+
 }
