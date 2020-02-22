@@ -1,6 +1,12 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+import { IndoorPathingService } from '../../services/indoor-pathing.service';
+
+
+//May have to remove
 import { Location } from '../../models/Location';
+import { Floor } from '../../models/Floor';
 
 declare var google;
 
@@ -19,9 +25,20 @@ export class MapComponent implements AfterViewInit {
   private loyolaloc :Location;
   
 
-  constructor(private geolocation: Geolocation) { 
+  constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService) { 
       this.userLocation = new Location(0, 0 ,0);
-      
+      let floor: Floor = new Floor();
+
+      var path = indoorPathingService.getPath(floor);
+      /*for(var row = 0; row < path.length; row++)
+      {
+        for(var col = 0; col < path[row].length; col++)
+        {
+          console.log(path[row][col]);
+        }
+        console.log('\n');
+      }*/
+
   }
 
   ngAfterViewInit(): void{

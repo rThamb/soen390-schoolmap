@@ -22,7 +22,7 @@ export class Floor
     public pathfindingFloorGrid: number[][];
     public schoolFloorGrid: Tile[][];
 
-    constructor(floorFile: string)
+    constructor()
     {
         
     }

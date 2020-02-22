@@ -13,6 +13,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 //geolocation
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { IndoorPathingService } from './services/indoor-pathing.service';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +33,8 @@ import { MenubarComponent } from './components/menubar/menubar.component';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Geolocation
+    Geolocation,
+    IndoorPathingService
   ],
   bootstrap: [AppComponent]
 })

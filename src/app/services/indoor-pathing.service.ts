@@ -11,28 +11,32 @@ const pf = require('pathfinding');
 })
 export class IndoorPathingService {
 
-  public floorLayoutsDirectory: string;
-
   constructor() 
   { 
-    this.floorLayoutsDirectory = '../../assets/binary_floor_layouts/';
+
   }
 
-  getPath(startLocation:Location, endLocation:Location)
+  getPath(floor:Floor)
   {
+    floor.width = 10;
+    floor.height = 10;
+    floor.pathfindingFloorGrid = [
+      [1, 0, 1, 1],
+      [1, 0, 1, 1],
+      [1, 0, 0, 1],
+      [1, 1, 0, 1]
+    ];
 
-    binaryFloorGrid = 
+    let grid = new pf.Grid(floor.pathfindingFloorGrid);
+    console.log(grid);
+
+    let finder = new pf.AStarFinder();
+    // findPath(x1,y1,x2,y2) col, row
+    let path = finder.findPath(1, 0, 2, 3, grid);
+
+    console.log(path);
+
+    return path;
   }
 
-  getBinaryGrid(floor: string)
-  {
-    let fileName = this.getFloorFileNameFromTag(floor);
-
-
-  }
-
-  getFloorFileNameFromTag(fileName: string)
-  {
-    return 'H8-floor.txt';
-  }
 }
