@@ -16,7 +16,7 @@ export class IndoorPathingService {
 
   }
 
-  getPath(floor:Floor)
+  getPath(floor: Floor)
   {
     floor.width = 10;
     floor.height = 10;
