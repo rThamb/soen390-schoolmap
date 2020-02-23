@@ -1,4 +1,5 @@
-import { Component,ViewChild } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+declare var google;
 
 @Component({
   selector: 'app-toggle',
@@ -7,23 +8,36 @@ import { Component,ViewChild } from '@angular/core';
 })
 export class ToggleComponent{
 
-@ViewChild('map') mapElement;
-map:any;
+  @ViewChild('googleMap', {static: false}) googleMap;
 
+  map:any;
   constructor() { }
 
   ngOnInit() {
   this.LoyolaMap();
+  this.SirGeorgeMap();
   }
 
-LoyolaMap(){
-let latLng = new google.maps.LatLng(45.458233, -73.640472);
-    let mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP, 
-   }
-this.map= new google.maps.Map(this.map.nativeElement,mapOptions);
+  //define coordinates for loyola map
+  LoyolaMap() {
+    let mapOptions: { mapTypeId: any; center: { lng: number; lat: number }; zoom: number } = {
+      zoom: 16,
+      center: {lat: 45.458227, lng: -73.640460},
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+  }
+
+  //define coordinates for sgw map
+  SirGeorgeMap(){
+    let mapOptions: { mapTypeId: any; center: { lng: number; lat: number }; zoom: number } = {
+      zoom: 16,
+      center: {lat: 45.494711, lng: -73.577871},
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+  }
 }
-}
+
+
 

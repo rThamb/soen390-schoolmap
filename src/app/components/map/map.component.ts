@@ -6,8 +6,6 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Location } from '../../models/Location';
 
 
-
-
 declare var google;
 
 @Component({
@@ -34,8 +32,6 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void{
       this.getCurrentLocation();
-    
-    
   }
 
   getCurrentLocation(): void{
@@ -49,17 +45,17 @@ export class MapComponent implements AfterViewInit {
 
   showMap(lat:number, long:number){
 
-    var mylocation = new google.maps.LatLng(lat, long);
-    
-    var mapOptions = {
-      zoom: 15,
-      center: mylocation,
+    let mylocation = new google.maps.LatLng(lat, long);
+
+    let mapOptions: { mapTypeId: any; center: { lng: number; lat: number }; zoom: number } = {
+      zoom: 16,
+      center: {lat: 45.494711, lng: -73.577871},
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    };
 
     this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
 
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
       position: mylocation,
       map: this.map,
       title: 'Here'
