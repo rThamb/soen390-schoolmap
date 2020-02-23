@@ -1980,8 +1980,20 @@ export class MapComponent implements AfterViewInit {
     }  
     
 
+<<<<<<< HEAD
     //TESTING ReadGridService --DELETE LATER
     var test = await this.GridService.createGrid("testFloor") //argument is the name/key of the floor we want. Ex: "testFloor"
+=======
+
+    this.testGrid();
+  }
+
+  //TESTING ReadGridService --DELETE LATER
+  async testGrid() //Need method to be async, so we can use await
+  {
+    console.log("Inside testGrid()");
+    var test = await this.myService.createGrid("testFloor"); //argument is the name/key of the floor we want. Ex: "testFloor"
+>>>>>>> update
 
     //Note can also get row length, col length by using createGrid("NRows") or ("NCols")
     for(var row = 0; row < test.length; row++)
