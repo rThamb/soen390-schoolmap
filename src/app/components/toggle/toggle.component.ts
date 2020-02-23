@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 declare var google;
 
+
 @Component({
   selector: 'app-toggle',
   templateUrl: './toggle.component.html',
@@ -21,11 +22,16 @@ export class ToggleComponent{
   //define coordinates for loyola map
   LoyolaMap() {
     let mapOptions: { mapTypeId: any; center: { lng: number; lat: number }; zoom: number } = {
-      zoom: 16,
+      zoom: 15,
       center: {lat: 45.458227, lng: -73.640460},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+
+    // testing to see if the segment button works
+    console.log("After clicking loyola");
+    setTimeout(() => {
+      console.log(this.googleMap, mapOptions);
+    }, 10);
   }
 
   //define coordinates for sgw map
@@ -35,8 +41,14 @@ export class ToggleComponent{
       center: {lat: 45.494711, lng: -73.577871},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+
+    // testing to see if the segment button works
+    console.log("after clicking sgw");
+    setTimeout(() => {
+      console.log(this.googleMap, mapOptions);
+    }, 10);
   }
+
 }
 
 

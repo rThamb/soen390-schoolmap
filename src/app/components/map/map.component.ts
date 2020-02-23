@@ -48,7 +48,7 @@ export class MapComponent implements AfterViewInit {
     let mylocation = new google.maps.LatLng(lat, long);
 
     let mapOptions: { mapTypeId: any; center: { lng: number; lat: number }; zoom: number } = {
-      zoom: 16,
+      zoom: 15,
       center: {lat: 45.494711, lng: -73.577871},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };

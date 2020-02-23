@@ -1,11 +1,45 @@
+
 <ion-toolbar class="toolbar">
   <ion-segment>
-    <ion-segment-button value="loyola" id="map"(ionSelect)="LoyolaMap()">
+    <ion-segment-button value="loyola"(ionSelect)="LoyolaMap()">
       <ion-label>LOYOLA</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="sgw" (ionSelect)="SirGeorgeMap()">
+    <ion-segment-button checked value="sgw" (ionSelect)="SirGeorgeMap()">
       <ion-label>SIR GEORGE</ion-label>
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
+
+
+<!--<ion-toolbar>-->
+  <!--<ion-segment [(ngModel)]="map">-->
+    <!--<ion-segment-button value="loyola">-->
+      <!--LOYOLA-->
+    <!--</ion-segment-button>-->
+    <!--<ion-segment-button value="sirGeorge">-->
+      <!--SIR GEORGE-->
+    <!--</ion-segment-button>-->
+  <!--</ion-segment>-->
+<!--</ion-toolbar>-->
+
+<!--<ion-content>-->
+  <!--<div [ngSwitch]="map">-->
+    <!--<ion-list *ngSwitchCase="'loyola'">-->
+      <!--<ion-item>-->
+        <!--<ion-thumbnail>-->
+          <!--&lt;!&ndash;include html for loyola map&ndash;&gt;-->
+        <!--</ion-thumbnail>-->
+      <!--</ion-item>-->
+    <!--</ion-list> -->
+      <!--<ion-list *ngSwitchCase="'sirGeorge'">-->
+        <!--<ion-item>-->
+          <!--<ion-thumbnail>-->
+            <!--&lt;!&ndash;include html for sgw map&ndash;&gt;-->
+          <!--</ion-thumbnail>-->
+        <!--</ion-item>-->
+      <!--</ion-list>-->
+  <!--</div>-->
+<!--</ion-content>-->
+
+
 
