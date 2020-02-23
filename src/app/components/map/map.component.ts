@@ -694,7 +694,7 @@ export class MapComponent implements AfterViewInit {
       icon: '../res/img/empty.png',
       label: 
       {
-          color: 'black',
+          color: 'purple',
           fontWeight: 'bold',
           text: 'HALL',
           fontSize: '15px',
@@ -717,6 +717,23 @@ export class MapComponent implements AfterViewInit {
 
       hallInfo.open(this.map, hallMarker);
     });
+
+    //EV Building Marker and info window
+    var EVMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.495470, lng: -73.577780},
+      map: this.map,
+      icon: '../res/img/empty.png',
+      label: 
+      {
+          color: 'purple',
+          fontWeight: 'bold',
+          text: 'EV',
+          fontSize: '15px',
+      },
+    });
+
+    EVMarker.setMap(this.map);
 
     //Maybe Use a drop down for Department and Services
           //   <div class="dropdown">
