@@ -13,10 +13,12 @@
   height: 86vh;
   width: 100%;
 }
-
+//hide the fullscreen button by google maps
 button.gm-control-active.gm-fullscreen-control {
   display: none !important;
+  width: 0;
 }
+//hide the map/satellite button along with +/- buttons
 .gmnoprint {
   display: none;
 }
