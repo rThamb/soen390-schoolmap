@@ -7,6 +7,9 @@ import { IndoorPathingService } from '../../services/indoor-pathing.service';
 //May have to remove
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
+import { ReadGridService } from '../../services/readGrid/read-grid.service';
+
+
 
 declare var google;
 
@@ -25,7 +28,8 @@ export class MapComponent implements AfterViewInit {
   private loyolaloc :Location;
   
 
-  constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService) { 
+  constructor(private geolocation: Geolocation, private GridService: 
+    ReadGridService, private indoorPathingService: IndoorPathingService) { 
       this.userLocation = new Location(0, 0 ,0);
       let floor: Floor = new Floor();
 
@@ -1901,7 +1905,7 @@ export class MapComponent implements AfterViewInit {
 
   
   //FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
-  enterBuilding(id: string)
+  async enterBuilding(id: string)
   {
     switch (id) 
     {
@@ -1973,7 +1977,21 @@ export class MapComponent implements AfterViewInit {
       case 'ge':
         console.log("In " + id + " building.");
         break;
+    }  
+    
+
+    //TESTING ReadGridService --DELETE LATER
+    var test = await this.GridService.createGrid("testFloor") //argument is the name/key of the floor we want. Ex: "testFloor"
+
+    //Note can also get row length, col length by using createGrid("NRows") or ("NCols")
+    for(var row = 0; row < test.length; row++)
+    {
+      for(var col = 0; col <test[row].length; col++)
+      {
+          console.log(test[row][col]);
+      }
     }
+    console.log("Is row 1, col 4 0? -> : " + test[1][4]);
   }
 
 }

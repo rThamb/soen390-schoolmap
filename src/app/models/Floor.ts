@@ -10,10 +10,10 @@
  * 
  * see documentation of pathfindingjs for more info
  */
+import { ReadGridService } from '../services/readGrid/read-grid.service';
 import {Tile} from './Tile';
 declare var require: any;
-
-
+const FP = require('pathfinding');
 
 export class Floor 
 {
@@ -21,10 +21,11 @@ export class Floor
     public height: number;
     public pathfindingFloorGrid: number[][];
     public schoolFloorGrid: Tile[][];
+    public floorGrid: Tile[][];
 
-    constructor()
+    constructor(floorFile: string, private myService: ReadGridService)
     {
-        
+        //this.myService.createGrid("testFloor");
     }
 
 
