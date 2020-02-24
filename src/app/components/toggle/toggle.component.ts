@@ -96,27 +96,41 @@ export class ToggleComponent {
 
   //define coordinates for loyola map
   LoyolaMap() {
+    let mylocation = new google.maps.LatLng(45.458234, -73.640493);
     let mapOptions: { mapTypeId: any; center: { lng: number; lat: number }; zoom: number } = {
-      zoom: 15,
-      center: {lat: 45.458227, lng: -73.640460},
+      zoom: 16,
+      center: {lat: 45.458234, lng: -73.640493},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
+    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+
+    let marker = new google.maps.Marker({
+      position: mylocation,
+      map: this.map,
+      title: 'Here'
+    });
     // testing to see if the segment button works
-    console.log("After clicking loyola");
-    setTimeout(() => {
-      console.log(this.googleMap, mapOptions);
-    }, 10);
+  
   }
+
 
   //define coordinates for sgw map
   SirGeorgeMap(){
+    let mylocation = new google.maps.LatLng(45.494711 ,-73.577871);
     let mapOptions: { mapTypeId: any; center: { lng: number; lat: number }; zoom: number } = {
       zoom: 16,
       center: {lat: 45.494711, lng: -73.577871},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
+    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+
+    let marker = new google.maps.Marker({
+      position: mylocation,
+      map: this.map,
+      title: 'Here'
+    });
     // testing to see if the segment button works
     console.log("after clicking sgw");
     setTimeout(() => {
