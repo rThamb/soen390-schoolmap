@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
@@ -22,30 +22,31 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef; 
 
   private userLocation: Location;
+  
 
   constructor(private geolocation: Geolocation) { 
       this.userLocation = new Location(0, 0 ,0);
   }
 
   ngAfterViewInit(): void{
-    this.getCurrentLocation();
+    this.getCurrentLocation(15);
   }
 
-  getCurrentLocation(): void{
+  getCurrentLocation(x:number): void{
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation = new Location(resp.coords.longitude, resp.coords.latitude, resp.coords.altitude);
-      this.showMap();
+      this.showMap(x);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
 
-  showMap(){
+  showMap(x:number){
 
     var mylocation = new google.maps.LatLng(this.userLocation.latitude,this.userLocation.longitude);
     
     var mapOptions = {
-      zoom: 15,
+      zoom: x,
       center: mylocation,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }

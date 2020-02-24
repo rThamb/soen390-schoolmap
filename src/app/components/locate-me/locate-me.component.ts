@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-locate-me',
@@ -7,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LocateMeComponent implements OnInit {
 
+  @Output() locateevent=new EventEmitter();
   constructor() { }
 
   ngOnInit() {}
+  callparentlocate(){
+    this.locateevent.emit();
+  }
 
 }

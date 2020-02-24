@@ -12,10 +12,9 @@
         </header>
         
         <app-toggle></app-toggle>
-        <app-map></app-map>
+        <app-map #map></app-map>
+        <app-locate-me (locateevent)="map.getCurrentLocation(20)"></app-locate-me>
 
-        <!--Currently displays locate me component works, work on hopefully getting this button to overlay on the map component-->
-        <app-locate-me></app-locate-me> 
         
 
 <!-- inject other component like the one above to construct your view 
