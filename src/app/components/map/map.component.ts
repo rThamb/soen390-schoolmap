@@ -1985,15 +1985,33 @@ export class MapComponent implements AfterViewInit {
     var test = await this.GridService.createGrid("testFloor") //argument is the name/key of the floor we want. Ex: "testFloor"
 =======
 
-    this.testGrid();
+
+    
+    /*
+    You want to preform the action after the background work of getting the data 
+    is complete. Making the component wait for a service class to finish its work
+    will cause preformance issues in the later future.
+
+    */
+    this.myService.createGrid("H8").then((grid: Floor) => {
+      this.testGrid(grid.pathfindingFloorGrid);
+    })
   }
 
   //TESTING ReadGridService --DELETE LATER
-  async testGrid() //Need method to be async, so we can use await
+  
+  
+  testGrid(test) //Need method to be async, so we can use await
   {
+    //test variable is the actual grid, 
+    //obtain your columns(test.length) and rows (test[0]length) by invoking the methods 
     console.log("Inside testGrid()");
+<<<<<<< HEAD
     var test = await this.myService.createGrid("testFloor"); //argument is the name/key of the floor we want. Ex: "testFloor"
 >>>>>>> update
+=======
+    //var test = await this.myService.createGrid("testFloor"); //argument is the name/key of the floor we want. Ex: "testFloor"
+>>>>>>> Started indoor path with json files. Running into issues, needs more work. Removed unwanted promises from service classes.
 
     //Note can also get row length, col length by using createGrid("NRows") or ("NCols")
     for(var row = 0; row < test.length; row++)

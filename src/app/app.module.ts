@@ -17,6 +17,8 @@ import { AppComponent } from './app.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { IndoorPathingService } from './services/indoor-pathing.service';
 import { ReadGridService } from './services/readGrid/read-grid.service' 
+import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapping.service' 
+
 
 
 //Component imports
@@ -41,7 +43,8 @@ import { ShapesComponent } from './components/shapes/shapes.component';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
     IndoorPathingService,
-    ReadGridService
+    ReadGridService,
+    GpsGridMappingService
   ],
   bootstrap: [AppComponent]
 })

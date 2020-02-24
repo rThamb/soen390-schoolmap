@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ReadGridService } from '../../services/readGrid/read-grid.service' 
+import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
+import { IndoorPathingService } from '../../services/indoor-pathing.service' 
+
 
 @Component({
   selector: 'app-home',
@@ -22,7 +25,12 @@ export class HomeComponent implements OnInit {
 
   floor: any;
 
-  constructor(private service:ReadGridService ) { 
+  constructor(private service:ReadGridService, private service2: GpsGridMappingService,
+  private service3: IndoorPathingService ) { 
+    debugger;
+    this.testIndoorPathing();
+    //this.service2.getFloorTest();
+    //this.setFloor();
   }
 
   ngOnInit() {
@@ -31,9 +39,17 @@ export class HomeComponent implements OnInit {
   }
 
   setFloor(){
-    this.service.getGrid("H8").then((grid) => {
+    this.service.createGrid("H8").then((grid) => {
       debugger;
       this.floor = grid;
     })
+  }
+
+  testIndoorPathing(){
+    this.service3.getPathForDestinationOnSameFloor(null, null, null).then(
+      (path) => {
+        console.log(path);
+      }
+    )
   }
 }
