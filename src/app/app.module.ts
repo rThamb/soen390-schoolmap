@@ -21,10 +21,9 @@ import { MapComponent } from './components/map/map.component';
 import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
 import { HomeComponent } from './components/home/home.component'
 import { MenubarComponent } from './components/menubar/menubar.component';
-import {BottomNavBarComponent} from "./components/bottom-nav-bar/bottom-nav-bar.component";
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent, ToggleComponent, BottomNavBarComponent],
+  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent, ToggleComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [
