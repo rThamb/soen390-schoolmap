@@ -12,8 +12,12 @@
  */
 import { ReadGridService } from '../services/readGrid/read-grid.service';
 import {Tile} from './Tile';
+import { Coordinate } from './Coordinate'
 declare var require: any;
+<<<<<<< HEAD
 const FP = require('pathfinding');
+=======
+>>>>>>> Setup the readGrid service to work as expected. (using promises with async await.)
 
 export class Floor 
 {

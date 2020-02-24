@@ -10,14 +10,16 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-//geolocation
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { IndoorPathingService } from './services/indoor-pathing.service';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+//services
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { IndoorPathingService } from './services/indoor-pathing.service';
+import { ReadGridService } from './services/readGrid/read-grid.service' 
+
+
+//Component imports
 import { MapComponent } from './components/map/map.component';
 import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
 import { LocateMeComponent } from './components/locate-me/locate-me.component';
@@ -38,7 +40,8 @@ import { ShapesComponent } from './components/shapes/shapes.component';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
-    IndoorPathingService
+    IndoorPathingService,
+    ReadGridService
   ],
   bootstrap: [AppComponent]
 })

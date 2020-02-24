@@ -1,4 +1,20 @@
 {
-    "coordinates":[1,1,1,1]
-    
+    "topLeftLat": 4, 
+    "topLeftLong": 4,
+    "topRightLat": 4, 
+    "topRightLong": 4,
+    "bottomLeftLat": 4, 
+    "bottomLeftLong": 4,
+    "bottomRightLat": 4, 
+    "bottomRightLong": 4,
+    "binaryGrid": [[1,1,1,1,1,1,1,1,1,1,1],
+                  [0,0,0,0,0,1,1,1,1,1,1],
+                  [1,1,1,0,0,0,0,0,0,0,0],
+                  [1,1,1,1,1,1,1,1,1,1,1]],
+
+    "tileGrid":[[1,1,1,1,1,1,1,1,1,1,1],
+                  [0,0,0,0,0,1,1,1,1,1,1],
+                  [1,1,1,0,0,0,0,0,0,0,0],
+                  [1,1,1,1,1,1,1,1,1,1,1]]
+      
 }
