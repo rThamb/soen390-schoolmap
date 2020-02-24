@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-import { MapComponent } from './components/map/map.component';
-import { MenubarComponent } from './components/menubar/menubar.component';
-import { LocateMeComponent } from './components/locate-me/locate-me.component';
-import { ShapesComponent } from './components/shapes/shapes.component';
+
 import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
-import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component'
 
 
@@ -18,6 +14,7 @@ const routes: Routes = [
   },
   */
    {path: '', component: HomeComponent},
+   {path: 'home', component: HomeComponent},
    {path: "dir", component: DirectionControlsComponent},
 ];
 @NgModule({
