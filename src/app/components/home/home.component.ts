@@ -45,11 +45,12 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  testIndoorPathing(){
-    this.service3.getPathForDestinationOnSameFloor(null, null, null).then(
-      (path) => {
-        console.log(path);
-      }
-    )
+  async testIndoorPathing(){
+
+    debugger;
+    let grid = await this.service.createGrid("H8");
+    debugger;
+    let path = this.service3.getPathForDestinationOnSameFloor(null, grid, "H840", "H890"); 
+    console.log(path);
   }
 }

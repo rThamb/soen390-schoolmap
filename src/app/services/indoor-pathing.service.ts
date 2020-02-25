@@ -20,22 +20,18 @@ export class IndoorPathingService {
 
   }
 
-  async getPathForDestinationOnSameFloor(userPostion: Coordinate, floor: Floor, classroom: string){
+   getPathForDestinationOnSameFloor(userPostion: Coordinate, floor: Floor, startClass, endClass: string){
 
     //ignore userPostion for now
-    let start = "H840";
-    classroom = "H890"; //destination
-    floor = await this.service.createGrid("H8");
 
     debugger;
+    let startX = floor.pointsOfInterest[startClass]["x"];
+    let startY = floor.pointsOfInterest[startClass]["y"];
 
-    let startX = floor.pointsOfInterest[start].x;
-    let startY = floor.pointsOfInterest[start].y;
+    let endX = floor.pointsOfInterest[endClass]["x"];
+    let endY = floor.pointsOfInterest[endClass]["y"];
 
-    let endX = floor.pointsOfInterest[classroom].x;
-    let endY = floor.pointsOfInterest[classroom].y;
-
-    let path =  this.determineOptimalPath(startX, startY, endX, endY, floor);
+    let path = this.determineOptimalPath(startX, startY, endX, endY, floor);
     return path;
   }
 
@@ -66,7 +62,7 @@ export class IndoorPathingService {
   
 
   determineOptimalPath(startX, startY, endX, endY, floor){
-    debugger;
+
     let grid = new pf.Grid(floor.pathfindingFloorGrid);
     let finder = new pf.AStarFinder();
     // findPath(x1,y1,x2,y2) col, row
