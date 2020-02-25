@@ -9,5 +9,5 @@ export class Location{
         this.longitude = long;
         this.latitude = lat;
         this.altitude = alt;
-    } 
+    }
 }

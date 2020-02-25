@@ -8,11 +8,12 @@ import { EventEmitter } from '@angular/core';
 })
 export class LocateMeComponent implements OnInit {
 
-  @Output() locateevent=new EventEmitter();
+  @Output() locateevent = new EventEmitter();
   constructor() { }
 
   ngOnInit() {}
-  callparentlocate(){
+  
+  callparentlocate() {
     this.locateevent.emit();
   }
 

@@ -1,12 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-
-
-//May have to remove
 import { Location } from '../../models/Location';
-
-
-
 
 declare var google;
 
@@ -22,10 +16,9 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef; 
 
   private userLocation: Location;
-  
 
   constructor(private geolocation: Geolocation) { 
-      this.userLocation = new Location(0, 0 ,0);
+      this.userLocation = new Location(0, 0 , 0);
   }
 
   ngAfterViewInit(): void{
