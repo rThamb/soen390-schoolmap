@@ -17,6 +17,10 @@ declare var google;
 })
 export class MapComponent implements AfterViewInit {
 
+  directionsService = new google.maps.DirectionsService;
+  directionsRenderer = new google.maps.DirectionsRenderer;
+  directions = {}
+
   map;
 
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef; 
@@ -56,6 +60,23 @@ export class MapComponent implements AfterViewInit {
       position: mylocation,
       map: this.map,
       title: 'Here'
+    });
+
+    this.directionsRenderer.setMap(this.map);
+
+  }
+
+  getDirections() {
+    this.directionsService.route({
+      origin: this.directions['start'],
+      destination: this.directions['destination'],
+      travelMode: 'DRIVING'
+    }, (response, status) => {
+      if (status === 'OK') {
+        this.directionsRenderer.setDirections(response);
+      } else {
+        window.alert('Request to directions API failed: ' + status);
+      }
     });
   }
 

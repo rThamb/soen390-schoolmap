@@ -21,6 +21,7 @@ import { DirectionControlsComponent } from './components/direction-controls/dire
 import { HomeComponent } from './components/home/home.component'
 import { MenubarComponent } from './components/menubar/menubar.component';
 import { ShapesComponent } from './components/shapes/shapes.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -30,7 +31,7 @@ import { ShapesComponent } from './components/shapes/shapes.component';
 @NgModule({
   declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent, ShapesComponent,ToggleComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [
     StatusBar,
     SplashScreen,

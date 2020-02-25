@@ -6,9 +6,15 @@
 
 }
 
+.toolbar {
+  position: absolute;
+  top: 6rem;
+  text-align: center;
+}
+
 .map-content {
   position: absolute;
-  top: 7rem;
+  top: 15rem;
   left: 0;
   height: 86vh;
   width: 100%;

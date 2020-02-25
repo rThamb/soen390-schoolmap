@@ -1,3 +1,15 @@
+<form (ngSubmit)="getDirections()">
+  <ion-toolbar class="toolbar">
+    <ion-item>
+      <ion-input [(ngModel)]="directions.start" name='start' placeholder="Start"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="directions.destination" name='destination' placeholder="Destination"></ion-input>
+    </ion-item>
+    <ion-button type="submit" block>Get Directions</ion-button>
+  </ion-toolbar> 
+</form>
+
 <ion-content class="map-content">
   <div #googleMap class="map"></div>
 </ion-content>
