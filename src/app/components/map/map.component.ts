@@ -686,21 +686,27 @@ export class MapComponent implements AfterViewInit {
     vanierLibrary, psyBuilding, adminBuilding, centralBuilding, jesuitHall, athleticCamp, loyolaGym, phyServiceBuilding, centerArts, saintIgnatius, structuralCenter, jesuitResidence, studentResidences, faubourg])})
     
     this.map.data.setStyle({
-      fillColor: 'blue'
+      fillColor: 'deepskyblue'
     });
+
+    //Text properties for all buildings
+    var markerColor = 'purple';
+    var fontWeight = 'bold';
+    var fontSize = '16px';
+    var iconEmpty = '../res/img/empty.png';
 
     //Hall Building Marker and info window
     var hallMarker = new google.maps.Marker
     ({
-      position: {lat: 45.497290, lng: -73.578908},
+      position: {lat: 45.497092, lng: -73.578974},
       map: this.map,
-      icon: '../res/img/empty.png',
+      icon: iconEmpty,
       label: 
       {
-          color: 'purple',
-          fontWeight: 'bold',
+          color: markerColor,
+          fontWeight: fontWeight,
           text: 'HALL',
-          fontSize: '15px',
+          fontSize: fontSize,
       },
     });
 
@@ -708,52 +714,542 @@ export class MapComponent implements AfterViewInit {
 
     var hallInfo = new google.maps.InfoWindow({content:""});
 
+    var hallContent =
+    "<ion-list> <ion-header align='center'><ion-title>Henry F. Hall Building </ion-title></ion-header>" +
+    "<ion-item><ion-label><b>Address:</b> 1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8</ion-label> </ion-item>"+
+    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Geography, Planning and Environment</option>"+
+    "<option value=''>Political Science, Sociology and Anthropology, Economics</option>"+
+    "<option value=''>School of Irish Studies</option>" +
+    "</select></ion-item>"+
+    
+    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Welcome Crew Office</option>"+
+    "<option value=''>DB Clarke Theatre</option>"+
+    "<option value=''>Dean of Students</option>" +
+    "<option value=''>Aboriginal Student Resource Centre</option>"+
+    "<option value=''>Concordia Student Union</option>"+
+    "<option value=''>IT Service Desk</option>"+
+    "<option value=''>Security Office</option>" +
+    "<option value=''>Student Success Centre</option>"+
+    "<option value=''>Mail Services</option>"+
+    "<option value=''>Archives</option>"+
+    "<option value=''>Career and Planning Services</option>"+
+    "<option value=''>Sexual Assault Ressource Centre (SARC)</option>"+
+    "</select></ion-item>"+
+    "</ion-list>"+
+    "<img width='80%' style='margin-left:12%' src=assets/BuildingImages/HallBuilding.jpg>" +
+    "<p style='margin-left:40%';><ion-button id='hall'>Enter Building</ion-button></p>"
+
     google.maps.event.addListener(hallMarker, 'click', function() 
     {
-      //Probably put this in html file
-      hallInfo.setContent('<h4 align="center">Henry F. Hall Building </h4>' +
-            '<p ><b>Address: </b>1455 de Maisonneuve Boulevard West</p>' +
-            '<p><b>#Floors: </b> 12 </p>' +
-            '<p><b>Departments: </b></p>' +
-            '<p><b>Services: </b></p>' +
-            '<ion-button onclick="inBuilding()">Enter Building</ion-button>');
+      hallInfo.setContent(hallContent);
 
       hallInfo.open(this.map, hallMarker);
     });
+
+    hallInfo.addListener('domready', () => {
+      document.getElementById("hall").addEventListener("click", () => {
+        this.enterBuilding("hall");
+      });
+    });
+
 
     //EV Building Marker and info window
     var EVMarker = new google.maps.Marker
     ({
       position: {lat: 45.495470, lng: -73.577780},
       map: this.map,
-      icon: '../res/img/empty.png',
+      icon: iconEmpty,
       label: 
       {
-          color: 'purple',
-          fontWeight: 'bold',
+          color: markerColor,
+          fontWeight: fontWeight,
           text: 'EV',
-          fontSize: '15px',
+          fontSize: fontSize,
       },
     });
 
     EVMarker.setMap(this.map);
+    
+    var EVInfo = new google.maps.InfoWindow({content:""});
 
-    //Maybe Use a drop down for Department and Services
-          //   <div class="dropdown">
-          //   <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-          //   <div id="myDropdown" class="dropdown-content">
-          //     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-          //     <a href="#about">About</a>
-          //     <a href="#base">Base</a>
-          //     <a href="#blog">Blog</a>
-          //     <a href="#contact">Contact</a>
-          //     <a href="#custom">Custom</a>
-          //     <a href="#support">Support</a>
-          //     <a href="#tools">Tools</a>
-          //   </div>
-          // </div>
-  }
+    var EVContent =
+    "<ion-list> <ion-header align='center'><ion-title>Engineering, CompSc and Visual Arts Integrated Complex</ion-title></ion-header>" +
+      "<ion-item><ion-label><b>Address:</b> 1515 Saint-Catherine St W, Montreal, Quebec H3G 2W1</ion-label> </ion-item>"+
+      "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
+      "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+      "<option value=''>Gina Cody School of Engineering and Computer Science</option>"+
+      "<option value=''>Electrical and Computer Engineering</option>"+
+      "<option value=''>Building, Civil and Environmental Engineering</option>" +
+      "<option value=''>Computer Science and Software Engineering</option>"+
+      "<option value=''>Mechanical, Industrial and Aerospace Engineering</option>"+
+      "<option value=''>Design and Computation Arts</option>"+
+      "<option value=''>Faculty of Fine Arts</option>"+
+      "<option value=''>Recreation and Athletics</option>"+
+      "<option value=''>Zero Energy Building Studies</option>"+
+      "<option value=''>Centre for Pattern Recognition and Machine Intelligence</option>"+
+      "<option value=''>Center for Composites</option>"+
+      "</select></ion-item>"+
+      
+      "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+      "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+      "<option value=''>LeGym</option>"+
+      "<option value=''>FOFA Gallery</option>"+
+
+      "</select></ion-item>"+
+      "</ion-list>"+
+      "<img width='60%' style='margin-left:23%' src=assets/BuildingImages/ev.jpg>" +
+      "<p style='margin-left:40%';><ion-button id='ev''>Enter Building</ion-button></p>"
+
+    google.maps.event.addListener(EVMarker, 'click', function() 
+    {
+      //Probably put this in html file
+      EVInfo.setContent(EVContent);
+
+
+      EVInfo.open(this.map, EVMarker);
+    });
+
+    EVInfo.addListener('domready', () => {
+      document.getElementById("ev").addEventListener("click", () => {
+        this.enterBuilding("ev");
+      });
+    });
+
+          
+    //LB Building Marker and info window
+    var LBMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.496708, lng: -73.577912},
+      map: this.map,
+      icon: iconEmpty,
+      label: 
+      {
+          color: markerColor,
+          fontWeight: fontWeight,
+          text: 'LB',
+          fontSize: fontSize,
+      },
+    });
+
+    LBMarker.setMap(this.map);
+
+    var LBInfo = new google.maps.InfoWindow({content:""});
+
+    var LBContent =
+    "<ion-list> <ion-header align='center'><ion-title>J.W. McConnel Building</ion-title></ion-header>" +
+    "<ion-item><ion-label><b>Address:</b> 1400 Maisonneuve Blvd W Montreal, QC H3G 1M8</ion-label> </ion-item>"+
+    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>English</option>"+
+    "<option value=''>History</option>"+
+    "<option value=''>Études françaises</option>" +
+    "<option value=''>Mathematics and Statistics</option>"+
+    "<option value=''>Education</option>"+
+    "<option value=''>Centre for Interdisciplinary Studies in Society and Culture</option>" +
+    "<option value=''>Centre for the Study of Learning and Performance</option>" +
+    "</select></ion-item>"+
+    
+    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>R. Howard Webster Library</option>"+
+    "<option value=''>Welcome Centre</option>"+
+    "<option value=''>Leonard and Bina Ellen Art Gallery</option>" +
+    "<option value=''>J.A. De Sève Cinema</option>"+
+    "<option value=''>Birks Student Service Centre</option>"+
+    "<option value=''>Campus Stores</option>"+
+    "<option value=''>Instructional & Information Technology Services (IITS)</option>" +
+    "<option value=''>4TH SPACE</option>"+
+    "</select></ion-item>"+
+    "</ion-list>"+
+    "<img width='70%' style='margin-left:17%' src=assets/BuildingImages/LB.jpg>" +
+    "<p style='margin-left:40%';><ion-button id='lb' >Enter Building</ion-button></p>";
+
+    google.maps.event.addListener(LBMarker, 'click', function() 
+    {
+      LBInfo.setContent(LBContent);
+
+      LBInfo.open(this.map, LBMarker);
+    });
+
+    LBInfo.addListener('domready', () => {
+      document.getElementById("lb").addEventListener("click", () => {
+        this.enterBuilding("lb");
+      });
+    });
+
+   
+    var FGMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.494115, lng: -73.578223},
+      map: this.map,
+      icon: iconEmpty,
+      label: 
+      {
+          color: markerColor,
+          fontWeight: fontWeight,
+          text: 'FG',
+          fontSize: fontSize,
+      },
+    });
+
+    FGMarker.setMap(this.map);
+
+    var FGInfo = new google.maps.InfoWindow({content:""});
+
+    var FGContent =
+    "<ion-list> <ion-header align='center'><ion-title>Faubourg Building </ion-title></ion-header>" +
+    "<ion-item><ion-label><b>Address:</b> 1250 Guy St, Montreal, Quebec H3H 2L3</ion-label> </ion-item>"+
+    
+    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Education</option>"+
+    "<option value=''>Classics, Modern Language & Linguistics</option>"+
+    "<option value=''>Concordia Continuing Education</option>" +
+    "<option value=''>Mel Hoppenheim School of Cinema</option>" +
+    "<option value=''>Montreal Institute for Genocide and Human Rights Studies</option>" +
+    "<option value=''>District 3 Innovation Center</option>" +
+    "</select></ion-item>"+
+    
+    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Human Resources</option>"+
+    "<option value=''>Office of the Registrar</option>"+
+    "<option value=''>Examinations Office</option>"+
+    "<option value=''>Senior non-credit program</option>"+
+    "</select></ion-item>"+
+    "</ion-list>"+
+    "<img width='80%' style='margin-left:15%' src=assets/BuildingImages/fb.jpg>" +
+    "<p style='margin-left:40%';><ion-button id='fg'>Enter Building</ion-button></p>";
+
+    google.maps.event.addListener(FGMarker, 'click', function() 
+    {
+      FGInfo.setContent(FGContent);
+
+      FGInfo.open(this.map, FGMarker);
+    });
+
+    FGInfo.addListener('domready', () => {
+      document.getElementById("fg").addEventListener("click", () => {
+        this.enterBuilding("fg");
+      });
+    });
+    
+
+
+    var MBMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.495095, lng: -73.578854},
+      map: this.map,
+      icon: iconEmpty,
+      label: 
+      {
+          color: markerColor,
+          fontWeight: fontWeight,
+          text: 'MB',
+          fontSize: fontSize,
+      },
+    });
+
+    MBMarker.setMap(this.map);
+
+    var MBInfo = new google.maps.InfoWindow({content:""});
+
+    var MBContent =
+    "<ion-list> <ion-header align='center'><ion-title>John Molson Building</ion-title></ion-header>" +
+    "<ion-item><ion-label><b>Address: </b>1600 Boulevard de Maisonneuve O, Montréal, QC H3H 1J5</ion-label> </ion-item>"+
+
+    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Accoutancy</option>"+
+    "<option value=''>Supply Chain & Business Technology Management</option>"+
+    "<option value=''>Finance</option>" +
+    "<option value=''>Management</option>" +
+    "<option value=''>Executive MBA Program</option>" +
+    "<option value=''>Music</option>" +
+    "<option value=''>Theatre</option>" +
+    "<option value=''>Contemporary Dance</option>" +
+    "</select></ion-item>"+
+    
+    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Career Management Services</option>"+
+    "<option value=''>John Molson Executive Centre</option>"+
+    "<option value=''>Office of the Registrar</option>"+
+    "<option value=''>Performing Arts Facilities</option>"+
+    "</select></ion-item>"+
+    "</ion-list>"+
+    "<img width='68%' style='margin-left:18%' src=assets/BuildingImages/JMSB.jpg>" +
+    "<p style='margin-left:40%';><ion-button id='fg'>Enter Building</ion-button></p>";
+
+    google.maps.event.addListener(MBMarker, 'click', function() 
+    {
+      MBInfo.setContent(MBContent);
+
+      MBInfo.open(this.map, MBMarker);
+    });
+
+    MBInfo.addListener('domready', () => {
+      document.getElementById("mb").addEventListener("click", () => {
+        this.enterBuilding("mb");
+      });
+    });  
+
+
+
+    var VAMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.495530, lng: -73.573845},
+      map: this.map,
+      icon: iconEmpty,
+      label: 
+      {
+          color: markerColor,
+          fontWeight: fontWeight,
+          text: 'VA',
+          fontSize: fontSize,
+      },
+    });
+
+    VAMarker.setMap(this.map);
+
+    var VAInfo = new google.maps.InfoWindow({content:""});
+
+    var VAContent =
+    "<ion-list> <ion-header align='center'><ion-title>John Molson Building</ion-title></ion-header>" +
+    "<ion-item><ion-label><b>Address: </b>1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5</ion-label> </ion-item>"+
+
+    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Studio Arts</option>"+
+    "<option value=''>Art History</option>"+
+    "<option value=''>Art Education</option>" +
+    "<option value=''>Creative Arts Therapies</option>" +
+    "</select></ion-item>"+
+    
+    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>VAV Art Gallery</option>"+
+    "<option value=''>Art Supply Store</option>"+
+    "</select></ion-item>"+
+    "</ion-list>"+
+    "<img width='80%' style='margin-left:12%' src=assets/BuildingImages/va.jpg>" +
+    "<p style='margin-left:40%';><ion-button id='va'>Enter Building</ion-button></p>";
+
+    google.maps.event.addListener(VAMarker, 'click', function() 
+    {
+      VAInfo.setContent(VAContent);
+
+      VAInfo.open(this.map, VAMarker);
+    });
+
+    VAInfo.addListener('domready', () => {
+      document.getElementById("va").addEventListener("click", () => {
+        this.enterBuilding("va");
+      });
+    });  
 
   
+
+    var GNMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.493729, lng: -73.576222},
+      map: this.map,
+      icon: iconEmpty,
+      label: 
+      {
+          color: markerColor,
+          fontWeight: fontWeight,
+          text: 'GN',
+          fontSize: fontSize,
+      },
+    });
+
+    GNMarker.setMap(this.map);
+
+    var GNInfo = new google.maps.InfoWindow({content:""});
+
+    var GNContent =
+    "<ion-list> <ion-header align='center'><ion-title>Grey Nuns Building</ion-title></ion-header>" +
+    "<ion-item><ion-label><b>Address: </b>1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5</ion-label> </ion-item>"+
+    
+    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Residences</option>"+
+    "<option value=''>Grey Nuns Library</option>"+
+    "<option value=''>Daycare Centre</option>"+
+    "<option value=''>Summer Accommodation</option>"+
+    "</select></ion-item>"+
+    "</ion-list>"+
+    "<img width='80%' style='margin-left:12%' src=assets/BuildingImages/gn.jpg>" +
+    "<p style='margin-left:40%';><ion-button id='gn'>Enter Building</ion-button></p>";
+
+    google.maps.event.addListener(GNMarker, 'click', function() 
+    {
+      GNInfo.setContent(GNContent);
+
+      GNInfo.open(this.map, GNMarker);
+    });
+
+    GNInfo.addListener('domready', () => {
+      document.getElementById("gn").addEventListener("click", () => {
+        this.enterBuilding("gn");
+      });
+    });  
+
+  
+    //Loyola Campus
+    var CJMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.457395, lng: -73.640399},
+      map: this.map,
+      icon: iconEmpty,
+      label: 
+      {
+          color: markerColor,
+          fontWeight: fontWeight,
+          text: 'CJ',
+          fontSize: fontSize,
+      },
+    });
+
+    CJMarker.setMap(this.map);
+
+    var CJInfo = new google.maps.InfoWindow({content:""});
+
+    var CJContent =
+    "<ion-list> <ion-header align='center'><ion-title>Communication Studies and Journalism Building</ion-title></ion-header>" +
+    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    
+    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Communication Studies</option>"+
+    "<option value=''>Journalism</option>"+
+    "</select></ion-item>"+
+
+    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Campus Retail Stores</option>"+
+    "</select></ion-item>"+
+    "</ion-list>"+
+    "<img width='80%' style='margin-left:12%' src=assets/BuildingImages/cj.jpg>" +
+    "<p style='margin-left:40%';><ion-button id='cj'>Enter Building</ion-button></p>";
+
+    google.maps.event.addListener(CJMarker, 'click', function() 
+    {
+      CJInfo.setContent(CJContent);
+
+      CJInfo.open(this.map, CJMarker);
+    });
+
+    CJInfo.addListener('domready', () => {
+      document.getElementById("cj").addEventListener("click", () => {
+        this.enterBuilding("cj");
+      });
+    });  
+
+
+
+    var SCMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.457605, lng: -73.641512},
+      map: this.map,
+      icon: iconEmpty,
+      label: 
+      {
+          color: markerColor,
+          fontWeight: fontWeight,
+          text: 'SC',
+          fontSize: fontSize,
+      },
+    });
+
+    SCMarker.setMap(this.map);
+
+    var SCInfo = new google.maps.InfoWindow({content:""});
+
+    var SCContent =
+    "<ion-list> <ion-header align='center'><ion-title>Richard J. Renaud Science Complex</ion-title></ion-header>" +
+    "<ion-item><ion-label><b>Address: </b>3475 Rue West Broadway Montreal, QC H4B 2A7</ion-label> </ion-item>"+
+    
+    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Biology</option>"+
+    "<option value=''>Chemistry and Biochemistry</option>"+
+    "<option value=''>Health, Kinesiology & Applied Physiology</option>"+
+    "<option value=''>Physics</option>"+
+    "<option value=''>Psychology</option>"+
+    "<option value=''>Centre for Biological Applications of Mass Spectrometry</option>"+
+    "<option value=''>Centre for NanoScience Research</option>"+
+    "<option value=''>Centre for Studies in Behavioral Neurobiology</option>"+
+    "<option value=''>Centre for Research in Molecular Modeling</option>"+
+    "</select></ion-item>"+
+
+    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
+    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<option value=''>Science College</option>"+
+    "<option value=''>Science Technical Centre</option>"+
+    "<option value=''>Animal Care Facilities</option>"+
+    "<option value=''>Security Office</option>"+
+    "<option value=''>Café</option>"+
+    "</select></ion-item>"+
+    "</ion-list>"+
+    "<img width='80%' style='margin-left:12%' src=assets/BuildingImages/sc.jpg>" +
+    "<p style='margin-left:40%';><ion-button id='sc'>Enter Building</ion-button></p>";
+
+    google.maps.event.addListener(SCMarker, 'click', function() 
+    {
+      SCInfo.setContent(SCContent);
+
+      SCInfo.open(this.map, SCMarker);
+    });
+
+    SCInfo.addListener('domready', () => {
+      document.getElementById("sc").addEventListener("click", () => {
+        this.enterBuilding("sc");
+      });
+    });  
+
+  }
+
+
+  
+  //FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
+  enterBuilding(id: string)
+  {
+    switch (id) 
+    {
+      case 'hall':
+          console.log("In " + id + " building.");
+          break;
+      case 'ev':
+          console.log("In " + id + " building.");
+          break;
+      case 'lb':
+          console.log("In " + id + " building.");
+          break;
+      case 'fg':
+            console.log("In " + id + " building.");
+          break;
+      case 'mb':
+            console.log("In " + id + " building.");
+          break;
+      case 'va':
+            console.log("In " + id + " building.");
+          break;
+      case 'gn':
+            console.log("In " + id + " building.");
+          break;
+      case 'cj':
+            console.log("In " + id + " building.");
+          break;
+      case 'sc':
+            console.log("In " + id + " building.");
+          break;
+    }
+  }
 
 }
