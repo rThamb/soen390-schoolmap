@@ -1,9 +1,11 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
 //May have to remove
 import { Location } from '../../models/Location';
+
+
 
 
 declare var google;
@@ -20,45 +22,59 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef; 
 
   private userLocation: Location;
-
-  loyolaLoc:Location;
-  sgwLoc:Location;
+  private loyolaloc :Location;
+  
 
   constructor(private geolocation: Geolocation) { 
       this.userLocation = new Location(0, 0 ,0);
-      this.loyolaLoc = new Location(45.458227, -73.640460, 0);
-      this.sgwLoc = new Location(45.494553, -73.577388, 0);
+      
   }
 
   ngAfterViewInit(): void{
-      this.getCurrentLocation();
+    this.getCurrentLocation(15);
   }
 
-  getCurrentLocation(): void{
+  getCurrentLocation(x:number): void{
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation = new Location(resp.coords.longitude, resp.coords.latitude, resp.coords.altitude);
-      this.showMap(this.userLocation.latitude, this.userLocation.longitude);
+      this.showMap(x);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
 
-  showMap(lat:number, long:number){
+  showMap(x:number){
 
-    let mylocation = new google.maps.LatLng(lat, long);
-
-    let mapOptions: { mapTypeId: any; center: { lng: number; lat: number }; zoom: number } = {
-      zoom: 15,
-      center: {lat: 45.494711, lng: -73.577871},
+    var mylocation = new google.maps.LatLng(this.userLocation.latitude,this.userLocation.longitude);
+    
+    var mapOptions = {
+      zoom: x,
+      center: mylocation,
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+    }
 
     this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
 
-    let marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
       position: mylocation,
       map: this.map,
       title: 'Here'
+    });
+  }
+
+  NavigateMap(location:Location){  
+      let mapOptions = {
+        center: location,
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+
+      this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+      var marker = new google.maps.Marker({
+        position: location,
+        map: this.map,
+        title: 'Here'
+
     });
   }
 

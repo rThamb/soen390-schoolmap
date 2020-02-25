@@ -15,23 +15,5 @@
   width: 100%;
 }
 //hide the fullscreen button by google maps
-.gm-fullscreen-control {
-  display: none !important;
-}
-//hide the map/satellite button along with +/- buttons
-.gmnoprint {
-  display: none  !important;
-}
-.gm-style-mtc {
-  display: none;
-}
 
-.map[_ngcontent-tav-c4] {
-  height: 89%;
-}
 
-@media only screen and (max-width: 600px) {
-  .map {
-    height: 86%;
-  }
-}

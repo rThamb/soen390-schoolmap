@@ -10,8 +10,8 @@
         <header>
         <app-menubar></app-menubar>
         </header>
-        <app-toggle></app-toggle>
-        <app-map></app-map>
+        <app-toggle (togglelocateev)=map.NavigateMap($event)></app-toggle>
+        <app-map #map></app-map>
 
 
 <!-- inject other component like the one above to construct your view 
