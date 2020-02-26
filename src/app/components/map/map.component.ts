@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { IndoorPathingService } from '../../services/indoor-pathing.service';
@@ -6,8 +6,9 @@ import { IndoorPathingService } from '../../services/indoor-pathing.service';
 
 //May have to remove
 import { Location } from '../../models/Location';
-import { Floor } from '../../models/Floor';
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
+import { Floor } from '../../models/Floor';
+
 
 
 
@@ -28,8 +29,7 @@ export class MapComponent implements AfterViewInit {
   private loyolaloc :Location;
   
 
-  constructor(private geolocation: Geolocation, private GridService: 
-    ReadGridService, private indoorPathingService: IndoorPathingService) { 
+  constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) { 
       this.userLocation = new Location(0, 0 ,0);
       let floor: Floor = new Floor();
 
@@ -43,16 +43,17 @@ export class MapComponent implements AfterViewInit {
         console.log('\n');
       }*/
 
+
   }
 
   ngAfterViewInit(): void{
-    this.getCurrentLocation(15);
+    this.getCurrentLocation();
   }
 
-  getCurrentLocation(x:number): void{
+  getCurrentLocation(): void{
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation = new Location(resp.coords.longitude, resp.coords.latitude, resp.coords.altitude);
-      this.showMap(x);
+      this.showMap(15);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -1980,10 +1981,6 @@ export class MapComponent implements AfterViewInit {
     }  
     
 
-<<<<<<< HEAD
-    //TESTING ReadGridService --DELETE LATER
-    var test = await this.GridService.createGrid("testFloor") //argument is the name/key of the floor we want. Ex: "testFloor"
-=======
 
 
     
@@ -1991,7 +1988,6 @@ export class MapComponent implements AfterViewInit {
     You want to preform the action after the background work of getting the data 
     is complete. Making the component wait for a service class to finish its work
     will cause preformance issues in the later future.
-
     */
     this.myService.createGrid("H8").then((grid: Floor) => {
       this.testGrid(grid.pathfindingFloorGrid);
@@ -2006,12 +2002,7 @@ export class MapComponent implements AfterViewInit {
     //test variable is the actual grid, 
     //obtain your columns(test.length) and rows (test[0]length) by invoking the methods 
     console.log("Inside testGrid()");
-<<<<<<< HEAD
-    var test = await this.myService.createGrid("testFloor"); //argument is the name/key of the floor we want. Ex: "testFloor"
->>>>>>> update
-=======
     //var test = await this.myService.createGrid("testFloor"); //argument is the name/key of the floor we want. Ex: "testFloor"
->>>>>>> Started indoor path with json files. Running into issues, needs more work. Removed unwanted promises from service classes.
 
     //Note can also get row length, col length by using createGrid("NRows") or ("NCols")
     for(var row = 0; row < test.length; row++)
