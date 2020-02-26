@@ -8,12 +8,13 @@
 
 -->     
         
-        
-        <app-toggle></app-toggle>
+        <header>
+        <app-menubar></app-menubar>
+        </header>
+        <app-toggle (togglelocateev)=map.NavigateMap($event)></app-toggle>
         <app-map #map></app-map>
         <app-locate-me (locateevent)="map.getCurrentLocation(20)"></app-locate-me>
 
-        
 
 <!-- inject other component like the one above to construct your view 
 

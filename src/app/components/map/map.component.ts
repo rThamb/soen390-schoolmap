@@ -16,9 +16,12 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef; 
 
   private userLocation: Location;
+  private loyolaloc :Location;
+  
 
   constructor(private geolocation: Geolocation) { 
-      this.userLocation = new Location(0, 0 , 0);
+      this.userLocation = new Location(0, 0 ,0);
+      
   }
 
   ngAfterViewInit(): void{
@@ -50,6 +53,22 @@ export class MapComponent implements AfterViewInit {
       position: mylocation,
       map: this.map,
       title: 'Here'
+    });
+  }
+
+  NavigateMap(location:Location){  
+      let mapOptions = {
+        center: location,
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+
+      this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+      var marker = new google.maps.Marker({
+        position: location,
+        map: this.map,
+        title: 'Here'
+
     });
   }
 

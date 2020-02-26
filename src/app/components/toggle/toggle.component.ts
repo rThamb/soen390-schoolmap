@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Output, ViewChild, OnInit, EventEmitter } from '@angular/core';
+import {Location} from "../../models/Location";
+import {Geolocation} from "@ionic-native/geolocation/ngx";
+
+declare var google;
 
 @Component({
   selector: 'app-toggle',
@@ -6,9 +10,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toggle.component.scss'],
 })
 export class ToggleComponent implements OnInit {
+  
+  @ViewChild('googleMap', {static: false}) googleMap;
 
+  //map:any;
+  
+  @Output() togglelocateev=new EventEmitter();
+  loyolaloc :Location= new google.maps.LatLng(45.458234,-73.640493,0);
+  sirgeorge= new google.maps.LatLng(45.494711 ,-73.577871,0);
+  
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+  callparentloy(){
+    this.togglelocateev.emit(this.loyolaloc);
+  }
+  callparentsgw(){
+    this.togglelocateev.emit(this.sirgeorge);
+  }
 
-}
+  }
+
+
+
+
+
+

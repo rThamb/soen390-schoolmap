@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
-
 import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
 import { HomeComponent } from './components/home/home.component'
 

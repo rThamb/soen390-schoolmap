@@ -1,8 +1,9 @@
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
  .map {
-   height: 100%;
+   height: 89%;
   width: 100%;
+   z-index: 1;
 
 }
 
@@ -12,7 +13,7 @@
   left: 0;
   height: 86vh;
   width: 100%;
-
-
 }
+//hide the fullscreen button by google maps
+
 

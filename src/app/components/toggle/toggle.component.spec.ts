@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ToggleComponent } from './toggle.component';
+import {MapComponent} from '../map/map.component';
+import { NgModule } from '@angular/core';
 
 describe('ToggleComponent', () => {
   let component: ToggleComponent;
@@ -9,8 +11,8 @@ describe('ToggleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToggleComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ ToggleComponent, MapComponent ],
+      imports: [IonicModule.forRoot(), NgModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ToggleComponent);

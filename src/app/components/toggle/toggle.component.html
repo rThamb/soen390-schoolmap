@@ -1,5 +1,11 @@
+
 <ion-toolbar class="toolbar">
-  <ion-label class="label">LOY</ion-label>
-  <ion-toggle class="toggle"></ion-toggle>
-  <ion-label class="label">SGW</ion-label>
+  <ion-segment>
+    <ion-segment-button value="loyola"(ionSelect)="callparentloy()">
+      <ion-label>LOYOLA</ion-label>
+    </ion-segment-button>
+    <ion-segment-button  value="sgw" (ionSelect)="callparentsgw()">
+      <ion-label>SIR GEORGE</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-toolbar>
