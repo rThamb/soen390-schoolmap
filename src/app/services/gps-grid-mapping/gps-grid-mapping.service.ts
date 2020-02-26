@@ -14,6 +14,7 @@ export class GpsGridMappingService {
   constructor() { }
 
 
+  /*
   getFloorTest(){
 
     let coor = new Coordinate(6.4, 4);
@@ -35,13 +36,15 @@ export class GpsGridMappingService {
     floor.bottomLeftCorrnerGPS = bottomLeft;
     
     this.getFloorGridCoordinate(coor, floor);
+Y
 
   }
+  */
 
-  getFloorGridCoordinate(userPosition: Coordinate, currentFloor: Floor){
+  getFloorGridCoordinate(userPosition: Coordinate, currentFloor: Floor): string {
     let x = this.mapUserLatitudeToXCoordinate(userPosition.latitude, currentFloor);
     let y = this.mapUserLongitudeToYCoordinate(userPosition.longitude, currentFloor);
-    
+    return x + "," + y; 
   }
 
 
