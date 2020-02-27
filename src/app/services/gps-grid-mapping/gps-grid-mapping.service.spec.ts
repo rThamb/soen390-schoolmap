@@ -38,11 +38,11 @@ fdescribe('GpsGridMappingService', () => {
     floor.bottomLeftCorrnerGPS = bottomLeft;
     
     let obtained = service.getFloorGridCoordinate(coor, floor);
-    //let expect = 2 + "," + 3;
-    //let result: boolean = obtained === expect; 
+    console.log(obtained);
+    let expected = 1 + "," + 2;
     //console.log(result)
     
-    expect(true).toBeTruthy();
+    expect(obtained + "").toContain(expected);
   });
 
 
