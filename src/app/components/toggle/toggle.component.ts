@@ -11,8 +11,7 @@ declare var google;
 })
 export class ToggleComponent implements OnInit {
   
-  @ViewChild('googleMap', {static: false}) googleMap;
-
+  
   //map:any;
   
   @Output() togglelocateev=new EventEmitter();
