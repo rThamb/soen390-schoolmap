@@ -1,21 +1,22 @@
-<!-- HOME PAGE -->
 
 
-<!-- Construct the home page with the basic building blocks
+
+<!-- Construct he home page with the basic building blocks
 
  - menu
  - map
 
- Each building block should be a reusable component
 -->     
         
-        
+        <header>
+        <app-menubar></app-menubar>
+        </header>
         <app-toggle (togglelocateev)=map.NavigateMap($event)></app-toggle>
         <app-map #map></app-map>
         <app-locate-me (locateevent)="map.getCurrentLocation(20)"></app-locate-me>
 
 
-<!-- inject other components like the one above to construct your view 
+<!-- inject other component like the one above to construct your view 
 
 You should be using div elements to structure the overall page, when injecting other components 
 -->
