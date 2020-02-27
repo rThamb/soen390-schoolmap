@@ -44,6 +44,7 @@ export class MapComponent implements AfterViewInit {
     var mapOptions = {
       zoom: x,
       center: mylocation,
+      disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 

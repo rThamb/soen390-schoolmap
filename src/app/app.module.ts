@@ -18,13 +18,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { MapComponent } from './components/map/map.component';
-import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
 import { LocateMeComponent } from './components/locate-me/locate-me.component';
+import { NewRouteComponent } from './components/new-route/new-route.component';
 import { HomeComponent } from './components/home/home.component'
 import { MenubarComponent } from './components/menubar/menubar.component';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, DirectionControlsComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent],
+  declarations: [AppComponent, MapComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent, NewRouteComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [

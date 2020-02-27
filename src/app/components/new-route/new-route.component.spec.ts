@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DirectionControlsComponent } from './direction-controls.component';
+import { NewRouteComponent } from './new-route.component';
 
-describe('DirectionControlsComponent', () => {
-  let component: DirectionControlsComponent;
-  let fixture: ComponentFixture<DirectionControlsComponent>;
+describe('NewRouteComponent', () => {
+  let component: NewRouteComponent;
+  let fixture: ComponentFixture<NewRouteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DirectionControlsComponent ],
+      declarations: [ NewRouteComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DirectionControlsComponent);
+    fixture = TestBed.createComponent(NewRouteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { DirectionControlsComponent } from './components/direction-controls/direction-controls.component';
 import { HomeComponent } from './components/home/home.component'
+import { NewRouteComponent } from './components/new-route/new-route.component';
 
 
 const routes: Routes = [
@@ -13,7 +13,8 @@ const routes: Routes = [
   */
    {path: '', component: HomeComponent},
    {path: 'home', component: HomeComponent},
-   {path: "dir", component: DirectionControlsComponent},
+   {path: 'new-route', component: NewRouteComponent},
+
 ];
 @NgModule({
   imports: [
