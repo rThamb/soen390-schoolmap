@@ -4,7 +4,7 @@ import { Floor } from '../../models/Floor'
 
 import { ReadGridService } from './read-grid.service';
 
-fdescribe('ReadGridService', () => {
+describe('ReadGridService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [ReadGridService]
   }).compileComponents());
