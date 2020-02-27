@@ -2,14 +2,11 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { IndoorPathingService } from '../../services/indoor-pathing.service';
-
+import { ReadGridService } from '../../services/readGrid/read-grid.service';
 
 //May have to remove
 import { Location } from '../../models/Location';
-import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Floor } from '../../models/Floor';
-
-
 
 
 declare var google;
