@@ -1,11 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Coordinate } from '../../models/Coordinate'
 import { Floor } from '../../models/Floor'
-
-
 import { GpsGridMappingService } from './gps-grid-mapping.service';
 
-fdescribe('GpsGridMappingService', () => {
+describe('GpsGridMappingService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [GpsGridMappingService]
   }).compileComponents());
@@ -42,7 +40,7 @@ fdescribe('GpsGridMappingService', () => {
     let expected = 1 + "," + 2;
     //console.log(result)
     
-    expect(obtained + "").toContain(expected);
+    expect(obtained + "").toContain(expected + "");
   });
 
 

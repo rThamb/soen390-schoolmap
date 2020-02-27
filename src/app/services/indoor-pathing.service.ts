@@ -16,9 +16,7 @@ const pf = require('pathfinding');
 export class IndoorPathingService {
 
   constructor(private service:ReadGridService) 
-  { 
-
-  }
+  { }
 
    getPathForDestinationOnSameFloor(userPostion: Coordinate, floor: Floor, startClass, endClass: string){
 
@@ -49,13 +47,10 @@ export class IndoorPathingService {
     ];
 
     let grid = new pf.Grid(floor.pathfindingFloorGrid);
-    console.log(grid);
 
     let finder = new pf.AStarFinder();
     // findPath(x1,y1,x2,y2) col, row
     let path = finder.findPath(1, 0, 2, 3, grid);
-
-    console.log(path);
 
     return path;
   }
@@ -65,8 +60,6 @@ export class IndoorPathingService {
 
     let grid = new pf.Grid(floor.pathfindingFloorGrid);
     let finder = new pf.AStarFinder();
-    // findPath(x1,y1,x2,y2) col, row
-    //let path = finder.findPath(1, 0, 2, 3, grid);
 
     let path = finder.findPath(startX, startY, endX, endY, grid);
     console.log(path);
