@@ -1,4 +1,3 @@
-export class Tile
-{
-    
+export class Tile {
+
 }

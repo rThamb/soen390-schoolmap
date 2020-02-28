@@ -1,0 +1,16 @@
+{
+  "HBuilding": [
+    {
+      "name": "H851.01",
+      "state" : "Montreal",
+      "latitude": 45.497575,
+      "longitude": -73.578947
+    },
+    {
+      "name": "H811",
+      "state": "Montreal",
+      "latitude": 45.497429,
+      "longitude":  -73.579204
+    }
+  ]
+}
