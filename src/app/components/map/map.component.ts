@@ -75,7 +75,7 @@ export class MapComponent implements AfterViewInit {
 
   initOverlays()
   {
-            //Layers on buildings
+    //Layers on buildings
     //SGW Campus
     var hall = 
     [
