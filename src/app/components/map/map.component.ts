@@ -9,7 +9,7 @@ import { Floor } from '../../models/Floor';
 declare var google;
 
 
-// MapComponent class handles all google maps objects 
+// MapComponent class. Contains the map object and functions for all google map related services. 
 
 @Component({
   selector: 'app-map',
@@ -22,7 +22,7 @@ export class MapComponent implements AfterViewInit {
  
   public map: any; // google.maps.Map
   private userLocation: Location = new Location(0, 0, 0);
-  private mapOptions; 
+  private mapOptions; // Object
   private userMarker; // google.maps.Marker
 
   constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
@@ -34,6 +34,7 @@ export class MapComponent implements AfterViewInit {
     this.initMap();
   }
 
+  // Initializes the map object with default values
   async initMap(){
     const resp = await this.geolocation.getCurrentPosition();
 
@@ -43,6 +44,7 @@ export class MapComponent implements AfterViewInit {
     this.mapOptions = {
       center: this.userLocation.getGoogleLatLng(),
       zoom: 17,
+      disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
@@ -57,6 +59,7 @@ export class MapComponent implements AfterViewInit {
     this.initOverlays();
   }
 
+  // Gets the current location of user and focuses map to that point
   getCurrentLocation(): void{
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation.setLat(resp.coords.latitude);
@@ -67,13 +70,17 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  // Re-center the map based on location parameter
   focusMap(location) {
     this.map.setCenter(location);
   }
 
+  // Spawns the building overlays on top of the map
+  // *messy, must be refactored in a later sprint*
   initOverlays()
   {
-            //Layers on buildings
+            
+    //Layers on buildings
     //SGW Campus
     var hall = 
     [

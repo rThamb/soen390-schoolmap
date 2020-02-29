@@ -1,10 +1,10 @@
 import { Building } from './Building';
+import { Location } from './Location';
 
 export class Campus
 {
     private buildings: Building[];
     private campusLocation: Location;
-    public selected: boolean;
 
     constructor(cl: Location)
     {

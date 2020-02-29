@@ -33,5 +33,8 @@ export class Building
         this.floors = f;
     }
 
-    
+    public addFloor(f: Floor)
+    {
+        this.floors.push(f);
+    }
 }

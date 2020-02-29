@@ -4,6 +4,12 @@ import { Room } from '../../models/Room';
 import { Location } from '../../models/Location';
 import { Floor } from 'src/app/models/Floor';
 
+
+/**
+ * This service class handles the Building Factory, which is responsible for
+ * loading Building objects from JSON files into memory on demand. It is utilized
+ * by the MapComponent class
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +47,8 @@ export class BuildingFactoryService {
         floor.addRoom(room);
 
       }
+
+      building.addFloor(floor);
     }
     
 
