@@ -4,6 +4,7 @@ export class Campus
 {
     private buildings: Building[];
     private campusLocation: Location;
+    public selected: boolean;
 
     constructor(cl: Location)
     {
@@ -29,5 +30,10 @@ export class Campus
     public setCampusBuildings(b: Building[])
     {
         this.buildings = b;
+    }
+
+    public addBuilding(b: Building)
+    {
+        this.buildings.push(b);
     }
 }

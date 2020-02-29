@@ -1,4 +1,5 @@
 import { Floor } from './Floor';
+import {Location} from './Location';
 
 // This class represents a building object found on the map.
 // It contains an array of floors containing points of interests.
@@ -7,9 +8,9 @@ export class Building
     private buildingLocation: Location;
     private floors: Floor[];
 
-    constructor(bl: Location)
+    constructor()
     {
-        this.buildingLocation = bl;
+    
     }
 
     public getBuildingLocation()
@@ -31,4 +32,6 @@ export class Building
     {
         this.floors = f;
     }
+
+    
 }

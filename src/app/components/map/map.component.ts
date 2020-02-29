@@ -1,15 +1,15 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-
 import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service';
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
-
-//May have to remove
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
 
 
 declare var google;
+
+
+// MapComponent class handles all google maps objects 
 
 @Component({
   selector: 'app-map',
@@ -22,7 +22,7 @@ export class MapComponent implements AfterViewInit {
  
   public map: any; // google.maps.Map
   private userLocation: Location = new Location(0, 0, 0);
-  private mapOptions;
+  private mapOptions; 
   private userMarker; // google.maps.Marker
 
   constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
@@ -61,15 +61,13 @@ export class MapComponent implements AfterViewInit {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation.setLat(resp.coords.latitude);
       this.userLocation.setLng(resp.coords.longitude);
-      this.NavigateMap(this.userLocation.getGoogleLatLng());
+      this.focusMap(this.userLocation.getGoogleLatLng());
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
 
-  
-
-  NavigateMap(location) {
+  focusMap(location) {
     this.map.setCenter(location);
   }
 

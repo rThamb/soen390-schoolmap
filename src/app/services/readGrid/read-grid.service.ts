@@ -20,7 +20,7 @@ export class ReadGridService {
 
     let filenames = {
       "H8": "H8_Floor.json" 
-    }; 
+    };
 
     this.floorFileNameMap = filenames;
   }
