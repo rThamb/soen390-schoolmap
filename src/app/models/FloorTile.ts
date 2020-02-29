@@ -14,5 +14,25 @@ export class FloorTile
         this.pathfinderCode = pfc;
     }
 
-    
+    public getPOI()
+    {
+        return this.poi;
+    }
+
+    public setPOI(p: IndoorPOI)
+    {
+        this.poi = p;
+    }
+
+    public getPathfinderCode()
+    {
+        return this.pathfinderCode;
+    }
+
+    public setPathfinderCode(c: number)
+    {
+        this.pathfinderCode = c;
+    }
+
+
 }

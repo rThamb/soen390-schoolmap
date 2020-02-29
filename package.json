@@ -84,15 +84,12 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-<<<<<<< HEAD
       "cordova-sqlite-storage": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "to track your walk"
       },
-      "cordova-plugin-advanced-http": {}
-=======
+      "cordova-plugin-advanced-http": {},
       "cordova-plugin-file": {}
->>>>>>> 0695ed44abb036715113004d2cc93c42ec05c318
     },
     "platforms": [
       "android"
