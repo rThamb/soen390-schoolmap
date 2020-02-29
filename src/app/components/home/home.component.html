@@ -8,7 +8,7 @@
 
 -->     
         
-        <app-toggle (togglelocateev)=map.NavigateMap($event)></app-toggle>
+        <app-toggle (toggleevent)=map.focusMap($event)></app-toggle>
         <app-map #map></app-map>
         <app-locate-me (locateevent)="map.getCurrentLocation()"></app-locate-me>
 

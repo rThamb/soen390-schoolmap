@@ -1,4 +1,5 @@
 import { Building } from './Building';
+import { Location } from './Location';
 
 export class Campus
 {
@@ -29,5 +30,10 @@ export class Campus
     public setCampusBuildings(b: Building[])
     {
         this.buildings = b;
+    }
+
+    public addBuilding(b: Building)
+    {
+        this.buildings.push(b);
     }
 }
