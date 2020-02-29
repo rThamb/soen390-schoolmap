@@ -56,6 +56,23 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  NavigateMap(location:Location){  
+    let mapOptions = {
+      center: location,
+      zoom: 17,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+    var marker = new google.maps.Marker({
+      position: location,
+      map: this.map,
+      title: 'Here'
+
+  });
+}
+
+
   showMap(x:number){
 
     var mylocation = new google.maps.LatLng(this.userLocation.latitude,this.userLocation.longitude);
@@ -1884,22 +1901,6 @@ export class MapComponent implements AfterViewInit {
       });
     });  
     
-  }
-
-  NavigateMap(location:Location){  
-      let mapOptions = {
-        center: location,
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-
-      this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
-      var marker = new google.maps.Marker({
-        position: location,
-        map: this.map,
-        title: 'Here'
-
-    });
   }
 
   
