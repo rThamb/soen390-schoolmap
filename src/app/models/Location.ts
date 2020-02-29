@@ -1,13 +1,14 @@
-export class Location{
+// This class represents a coordinate location object on the map
+// Every Point of interest has a location
+export class Location {
 
-    //longitude and latitude
-    public longitude : number; 
-    public latitude : number;
-    public altitude : number;
+    public latitude: number;
+    public longitude: number;
+    public altitude: number;
 
-    constructor(long: number, lat: number, alt:number){
-        this.longitude = long;
+    constructor(lat: number, lng: number, alt: number) {
         this.latitude = lat;
+        this.longitude = lng;
         this.altitude = alt;
     }
 }

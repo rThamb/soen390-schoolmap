@@ -11,13 +11,10 @@ declare var google;
 })
 export class ToggleComponent implements OnInit {
   
-  @ViewChild('googleMap', {static: false}) googleMap;
+  @Output() togglelocateev = new EventEmitter();
 
-  //map:any;
-  
-  @Output() togglelocateev=new EventEmitter();
-  loyolaloc :Location= new google.maps.LatLng(45.458234,-73.640493,0);
-  sirgeorge= new google.maps.LatLng(45.494711 ,-73.577871,0);
+  loyolaloc = new google.maps.LatLng(45.458234, -73.640493, 0);
+  sirgeorge = new google.maps.LatLng(45.494711, -73.577871, 0);
   
   constructor() { }
 
