@@ -27,7 +27,7 @@ import { MapComponent } from './components/map/map.component';
 import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { HomeComponent } from './components/home/home.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
-import { ShapesComponent } from './components/shapes/shapes.component';
+import { NewRouteComponent } from './components/new-route/new-route.component';
 
 
 
@@ -35,7 +35,7 @@ import { ShapesComponent } from './components/shapes/shapes.component';
 
 @NgModule({
 
-  declarations: [AppComponent, MapComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent],
+  declarations: [AppComponent, MapComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent, NewRouteComponent],
   entryComponents: [],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [

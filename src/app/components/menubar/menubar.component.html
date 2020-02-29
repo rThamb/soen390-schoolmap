@@ -16,16 +16,16 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item> <ion-icon name="home" class="item-spacing"></ion-icon> Home </ion-item>
-      <ion-item> <ion-icon name="map" class="item-spacing"></ion-icon> New Route </ion-item>
-      <ion-item> <ion-icon name="calendar" class="item-spacing"></ion-icon> My Schedule </ion-item>
-      <ion-item> <ion-icon name="bus" class="item-spacing"></ion-icon> Shuttle Bus Schedule </ion-item>
-      <ion-item> <ion-icon name="walk" class="item-spacing"></ion-icon> Nearby Events </ion-item>
-      <ion-item> <ion-icon name="restaurant" class="item-spacing"></ion-icon> Nearby Restaurants </ion-item>
-      <ion-item> <ion-icon name="settings" class="item-spacing"></ion-icon> Settings </ion-item>
-      <ion-item> <ion-icon name="medical" class="item-spacing"></ion-icon> Safety </ion-item>
-      <ion-item> <ion-icon name="warning" class="item-spacing"></ion-icon> Report an Issue </ion-item>
-      <ion-item> <ion-icon name="information-circle" class="item-spacing"></ion-icon> About Us </ion-item>
+      <ion-item button (click)="LoadNewPage('/home')"> <ion-icon name="home" class="item-spacing"></ion-icon> Home </ion-item>
+      <ion-item button (click)="LoadNewPage('/NewRoute')"> <ion-icon name="map" class="item-spacing"></ion-icon> New Route </ion-item>
+      <ion-item button (click)="LoadNewPage('/mySchedule')"> <ion-icon name="calendar" class="item-spacing"></ion-icon> My Schedule </ion-item>
+      <ion-item button (click)="homepage()"> <ion-icon name="bus" class="item-spacing"></ion-icon> Shuttle Bus Schedule </ion-item>
+      <ion-item button (click)="homepage()"> <ion-icon name="walk" class="item-spacing"></ion-icon> Nearby Events </ion-item>
+      <ion-item button (click)="homepage()"> <ion-icon name="restaurant" class="item-spacing"></ion-icon> Nearby Restaurants </ion-item>
+      <ion-item button (click)="homepage()"> <ion-icon name="settings" class="item-spacing"></ion-icon> Settings </ion-item>
+      <ion-item button (click)="homepage()"> <ion-icon name="medical" class="item-spacing"></ion-icon> Safety </ion-item>
+      <ion-item button (click)="homepage()"> <ion-icon name="warning" class="item-spacing"></ion-icon> Report an Issue </ion-item>
+      <ion-item button (click)="homepage()"> <ion-icon name="information-circle" class="item-spacing"></ion-icon> About Us </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>

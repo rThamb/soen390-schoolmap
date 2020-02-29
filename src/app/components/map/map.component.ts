@@ -7,6 +7,7 @@ import { ReadGridService } from '../../services/readGrid/read-grid.service';
 //May have to remove
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
+import { empty } from 'rxjs';
 
 
 declare var google;
@@ -43,6 +44,7 @@ export class MapComponent implements AfterViewInit {
     this.mapOptions = {
       center: this.userLocation.getGoogleLatLng(),
       zoom: 17,
+      disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
@@ -52,6 +54,25 @@ export class MapComponent implements AfterViewInit {
       position: this.userLocation.getGoogleLatLng(),
       map: this.map,
       title: 'Here'
+    });
+
+    //TESTING STARTING AND END LOCATIONS FOR INDOOR PATHING
+    var start = new google.maps.Marker({
+      position: {lat:45.497500, lng:-73.579096},
+      map: this.map,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 4,
+      },
+    });
+    //TESTING STARTING AND END LOCATIONS FOR INDOOR PATHING
+    var end = new google.maps.Marker({
+      position: {lat:45.497052, lng:-73.579125},
+      map: this.map,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 4,
+      },
     });
 
     this.initOverlays();
