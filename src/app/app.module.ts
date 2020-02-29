@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 
 //services
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { IndoorPathingService } from './services/indoor-pathing.service';
+import { IndoorPathingService } from './services/indoorPathing/indoor-pathing.service';
 import { ReadGridService } from './services/readGrid/read-grid.service' 
 import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapping.service' 
 

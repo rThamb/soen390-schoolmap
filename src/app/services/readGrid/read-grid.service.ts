@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Floor } from '../../models/Floor' 
-import { Coordinate } from '../../models/Coordinate'
+import { Floor } from '../../models/Floor' ;
+import { Location } from '../../models/Location';
 
 @Injectable({
   providedIn: 'root'
@@ -45,11 +45,14 @@ export class ReadGridService {
   private jsonToFloor(json: any) : Floor{
     //json['property'] - how to access values
      let floor = new Floor();
-     floor.topLeftCornerGPS = new Coordinate(json.topLeftLat, json.topLeftLong);
-     floor.topRightCornerGPS = new Coordinate(json.topRightLat, json.topRightLong);
-     floor.bottomLeftCorrnerGPS = new Coordinate(json.bottomLeftLat, json.bottomLeftLong);
-     floor.bottomRightCornerGPS = new Coordinate(json.bottomRightLat, json.bottomRightLong);
-     floor.pathfindingFloorGrid = json.binaryGrid;
+     floor.topLeftCornerGPS = new Location(json.topLeftLat, json.topLeftLong, 0);
+     floor.topRightCornerGPS = new Location(json.topRightLat, json.topRightLong, 0);
+     floor.bottomLeftCornerGPS = new Location(json.bottomLeftLat, json.bottomLeftLong, 0);
+     floor.bottomRightCornerGPS = new Location(json.bottomRightLat, json.bottomRightLong, 0);
+     //floor.pathfindingFloorGrid = json.binaryGrid;
+     
+
+
      floor.pointsOfInterest = json.POI; 
      return floor;
   }

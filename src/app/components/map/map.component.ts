@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-import { IndoorPathingService } from '../../services/indoor-pathing.service';
+import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service';
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 
 //May have to remove
@@ -18,81 +18,64 @@ declare var google;
 })
 export class MapComponent implements AfterViewInit {
 
-  map;
+  @ViewChild('googleMap', {static: false}) googleMap: ElementRef;
+ 
+  public map: any; // google.maps.Map
+  private userLocation: Location = new Location(0, 0, 0);
+  private mapOptions;
+  private userMarker; // google.maps.Marker
 
-  @ViewChild('googleMap', {static: false}) googleMap: ElementRef; 
-
-  private userLocation: Location;
-  private loyolaloc :Location;
-  
-
-  constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) { 
-      this.userLocation = new Location(0, 0 ,0);
-      let floor: Floor = new Floor();
-
-      var path = indoorPathingService.getPath(floor);
-      /*for(var row = 0; row < path.length; row++)
-      {
-        for(var col = 0; col < path[row].length; col++)
-        {
-          console.log(path[row][col]);
-        }
-        console.log('\n');
-      }*/
-
+  constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
+  {
 
   }
 
-  ngAfterViewInit(): void{
-    this.getCurrentLocation();
+  ngAfterViewInit(): void {
+    this.initMap();
+  }
+
+  async initMap(){
+    const resp = await this.geolocation.getCurrentPosition();
+
+    this.userLocation.setLat(resp.coords.latitude);
+    this.userLocation.setLng(resp.coords.longitude);
+
+    this.mapOptions = {
+      center: this.userLocation.getGoogleLatLng(),
+      zoom: 17,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
+
+    this.userMarker = new google.maps.Marker({
+      position: this.userLocation.getGoogleLatLng(),
+      map: this.map,
+      title: 'Here'
+    });
+
+    this.initOverlays();
   }
 
   getCurrentLocation(): void{
     this.geolocation.getCurrentPosition().then((resp) => {
-      this.userLocation = new Location(resp.coords.longitude, resp.coords.latitude, resp.coords.altitude);
-      this.showMap(15);
+      this.userLocation.setLat(resp.coords.latitude);
+      this.userLocation.setLng(resp.coords.longitude);
+      this.NavigateMap(this.userLocation.getGoogleLatLng());
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
 
-  NavigateMap(location:Location){  
-    let mapOptions = {
-      center: location,
-      zoom: 17,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+  
 
-    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
-    var marker = new google.maps.Marker({
-      position: location,
-      map: this.map,
-      title: 'Here'
+  NavigateMap(location) {
+    this.map.setCenter(location);
+  }
 
-  });
-}
-
-
-  showMap(x:number){
-
-    var mylocation = new google.maps.LatLng(this.userLocation.latitude,this.userLocation.longitude);
-    
-    var mapOptions = {
-      zoom: x,
-      center: mylocation,
-      disableDefaultUI: true,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-
-    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
-
-    var marker = new google.maps.Marker({
-      position: mylocation,
-      map: this.map,
-      title: 'Here'
-    });
-
-    //Layers on buildings
+  initOverlays()
+  {
+            //Layers on buildings
     //SGW Campus
     var hall = 
     [
@@ -1978,6 +1961,35 @@ export class MapComponent implements AfterViewInit {
         console.log("In " + id + " building.");
         break;
     }  
+
+    this.myService.createGrid("H8").then((grid: Floor) => {
+      this.testGrid(grid.getFloorTileGrid());
+    })
+  }
+
+  
+
+  showMap(x:number){
+    
+    let mylocation = new google.maps.LatLng(this.userLocation.latitude, this.userLocation.longitude);
+    
+    let mapOptions = {
+      center: this.userLocation,
+      zoom: x,
+      disableDefaultUI: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
+    
+
+    var userMarker = new google.maps.Marker({
+      position: this.userLocation,
+      map: this.map,
+      title: 'Here'
+    });
+
+
     
 
 
@@ -1988,9 +2000,7 @@ export class MapComponent implements AfterViewInit {
     is complete. Making the component wait for a service class to finish its work
     will cause preformance issues in the later future.
     */
-    this.myService.createGrid("H8").then((grid: Floor) => {
-      this.testGrid(grid.pathfindingFloorGrid);
-    })
+
   }
 
   //TESTING ReadGridService --DELETE LATER

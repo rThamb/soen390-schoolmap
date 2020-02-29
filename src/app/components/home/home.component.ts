@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService} from '../../services/data.service';
 import { ReadGridService } from '../../services/readGrid/read-grid.service' 
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
-import { IndoorPathingService } from '../../services/indoor-pathing.service' 
+import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service' 
 
 
 @Component({
@@ -27,17 +27,17 @@ export class HomeComponent implements OnInit {
 
   constructor(private dataService: DataService, private service:ReadGridService, private service2: GpsGridMappingService,
   private service3: IndoorPathingService ) { 
-    debugger;
-    this.testIndoorPathing();
+    //debugger;
+    //this.testIndoorPathing();
     //this.service2.getFloorTest();
     //this.setFloor();
   }
 
   ngOnInit() {
-this.dataService.getLocalData().subscribe(data => {
-  console.log('Local Data:');
-  console.log(data);
-});
+    this.dataService.getLocalData().subscribe(data => {
+      console.log('Local Data:');
+      console.log(data);
+    });
 
   }
 
@@ -50,10 +50,10 @@ this.dataService.getLocalData().subscribe(data => {
 
   async testIndoorPathing(){
 
-    debugger;
-    let grid = await this.service.createGrid("H8");
-    debugger;
-    let path = this.service3.getPathForDestinationOnSameFloor(null, grid, "H840", "H890"); 
-    console.log(path);
+    //debugger;
+    //let grid = await this.service.createGrid("H8");
+    //debugger;
+    //let path = this.service3.getPathForDestinationOnSameFloor(null, grid, "H840", "H890"); 
+    //console.log(path);
   }
 }

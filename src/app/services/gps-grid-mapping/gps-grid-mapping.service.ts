@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Coordinate } from '../../models/Coordinate'
-import { Floor } from '../../models/Floor'
+import { Location } from '../../models/Location';
+import { Floor } from '../../models/Floor';
 
 
 @Injectable({
@@ -41,28 +41,29 @@ Y
   }
   */
 
-  getFloorGridCoordinate(userPosition: Coordinate, currentFloor: Floor): string {
-    let x = this.mapUserLatitudeToXCoordinate(userPosition.latitude, currentFloor);
-    let y = this.mapUserLongitudeToYCoordinate(userPosition.longitude, currentFloor);
-    return x + "," + y; 
+  getFloorGridCoordinate(userPosition: Location, currentFloor: Floor): string {
+    let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), currentFloor);
+    let y = this.mapUserLongitudeToYCoordinate(userPosition.getLng(), currentFloor);
+    return x + "," + y;
   }
 
 
   //determine the x index of the floor cell that resemble his actually position. (left to right)
   private mapUserLatitudeToXCoordinate(lat: number, floor: Floor){
     
-    let numberCells = floor.pathfindingFloorGrid[0].length;
-    let exBound = floor.topRightCornerGPS.latitude;
-    let lowBound = floor.topLeftCornerGPS.latitude;
+    let numberCells = floor.getFloorTileGrid[0].length;
+    let exBound = floor.topRightCornerGPS.getLat();
+    let lowBound = floor.topLeftCornerGPS.getLat();
 
     return this.determineCoordinate(lat, exBound, lowBound, numberCells);
   }
 
   private mapUserLongitudeToYCoordinate(long: number, floor: Floor){
     debugger;
-    let numberCells = floor.pathfindingFloorGrid.length;
-    let exBound = floor.bottomLeftCorrnerGPS.longitude;
-    let lowBound = floor.topLeftCornerGPS.longitude;
+    let numberCells = floor.getFloorTileGrid.length;
+    let exBound = floor.bottomLeftCornerGPS.getLng();
+    let lowBound = floor.topLeftCornerGPS.getLng();
+    
 
     return this.determineCoordinate(long, exBound, lowBound, numberCells);
   }

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { Coordinate } from '../../models/Coordinate'
-import { Floor } from '../../models/Floor'
+import { Location } from '../../models/Location'
+import { Floor } from '../../models/Floor';
 import { GpsGridMappingService } from './gps-grid-mapping.service';
 
 describe('GpsGridMappingService', () => {
@@ -18,11 +18,11 @@ describe('GpsGridMappingService', () => {
   it('should determine GPS and Coordinate',  () => {
     const service: GpsGridMappingService = TestBed.get(GpsGridMappingService);
 
-    let coor = new Coordinate(6.4, 4);
+    let coor = new Location(6.4, 4, 0);
     let floor = new Floor();
-    let topLeft = new Coordinate(4.4, 0);
-    let topRight = new Coordinate(12.4, 0);
-    let bottomLeft = new Coordinate(4.2, 6);
+    let topLeft = new Location(4.4, 0, 0);
+    let topRight = new Location(12.4, 0, 0);
+    let bottomLeft = new Location(4.2, 6, 0);
 
     let map = [];
     let arr = [0,0,0,0,0]
@@ -30,10 +30,10 @@ describe('GpsGridMappingService', () => {
     map.push(arr);
     map.push(arr);
 
-    floor.pathfindingFloorGrid = map;
-    floor.topLeftCornerGPS = topLeft; 
-    floor.topRightCornerGPS = topRight;
-    floor.bottomLeftCorrnerGPS = bottomLeft;
+    // floor.pathfindingFloorGrid = map; 
+    // floor.topLeftCornerGPS = topLeft; 
+    // floor.topRightCornerGPS = topRight;
+    // floor.bottomLeftCorrnerGPS = bottomLeft;
     
     let obtained = service.getFloorGridCoordinate(coor, floor);
     console.log(obtained);
