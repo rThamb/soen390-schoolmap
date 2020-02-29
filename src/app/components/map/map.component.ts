@@ -732,17 +732,17 @@ export class MapComponent implements AfterViewInit {
     var hallInfo = new google.maps.InfoWindow({content:""});
 
     var hallContent =
-    "<ion-list> <ion-header align='center'><ion-title>Henry F. Hall Building </ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address:</b> 1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8</ion-label> </ion-item>"+
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-list> <h4 align='center'>Henry F. Hall Building </h4>" +
+    "<ion-item><ion-text> <label ><b>Address:</b></label> 1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8 </ion-text> </ion-item>"+
+    "<ion-item><label style='margin-right:1.2em'><b>Departments: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Geography, Planning and Environment</option>"+
     "<option value=''>Political Science, Sociology and Anthropology, Economics</option>"+
     "<option value=''>School of Irish Studies</option>" +
     "</select></ion-item>"+
     
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:3.2em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Welcome Crew Office</option>"+
     "<option value=''>DB Clarke Theatre</option>"+
     "<option value=''>Dean of Students</option>" +
@@ -794,10 +794,10 @@ export class MapComponent implements AfterViewInit {
     var EVInfo = new google.maps.InfoWindow({content:""});
 
     var EVContent =
-    "<ion-list> <ion-header align='center'><ion-title>Engineering, CompSc and Visual Arts Integrated Complex</ion-title></ion-header>" +
-      "<ion-item><ion-label><b>Address:</b> 1515 Saint-Catherine St W, Montreal, Quebec H3G 2W1</ion-label> </ion-item>"+
-      "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-      "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-list><h4 align='center'>Engineering, Computer Science and Visual Arts Integrated Complex</h4>" +
+      "<ion-item><ion-text><label><b>Address:</b> </label>1515 Saint-Catherine St W, Montreal, Quebec H3G 2W1</ion-text> </ion-item>"+
+      "<ion-item><label style='margin-right:1.2em'><b>Departments: </b></label> <select style='width:32%;'>" +
+      "<option value=''>View</option>"+
       "<option value=''>Gina Cody School of Engineering and Computer Science</option>"+
       "<option value=''>Electrical and Computer Engineering</option>"+
       "<option value=''>Building, Civil and Environmental Engineering</option>" +
@@ -811,15 +811,14 @@ export class MapComponent implements AfterViewInit {
       "<option value=''>Center for Composites</option>"+
       "</select></ion-item>"+
       
-      "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-      "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+      "<ion-item><label style='margin-right:3.2em'><b>Services: </b></label> <select style='width:32%;'>" +
+      "<option value=''>View</option>"+
       "<option value=''>LeGym</option>"+
       "<option value=''>FOFA Gallery</option>"+
-
       "</select></ion-item>"+
       "</ion-list>"+
       "<div align ='center'><img width='45%' src=assets/BuildingImages/ev.jpg></div>" +
-      "<div align ='center'><ion-button id='ev''>Enter Building</ion-button></div>"
+      "<div align ='center'><ion-button id='ev'>Enter Building</ion-button></div>"
 
     google.maps.event.addListener(EVMarker, 'click', function() 
     {
@@ -857,10 +856,10 @@ export class MapComponent implements AfterViewInit {
     var LBInfo = new google.maps.InfoWindow({content:""});
 
     var LBContent =
-    "<ion-list> <ion-header align='center'><ion-title>J.W. McConnel Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address:</b> 1400 Maisonneuve Blvd W Montreal, QC H3G 1M8</ion-label> </ion-item>"+
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-list> <h4 align='center'>J.W. McConnel Building</h4>" +
+    "<ion-item><ion-text><label><b>Address:</b></label> 1400 Maisonneuve Blvd W Montreal, QC H3G 1M8 </ion-text></ion-item>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>English</option>"+
     "<option value=''>History</option>"+
     "<option value=''>Études françaises</option>" +
@@ -870,8 +869,8 @@ export class MapComponent implements AfterViewInit {
     "<option value=''>Centre for the Study of Learning and Performance</option>" +
     "</select></ion-item>"+
     
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>R. Howard Webster Library</option>"+
     "<option value=''>Welcome Centre</option>"+
     "<option value=''>Leonard and Bina Ellen Art Gallery</option>" +
@@ -918,11 +917,11 @@ export class MapComponent implements AfterViewInit {
     var FGInfo = new google.maps.InfoWindow({content:""});
 
     var FGContent =
-    "<ion-list> <ion-header align='center'><ion-title>Faubourg Building </ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address:</b> 1250 Guy St, Montreal, Quebec H3H 2L3</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>Faubourg Building </h4>" +
+    "<ion-item><ion-text><label><b>Address:</b></label>  1250 Guy St, Montreal, Quebec H3H 2L3</ion-text></ion-item>"+
     
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Education</option>"+
     "<option value=''>Classics, Modern Language & Linguistics</option>"+
     "<option value=''>Concordia Continuing Education</option>" +
@@ -931,8 +930,8 @@ export class MapComponent implements AfterViewInit {
     "<option value=''>District 3 Innovation Center</option>" +
     "</select></ion-item>"+
     
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Human Resources</option>"+
     "<option value=''>Office of the Registrar</option>"+
     "<option value=''>Examinations Office</option>"+
@@ -976,11 +975,11 @@ export class MapComponent implements AfterViewInit {
     var MBInfo = new google.maps.InfoWindow({content:""});
 
     var MBContent =
-    "<ion-list> <ion-header align='center'><ion-title>John Molson Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>1600 Boulevard de Maisonneuve O, Montréal, QC H3H 1J5</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>John Molson Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>1600 Boulevard de Maisonneuve O, Montréal, QC H3H 1J5</ion-text> </ion-item>"+
 
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Accoutancy</option>"+
     "<option value=''>Supply Chain & Business Technology Management</option>"+
     "<option value=''>Finance</option>" +
@@ -991,8 +990,8 @@ export class MapComponent implements AfterViewInit {
     "<option value=''>Contemporary Dance</option>" +
     "</select></ion-item>"+
     
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Career Management Services</option>"+
     "<option value=''>John Molson Executive Centre</option>"+
     "<option value=''>Office of the Registrar</option>"+
@@ -1000,7 +999,7 @@ export class MapComponent implements AfterViewInit {
     "</select></ion-item>"+
     "</ion-list>"+
     "<div align ='center'><img width='50%' src=assets/BuildingImages/JMSB.jpg></div>" +
-    "<div align ='center'><ion-button id='fg'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id='fg'>Enter Building</ion-button></div>"
 
     google.maps.event.addListener(MBMarker, 'click', function() 
     {
@@ -1036,25 +1035,26 @@ export class MapComponent implements AfterViewInit {
     var VAInfo = new google.maps.InfoWindow({content:""});
 
     var VAContent =
-    "<ion-list> <ion-header align='center'><ion-title>Visual Arts Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>Visual Arts Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b>1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5</label></ion-text> </ion-item>"+
 
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;' >" +
+    "<option value=''>View</option>"+
     "<option value=''>Studio Arts</option>"+
     "<option value=''>Art History</option>"+
     "<option value=''>Art Education</option>" +
     "<option value=''>Creative Arts Therapies</option>" +
     "</select></ion-item>"+
     
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;' >" +
+    "<option value=''>View</option>"+
     "<option value=''>VAV Art Gallery</option>"+
     "<option value=''>Art Supply Store</option>"+
     "</select></ion-item>"+
     "</ion-list>"+
     "<div align ='center'><img width='75%' src=assets/BuildingImages/va.jpg><div>" +
     "<div align ='center'><ion-button id='va'>Enter Building</ion-button></div>";
+
 
     google.maps.event.addListener(VAMarker, 'click', function() 
     {
@@ -1090,11 +1090,11 @@ export class MapComponent implements AfterViewInit {
     var GNInfo = new google.maps.InfoWindow({content:""});
 
     var GNContent =
-    "<ion-list> <ion-header align='center'><ion-title>Grey Nuns Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>Grey Nuns Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></ion-label>1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5</ion-text> </ion-item>"+
     
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;' >" +
+    "<option value=''>View</option>"+
     "<option value=''>Residences</option>"+
     "<option value=''>Grey Nuns Library</option>"+
     "<option value=''>Daycare Centre</option>"+
@@ -1138,17 +1138,17 @@ export class MapComponent implements AfterViewInit {
     var CJInfo = new google.maps.InfoWindow({content:""});
 
     var CJContent =
-    "<ion-list> <ion-header align='center'><ion-title>Communication Studies and Journalism Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>Communication Studies and Journalism Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
     
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Communication Studies</option>"+
     "<option value=''>Journalism</option>"+
     "</select></ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Campus Retail Stores</option>"+
     "</select></ion-item>"+
     "</ion-list>"+
@@ -1189,11 +1189,11 @@ export class MapComponent implements AfterViewInit {
     var SCInfo = new google.maps.InfoWindow({content:""});
 
     var SCContent =
-    "<ion-list> <ion-header align='center'><ion-title>Richard J. Renaud Science Complex</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>3475 Rue West Broadway Montreal, QC H4B 2A7</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>Richard J. Renaud Science Complex</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>3475 Rue West Broadway Montreal, QC H4B 2A7<ion-text></ion-item>"+
     
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Biology</option>"+
     "<option value=''>Chemistry and Biochemistry</option>"+
     "<option value=''>Health, Kinesiology & Applied Physiology</option>"+
@@ -1205,8 +1205,8 @@ export class MapComponent implements AfterViewInit {
     "<option value=''>Centre for Research in Molecular Modeling</option>"+
     "</select></ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Science College</option>"+
     "<option value=''>Science Technical Centre</option>"+
     "<option value=''>Animal Care Facilities</option>"+
@@ -1249,11 +1249,11 @@ export class MapComponent implements AfterViewInit {
     var LJInfo = new google.maps.InfoWindow({content:""});
 
     var LJContent =
-    "<ion-list> <ion-header align='center'><ion-title>Loyola Jesuit Hall and Conference Centre</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>Loyola Jesuit Hall and Conference Centre</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6<ion-text> </ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Loyola Jesuit Hall and Conference Centre</option>"+
     "<option value=''>Conference services</option>"+
     "</select></ion-item>"+
@@ -1294,11 +1294,11 @@ export class MapComponent implements AfterViewInit {
     var CBInfo = new google.maps.InfoWindow({content:""});
 
     var CBContent =
-    "<ion-list> <ion-header align='center'><ion-title>Central Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 2B5</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>Central Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 2B5</ion-text></ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Concordia Student Union</option>"+
     "<option value=''>Loyola College for Diversity and Sustainability and Loyola</option>"+
     "</select></ion-item>"+
@@ -1339,16 +1339,16 @@ export class MapComponent implements AfterViewInit {
     var ADInfo = new google.maps.InfoWindow({content:""});
 
     var ADContent =
-    "<ion-list> <ion-header align='center'><ion-title>Administration Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>Administration Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
     
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Faculty of Arts & Science</option>"+
     "</select></ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Welcome Crew Office</option>"+
     "<option value=''>Centre for Teaching & Learning</option>"+
     "<option value=''>Loyola International College</option>"+
@@ -1398,14 +1398,14 @@ export class MapComponent implements AfterViewInit {
     var PYInfo = new google.maps.InfoWindow({content:""});
 
     var PYContent =
-    "<ion-list> <ion-header align='center'><ion-title>Psychology Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 2Z3</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>Psychology Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 2Z3</ion-text> </ion-item>"+
     
-    "<ion-item><ion-label style='margin-right:1em'><b>Departments: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Psychology</option>"+
     "<option value=''>Centre for clinical research in health (CCRH)</option>"+
-    "</select></ion-item>"+
+    "</select></ion-item></ion-list>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/py.jpg><div>" +
     "<div align ='center'><ion-button id='py'>Enter Building</ion-button></div>";
@@ -1444,11 +1444,11 @@ export class MapComponent implements AfterViewInit {
     var VLInfo = new google.maps.InfoWindow({content:""});
 
     var VLContent =
-    "<ion-list> <ion-header align='center'><ion-title>Vanier Library</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>Vanier Library</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Library</option>"+
     "</select></ion-item>"+
     "</ion-list>"+
@@ -1490,8 +1490,8 @@ export class MapComponent implements AfterViewInit {
     var CSInfo = new google.maps.InfoWindow({content:""});
 
     var CSContent =
-    "<ion-list> <ion-header align='center'><ion-title>Concordia Stadium</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-label> </ion-item><ion-list>"+
+    "<ion-list> <h4 align='center'>Concordia Stadium</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text> </ion-item></ion-list>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/cs.jpg><div>"
 
@@ -1522,8 +1522,8 @@ export class MapComponent implements AfterViewInit {
     var SDInfo = new google.maps.InfoWindow({content:""});
 
     var SDContent =
-    "<ion-list> <ion-header align='center'><ion-title>Stinger Dome</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7200 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-label> </ion-item><ion-list>"+
+    "<ion-list> <h4 align='center'>Stinger Dome</ion-title></h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text></ion-item></ion-list>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/sd.jpg><div>"
 
@@ -1554,11 +1554,11 @@ export class MapComponent implements AfterViewInit {
     var PCInfo = new google.maps.InfoWindow({content:""});
 
     var PCContent =
-    "<ion-list> <ion-header align='center'><ion-title>PERFORM Centre</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>PERFORM Centre</ion-title></h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>PERFORM Centre</option>"+
     "</select></ion-item>"+
     "</ion-list>"+
@@ -1593,11 +1593,11 @@ export class MapComponent implements AfterViewInit {
     var CGInfo = new google.maps.InfoWindow({content:""});
 
     var CGContent =
-    "<ion-list> <ion-header align='center'><ion-title>Concordia Gymnasium</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7200 Sherbrooke St W Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>Concordia Gymnasium</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Gymnasium</option>"+
     "</select></ion-item>"+
     "</ion-list>"+
@@ -1631,11 +1631,11 @@ export class MapComponent implements AfterViewInit {
     var PSInfo = new google.maps.InfoWindow({content:""});
 
     var PSContent =
-    "<ion-list> <ion-header align='center'><ion-title>Physical Services Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list> <h4 align='center'>Physical Services Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Environmental Health and Safety</option>"+
     "<option value=''>Facilities Management</option>"+
     "</select></ion-item>"+
@@ -1676,8 +1676,8 @@ export class MapComponent implements AfterViewInit {
     var TBInfo = new google.maps.InfoWindow({content:""});
 
     var TBContent =
-    "<ion-list> <ion-header align='center'><ion-title>Terrebonne Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7079 Rue de Terrebonne, Montréal, QC H4B 2B4</ion-label> </ion-item> </ion-list>"
+    "<ion-list><h4 align='center'>Terrebonne Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7079 Rue de Terrebonne, Montréal, QC H4B 2B4 </ion-text></ion-item> </ion-list>"
 
     google.maps.event.addListener(TBMarker, 'click', function() 
     {
@@ -1706,8 +1706,8 @@ export class MapComponent implements AfterViewInit {
     var SIInfo = new google.maps.InfoWindow({content:""});
 
     var SIContent =
-    "<ion-list> <ion-header align='center'><ion-title>Saint Ignatius of Loyola</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>4455 Rue West Broadway, Montréal, QC H4B 2A7</ion-label> </ion-item></ion-list>" +
+    "<ion-list><h4 align='center'>Saint Ignatius of Loyola</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>4455 Rue West Broadway, Montréal, QC H4B 2A7</ion-text> </ion-item></ion-list>" +
     "<div align ='center'><img width='55%' src=assets/BuildingImages/si.png><div>"
 
     google.maps.event.addListener(SIMarker, 'click', function() 
@@ -1737,11 +1737,11 @@ export class MapComponent implements AfterViewInit {
     var GEInfo = new google.maps.InfoWindow({content:""});
 
     var GEContent =
-    "<ion-list> <ion-header align='center'><ion-title>Centre for Structural and Functional Genomics</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>Centre for Structural and Functional Genomics</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Centre for Structural and Functional Genomics</option>"+
     "</select></ion-item>"+
     "</ion-list>"+
@@ -1782,11 +1782,11 @@ export class MapComponent implements AfterViewInit {
     var JRInfo = new google.maps.InfoWindow({content:""});
 
     var JRContent =
-    "<ion-list> <ion-header align='center'><ion-title>Jesuit Residence</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>Jesuit Residence</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec</ion-text> </ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Student Residence</option>"+
     "</select></ion-item>"+
     "</ion-list>"+
@@ -1821,11 +1821,11 @@ export class MapComponent implements AfterViewInit {
     var SRInfo = new google.maps.InfoWindow({content:""});
 
     var SRContent =
-    "<ion-list> <ion-header align='center'><ion-title>Student Residence</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7079 Rue de Terrebonne, Montréal, QC H4B 2B4</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>Student Residence</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7079 Rue de Terrebonne, Montréal, QC H4B 2B4</ion-text> </ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>Student Residence</option>"+
     "</select></ion-item>"+
     "</ion-list>"
@@ -1857,11 +1857,11 @@ export class MapComponent implements AfterViewInit {
     var FCInfo = new google.maps.InfoWindow({content:""});
 
     var FCContent =
-    "<ion-list> <ion-header align='center'><ion-title>F.C. Smith Building</ion-title></ion-header>" +
-    "<ion-item><ion-label><b>Address: </b>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-label> </ion-item>"+
+    "<ion-list><h4 align='center'>F.C. Smith Building</h4>" +
+    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><ion-label><b>Services: </b></ion-label> <select>" +
-    "<option value=''>----------------------------------------View All----------------------------------------</option>"+
+    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
+    "<option value=''>View</option>"+
     "<option value=''>F.C. Smith Auditorium</option>"+
     "<option value=''>Cazalet Theater</option>"+
     "<option value=''>Concordia Multi-Faith and Spirituality Centre</option>"+
@@ -2003,9 +2003,7 @@ export class MapComponent implements AfterViewInit {
 
   }
 
-  //TESTING ReadGridService --DELETE LATER
-  
-  
+  //TESTING ReadGrid Service --DELETE LATER
   testGrid(test) //Need method to be async, so we can use await
   {
     //test variable is the actual grid, 
