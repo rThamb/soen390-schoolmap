@@ -1,10 +1,12 @@
 {
-    "topLeftLat": 45.497163, 
+    "floors":[
+    {
+    "topLeftLat": 45.497165, 
     "topLeftLong": -73.579545,
     "topRightLat": 45.497709, 
     "topRightLong": -73.579038,
-    "bottomLeftLat": 45.496835, 
-    "bottomLeftLong": -73.578855,
+    "bottomLeftLat": 45.496829, 
+    "bottomLeftLong": -73.578850,
     "bottomRightLat": 45.497373, 
     "bottomRightLong": -73.578342,
     "binaryGrid": [
@@ -43,4 +45,6 @@
             "y": 9
         }
     }
+    }
+    ]
 }

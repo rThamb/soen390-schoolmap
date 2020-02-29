@@ -19,8 +19,8 @@ export class ReadGridService {
     this.directoryPath = "./assets/binary_floor_layouts/"; 
 
     let filenames = {
-      "H8": "H8_Floor.json" 
-    };
+      "HB": "HB_Building.json" 
+    }; 
 
     this.floorFileNameMap = filenames;
   }
@@ -42,18 +42,25 @@ export class ReadGridService {
     }
   }
 
-  private jsonToFloor(json: any) : Floor{
+  private jsonToFloor(json: any) : any{
+    let floors = [];
+    let floorsData = json.floors;
+
     //json['property'] - how to access values
-     let floor = new Floor();
-     floor.topLeftCornerGPS = new Location(json.topLeftLat, json.topLeftLong, 0);
-     floor.topRightCornerGPS = new Location(json.topRightLat, json.topRightLong, 0);
-     floor.bottomLeftCornerGPS = new Location(json.bottomLeftLat, json.bottomLeftLong, 0);
-     floor.bottomRightCornerGPS = new Location(json.bottomRightLat, json.bottomRightLong, 0);
-     //floor.pathfindingFloorGrid = json.binaryGrid;
-     
 
+    let curFloor = null;
+    for(let i = 0; i < floorsData.length; i++){
 
-     floor.pointsOfInterest = json.POI; 
-     return floor;
+     curFloor = floorsData[i]; 
+     let floor: Floor = new Floor();
+     floor.topLeftCornerGPS = new Location(curFloor.topLeftLat, curFloor.topLeftLong, 0);
+     floor.topRightCornerGPS = new Location(curFloor.topRightLat, curFloor.topRightLong, 0);
+     floor.bottomLeftCornerGPS = new Location(curFloor.bottomLeftLat, curFloor.bottomLeftLong, 0);
+     floor.bottomRightCornerGPS = new Location(curFloor.bottomRightLat, curFloor.bottomRightLong, 0);
+     var binaryGrid = curFloor.binaryGrid;
+     floor.pointsOfInterest = curFloor.POI; 
+     floors.push(floor);
+    }
+    return floors;
   }
 }
