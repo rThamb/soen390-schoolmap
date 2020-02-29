@@ -1,4 +1,3 @@
-
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { NgModule } from '@angular/core';
 
@@ -11,17 +10,28 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-// geolocation
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+//services
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { IndoorPathingService } from './services/indoor-pathing.service';
+import { ReadGridService } from './services/readGrid/read-grid.service' 
+import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapping.service' 
+
+
+
+//Component imports
 import { MapComponent } from './components/map/map.component';
 
 import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { HomeComponent } from './components/home/home.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
+import { ShapesComponent } from './components/shapes/shapes.component';
+
+
+
+
 
 @NgModule({
 
@@ -32,7 +42,10 @@ import { MenubarComponent } from './components/menubar/menubar.component';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Geolocation
+    Geolocation,
+    IndoorPathingService,
+    ReadGridService,
+    GpsGridMappingService
   ],
   bootstrap: [AppComponent]
 })

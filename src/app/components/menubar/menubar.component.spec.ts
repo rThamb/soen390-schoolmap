@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {RouterTestingModule} from '@angular/router/testing';
 import { MenubarComponent } from './menubar.component';
 
 describe('MenubarComponent', () => {
@@ -10,7 +11,10 @@ describe('MenubarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MenubarComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [RouterTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      // imports: [IonicModule.forRoot()],
+      //providers: [IonicModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MenubarComponent);
