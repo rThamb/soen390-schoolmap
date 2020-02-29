@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { IndoorPathingService } from '../../services/indoor-pathing.service';
+import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { IonicModule } from '@ionic/angular';
 
 import { MapComponent } from './map.component';
@@ -9,7 +12,8 @@ describe('MapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapComponent ],
+      declarations: [ MapComponent],
+      providers: [Geolocation, IndoorPathingService, ReadGridService],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

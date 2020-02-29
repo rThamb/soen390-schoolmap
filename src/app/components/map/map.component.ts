@@ -1,6 +1,13 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+import { IndoorPathingService } from '../../services/indoor-pathing.service';
+import { ReadGridService } from '../../services/readGrid/read-grid.service';
+
+//May have to remove
 import { Location } from '../../models/Location';
+import { Floor } from '../../models/Floor';
+
 
 declare var google;
 
@@ -19,19 +26,31 @@ export class MapComponent implements AfterViewInit {
   private loyolaloc :Location;
   
 
-  constructor(private geolocation: Geolocation) { 
+  constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) { 
       this.userLocation = new Location(0, 0 ,0);
-      
+      let floor: Floor = new Floor();
+
+      var path = indoorPathingService.getPath(floor);
+      /*for(var row = 0; row < path.length; row++)
+      {
+        for(var col = 0; col < path[row].length; col++)
+        {
+          console.log(path[row][col]);
+        }
+        console.log('\n');
+      }*/
+
+
   }
 
   ngAfterViewInit(): void{
-    this.getCurrentLocation(15);
+    this.getCurrentLocation();
   }
 
-  getCurrentLocation(x:number): void{
+  getCurrentLocation(): void{
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation = new Location(resp.coords.longitude, resp.coords.latitude, resp.coords.altitude);
-      this.showMap(x);
+      this.showMap(15);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -1884,7 +1903,7 @@ export class MapComponent implements AfterViewInit {
 
   
   //FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
-  enterBuilding(id: string)
+  async enterBuilding(id: string)
   {
     switch (id) 
     {
@@ -1956,7 +1975,41 @@ export class MapComponent implements AfterViewInit {
       case 'ge':
         console.log("In " + id + " building.");
         break;
+    }  
+    
+
+
+
+    
+    /*
+    You want to preform the action after the background work of getting the data 
+    is complete. Making the component wait for a service class to finish its work
+    will cause preformance issues in the later future.
+    */
+    this.myService.createGrid("H8").then((grid: Floor) => {
+      this.testGrid(grid.pathfindingFloorGrid);
+    })
+  }
+
+  //TESTING ReadGridService --DELETE LATER
+  
+  
+  testGrid(test) //Need method to be async, so we can use await
+  {
+    //test variable is the actual grid, 
+    //obtain your columns(test.length) and rows (test[0]length) by invoking the methods 
+    console.log("Inside testGrid()");
+    //var test = await this.myService.createGrid("testFloor"); //argument is the name/key of the floor we want. Ex: "testFloor"
+
+    //Note can also get row length, col length by using createGrid("NRows") or ("NCols")
+    for(var row = 0; row < test.length; row++)
+    {
+      for(var col = 0; col <test[row].length; col++)
+      {
+          console.log(test[row][col]);
+      }
     }
+    console.log("Is row 1, col 4 0? -> : " + test[1][4]);
   }
 
 }
