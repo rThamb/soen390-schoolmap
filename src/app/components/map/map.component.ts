@@ -4,14 +4,18 @@ import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathin
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
+import { BuildingFactoryService } from 'src/app/services/BuildingFactory/building-factory.service';
+import { Campus } from 'src/app/models/Campus';
 import { empty } from 'rxjs';
 
 
 declare var google;
 
 
-// MapComponent class. Contains the map object and functions for all google map related services. 
-
+/**
+ * MapComponent class. Contains the map object and attributes for all google map related services.
+ * Also contains data for both campuses and is injected with our services.
+ */
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -26,9 +30,13 @@ export class MapComponent implements AfterViewInit {
   private mapOptions; // Object
   private userMarker; // google.maps.Marker
 
-  constructor(private geolocation: Geolocation, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
-  {
+  private sgw: Campus;
+  private loyola: Campus;
 
+  // IndoorPathingService and ReadGridService are not final.
+  constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
+  {
+    
   }
 
   ngAfterViewInit(): void {

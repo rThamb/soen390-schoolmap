@@ -4,11 +4,13 @@ import { Room } from '../../models/Room';
 import { Location } from '../../models/Location';
 import { Floor } from 'src/app/models/Floor';
 
+declare var require: any;
+const fs: any = require('fs');
 
 /**
  * This service class handles the Building Factory, which is responsible for
  * loading Building objects from JSON files into memory on demand. It is utilized
- * by the MapComponent class
+ * by the MapComponent class.
  */
 @Injectable({
   providedIn: 'root'
@@ -17,12 +19,19 @@ export class BuildingFactoryService {
 
   constructor() { }
 
-  async getBuilding(buildingJSON: string)
+  /**
+   * Fetches the building data from the JSON file parameter and loads it into a Building object
+   * returns the building object. This class is injected into the MapComponent as a service.
+   */
+
+  public getBuilding(buildingJSON: string)
   {
+    
+    const jsonFileContent = fs.readFileSync('./assets/buildings/' + buildingJSON);
+    const json = JSON.parse(jsonFileContent);
+
+    //let json = this.fetchBuilding(buildingJSON);
     let building = new Building();
-    let buildingFilePath = './assets/buildings/' + buildingJSON;
-    let res = await fetch(buildingFilePath);
-    let json = await res.json();
 
     let rNum, lat, lng;
     let bl = new Location(json.Location.lat, json.Location.lng, 0);
@@ -51,6 +60,6 @@ export class BuildingFactoryService {
       building.addFloor(floor);
     }
     
-
+    return building;
   }
 }
