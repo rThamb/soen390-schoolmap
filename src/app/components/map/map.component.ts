@@ -99,7 +99,7 @@ export class MapComponent implements AfterViewInit {
   // *messy, must be refactored in a later sprint*
   initOverlays()
   {
-            
+
     //Layers on buildings
     //SGW Campus
     var hall = 
