@@ -56,6 +56,7 @@ export class IndoorPathingService {
     let grid = new pf.Grid(this.getBinaryGrid(floor));
     let finder = new pf.AStarFinder();
     let path = finder.findPath(1, 0, 2, 3, grid);
+    
     return path;
   }
   

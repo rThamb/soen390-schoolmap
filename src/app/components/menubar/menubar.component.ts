@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { Component, OnInit, NgModule } from '@angular/core';
+import { MenuController, NavController } from '@ionic/angular';
+
+
 
 @Component({
   selector: 'app-menubar',
@@ -8,8 +10,18 @@ import { MenuController } from '@ionic/angular';
 })
 export class MenubarComponent implements OnInit {
 
-  constructor(private menu: MenuController) { }
-openFirst() {
+  constructor(
+    public navCtrl: NavController,
+    private menu: MenuController) { }
+
+  //Method allows user to navigate between pages using menu component
+  LoadNewPage(page:string): void {
+    this.navCtrl.navigateRoot(page);
+    this.menu.toggle();
+  }
+
+  //MenuBar Methods
+  openFirst() {
     this.menu.enable(true, 'first');
     this.menu.open('first');
   }

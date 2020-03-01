@@ -1,5 +1,6 @@
 import { FloorTile } from './FloorTile';
 import { Location } from './Location';
+import { Room } from './Room';
 
 // This class represents the Floors that are stored in Buildings
 // Each Floor instance stores a pathfinding grid configuration, it's level and POI locations.
@@ -9,14 +10,16 @@ export class Floor
     private floorTileGrid: FloorTile[][];
     private width: number;
     private height: number;
+    private rooms: Room[];
 
-    //Temp variables
+    //Temporary variables for prototyping
     public topRightCornerGPS: Location;
     public topLeftCornerGPS: Location;
     public bottomLeftCornerGPS: Location;
     public bottomRightCornerGPS: Location;
-
+    
     public pointsOfInterest: any;
+    //-------------------------------------
 
     constructor()
     {
@@ -61,5 +64,10 @@ export class Floor
     public setHeight(h: number)
     {
         this.height = h;
+    }
+
+    public addRoom(r: Room)
+    {
+        this.rooms.push(r);
     }
 }
