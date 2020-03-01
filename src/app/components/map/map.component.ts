@@ -6,6 +6,7 @@ import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
 import { BuildingFactoryService } from 'src/app/services/BuildingFactory/building-factory.service';
 import { Campus } from 'src/app/models/Campus';
+import { empty } from 'rxjs';
 
 
 declare var google;
@@ -64,6 +65,25 @@ export class MapComponent implements AfterViewInit {
       title: 'Here'
     });
 
+    //TESTING STARTING AND END LOCATIONS FOR INDOOR PATHING
+    var start = new google.maps.Marker({
+      position: {lat:45.497500, lng:-73.579096},
+      map: this.map,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 4,
+      },
+    });
+    //TESTING STARTING AND END LOCATIONS FOR INDOOR PATHING
+    var end = new google.maps.Marker({
+      position: {lat:45.497052, lng:-73.579125},
+      map: this.map,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 4,
+      },
+    });
+
     this.initOverlays();
   }
 
@@ -87,7 +107,7 @@ export class MapComponent implements AfterViewInit {
   // *messy, must be refactored in a later sprint*
   initOverlays()
   {
-            
+
     //Layers on buildings
     //SGW Campus
     var hall = 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { NewRouteComponent } from './components/new-route/new-route.component';
 
 const routes: Routes = [
  /*
@@ -11,6 +12,7 @@ const routes: Routes = [
   */
    {path: '', component: HomeComponent},
    {path: 'home', component: HomeComponent},
+   {path: 'NewRoute', component: NewRouteComponent},
 
 ];
 @NgModule({
