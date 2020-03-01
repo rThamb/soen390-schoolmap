@@ -7,6 +7,7 @@ import { Floor } from '../../models/Floor';
 import { BuildingFactoryService } from 'src/app/services/BuildingFactory/building-factory.service';
 import { Campus } from 'src/app/models/Campus';
 import { empty } from 'rxjs';
+import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 
 
 declare var google;
@@ -88,7 +89,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   // Gets the current location of user and focuses map to that point
-  getCurrentLocation(): void{
+  getCurrentLocation(){
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation.setLat(resp.coords.latitude);
       this.userLocation.setLng(resp.coords.longitude);
@@ -96,6 +97,8 @@ export class MapComponent implements AfterViewInit {
     }).catch((error) => {
       console.log('Error getting location', error);
     });
+
+    return this.userLocation.getGoogleLatLng();
   }
 
   // Re-center the map based on location parameter
@@ -107,6 +110,14 @@ export class MapComponent implements AfterViewInit {
   // *messy, must be refactored in a later sprint*
   initOverlays()
   {
+    //Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
+    var userLocationMarker = new google.maps.Marker({
+      position: this.userLocation.getGoogleLatLng(),
+      map: this.map
+    });
+
+    var userInfoWindow = new google.maps.InfoWindow({content: ""});
+    var userContent = "";
 
     //Layers on buildings
     //SGW Campus
@@ -732,12 +743,198 @@ export class MapComponent implements AfterViewInit {
       {lat: 45.459141, lng: -73.642245},
       {lat: 45.459105, lng: -73.642271}
     ]
-    this.map.data.add({geometry: new google.maps.Data.Polygon([hall, molson, EV, LB, visualArts, greyNuns, scienceComplex, journalismBuilding, chapel, stingerDome, stingerStadium, 
-    vanierLibrary, psyBuilding, adminBuilding, centralBuilding, jesuitHall, athleticCamp, loyolaGym, phyServiceBuilding, centerArts, saintIgnatius, structuralCenter, jesuitResidence, studentResidences, faubourg])})
+
+    //Coordinates of SJW campus
+    var sjwCampus =
+    [
+      {lat: 45.498053, lng: -73.579573},
+      {lat: 45.496897, lng: -73.577055},
+      {lat: 45.496160, lng: -73.577763},
+      {lat: 45.495865, lng: -73.577132},
+      {lat: 45.495073, lng: -73.578012},
+      {lat: 45.493839, lng: -73.575199},
+      {lat: 45.492350, lng: -73.576615},
+      {lat: 45.494603, lng: -73.580481},
+      {lat: 45.495797, lng: -73.579486},
+      {lat: 45.496562, lng: -73.581687},
+      {lat: 45.498301, lng: -73.579965}
+    ]
+
+    //Coordinates of loyola campus
+    var loyolaCampus =
+    [
+      {lat: 45.455796, lng: -73.638138},
+      {lat: 45.457986, lng: -73.643931},
+      {lat: 45.461037, lng: -73.641644},
+      {lat: 45.457883, lng: -73.634184}
+    ]
     
-    this.map.data.setStyle({
-      fillColor: 'deepskyblue'
+    //Polygon properties for all buildings
+    var fColor = "deepskyblue";
+
+    //Polygon for each campus
+    var sjwP = new google.maps.Polygon({
+      paths: [visualArts, sjwCampus],
+      visible: false
     });
+    sjwP.setMap(this.map);
+
+    var loyolaP = new google.maps.Polygon({
+      paths: loyolaCampus,
+      visible: false
+    });
+    loyolaP.setMap(this.map);
+
+    //Polygon for each building
+    var hallP = new google.maps.Polygon({
+      paths: hall,
+      fillColor: fColor,
+    });
+    hallP.setMap(this.map);
+
+    var molsonP = new google.maps.Polygon({
+      paths: molson,
+      fillColor: fColor,
+    });
+    molsonP.setMap(this.map);
+
+    var faubourgP = new google.maps.Polygon({
+      paths: faubourg,
+      fillColor: fColor,
+    });
+    faubourgP.setMap(this.map);
+
+    var EVP = new google.maps.Polygon({
+      paths: EV,
+      fillColor: fColor,
+    });
+    EVP.setMap(this.map);
+
+    var lbP = new google.maps.Polygon({
+      paths: LB,
+      fillColor: fColor,
+    });
+    lbP.setMap(this.map);
+
+    var visualArtsP = new google.maps.Polygon({
+      paths: visualArts,
+      fillColor: fColor,
+    });
+    visualArtsP.setMap(this.map);
+
+    var greyNunsP = new google.maps.Polygon({
+      paths: greyNuns,
+      fillColor: fColor,
+    });
+    greyNunsP.setMap(this.map);
+
+    var scienceComplexP = new google.maps.Polygon({
+      paths: scienceComplex,
+      fillColor: fColor,
+    });
+    scienceComplexP.setMap(this.map);
+
+    var journalismP = new google.maps.Polygon({
+      paths: journalismBuilding,
+      fillColor: fColor,
+    });
+    journalismP.setMap(this.map);
+
+    var chapelP = new google.maps.Polygon({
+      paths: chapel,
+      fillColor: fColor,
+    });
+    chapelP.setMap(this.map);
+
+    var stingerDomeP = new google.maps.Polygon({
+      paths: stingerDome,
+      fillColor: fColor,
+    });
+    stingerDomeP.setMap(this.map);
+
+    var stingerStadiumP = new google.maps.Polygon({
+      paths: stingerStadium,
+      fillColor: fColor,
+    });
+    stingerStadiumP.setMap(this.map);
+
+    var centralBuildingP = new google.maps.Polygon({
+      paths: centralBuilding,
+      fillColor: fColor,
+    });
+    centralBuildingP.setMap(this.map);
+
+    var vanierLibraryP = new google.maps.Polygon({
+      paths: vanierLibrary,
+      fillColor: fColor,
+    });
+    vanierLibraryP.setMap(this.map);
+
+    var psyP = new google.maps.Polygon({
+      paths: psyBuilding,
+      fillColor: fColor,
+    });
+    psyP.setMap(this.map);
+
+    var adminP = new google.maps.Polygon({
+      paths: adminBuilding,
+      fillColor: fColor,
+    });
+    adminP.setMap(this.map);
+
+    var jesuitP = new google.maps.Polygon({
+      paths: jesuitHall,
+      fillColor: fColor,
+    });
+    jesuitP.setMap(this.map);
+
+    var athleticCampP = new google.maps.Polygon({
+      paths: athleticCamp,
+      fillColor: fColor,
+    });
+    athleticCampP.setMap(this.map);
+
+    var loyolaGymP = new google.maps.Polygon({
+      paths: loyolaGym,
+      fillColor: fColor,
+    });
+    loyolaGymP.setMap(this.map);
+
+    var phyServiceP = new google.maps.Polygon({
+      paths: phyServiceBuilding,
+      fillColor: fColor,
+    });
+    phyServiceP.setMap(this.map);
+  
+    var centerArtsP = new google.maps.Polygon({
+      paths: centerArts,
+      fillColor: fColor,
+    });
+    centerArtsP.setMap(this.map);
+
+    var saintIgnatiusP = new google.maps.Polygon({
+      paths: saintIgnatius,
+      fillColor: fColor,
+    });
+    saintIgnatiusP.setMap(this.map);
+
+    var structuralCenterP = new google.maps.Polygon({
+      paths: structuralCenter,
+      fillColor: fColor,
+    });
+    structuralCenterP.setMap(this.map);
+
+    var jesuitResidenceP = new google.maps.Polygon({
+      paths: jesuitResidence,
+      fillColor: fColor,
+    });
+    jesuitResidenceP.setMap(this.map);
+
+    var studentResidencesP = new google.maps.Polygon({
+      paths: studentResidences,
+      fillColor: fColor,
+    });
+    studentResidencesP.setMap(this.map);
 
     //Text properties for all buildings
     var markerColor = 'purple';
@@ -1916,7 +2113,148 @@ export class MapComponent implements AfterViewInit {
         this.enterBuilding("fc");
       });
     });  
+
+   
+    //var hallTest = new google.maps.LatLng(45.497194, -73.578886) //Variable to test containsLocation
     
+    var currentLoc = this; //For current location
+    var currentBuilding = ""; //For Content of user marker info window
+    var currentCampus = "";
+
+    //Listener to the user location marker
+    userLocationMarker.addListener('click', function()
+    {
+      //Check if user location is inside a Concordia campus
+      if(google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), sjwP) == true)
+      {
+        currentCampus = "Sir George Williams Campus";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), loyolaP) == true))
+      {
+        currentCampus = "Loyola Campus";
+      }
+      else
+      {
+        currentCampus = "N/A";
+      }    
+
+
+      //Check if user location is inside a Concordia building
+      if(google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), hallP) == true)
+      {
+        currentBuilding = "Hall Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), molsonP) == true))
+      {
+        currentBuilding = "John Molson Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), EVP) == true))
+      {
+        currentBuilding = "Engineering, Computer Science and Visual Arts Integrated Complex";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), lbP) == true))
+      {
+        currentBuilding = "J.W. McConnel Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), visualArtsP) == true))
+      {
+        currentBuilding = "Visual Arts Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), faubourgP) == true))
+      {
+        currentBuilding = "Faubourg Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), greyNunsP) == true))
+      {
+        currentBuilding = "Grey Nuns Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), journalismP) == true))
+      {
+        currentBuilding = "Communication Studies and Journalism Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), scienceComplexP) == true))
+      {
+        currentBuilding = "Richard J. Renaud Science Complex";
+      }
+      
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), jesuitP) == true))
+      {
+        currentBuilding = "Loyola Jesuit Hall and Conference Centre";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), centralBuildingP) == true))
+      {
+        currentBuilding = "Central Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), adminP) == true))
+      {
+        currentBuilding = "Administration Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), psyP) == true))
+      {
+        currentBuilding = "Psychology Building";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), vanierLibraryP) == true))
+      {
+        currentBuilding = "Vanier Library";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), stingerStadiumP) == true))
+      {
+        currentBuilding = "Concordia Stadium";
+      }
+
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), stingerDomeP) == true))
+      {
+        currentBuilding = "Stinger Dome";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), athleticCampP) == true))
+      {
+        currentBuilding = "PERFORM Centre";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), loyolaGymP) == true))
+      {
+        currentBuilding = "Concordia Gymnasium";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), phyServiceP) == true))
+      {
+        currentBuilding = "Physical Services Building<";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), centerArtsP) == true))
+      {
+        currentBuilding = "Terrebonne Building";
+      }
+      
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), saintIgnatiusP) == true))
+      {
+        currentBuilding = "Saint Ignatius of Loyola";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), structuralCenterP) == true))
+      {
+        currentBuilding = "Centre for Structural and Functional Genomics";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), jesuitResidenceP) == true))
+      {
+        currentBuilding = "Jesuit Residence";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), studentResidencesP) == true))
+      {
+        currentBuilding = "Student Residence";
+      }
+      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), chapelP) == true))
+      {
+        currentBuilding = "F.C. Smith Building<";
+      }
+      else
+      {
+        currentBuilding = "N/A";
+      }          
+
+      userContent =
+          "<ion-list><h4 align='center'>Concordia University</h4>" +
+          "<ion-item><ion-text><label><b>Current Campus: </b></label>"+currentCampus+"</ion-text></ion-item>"+
+          "<ion-item><ion-text><label><b>Current Building: </b></label>"+currentBuilding+"</ion-text></ion-item></ion-list>"
+      userInfoWindow.setContent(userContent);
+      userInfoWindow.open(this.map, userLocationMarker);
+    });
   }
 
   
@@ -2022,12 +2360,6 @@ export class MapComponent implements AfterViewInit {
       title: 'Here'
     });
 
-
-    
-
-
-
-    
     /*
     You want to preform the action after the background work of getting the data 
     is complete. Making the component wait for a service class to finish its work
