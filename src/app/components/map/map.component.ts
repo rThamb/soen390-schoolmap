@@ -34,8 +34,8 @@ export class MapComponent implements AfterViewInit {
   private sgw: Campus;
   private loyola: Campus;
 
-  // IndoorPathingService and ReadGridService are not final.
-  constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
+  // Basic Constructor.
+  constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService) 
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
@@ -2260,7 +2260,7 @@ export class MapComponent implements AfterViewInit {
 
   
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
-  // Prototype for now
+  // current working version for now for this sprint.
   async enterBuilding(id: string)
   {
     switch (id) 
