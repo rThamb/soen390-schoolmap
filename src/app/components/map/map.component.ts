@@ -104,6 +104,7 @@ export class MapComponent implements AfterViewInit {
   // Re-center the map based on location parameter
   focusMap(location) {
     this.map.setCenter(location);
+    this.map.setZoom(17);
   }
 
   // Spawns the building overlays on top of the map
