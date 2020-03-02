@@ -1,6 +1,7 @@
 import { Building } from './Building';
 import { Location } from './Location';
 
+// Represents each campus of Concordia. Holds a location and list of building objects that are loaded from the BuildingFactory service.
 export class Campus
 {
     private buildings: Building[];
