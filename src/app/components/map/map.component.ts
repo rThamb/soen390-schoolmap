@@ -109,7 +109,7 @@ export class MapComponent implements AfterViewInit {
   // Initializes the building overlays UI component
   initOverlays()
   {
-    //Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
+    
     var userLocationMarker = new google.maps.Marker({
       position: this.userLocation.getGoogleLatLng(),
       map: this.map
@@ -2332,58 +2332,7 @@ export class MapComponent implements AfterViewInit {
         break;
     }  
 
-    this.myService.createGrid("H8").then((grid: Floor) => {
-      this.testGrid(grid.getFloorTileGrid());
-    })
   }
 
-  
-
-  showMap(x:number){
-    
-    let mylocation = new google.maps.LatLng(this.userLocation.latitude, this.userLocation.longitude);
-    
-    let mapOptions = {
-      center: this.userLocation,
-      zoom: x,
-      disableDefaultUI: true,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-
-    this.map = new google.maps.Map(this.googleMap.nativeElement, mapOptions);
-    
-
-    var userMarker = new google.maps.Marker({
-      position: this.userLocation,
-      map: this.map,
-      title: 'Here'
-    });
-
-    /*
-    You want to preform the action after the background work of getting the data 
-    is complete. Making the component wait for a service class to finish its work
-    will cause preformance issues in the later future.
-    */
-
-  }
-
-  //TESTING ReadGrid Service --DELETE LATER
-  testGrid(test) //Need method to be async, so we can use await
-  {
-    //test variable is the actual grid, 
-    //obtain your columns(test.length) and rows (test[0]length) by invoking the methods 
-    console.log("Inside testGrid()");
-    //var test = await this.myService.createGrid("testFloor"); //argument is the name/key of the floor we want. Ex: "testFloor"
-
-    //Note can also get row length, col length by using createGrid("NRows") or ("NCols")
-    for(var row = 0; row < test.length; row++)
-    {
-      for(var col = 0; col <test[row].length; col++)
-      {
-          console.log(test[row][col]);
-      }
-    }
-    console.log("Is row 1, col 4 0? -> : " + test[1][4]);
-  }
 
 }
