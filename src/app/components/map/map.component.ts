@@ -106,8 +106,7 @@ export class MapComponent implements AfterViewInit {
     this.map.setCenter(location);
   }
 
-  // Spawns the building overlays on top of the map
-  // *messy, must be refactored in a later sprint*
+  // Initializes the building overlays UI component
   initOverlays()
   {
     //Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
