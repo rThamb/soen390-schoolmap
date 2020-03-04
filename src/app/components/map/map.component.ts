@@ -34,7 +34,7 @@ export class MapComponent implements AfterViewInit {
   private sgw: Campus;
   private loyola: Campus;
 
-  // IndoorPathingService and ReadGridService are not final.
+  // Injects the component class with imported services
   constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
@@ -47,6 +47,7 @@ export class MapComponent implements AfterViewInit {
 
   // Initializes the map object with default values
   async initMap(){
+    // Gets current position of user
     const resp = await this.geolocation.getCurrentPosition();
 
     this.userLocation.setLat(resp.coords.latitude);
@@ -67,25 +68,6 @@ export class MapComponent implements AfterViewInit {
       title: 'Here'
     });
 
-    //TESTING STARTING AND END LOCATIONS FOR INDOOR PATHING
-    var start = new google.maps.Marker({
-      position: {lat:45.497500, lng:-73.579096},
-      map: this.map,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 4,
-      },
-    });
-    //TESTING STARTING AND END LOCATIONS FOR INDOOR PATHING
-    var end = new google.maps.Marker({
-      position: {lat:45.497052, lng:-73.579125},
-      map: this.map,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 4,
-      },
-    });
-
     this.initOverlays();
   }
 
@@ -94,7 +76,7 @@ export class MapComponent implements AfterViewInit {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation.setLat(resp.coords.latitude);
       this.userLocation.setLng(resp.coords.longitude);
-      this.focusMap(this.userLocation.getGoogleLatLng());
+      this.focusMap(this.userLocation);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -104,14 +86,30 @@ export class MapComponent implements AfterViewInit {
 
   // Re-center the map based on location parameter
   focusMap(location) {
-    this.map.setCenter(location);
+    this.map.setCenter(location.getGoogleLatLng());
     this.map.setZoom(17);
   }
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Spawns the building overlays on top of the map
   // *messy, must be refactored in a later sprint*
   initOverlays()
   {
+
     //Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
     var userLocationMarker = new google.maps.Marker({
       position: this.userLocation.getGoogleLatLng(),
