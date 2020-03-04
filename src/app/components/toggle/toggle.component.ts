@@ -12,9 +12,6 @@ declare var google;
 export class ToggleComponent implements OnInit {
   
   @Output() toggleevent = new EventEmitter();
-
-  loyolaloc = new google.maps.LatLng(45.458234, -73.640493, 0);
-  sirgeorge = new google.maps.LatLng(45.494711, -73.577871, 0);
   
   constructor() { }
 
@@ -22,11 +19,11 @@ export class ToggleComponent implements OnInit {
   }
 
   callparentloy(){
-    this.toggleevent.emit(this.loyolaloc);
+    this.toggleevent.emit(new Location(45.458234, -73.640493, 0));
   }
 
   callparentsgw(){
-    this.toggleevent.emit(this.sirgeorge);
+    this.toggleevent.emit(new Location(45.494711, -73.577871, 0));
   }
 
   }

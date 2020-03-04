@@ -9,7 +9,7 @@
 -->     
         
         <app-toggle (toggleevent)=map.focusMap($event)></app-toggle>
-        <app-map #map></app-map>
+        <app-map class="map" #map></app-map>
         <app-locate-me (locateevent)="map.getCurrentLocation()"></app-locate-me>
 
 

@@ -8,6 +8,7 @@ import { BuildingFactoryService } from 'src/app/services/BuildingFactory/buildin
 import { Campus } from 'src/app/models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
+import { overlays } from './BuildingOverlayPoints'
 
 
 declare var google;
@@ -34,10 +35,11 @@ export class MapComponent implements AfterViewInit {
   private sgw: Campus;
   private loyola: Campus;
 
-  // IndoorPathingService and ReadGridService are not final.
+  // Injects the component class with imported services
   constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
   {
-    
+    this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
+    this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
   }
 
   ngAfterViewInit(): void {
@@ -46,6 +48,7 @@ export class MapComponent implements AfterViewInit {
 
   // Initializes the map object with default values
   async initMap(){
+    // Gets current position of user
     const resp = await this.geolocation.getCurrentPosition();
 
     this.userLocation.setLat(resp.coords.latitude);
@@ -66,25 +69,6 @@ export class MapComponent implements AfterViewInit {
       title: 'Here'
     });
 
-    //TESTING STARTING AND END LOCATIONS FOR INDOOR PATHING
-    var start = new google.maps.Marker({
-      position: {lat:45.497500, lng:-73.579096},
-      map: this.map,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 4,
-      },
-    });
-    //TESTING STARTING AND END LOCATIONS FOR INDOOR PATHING
-    var end = new google.maps.Marker({
-      position: {lat:45.497052, lng:-73.579125},
-      map: this.map,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 4,
-      },
-    });
-
     this.initOverlays();
   }
 
@@ -93,7 +77,7 @@ export class MapComponent implements AfterViewInit {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.userLocation.setLat(resp.coords.latitude);
       this.userLocation.setLng(resp.coords.longitude);
-      this.focusMap(this.userLocation.getGoogleLatLng());
+      this.focusMap(this.userLocation);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -103,13 +87,16 @@ export class MapComponent implements AfterViewInit {
 
   // Re-center the map based on location parameter
   focusMap(location) {
-    this.map.setCenter(location);
+    this.map.setCenter(location.getGoogleLatLng());
+    this.map.setZoom(17);
   }
 
-  // Initializes the building overlays UI component
+  // Spawns the building overlays on top of the map
+  // **WILL BE REFACTORED HEAVILY IN NEXT SPRINT**
   initOverlays()
   {
-    
+
+    // Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
     var userLocationMarker = new google.maps.Marker({
       position: this.getCurrentLocation(),
       map: this.map
@@ -117,661 +104,40 @@ export class MapComponent implements AfterViewInit {
 
     var userInfoWindow = new google.maps.InfoWindow({content: ""});
     var userContent = "";
-
-    //Layers on buildings
-    //SGW Campus
-    var hall = 
-    [
-      {lat: 45.497372, lng: -73.578338},
-      {lat: 45.496826, lng: -73.578859},
-      {lat: 45.497164, lng: -73.579543},
-      {lat: 45.497710, lng: -73.579034}
-    ];
-
-    var faubourg =
-    [
-      {lat: 45.494662, lng: -73.577218},
-      {lat: 45.494703, lng: -73.577300},
-      {lat: 45.494692, lng: -73.577308},
-      {lat: 45.494775, lng: -73.577450},
-      {lat: 45.494764, lng: -73.577466},
-      {lat: 45.494809, lng: -73.577541},
-      {lat: 45.494801, lng: -73.577549},
-      {lat: 45.494843, lng: -73.577627},
-      {lat: 45.494836, lng: -73.577633},
-      {lat: 45.494877, lng: -73.577706},
-      {lat: 45.494870, lng: -73.577712},
-      {lat: 45.494912, lng: -73.577785},
-      {lat: 45.494365, lng: -73.578432},
-      {lat: 45.494372, lng: -73.578448},
-      {lat: 45.494299, lng: -73.578537},
-      {lat: 45.494291, lng: -73.578523},
-      {lat: 45.493816, lng: -73.579075},
-      {lat: 45.493618, lng: -73.578727},
-      {lat: 45.493843, lng: -73.578461},
-      {lat: 45.493830, lng: -73.578433},
-      {lat: 45.493881, lng: -73.578373},
-      {lat: 45.493892, lng: -73.578391},
-      {lat: 45.493920, lng: -73.578352},
-      {lat: 45.493907, lng: -73.578336},
-      {lat: 45.494101, lng: -73.578113},
-      {lat: 45.494108, lng: -73.578125},
-      {lat: 45.494201, lng: -73.578012},
-      {lat: 45.494185, lng: -73.577980},
-      {lat: 45.494367, lng: -73.577771},
-      {lat: 45.494387, lng: -73.577811},
-      {lat: 45.494425, lng: -73.577767},
-      {lat: 45.494384, lng: -73.577693},
-      {lat: 45.494450, lng: -73.577614},
-      {lat: 45.494397, lng: -73.577522}
-      
-      
-    ];
-
-    var molson =
-    [
-      {lat: 45.495180, lng: -73.578505},
-      {lat: 45.495001, lng: -73.578726},
-      {lat: 45.495033, lng: -73.578785},
-      {lat: 45.495002, lng: -73.578819},
-      {lat: 45.495172, lng: -73.579182},
-      {lat: 45.495224, lng: -73.579123},
-      {lat: 45.495361, lng: -73.579383},
-      {lat: 45.495529, lng: -73.579205},
-      {lat: 45.495444, lng: -73.578957}
-    ];
-
-    var EV =
-    [
-      {lat: 45.495168, lng: -73.577892},
-      {lat: 45.495817, lng: -73.577209},
-      {lat: 45.496062, lng: -73.577715},
-      {lat: 45.495678, lng: -73.578086},
-      {lat: 45.495870, lng: -73.578500},
-      {lat: 45.495588, lng: -73.578774}
-      
-    ];
-
-    var LB =
-    [
-      {lat: 45.496237, lng: -73.577711},
-      {lat: 45.496489, lng: -73.577449},
-      {lat: 45.496584, lng: -73.577650},
-      {lat: 45.496633, lng: -73.577604},
-      {lat: 45.496613, lng: -73.577558},
-      {lat: 45.496890, lng: -73.577268},
-      {lat: 45.497009, lng: -73.577540},
-      {lat: 45.496982, lng: -73.577574},
-      {lat: 45.497003, lng: -73.577623},
-      {lat: 45.497041, lng: -73.577587},
-      {lat: 45.497120, lng: -73.577747},
-      {lat: 45.497079, lng: -73.577792},
-      {lat: 45.497079, lng: -73.577792},
-      {lat: 45.497141, lng: -73.577816},
-      {lat: 45.497262, lng: -73.578063},
-      {lat: 45.497020, lng: -73.578295},
-      {lat: 45.497003, lng: -73.578258},
-      {lat: 45.496959, lng: -73.578297},
-      {lat: 45.496935, lng: -73.578252},
-      {lat: 45.496896, lng: -73.578291},
-      {lat: 45.496914, lng: -73.578331},
-      {lat: 45.496871, lng: -73.578373},
-      {lat: 45.496892, lng: -73.578425},
-      {lat: 45.496726, lng: -73.578581},
-      {lat: 45.496704, lng: -73.578535},
-      {lat: 45.496669, lng: -73.578573}
-
-    ];
-
-    var visualArts =
-    [
-      {lat: 45.495393, lng: -73.573766},
-      {lat: 45.495671, lng: -73.573496},
-      {lat: 45.495816, lng: -73.573810},
-      {lat: 45.496071, lng: -73.573557},
-      {lat: 45.496188, lng: -73.573796},
-      {lat: 45.495667, lng: -73.574318}
-    ]
-
-    var greyNuns =
-    [
-
-      {lat: 45.492592, lng: -73.576533},
-      {lat: 45.492735, lng: -73.576394},
-      {lat: 45.492900, lng: -73.576740},
-      {lat: 45.492928, lng: -73.576746},
-      {lat: 45.492949, lng: -73.576792},
-      {lat: 45.492942, lng: -73.576831},
-      {lat: 45.493026, lng: -73.577004},
-      {lat: 45.493364, lng: -73.576673},
-      {lat: 45.493341, lng: -73.576624},
-      {lat: 45.493472, lng: -73.576496},
-      {lat: 45.493494, lng: -73.576538},
-      {lat: 45.493793, lng: -73.576244},
-      {lat: 45.493570, lng: -73.575782},
-      {lat: 45.493715, lng: -73.575641},
-      {lat: 45.493934, lng: -73.576095},
-      {lat: 45.494037, lng: -73.575993},
-      {lat: 45.494127, lng: -73.576188},
-      {lat: 45.494022, lng: -73.576284},
-      {lat: 45.494393, lng: -73.577057},
-      {lat: 45.494096, lng: -73.577348},
-      {lat: 45.494126, lng: -73.577413},
-      {lat: 45.493975, lng: -73.577562},
-      {lat: 45.493869, lng: -73.577341},
-      {lat: 45.494194, lng: -73.577020},
-      {lat: 45.493899, lng: -73.576409},
-      {lat: 45.493903, lng: -73.576664},
-      {lat: 45.494068, lng: -73.577011},
-      {lat: 45.493904, lng: -73.577172},
-      {lat: 45.493718, lng: -73.576780},
-      {lat: 45.493718, lng: -73.576780},
-      {lat: 45.493839, lng: -73.576671},
-      {lat: 45.493833, lng: -73.576470},
-      {lat: 45.493553, lng: -73.576749},
-      {lat: 45.493614, lng: -73.576875},
-      {lat: 45.493670, lng: -73.576821},
-      {lat: 45.493730, lng: -73.576946},
-      {lat: 45.493673, lng: -73.576998},
-      {lat: 45.493748, lng: -73.577157},
-      {lat: 45.493635, lng: -73.577270},
-      {lat: 45.493580, lng: -73.577153},
-      {lat: 45.493601, lng: -73.577131},
-      {lat: 45.493577, lng: -73.577081},
-      {lat: 45.493529, lng: -73.577129},
-      {lat: 45.493450, lng: -73.576964},
-      {lat: 45.493478, lng: -73.576936},
-      {lat: 45.493439, lng: -73.576854},
-      {lat: 45.493353, lng: -73.576936},
-      {lat: 45.493366, lng: -73.576960},
-      {lat: 45.493108, lng: -73.577212},
-      {lat: 45.493201, lng: -73.577401},
-      {lat: 45.493089, lng: -73.577512},
-      {lat: 45.492995, lng: -73.577314},
-      {lat: 45.492924, lng: -73.577379},
-      {lat: 45.492838, lng: -73.577198},
-      {lat: 45.492896, lng: -73.577141},
-      {lat: 45.492811, lng: -73.576962},
-      {lat: 45.492811, lng: -73.576962},
-      {lat: 45.492775, lng: -73.576972},
-      {lat: 45.492710, lng: -73.577035},
-      {lat: 45.492678, lng: -73.576966},
-      {lat: 45.492677, lng: -73.576924},
-      {lat: 45.492727, lng: -73.576876},
-      {lat: 45.492746, lng: -73.576870},
-      {lat: 45.492609, lng: -73.576584},
-      {lat: 45.492615, lng: -73.576578}
-    ]
     
-    //Loyola Campus
-    var scienceComplex =
-    [
-      {lat: 45.456982, lng: -73.640831},
-      {lat: 45.457025, lng: -73.640938},
-      {lat: 45.456996, lng: -73.640960},
-      {lat: 45.457016, lng: -73.641016},
-      {lat: 45.457040, lng: -73.640995},
-      {lat: 45.457159, lng: -73.641298},
-      {lat: 45.457148, lng: -73.641306},
-      {lat: 45.457177, lng: -73.641384},
-      {lat: 45.457169, lng: -73.641394},
-      {lat: 45.457184, lng: -73.641432},
-      {lat: 45.457210, lng: -73.641412},
-      {lat: 45.457440, lng: -73.642004},
-      {lat: 45.457642, lng: -73.641848},
-      {lat: 45.457673, lng: -73.641925},
-      {lat: 45.458327, lng: -73.641413},
-      {lat: 45.458276, lng: -73.641284},
-      {lat: 45.458210, lng: -73.641339},
-      {lat: 45.458180, lng: -73.641262},
-      {lat: 45.458255, lng: -73.641202},
-      {lat: 45.458193, lng: -73.641041},
-      {lat: 45.458338, lng: -73.640920},
-      {lat: 45.458318, lng: -73.640860},
-      {lat: 45.457999, lng: -73.641115},
-      {lat: 45.457981, lng: -73.641065},
-      {lat: 45.457893, lng: -73.641133},
-      {lat: 45.457907, lng: -73.641169},
-      {lat: 45.457524, lng: -73.641472},
-      {lat: 45.457251, lng: -73.640764},
-      {lat: 45.457245, lng: -73.640770},
-      {lat: 45.457203, lng: -73.640655}
-    ];
-
-    var journalismBuilding = 
-    [
-      {lat: 45.457176, lng: -73.640391},
-      {lat: 45.457281, lng: -73.640659},
-      {lat: 45.457303, lng: -73.640639},
-      {lat: 45.457333, lng: -73.640720},
-      {lat: 45.457596, lng: -73.640501},
-      {lat: 45.457649, lng: -73.640632},
-      {lat: 45.457831, lng: -73.640485},
-      {lat: 45.457755, lng: -73.640292},
-      {lat: 45.457726, lng: -73.640314},
-      {lat: 45.457623, lng: -73.640045},
-      {lat: 45.457484, lng: -73.640151},
-      {lat: 45.457436, lng: -73.640027},
-      {lat: 45.457448, lng: -73.639944},
-      {lat: 45.457463, lng: -73.639952},
-      {lat: 45.457480, lng: -73.639821},
-      {lat: 45.457429, lng: -73.639771},
-      {lat: 45.457359, lng: -73.639763},
-      {lat: 45.457281, lng: -73.639801},
-      {lat: 45.457230, lng: -73.639882},
-      {lat: 45.457211, lng: -73.639990},
-      {lat: 45.457215, lng: -73.640021},
-      {lat: 45.457305, lng: -73.640073},
-      {lat: 45.457311, lng: -73.640049},
-      {lat: 45.457362, lng: -73.640075},
-      {lat: 45.457411, lng: -73.640208}      
-
-    ]
-
-    var chapel =
-    [
-      {lat: 45.458380, lng: -73.639038},
-      {lat: 45.458391, lng: -73.639072},
-      {lat: 45.458415, lng: -73.639054},
-      {lat: 45.458427, lng: -73.639086},
-      {lat: 45.458409, lng: -73.639100},
-      {lat: 45.458427, lng: -73.639156},
-      {lat: 45.458419, lng: -73.639162},
-      {lat: 45.458429, lng: -73.639187},
-      {lat: 45.458415, lng: -73.639193},
-      {lat: 45.458440, lng: -73.639259},
-      {lat: 45.458453, lng: -73.639251},
-      {lat: 45.458513, lng: -73.639424},
-      {lat: 45.458484, lng: -73.639444},
-      {lat: 45.458509, lng: -73.639518},
-      {lat: 45.458523, lng: -73.639512},
-      {lat: 45.458533, lng: -73.639541},
-      {lat: 45.458529, lng: -73.639559},
-      {lat: 45.458540, lng: -73.639587},
-      {lat: 45.458553, lng: -73.639593},
-      {lat: 45.458583, lng: -73.639575},
-      {lat: 45.458591, lng: -73.639597},
-      {lat: 45.458601, lng: -73.639591},
-      {lat: 45.458629, lng: -73.639666},
-      {lat: 45.458754, lng: -73.639568},
-      {lat: 45.458728, lng: -73.639490},
-      {lat: 45.458734, lng: -73.639484},
-      {lat: 45.458735, lng: -73.639471},
-      {lat: 45.458716, lng: -73.639415},
-      {lat: 45.458721, lng: -73.639403},
-      {lat: 45.458711, lng: -73.639369},
-      {lat: 45.458747, lng: -73.639345},
-      {lat: 45.458724, lng: -73.639278},
-      {lat: 45.458686, lng: -73.639302},
-      {lat: 45.458672, lng: -73.639268},
-      {lat: 45.458663, lng: -73.639288},
-      {lat: 45.458607, lng: -73.639133},
-      {lat: 45.458617, lng: -73.639074},
-      {lat: 45.458601, lng: -73.639040},
-      {lat: 45.458582, lng: -73.639032},
-      {lat: 45.458572, lng: -73.639056},
-      {lat: 45.458567, lng: -73.639040},
-      {lat: 45.458555, lng: -73.639046},
-      {lat: 45.458536, lng: -73.638994},
-      {lat: 45.458518, lng: -73.639010},
-      {lat: 45.458508, lng: -73.638984},
-      {lat: 45.458531, lng: -73.638966},
-      {lat: 45.458518, lng: -73.638934}
-    ]
-
-    var stingerDome =
-    [
-      {lat: 45.457375, lng: -73.637092},
-      {lat: 45.456960, lng: -73.636352},
-      {lat: 45.457930, lng: -73.635243},
-      {lat: 45.458337, lng: -73.635960}
-    ]
-
-    var stingerStadium =
-    [
-      {lat: 45.457829, lng: -73.638338},
-      {lat: 45.458803, lng: -73.637177},
-      {lat: 45.458380, lng: -73.636432},
-      {lat: 45.458152, lng: -73.636682},
-      {lat: 45.458048, lng: -73.636523},
-      {lat: 45.457869, lng: -73.636728},
-      {lat: 45.457885, lng: -73.636762},
-      {lat: 45.457733, lng: -73.636944},
-      {lat: 45.457717, lng: -73.636921},
-      {lat: 45.457518, lng: -73.637149},
-      {lat: 45.457613, lng: -73.637314},
-      {lat: 45.457394, lng: -73.637576}
-    ]
-
-    var vanierLibrary =
-    [
-
-      {lat: 45.458628, lng: -73.638459},
-      {lat: 45.458712, lng: -73.638397},
-      {lat: 45.458702, lng: -73.638354},
-      {lat: 45.458866, lng: -73.638234},
-      {lat: 45.458853, lng: -73.638191},
-      {lat: 45.458886, lng: -73.638167},
-      {lat: 45.458866, lng: -73.638119},
-      {lat: 45.458900, lng: -73.638091},
-      {lat: 45.458883, lng: -73.638038},
-      {lat: 45.458910, lng: -73.638014},
-      {lat: 45.458900, lng: -73.637990},
-      {lat: 45.459044, lng: -73.637880},
-      {lat: 45.459048, lng: -73.637899},
-      {lat: 45.459081, lng: -73.637875},
-      {lat: 45.459078, lng: -73.637856},
-      {lat: 45.459106, lng:-73.637841},
-      {lat: 45.459214, lng:-73.638136},
-      {lat: 45.459138, lng:-73.638199},
-      {lat: 45.459489, lng:-73.639138},
-      {lat: 45.459370, lng:-73.639235},
-      {lat: 45.459354, lng:-73.639212},
-      {lat: 45.459337, lng:-73.639224},
-      {lat: 45.459320, lng:-73.639178},
-      {lat: 45.459265, lng:-73.639222},
-      {lat: 45.459310, lng:-73.639324},
-      {lat: 45.459237, lng:-73.639384},
-      {lat: 45.459219, lng:-73.639334},
-      {lat: 45.459104, lng:-73.639424},
-      {lat: 45.458984, lng:-73.639129},
-      {lat: 45.459096, lng:-73.639040},
-      {lat: 45.459076, lng:-73.638996},
-      {lat: 45.459138, lng:-73.638946},
-      {lat: 45.459151, lng:-73.638982},
-      {lat: 45.459217, lng:-73.638927},
-      {lat: 45.459200, lng:-73.638883},
-      {lat: 45.459089, lng:-73.638970},
-      {lat: 45.459051, lng:-73.638863},
-      {lat: 45.458852, lng:-73.639018},
-      {lat: 45.458835, lng:-73.638976},
-      {lat: 45.458826, lng:-73.638980}
-      
-    ]
-
-    var psyBuilding =
-    [
-
-      {lat: 45.458722, lng: -73.640448},
-      {lat: 45.458758, lng: -73.640420},
-      {lat: 45.458754, lng: -73.640400},
-      {lat: 45.458988, lng: -73.640219},
-      {lat: 45.458998, lng: -73.640247},
-      {lat: 45.459024, lng: -73.640225},
-      {lat: 45.459019, lng: -73.640209},
-      {lat: 45.459095, lng: -73.640144},
-      {lat: 45.459273, lng: -73.640601},
-      {lat: 45.459207, lng: -73.640653},
-      {lat: 45.459190, lng: -73.640617},
-      {lat: 45.459170, lng: -73.640605},
-      {lat: 45.458846, lng: -73.640833},
-      {lat: 45.458798, lng: -73.640714},
-      {lat: 45.458817, lng: -73.640696}
-
-    ]
-
-    var adminBuilding =
-    [
-      {lat: 45.457789, lng: -73.639825},
-      {lat: 45.457806, lng: -73.639820},
-      {lat: 45.457810, lng: -73.639801},
-      {lat: 45.457838, lng: -73.639780},
-      {lat: 45.457848, lng: -73.639787},
-      {lat: 45.457873, lng: -73.639768},
-      {lat: 45.457892, lng: -73.639815},
-      {lat: 45.457903, lng: -73.639811},
-      {lat: 45.457915, lng: -73.639839},
-      {lat: 45.458028, lng: -73.639751},
-      {lat: 45.457982, lng: -73.639626},
-      {lat: 45.458042, lng: -73.639581},
-      {lat: 45.458096, lng: -73.639698},
-      {lat: 45.458203, lng: -73.639617},
-      {lat: 45.458190, lng: -73.639581},
-      {lat: 45.458200, lng: -73.639571},
-      {lat: 45.458183, lng: -73.639511},
-      {lat: 45.458264, lng: -73.639454},
-      {lat: 45.458375, lng: -73.639772},
-      {lat: 45.458299, lng: -73.639818},
-      {lat: 45.458278, lng: -73.639770},
-      {lat: 45.457963, lng: -73.640007},
-      {lat: 45.457989, lng: -73.640068},
-      {lat: 45.457910, lng: -73.640124}
-      
-    
-    ]
-
-    var centralBuilding =
-    [
-      {lat: 45.458069, lng: -73.639998},
-      {lat: 45.458377, lng: -73.640813},
-      {lat: 45.458525, lng: -73.640692},
-      {lat: 45.458220, lng: -73.639892}
-    ]
-
-    var jesuitHall = 
-    [
-      {lat: 45.458411, lng: -73.640858},
-      {lat: 45.458469, lng: -73.641010},
-      {lat: 45.458376, lng: -73.641085},
-      {lat: 45.458424, lng: -73.641218},
-      {lat: 45.458507, lng: -73.641137},
-      {lat: 45.458545, lng: -73.641234},
-      {lat: 45.458526, lng: -73.641250},
-      {lat: 45.458537, lng: -73.641278},
-      {lat: 45.458485, lng: -73.641320},
-      {lat: 45.458504, lng: -73.641381},
-      {lat: 45.458641, lng: -73.641272},
-      {lat: 45.458647, lng: -73.641286},
-      {lat: 45.458809, lng: -73.641159},
-      {lat: 45.458804, lng: -73.641143},
-      {lat: 45.458822, lng: -73.641127},
-      {lat: 45.458784, lng: -73.641031},
-      {lat: 45.458764, lng: -73.641049},
-      {lat: 45.458696, lng: -73.640856},
-      {lat: 45.458701, lng: -73.640848},
-      {lat: 45.458684, lng: -73.640801},
-      {lat: 45.458585, lng: -73.640878},
-      {lat: 45.458540, lng: -73.640757}
-
-    ]
-
-    var athleticCamp =
-    [
-      {lat: 45.456385, lng: -73.637378},
-      {lat: 45.456722, lng: -73.637094},
-      {lat: 45.456678, lng: -73.636984},
-      {lat: 45.456954, lng: -73.636764},
-      {lat: 45.457289, lng: -73.637630},
-      {lat: 45.457021, lng: -73.637850},
-      {lat: 45.457027, lng: -73.637879},
-      {lat: 45.456959, lng: -73.637929},
-      {lat: 45.457009, lng: -73.638057},
-      {lat: 45.456842, lng: -73.638190},
-      {lat: 45.456795, lng: -73.638065},
-      {lat: 45.456693, lng: -73.638149}
-      
-    ]
-
-    var loyolaGym =
-    [
-      {lat: 45.456773, lng: -73.638254},
-      {lat: 45.457041, lng: -73.638034},
-      {lat: 45.457165, lng: -73.638349},
-      {lat: 45.457049, lng: -73.638444},
-      {lat: 45.457060, lng: -73.638478},
-      {lat: 45.457030, lng: -73.638491},
-      {lat: 45.457017, lng: -73.638459},
-      {lat: 45.456886, lng: -73.638559},
-      {lat: 45.456828, lng: -73.638419},
-      {lat: 45.456800, lng: -73.638441},
-      {lat: 45.456801, lng: -73.638443},
-      {lat: 45.456763, lng: -73.638342},
-      {lat: 45.456800, lng: -73.638312}
-      
-    ]
-
-    var phyServiceBuilding =
-    [
-      {lat: 45.459281, lng:-73.639455},
-      {lat: 45.459583, lng:-73.639218},
-      {lat: 45.459624, lng:-73.639347},
-      {lat: 45.459665, lng:-73.639315},
-      {lat: 45.459981, lng:-73.640135},
-      {lat: 45.459862, lng:-73.640229},
-      {lat: 45.459852, lng:-73.640199},
-      {lat: 45.459704, lng:-73.640312},
-      {lat: 45.459639, lng:-73.640133},
-      {lat: 45.459607, lng:-73.640155},
-      {lat: 45.459412, lng:-73.639648},
-      {lat: 45.459442, lng:-73.639622},
-      {lat: 45.459404, lng:-73.639527},
-      {lat: 45.459333, lng:-73.639578}
-      
-    ]
-
-    var centerArts =
-    [
-      {lat: 45.459940, lng:-73.640871},
-      {lat: 45.460042, lng:-73.640791},
-      {lat: 45.460080, lng:-73.640894},
-      {lat: 45.459976, lng:-73.640975}
-            
-    ]
-
-    var saintIgnatius =
-    [
-      {lat: 45.457566, lng:-73.642399},
-      {lat: 45.457627, lng:-73.642351},
-      {lat: 45.457621, lng:-73.642335},
-      {lat: 45.457641, lng:-73.642319},
-      {lat: 45.457634, lng:-73.642300},
-      {lat: 45.457645, lng:-73.642292},
-      {lat: 45.457649, lng:-73.642302},
-      {lat: 45.457689, lng:-73.642270},
-      {lat: 45.457678, lng:-73.642240},
-      {lat: 45.457730, lng:-73.642202},
-      {lat: 45.457720, lng:-73.642180},
-      {lat: 45.457776, lng:-73.642135},
-      {lat: 45.457765, lng:-73.642105},
-      {lat: 45.457833, lng:-73.642051},
-      {lat: 45.457823, lng: -73.642021},
-      {lat: 45.457860, lng: -73.641991},
-      {lat: 45.457877, lng: -73.642049},
-      {lat: 45.457942, lng: -73.642001},
-      {lat: 45.457942, lng: -73.642001},
-      {lat: 45.457997, lng: -73.642079},
-      {lat: 45.458053, lng: -73.642234},
-      {lat: 45.458039, lng: -73.642268},
-      {lat: 45.458099, lng: -73.642417},
-      {lat: 45.458113, lng: -73.642395},
-      {lat: 45.458169, lng: -73.642518},
-      {lat: 45.457960, lng: -73.642682},
-      {lat: 45.457912, lng: -73.642554},
-      {lat: 45.457937, lng: -73.642532},
-      {lat: 45.457917, lng: -73.642475},
-      {lat: 45.457857, lng: -73.642524},
-      {lat: 45.457844, lng: -73.642495},
-      {lat: 45.457795, lng: -73.642536},
-      {lat: 45.457782, lng: -73.642501},
-      {lat: 45.457740, lng: -73.642534},
-      {lat: 45.457730, lng: -73.642507},
-      {lat: 45.457638, lng: -73.642578}
-      
-    ]
-
-    var structuralCenter =
-    [
-      {lat: 45.456801, lng: -73.640345},
-      {lat: 45.457045, lng: -73.640162},
-      {lat: 45.457145, lng: -73.640441},
-      {lat: 45.457129, lng: -73.640453},
-      {lat: 45.457175, lng: -73.640572},
-      {lat: 45.456947, lng: -73.640740},
-      {lat: 45.456920, lng: -73.640673},
-      {lat: 45.456895, lng: -73.640689},
-      {lat: 45.456871, lng: -73.640627},
-      {lat: 45.456896, lng: -73.640611}
-           
-    ]
-
-    var jesuitResidence =
-    [
-      {lat: 45.458397, lng: -73.643153},
-      {lat: 45.458469, lng: -73.643097},
-      {lat: 45.458480, lng: -73.643123},
-      {lat: 45.458491, lng: -73.643113},
-      {lat: 45.458486, lng: -73.643099},
-      {lat: 45.458539, lng: -73.643055},
-      {lat: 45.458570, lng: -73.643131},
-      {lat: 45.458583, lng: -73.643119},
-      {lat: 45.458625, lng: -73.643220},
-      {lat: 45.458607, lng: -73.643236},
-      {lat: 45.458634, lng: -73.643308},
-      {lat: 45.458566, lng: -73.643367},
-      {lat: 45.458560, lng: -73.643348},
-      {lat: 45.458494, lng: -73.643401},
-      {lat: 45.458465, lng: -73.643328},
-      {lat: 45.458449, lng: -73.643342},
-      {lat: 45.458410, lng: -73.643242},
-      {lat: 45.458428, lng: -73.643228}
-          
-    ]
-
-    var studentResidences =
-    [
-      {lat: 45.458929, lng: -73.641832},
-      {lat: 45.459386, lng: -73.641478},
-      {lat: 45.459239, lng: -73.641076},
-      {lat: 45.459516, lng: -73.640867},
-      {lat: 45.459691, lng: -73.641350},
-      {lat: 45.459401, lng: -73.641572},
-      {lat: 45.459562, lng: -73.641988},
-      {lat: 45.459701, lng: -73.641883},
-      {lat: 45.459715, lng: -73.641919},
-      {lat: 45.459825, lng: -73.641829},
-      {lat: 45.459899, lng: -73.642014},
-      {lat: 45.459784, lng: -73.642104},
-      {lat: 45.459796, lng: -73.642136},
-      {lat: 45.459622, lng: -73.642273},
-      {lat: 45.459498, lng: -73.641949},
-      {lat: 45.459360, lng: -73.642058},
-      {lat: 45.459365, lng: -73.642072},
-      {lat: 45.459341, lng: -73.642088},
-      {lat: 45.459363, lng: -73.642144},
-      {lat: 45.459162, lng: -73.642303},
-      {lat: 45.459141, lng: -73.642245},
-      {lat: 45.459105, lng: -73.642271}
-    ]
-
-    //Coordinates of SJW campus
-    var sjwCampus =
-    [
-      {lat: 45.498053, lng: -73.579573},
-      {lat: 45.496897, lng: -73.577055},
-      {lat: 45.496160, lng: -73.577763},
-      {lat: 45.495865, lng: -73.577132},
-      {lat: 45.495073, lng: -73.578012},
-      {lat: 45.493839, lng: -73.575199},
-      {lat: 45.492350, lng: -73.576615},
-      {lat: 45.494603, lng: -73.580481},
-      {lat: 45.495797, lng: -73.579486},
-      {lat: 45.496562, lng: -73.581687},
-      {lat: 45.498301, lng: -73.579965}
-    ]
-
-    //Coordinates of loyola campus
-    var loyolaCampus =
-    [
-      {lat: 45.455796, lng: -73.638138},
-      {lat: 45.457986, lng: -73.643931},
-      {lat: 45.461037, lng: -73.641644},
-      {lat: 45.457883, lng: -73.634184}
-    ]
-    
-    //Polygon properties for all buildings
+    // Polygon properties for all buildings
     var fColor = "deepskyblue";
 
-    //Polygon for each campus
+    // Declare all overlay points
+    var visualArts = overlays.visualArts.overlayPoints;
+    var sjwCampus = overlays.sjwCampus.overlayPoints
+    var loyolaCampus = overlays.loyolaCampus.overlayPoints;
+    var hall = overlays.hall.overlayPoints;
+    var molson = overlays.molson.overlayPoints;
+    var faubourg = overlays.faubourg.overlayPoints;
+    var EV = overlays.EV.overlayPoints;
+    var LB = overlays.LB.overlayPoints;
+    var greyNuns = overlays.greyNuns.overlayPoints;
+    var scienceComplex = overlays.scienceComplex.overlayPoints;
+    var journalismBuilding = overlays.journalismBuilding.overlayPoints;
+    var chapel = overlays.chapel.overlayPoints;
+    var psyBuilding = overlays.psyBuilding.overlayPoints;
+    var stingerDome = overlays.stingerDome.overlayPoints;
+    var stingerStadium = overlays.stingerStadium.overlayPoints;
+    var centralBuilding = overlays.centralBuilding.overlayPoints;
+    var vanierLibrary = overlays.vanierLibrary.overlayPoints;
+    var adminBuilding = overlays.adminBuilding.overlayPoints;
+    var jesuitHall = overlays.jesuitHall.overlayPoints;
+    var athleticCamp = overlays.athleticCamp.overlayPoints;
+    var loyolaGym = overlays.loyolaGym.overlayPoints;
+    var phyServiceBuilding = overlays.phyServiceBuilding.overlayPoints;
+    var centerArts = overlays.centerArts.overlayPoints;
+    var saintIgnatius = overlays.saintIgnatius.overlayPoints;
+    var structuralCenter = overlays.structuralCenter.overlayPoints;
+    var jesuitResidence = overlays.jesuitResidence.overlayPoints;
+    var studentResidences = overlays.studentResidences.overlayPoints;
+
+    // Polygon for each campus
     var sjwP = new google.maps.Polygon({
       paths: [visualArts, sjwCampus],
       visible: false
@@ -2259,7 +1625,8 @@ export class MapComponent implements AfterViewInit {
   }
 
   
-  //FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
+  // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
+  // Prototype for now
   async enterBuilding(id: string)
   {
     switch (id) 
