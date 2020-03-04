@@ -52,7 +52,7 @@ export class BuildingFactoryService {
         lat = json.Floors[i].Rooms[j].latitude;
         lng = json.Floors[i].Rooms[j].longitude;
 
-        let room = new Room(rNum,lat,lng,0);
+        let room = new Room(rNum,lat,lng,0); // 0 because altitude not being used currently in system. Might remove from Location in next sprint depending on usefulness.
         floor.addRoom(room);
 
       }
