@@ -1,4 +1,5 @@
- //Layers on buildings
+ //Overlay point data for buildings
+
     //SGW Campus
     var hall = 
     [

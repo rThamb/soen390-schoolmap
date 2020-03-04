@@ -91,14 +91,12 @@ export class MapComponent implements AfterViewInit {
     this.map.setZoom(17);
   }
 
-
-
   // Spawns the building overlays on top of the map
-  // **WILL BE REFACTORED HEAVILY IN NEXT SPRINT TO REDUCE # LINES**
+  // **WILL BE REFACTORED HEAVILY IN NEXT SPRINT**
   initOverlays()
   {
 
-    //Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
+    // Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
     var userLocationMarker = new google.maps.Marker({
       position: this.userLocation.getGoogleLatLng(),
       map: this.map
@@ -107,10 +105,10 @@ export class MapComponent implements AfterViewInit {
     var userInfoWindow = new google.maps.InfoWindow({content: ""});
     var userContent = "";
     
-    //Polygon properties for all buildings
+    // Polygon properties for all buildings
     var fColor = "deepskyblue";
 
-    //Declare all overlay points
+    // Declare all overlay points
     var visualArts = overlays.visualArts.overlayPoints;
     var sjwCampus = overlays.sjwCampus.overlayPoints
     var loyolaCampus = overlays.loyolaCampus.overlayPoints;
@@ -139,7 +137,7 @@ export class MapComponent implements AfterViewInit {
     var jesuitResidence = overlays.jesuitResidence.overlayPoints;
     var studentResidences = overlays.studentResidences.overlayPoints;
 
-    //Polygon for each campus
+    // Polygon for each campus
     var sjwP = new google.maps.Polygon({
       paths: [visualArts, sjwCampus],
       visible: false
