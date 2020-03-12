@@ -6,7 +6,9 @@ import {Location} from './Location';
 export class Building
 {
     private buildingLocation: Location;
-    private floors: Floor[];
+
+    //dictionary with
+    private floors: any;
 
     constructor()
     {
@@ -28,7 +30,7 @@ export class Building
         return this.floors;
     }
 
-    public setFloors(f: Floor[])
+    public setFloors(f: any)
     {
         this.floors = f;
     }
@@ -36,5 +38,9 @@ export class Building
     public addFloor(f: Floor)
     {
         this.floors.push(f);
+    }
+
+    public getFloorByCode(key: string){
+
     }
 }

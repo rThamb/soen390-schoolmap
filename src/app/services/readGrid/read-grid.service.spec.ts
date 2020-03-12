@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Coordinate } from '../../models/Coordinate'
+import { Location } from '../../models/Location'
 import { Floor } from '../../models/Floor'
 
 import { ReadGridService } from './read-grid.service';
@@ -18,14 +18,14 @@ describe('ReadGridService', () => {
     const service: ReadGridService = TestBed.get(ReadGridService);
 
     let expectedFloor = new Floor();
-    let topLeft = new Coordinate(45.497163, -73.579545);
-    let topRight = new Coordinate(45.497709, -73.579038);
-    let bottomLeft = new Coordinate(45.496835, -73.578855);
-    let bottomRight = new Coordinate(45.497373, -73.578342);
+    let topLeft = new Location(45.497163, -73.579545, 0);
+    let topRight = new Location(45.497709, -73.579038, 0);
+    let bottomLeft = new Location(45.496835, -73.578855, 0);
+    let bottomRight = new Location(45.497373, -73.578342, 0);
 
     expectedFloor.topLeftCornerGPS = topLeft; 
     expectedFloor.topRightCornerGPS = topRight;
-    expectedFloor.bottomLeftCorrnerGPS = bottomLeft;
+    expectedFloor.bottomLeftCornerGPS = bottomLeft;
     expectedFloor.bottomRightCornerGPS = bottomRight;
     expectedFloor.pathfindingFloorGrid = [
       [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
