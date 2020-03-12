@@ -32,7 +32,6 @@ export class ReadGridService {
    */
   async createGrid(keyName: string)
   {
-    debugger;
     try{
       let floorPlan: Floor = null;
       let filename = this.directoryPath + this.floorFileNameMap[keyName]; 

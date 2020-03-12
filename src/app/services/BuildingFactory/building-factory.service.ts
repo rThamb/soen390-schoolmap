@@ -66,11 +66,9 @@ export class BuildingFactoryService {
   }
 
   public async loadBuilding(buildingKey: string){
-    debugger;
     let building = new Building();
     building.setBuildingKey(buildingKey);
     let floorsDictionary = await this.floorService.createGrid(buildingKey);
-    debugger;
     building.setFloors(floorsDictionary);
     return building;
   }

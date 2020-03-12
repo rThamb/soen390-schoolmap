@@ -4,6 +4,7 @@ import { Floor } from '../../models/Floor';
 import { ReadGridService } from '../readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
+import { GridCoordinate } from '../../models/GridCoordinate'
 
 
 declare var require: any;

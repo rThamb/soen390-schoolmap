@@ -11,6 +11,9 @@ export class Building
     private floors: any;
     private buildingKey: string;
 
+
+    private classrooms: string[];
+
     constructor()
     {
     
@@ -52,7 +55,35 @@ export class Building
      * Returns the floor plan for the level specified for the building.
      * @param key           Level number
      */
-    public getFloorByCode(key: string): Floor{
+    public getFloorLevel(key: string): Floor{
         return this.floors[this.buildingKey + key];
+    }
+
+
+    /**
+     * Returns all the classroom codes in this building.
+     */
+    public getAllClassroomCodes(){
+
+        if(this.classrooms == null){
+        let classroomCodes = [];
+        let floorCodes = Object.keys(this.floors);
+
+        for(let i = 0; i < floorCodes.length; i++){
+            let curFloor = floorCodes[i];
+
+            let pois = this.floors[curFloor].pointsOfInterest;
+            let classRooms = Object.keys(pois);
+
+            for(let j = 0; j < classRooms.length; j++){
+                let str = classRooms[j];
+                if(str.substring(0, this.buildingKey.length) === this.buildingKey)
+                    classroomCodes.push(str);
+            }
+        }
+        this.classrooms = classroomCodes;
+        }
+
+        return this.classrooms;
     }
 }

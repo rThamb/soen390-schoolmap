@@ -5,6 +5,8 @@ import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathin
 import { Location } from '../../models/Location'
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
 import { Building } from '../../models/Building'
+import { Floor } from '../../models/Floor'
+
 
 
 @Component({
@@ -63,7 +65,13 @@ export class HomeComponent implements OnInit {
     debugger; 
     this.bService.loadBuilding("HB").then((building: Building) => {
       debugger;
-      let floor = building.getFloorByCode("8");
+      let classes = building.getAllClassroomCodes();
+      let floor : Floor = building.getFloorLevel("8");
+      let a = floor.getClassroomCoordinate("HB840");
+      let b =floor.getUp_EscalatorCoordinate();
+      let c = floor.getDown_EscalatorCoordinate();
+      let d = floor.getMensWashroom();
+      let e = floor.getWomensWashroom();
       debugger;
     });
   }
