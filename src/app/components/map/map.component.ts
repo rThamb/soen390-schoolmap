@@ -96,13 +96,15 @@ export class MapComponent implements AfterViewInit {
   initOverlays()
   {
 
+    var infoWindow = new google.maps.InfoWindow(); //This will be used for all markers
+
     // Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
     var userLocationMarker = new google.maps.Marker({
       position: this.getCurrentLocation(),
       map: this.map
     });
 
-    var userInfoWindow = new google.maps.InfoWindow({content: ""});
+    //var userInfoWindow = new google.maps.InfoWindow({content: ""});
     var userContent = "";
     
     // Polygon properties for all buildings
@@ -304,7 +306,7 @@ export class MapComponent implements AfterViewInit {
     //Text properties for all buildings
     var markerColor = 'purple';
     var fontWeight = 'bold';
-    var fontSize = '16px';
+    var fontSize = '30px';
     var iconEmpty = '../res/img/empty.png';
 
     //Hall Building Marker and info window
@@ -324,50 +326,40 @@ export class MapComponent implements AfterViewInit {
 
     hallMarker.setMap(this.map);
 
-    var hallInfo = new google.maps.InfoWindow({content:""});
-
     var hallContent =
     "<ion-list> <h4 align='center'>Henry F. Hall Building </h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text> <label ><b>Address:</b></label> 1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8 </ion-text> </ion-item>"+
-    "<ion-item><label style='margin-right:1.2em'><b>Departments: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Geography, Planning and Environment</option>"+
-    "<option value=''>Political Science, Sociology and Anthropology, Economics</option>"+
-    "<option value=''>School of Irish Studies</option>" +
-    "</select></ion-item>"+
     
-    "<ion-item><label style='margin-right:3.2em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Welcome Crew Office</option>"+
-    "<option value=''>DB Clarke Theatre</option>"+
-    "<option value=''>Dean of Students</option>" +
-    "<option value=''>Aboriginal Student Resource Centre</option>"+
-    "<option value=''>Concordia Student Union</option>"+
-    "<option value=''>IT Service Desk</option>"+
-    "<option value=''>Security Office</option>" +
-    "<option value=''>Student Success Centre</option>"+
-    "<option value=''>Mail Services</option>"+
-    "<option value=''>Archives</option>"+
-    "<option value=''>Career and Planning Services</option>"+
-    "<option value=''>Sexual Assault Ressource Centre (SARC)</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='50%' src=assets/BuildingImages/HallBuilding.jpg></div>" +
+    "<ion-item><p><label style='margin-right:1.2em'><b>Departments: </b></label><br/><br/>" +
+    "Geography, Planning and Environment <br/><br/>"+
+    "Political Science, Sociology and Anthropology, Economics <br/><br/>"+
+    "School of Irish Studies</p></ion-item>" +
+
+    "<ion-item><p><label style='margin-right:3.2em'><b>Services: </b></label><br/><br/>" +
+    "Welcome Crew Office<br/><br/>"+
+    "DB Clarke Theatre<br/><br/>"+
+    "Dean of Students<br/><br/>" +
+    "Aboriginal Student Resource Centre<br/><br/>"+
+    "Concordia Student Union<br/><br/>"+
+    "IT Service Desk<br/><br/>"+
+    "Security Office<br/><br/>" +
+    "Student Success Centre<br/><br/>"+
+    "Mail Services<br/><br/>"+
+    "Archives<br/><br/>"+
+    "Career and Planning Services<br/><br/>"+
+    "Sexual Assault Ressource Centre (SARC)</p></ion-item>"+
+  
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='50%' src=assets/BuildingImages/HallBuilding.jpg></div></div>" +
     "<div align ='center'><ion-button id='hall'>Enter Building</ion-button></div>"
 
     google.maps.event.addListener(hallMarker, 'click', function() 
     {
-      hallInfo.setContent(hallContent);
+      infoWindow.setContent(hallContent);
 
-      hallInfo.open(this.map, hallMarker);
+      infoWindow.open(this.map, hallMarker);
     });
-
-    hallInfo.addListener('domready', () => {
-      document.getElementById("hall").addEventListener("click", () => {
-        this.enterBuilding("hall");
-      });
-    });
-
 
     //EV Building Marker and info window
     var EVMarker = new google.maps.Marker
@@ -385,51 +377,41 @@ export class MapComponent implements AfterViewInit {
     });
 
     EVMarker.setMap(this.map);
-    
-    var EVInfo = new google.maps.InfoWindow({content:""});
 
     var EVContent =
     "<ion-list><h4 align='center'>Engineering, Computer Science and Visual Arts Integrated Complex</h4>" +
-      "<ion-item><ion-text><label><b>Address:</b> </label>1515 Saint-Catherine St W, Montreal, Quebec H3G 2W1</ion-text> </ion-item>"+
-      "<ion-item><label style='margin-right:1.2em'><b>Departments: </b></label> <select style='width:32%;'>" +
-      "<option value=''>View</option>"+
-      "<option value=''>Gina Cody School of Engineering and Computer Science</option>"+
-      "<option value=''>Electrical and Computer Engineering</option>"+
-      "<option value=''>Building, Civil and Environmental Engineering</option>" +
-      "<option value=''>Computer Science and Software Engineering</option>"+
-      "<option value=''>Mechanical, Industrial and Aerospace Engineering</option>"+
-      "<option value=''>Design and Computation Arts</option>"+
-      "<option value=''>Faculty of Fine Arts</option>"+
-      "<option value=''>Recreation and Athletics</option>"+
-      "<option value=''>Zero Energy Building Studies</option>"+
-      "<option value=''>Centre for Pattern Recognition and Machine Intelligence</option>"+
-      "<option value=''>Center for Composites</option>"+
-      "</select></ion-item>"+
+      "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
+      "<ion-item><ion-text><label><b>Address:</b> </label>1515 Saint-Catherine St W, Montreal, Quebec H3G 2W1</ion-text></ion-item>"+
+      "<ion-item><p><label style='margin-right:1.2em'><b>Departments: </b></label><br/><br/>" +
+
+      "Gina Cody School of Engineering and Computer Science<br/><br/>"+
+      "Electrical and Computer Engineering<br/><br/>"+
+      "Building, Civil and Environmental Engineering<br/><br/>" +
+      "Computer Science and Software Engineering<br/><br/>"+
+      "Mechanical, Industrial and Aerospace Engineering<br/><br/>"+
+      "Design and Computation Arts<br/><br/>"+
+      "Faculty of Fine Arts<br/><br/>"+
+      "Recreation and Athletics<br/><br/>"+
+      "Zero Energy Building Studies<br/><br/>"+
+      "Centre for Pattern Recognition and Machine Intelligence<br/><br/>"+
+      "Center for Composites</p>"+
+      "</ion-item>"+
       
-      "<ion-item><label style='margin-right:3.2em'><b>Services: </b></label> <select style='width:32%;'>" +
-      "<option value=''>View</option>"+
-      "<option value=''>LeGym</option>"+
-      "<option value=''>FOFA Gallery</option>"+
-      "</select></ion-item>"+
-      "</ion-list>"+
-      "<div align ='center'><img width='45%' src=assets/BuildingImages/ev.jpg></div>" +
+      "<ion-item><p><label style='margin-right:3.2em'><b>Services: </b></label><br/><br/>" +
+      "LeGym<br/><br/>"+
+      "FOFA Gallery</p>"+
+      "</ion-item>"+
+      "</ion-list><br/>"+
+      "<div align ='center'><img width='45%' src=assets/BuildingImages/ev.jpg></div></div>" +
       "<div align ='center'><ion-button id='ev'>Enter Building</ion-button></div>"
 
     google.maps.event.addListener(EVMarker, 'click', function() 
     {
-      //Probably put this in html file
-      EVInfo.setContent(EVContent);
+      infoWindow.setContent(EVContent);
 
 
-      EVInfo.open(this.map, EVMarker);
+      infoWindow.open(this.map, EVMarker);
     });
-
-    EVInfo.addListener('domready', () => {
-      document.getElementById("ev").addEventListener("click", () => {
-        this.enterBuilding("ev");
-      });
-    });
-
           
     //LB Building Marker and info window
     var LBMarker = new google.maps.Marker
@@ -448,50 +430,40 @@ export class MapComponent implements AfterViewInit {
 
     LBMarker.setMap(this.map);
 
-    var LBInfo = new google.maps.InfoWindow({content:""});
-
     var LBContent =
     "<ion-list> <h4 align='center'>J.W. McConnel Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address:</b></label> 1400 Maisonneuve Blvd W Montreal, QC H3G 1M8 </ion-text></ion-item>"+
-    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>English</option>"+
-    "<option value=''>History</option>"+
-    "<option value=''>Études françaises</option>" +
-    "<option value=''>Mathematics and Statistics</option>"+
-    "<option value=''>Education</option>"+
-    "<option value=''>Centre for Interdisciplinary Studies in Society and Culture</option>" +
-    "<option value=''>Centre for the Study of Learning and Performance</option>" +
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Departments: </b></label><br/><br/>" +
+    "English<br/><br/>"+
+    "History<br/><br/>"+
+    "Études françaises<br/><br/>" +
+    "Mathematics and Statistics<br/><br/>"+
+    "Education<br/><br/>"+
+    "Centre for Interdisciplinary Studies in Society and Culture" +
+    "Centre for the Study of Learning and Performance" +
+    "</p></ion-item>"+
     
-    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>R. Howard Webster Library</option>"+
-    "<option value=''>Welcome Centre</option>"+
-    "<option value=''>Leonard and Bina Ellen Art Gallery</option>" +
-    "<option value=''>J.A. De Sève Cinema</option>"+
-    "<option value=''>Birks Student Service Centre</option>"+
-    "<option value=''>Campus Stores</option>"+
-    "<option value=''>Instructional & Information Technology Services (IITS)</option>" +
-    "<option value=''>4TH SPACE</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='70%' src=assets/BuildingImages/LB.jpg><div>" +
-    "<div align ='center'><ion-button id='lb' >Enter Building</ion-button></div>";
+    "<ion-item><p><label style='margin-right:3.5em'><b>Services: </b></label><br/><br/>" +
+    "R. Howard Webster Library<br/><br/>"+
+    "Welcome Centre<br/><br/>"+
+    "Leonard and Bina Ellen Art Gallery<br/><br/>" +
+    "J.A. De Sève Cinema<br/><br/>"+
+    "Birks Student Service Centre<br/><br/>"+
+    "Campus Stores<br/><br/>"+
+    "Instructional & Information Technology Services (IITS)<br/><br/>" +
+    "4TH SPACE"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='70%' src=assets/BuildingImages/LB.jpg></div></div>" +
+    "<div align ='center'><ion-button id='lb'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(LBMarker, 'click', function() 
     {
-      LBInfo.setContent(LBContent);
+      infoWindow.setContent(LBContent);
 
-      LBInfo.open(this.map, LBMarker);
+      infoWindow.open(this.map, LBMarker);
     });
-
-    LBInfo.addListener('domready', () => {
-      document.getElementById("lb").addEventListener("click", () => {
-        this.enterBuilding("lb");
-      });
-    });
-
    
     var FGMarker = new google.maps.Marker
     ({
@@ -509,46 +481,36 @@ export class MapComponent implements AfterViewInit {
 
     FGMarker.setMap(this.map);
 
-    var FGInfo = new google.maps.InfoWindow({content:""});
-
     var FGContent =
     "<ion-list> <h4 align='center'>Faubourg Building </h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address:</b></label>  1250 Guy St, Montreal, Quebec H3H 2L3</ion-text></ion-item>"+
     
-    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Education</option>"+
-    "<option value=''>Classics, Modern Language & Linguistics</option>"+
-    "<option value=''>Concordia Continuing Education</option>" +
-    "<option value=''>Mel Hoppenheim School of Cinema</option>" +
-    "<option value=''>Montreal Institute for Genocide and Human Rights Studies</option>" +
-    "<option value=''>District 3 Innovation Center</option>" +
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Departments: </b></label> <br/><br/>" +
+    "Education<br/><br/>"+
+    "Classics, Modern Language & Linguistics<br/><br/>"+
+    "Concordia Continuing Education<br/><br/>" +
+    "Mel Hoppenheim School of Cinema<br/><br/>" +
+    "Montreal Institute for Genocide and Human Rights Studies<br/><br/>" +
+    "District 3 Innovation Center" +
+    "</p></ion-item>"+
     
-    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Human Resources</option>"+
-    "<option value=''>Office of the Registrar</option>"+
-    "<option value=''>Examinations Office</option>"+
-    "<option value=''>Senior non-credit program</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='60%' src=assets/BuildingImages/fb.jpg></div>" +
+    "<ion-item><p><label style='margin-right:3.5em'><b>Services: </b></label> <br/><br/>" +  
+    "Human Resources<br/><br/>"+
+    "Office of the Registrar<br/><br/>"+
+    "Examinations Office<br/><br/>"+
+    "Senior non-credit program"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='60%' src=assets/BuildingImages/fb.jpg></div></div>" +
     "<div align ='center'><ion-button id='fg'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(FGMarker, 'click', function() 
     {
-      FGInfo.setContent(FGContent);
+      infoWindow.setContent(FGContent);
 
-      FGInfo.open(this.map, FGMarker);
+      infoWindow.open(this.map, FGMarker);
     });
-
-    FGInfo.addListener('domready', () => {
-      document.getElementById("fg").addEventListener("click", () => {
-        this.enterBuilding("fg");
-      });
-    });
-    
 
 
     var MBMarker = new google.maps.Marker
@@ -567,48 +529,40 @@ export class MapComponent implements AfterViewInit {
 
     MBMarker.setMap(this.map);
 
-    var MBInfo = new google.maps.InfoWindow({content:""});
-
     var MBContent =
     "<ion-list> <h4 align='center'>John Molson Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>1600 Boulevard de Maisonneuve O, Montréal, QC H3H 1J5</ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Accoutancy</option>"+
-    "<option value=''>Supply Chain & Business Technology Management</option>"+
-    "<option value=''>Finance</option>" +
-    "<option value=''>Management</option>" +
-    "<option value=''>Executive MBA Program</option>" +
-    "<option value=''>Music</option>" +
-    "<option value=''>Theatre</option>" +
-    "<option value=''>Contemporary Dance</option>" +
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Departments: </b></label> <br/><br/>" +
     
-    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Career Management Services</option>"+
-    "<option value=''>John Molson Executive Centre</option>"+
-    "<option value=''>Office of the Registrar</option>"+
-    "<option value=''>Performing Arts Facilities</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='50%' src=assets/BuildingImages/JMSB.jpg></div>" +
-    "<div align ='center'><ion-button id='fg'>Enter Building</ion-button></div>"
+    "Accoutancy<br/><br/>"+
+    "Supply Chain & Business Technology Management<br/><br/>"+
+    "Finance<br/><br/>" +
+    "Management<br/><br/>" +
+    "Executive MBA Program<br/><br/>" +
+    "Music<br/><br/>" +
+    "Theatre<br/><br/>" +
+    "Contemporary Dance" +
+    "</p></ion-item>"+
+    
+    "<ion-item><p><label style='margin-right:3.5em'><b>Services: </b></label> <br/><br/>" +
+    
+    "Career Management Services<br/><br/>"+
+    "John Molson Executive Centre<br/><br/>"+
+    "Office of the Registrar<br/><br/>"+
+    "Performing Arts Facilities"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='50%' src=assets/BuildingImages/JMSB.jpg></div></div>" +
+    "<div align ='center'><ion-button id='mb'>Enter Building</ion-button></div>"
 
     google.maps.event.addListener(MBMarker, 'click', function() 
     {
-      MBInfo.setContent(MBContent);
+      infoWindow.setContent(MBContent);
 
-      MBInfo.open(this.map, MBMarker);
+      infoWindow.open(this.map, MBMarker);
     });
-
-    MBInfo.addListener('domready', () => {
-      document.getElementById("mb").addEventListener("click", () => {
-        this.enterBuilding("mb");
-      });
-    });  
-
 
 
     var VAMarker = new google.maps.Marker
@@ -627,48 +581,38 @@ export class MapComponent implements AfterViewInit {
 
     VAMarker.setMap(this.map);
 
-    var VAInfo = new google.maps.InfoWindow({content:""});
-
     var VAContent =
     "<ion-list> <h4 align='center'>Visual Arts Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b>1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5</label></ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;' >" +
-    "<option value=''>View</option>"+
-    "<option value=''>Studio Arts</option>"+
-    "<option value=''>Art History</option>"+
-    "<option value=''>Art Education</option>" +
-    "<option value=''>Creative Arts Therapies</option>" +
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Departments: </b></label><br/><br/>" +
+    "Studio Arts<br/><br/>"+
+    "Art History<br/><br/>"+
+    "Art Education<br/><br/>" +
+    "Creative Arts Therapies" +
+    "</p></ion-item>"+
     
-    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;' >" +
-    "<option value=''>View</option>"+
-    "<option value=''>VAV Art Gallery</option>"+
-    "<option value=''>Art Supply Store</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='75%' src=assets/BuildingImages/va.jpg><div>" +
+    "<ion-item><p><label style='margin-right:3.5em'><b>Services: </b></label><br/><br/>" +
+    "VAV Art Gallery<br/><br/>"+
+    "Art Supply Store"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='75%' src=assets/BuildingImages/va.jpg></div></div>" +
     "<div align ='center'><ion-button id='va'>Enter Building</ion-button></div>";
 
 
     google.maps.event.addListener(VAMarker, 'click', function() 
     {
-      VAInfo.setContent(VAContent);
+      infoWindow.setContent(VAContent);
 
-      VAInfo.open(this.map, VAMarker);
+      infoWindow.open(this.map, VAMarker);
     });
 
-    VAInfo.addListener('domready', () => {
-      document.getElementById("va").addEventListener("click", () => {
-        this.enterBuilding("va");
-      });
-    });  
-
-  
 
     var GNMarker = new google.maps.Marker
     ({
-      position: {lat: 45.493729, lng: -73.576222},
+      position: {lat: 45.493432, lng: -73.576705},
       map: this.map,
       icon: iconEmpty,
       label: 
@@ -682,35 +626,27 @@ export class MapComponent implements AfterViewInit {
 
     GNMarker.setMap(this.map);
 
-    var GNInfo = new google.maps.InfoWindow({content:""});
-
     var GNContent =
     "<ion-list> <h4 align='center'>Grey Nuns Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></ion-label>1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5</ion-text> </ion-item>"+
     
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;' >" +
-    "<option value=''>View</option>"+
-    "<option value=''>Residences</option>"+
-    "<option value=''>Grey Nuns Library</option>"+
-    "<option value=''>Daycare Centre</option>"+
-    "<option value=''>Summer Accommodation</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='55%' src=assets/BuildingImages/gn.jpg></div>" +
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label><br/><br/>" +
+    "Residences<br/><br/>"+
+    "Grey Nuns Library<br/><br/>"+
+    "Daycare Centre<br/><br/>"+
+    "Summer Accommodation"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='55%' src=assets/BuildingImages/gn.jpg></div></div>" +
     "<div align ='center'><ion-button id='gn'>Enter Building</ion-button></p><div>";
 
     google.maps.event.addListener(GNMarker, 'click', function() 
     {
-      GNInfo.setContent(GNContent);
+      infoWindow.setContent(GNContent);
 
-      GNInfo.open(this.map, GNMarker);
+      infoWindow.open(this.map, GNMarker);
     });
-
-    GNInfo.addListener('domready', () => {
-      document.getElementById("gn").addEventListener("click", () => {
-        this.enterBuilding("gn");
-      });
-    });  
 
   
     //Loyola Campus
@@ -730,39 +666,29 @@ export class MapComponent implements AfterViewInit {
 
     CJMarker.setMap(this.map);
 
-    var CJInfo = new google.maps.InfoWindow({content:""});
-
     var CJContent =
     "<ion-list> <h4 align='center'>Communication Studies and Journalism Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
     
-    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Communication Studies</option>"+
-    "<option value=''>Journalism</option>"+
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Departments: </b></label> <br/><br/>" +
+    "Communication Studies<br/><br/>"+
+    "Journalism"+
+    "</p></ion-item>"+
 
-    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Campus Retail Stores</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='55%' src=assets/BuildingImages/cj.jpg><div>" +
+    "<ion-item><p><label style='margin-right:3.5em'><b>Services: </b></label> <br/><br/>" +
+    "Campus Retail Stores"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='55%' src=assets/BuildingImages/cj.jpg></div></div>" +
     "<div align ='center'><ion-button id='cj'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(CJMarker, 'click', function() 
     {
-      CJInfo.setContent(CJContent);
+      infoWindow.setContent(CJContent);
 
-      CJInfo.open(this.map, CJMarker);
+      infoWindow.open(this.map, CJMarker);
     });
-
-    CJInfo.addListener('domready', () => {
-      document.getElementById("cj").addEventListener("click", () => {
-        this.enterBuilding("cj");
-      });
-    });  
-
 
 
     var SCMarker = new google.maps.Marker
@@ -781,49 +707,41 @@ export class MapComponent implements AfterViewInit {
 
     SCMarker.setMap(this.map);
 
-    var SCInfo = new google.maps.InfoWindow({content:""});
-
     var SCContent =
     "<ion-list><h4 align='center'>Richard J. Renaud Science Complex</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>3475 Rue West Broadway Montreal, QC H4B 2A7<ion-text></ion-item>"+
     
-    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Biology</option>"+
-    "<option value=''>Chemistry and Biochemistry</option>"+
-    "<option value=''>Health, Kinesiology & Applied Physiology</option>"+
-    "<option value=''>Physics</option>"+
-    "<option value=''>Psychology</option>"+
-    "<option value=''>Centre for Biological Applications of Mass Spectrometry</option>"+
-    "<option value=''>Centre for NanoScience Research</option>"+
-    "<option value=''>Centre for Studies in Behavioral Neurobiology</option>"+
-    "<option value=''>Centre for Research in Molecular Modeling</option>"+
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Departments: </b></label> <br/><br/>" +
+    "Biology<br/><br/>"+
+    "Chemistry and Biochemistry<br/><br/>"+
+    "Health, Kinesiology & Applied Physiology<br/><br/>"+
+    "Physics<br/><br/>"+
+    "Psychology<br/><br/>"+
+    "Centre for Biological Applications of Mass Spectrometry<br/><br/>"+
+    "Centre for NanoScience Research<br/><br/>"+
+    "Centre for Studies in Behavioral Neurobiology<br/><br/>"+
+    "Centre for Research in Molecular Modeling"+
+    "</p></ion-item>"+
 
-    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Science College</option>"+
-    "<option value=''>Science Technical Centre</option>"+
-    "<option value=''>Animal Care Facilities</option>"+
-    "<option value=''>Security Office</option>"+
-    "<option value=''>Café</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='60%'  src=assets/BuildingImages/sc.jpg></div>" +
+    "<ion-item><p><label style='margin-right:3.5em'><b>Services: </b></label> <br/><br/>" +
+    "Science College<br/><br/>"+
+    "Science Technical Centre<br/><br/>"+
+    "Animal Care Facilities<br/><br/>"+
+    "Security Office<br/><br/>"+
+    "Café"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='60%'  src=assets/BuildingImages/sc.jpg></div></div>" +
     "<div align = 'center'><ion-button id='sc'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(SCMarker, 'click', function() 
     {
-      SCInfo.setContent(SCContent);
+      infoWindow.setContent(SCContent);
 
-      SCInfo.open(this.map, SCMarker);
+      infoWindow.open(this.map, SCMarker);
     });
 
-    SCInfo.addListener('domready', () => {
-      document.getElementById("sc").addEventListener("click", () => {
-        this.enterBuilding("sc");
-      });
-    });  
 
     var LJMarker = new google.maps.Marker
     ({
@@ -841,34 +759,26 @@ export class MapComponent implements AfterViewInit {
 
     LJMarker.setMap(this.map);
 
-    var LJInfo = new google.maps.InfoWindow({content:""});
-
     var LJContent =
     "<ion-list><h4 align='center'>Loyola Jesuit Hall and Conference Centre</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6<ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Loyola Jesuit Hall and Conference Centre</option>"+
-    "<option value=''>Conference services</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='50%'  src=assets/BuildingImages/lj.jpg></div>" +
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    
+    "Loyola Jesuit Hall and Conference Centre<br/><br/>"+
+    "Conference services"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='50%'  src=assets/BuildingImages/lj.jpg></div></div>" +
     "<div align = 'center'><ion-button id='lj'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(LJMarker, 'click', function() 
     {
-      LJInfo.setContent(LJContent);
+      infoWindow.setContent(LJContent);
 
-      LJInfo.open(this.map, LJMarker);
+      infoWindow.open(this.map, LJMarker);
     });
-
-    LJInfo.addListener('domready', () => {
-      document.getElementById("lj").addEventListener("click", () => {
-        this.enterBuilding("lj");
-      });
-    });  
-
 
     var CBMarker = new google.maps.Marker
     ({
@@ -886,33 +796,25 @@ export class MapComponent implements AfterViewInit {
 
     CBMarker.setMap(this.map);
 
-    var CBInfo = new google.maps.InfoWindow({content:""});
-
     var CBContent =
     "<ion-list><h4 align='center'>Central Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 2B5</ion-text></ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Concordia Student Union</option>"+
-    "<option value=''>Loyola College for Diversity and Sustainability and Loyola</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
-    "<div align ='center'><img width='50%'  src=assets/BuildingImages/cb.jpg></div>" +
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    "Concordia Student Union<br/><br/>"+
+    "Loyola College for Diversity and Sustainability and Loyola"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
+    "<div align ='center'><img width='50%'  src=assets/BuildingImages/cb.jpg></div></div>" +
     "<div align = 'center'><ion-button id='cb'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(CBMarker, 'click', function() 
     {
-      CBInfo.setContent(CBContent);
+      infoWindow.setContent(CBContent);
 
-      CBInfo.open(this.map, CBMarker);
+      infoWindow.open(this.map, CBMarker);
     });
-
-    CBInfo.addListener('domready', () => {
-      document.getElementById("cb").addEventListener("click", () => {
-        this.enterBuilding("cb");
-      });
-    });  
 
 
     var ADMarker = new google.maps.Marker
@@ -931,47 +833,39 @@ export class MapComponent implements AfterViewInit {
 
     ADMarker.setMap(this.map);
 
-    var ADInfo = new google.maps.InfoWindow({content:""});
-
     var ADContent =
     "<ion-list> <h4 align='center'>Administration Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
     
-    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Faculty of Arts & Science</option>"+
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Departments: </b></label> <br/><br/>" +
+    
+    "Faculty of Arts & Science"+
+    "</p></ion-item>"+
 
-    "<ion-item><label style='margin-right:3.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Welcome Crew Office</option>"+
-    "<option value=''>Centre for Teaching & Learning</option>"+
-    "<option value=''>Loyola International College</option>"+
-    "<option value=''>Provost and VP, Academic</option>"+
-    "<option value=''>Concordia Multi-Faith and Spirituality Centre</option>"+
-    "<option value=''>Advocacy & Support Services</option>"+
-    "<option value=''>Access Centre for Students with Disabilities</option>"+
-    "<option value=''>Councelling and Development</option>"+
-    "<option value=''>Health Services</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
+    "<ion-item><p><label style='margin-right:3.5em'><b>Services: </b></label> <br/><br/>" +
+    
+    "Welcome Crew Office<br/><br/>"+
+    "Centre for Teaching & Learning<br/><br/>"+
+    "Loyola International College<br/><br/>"+
+    "Provost and VP, Academic<br/><br/>"+
+    "Concordia Multi-Faith and Spirituality Centre<br/><br/>"+
+    "Advocacy & Support Services<br/><br/>"+
+    "Access Centre for Students with Disabilities<br/><br/>"+
+    "Councelling and Development<br/><br/>"+
+    "Health Services"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
 
-    "<div align ='center'><img width='55%' src=assets/BuildingImages/ad.jpg><div>" +
+    "<div align ='center'><img width='55%' src=assets/BuildingImages/ad.jpg></div></div>" +
     "<div align ='center'><ion-button id='ad'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(ADMarker, 'click', function() 
     {
-      ADInfo.setContent(ADContent);
+      infoWindow.setContent(ADContent);
 
-      ADInfo.open(this.map, ADMarker);
+      infoWindow.open(this.map, ADMarker);
     });
-
-    ADInfo.addListener('domready', () => {
-      document.getElementById("ad").addEventListener("click", () => {
-        this.enterBuilding("ad");
-      });
-    });  
-
 
     
     var PYMarker = new google.maps.Marker
@@ -990,34 +884,26 @@ export class MapComponent implements AfterViewInit {
 
     PYMarker.setMap(this.map);
 
-    var PYInfo = new google.maps.InfoWindow({content:""});
-
     var PYContent =
     "<ion-list> <h4 align='center'>Psychology Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 2Z3</ion-text> </ion-item>"+
     
-    "<ion-item><label style='margin-right:1.5em'><b>Departments: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Psychology</option>"+
-    "<option value=''>Centre for clinical research in health (CCRH)</option>"+
-    "</select></ion-item></ion-list>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Departments: </b></label> <br/><br/>" +
+    
+    "Psychology<br/><br/>"+
+    "Centre for clinical research in health (CCRH)"+
+    "</p></ion-item></ion-list><br/>"+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/py.jpg><div>" +
+    "<div align ='center'><img width='45%' src=assets/BuildingImages/py.jpg></div></div>" +
     "<div align ='center'><ion-button id='py'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(PYMarker, 'click', function() 
     {
-      PYInfo.setContent(PYContent);
+      infoWindow.setContent(PYContent);
 
-      PYInfo.open(this.map, PYMarker);
+      infoWindow.open(this.map, PYMarker);
     });
-
-    PYInfo.addListener('domready', () => {
-      document.getElementById("py").addEventListener("click", () => {
-        this.enterBuilding("py");
-      });
-    });  
-
 
        
     var VLMarker = new google.maps.Marker
@@ -1036,35 +922,25 @@ export class MapComponent implements AfterViewInit {
 
     VLMarker.setMap(this.map);
 
-    var VLInfo = new google.maps.InfoWindow({content:""});
-
     var VLContent =
     "<ion-list><h4 align='center'>Vanier Library</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Library</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    "Library"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/vl.jpg><div>" +
+    "<div align ='center'><img width='45%' src=assets/BuildingImages/vl.jpg></div></div>" +
     "<div align ='center'><ion-button id='vl'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(VLMarker, 'click', function() 
     {
-      VLInfo.setContent(VLContent);
+      infoWindow.setContent(VLContent);
 
-      VLInfo.open(this.map, VLMarker);
+      infoWindow.open(this.map, VLMarker);
     });
-
-    VLInfo.addListener('domready', () => {
-      document.getElementById("vl").addEventListener("click", () => {
-        this.enterBuilding("vl");
-      });
-    });  
-
-
            
     var CSMarker = new google.maps.Marker
     ({
@@ -1082,19 +958,17 @@ export class MapComponent implements AfterViewInit {
 
     CSMarker.setMap(this.map);
 
-    var CSInfo = new google.maps.InfoWindow({content:""});
-
     var CSContent =
     "<ion-list> <h4 align='center'>Concordia Stadium</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text> </ion-item></ion-list>"+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/cs.jpg><div>"
+    "<div align ='center'><img width='45%' src=assets/BuildingImages/cs.jpg></div>"
 
     google.maps.event.addListener(CSMarker, 'click', function() 
     {
-      CSInfo.setContent(CSContent);
+      infoWindow.setContent(CSContent);
 
-      CSInfo.open(this.map, CSMarker);
+      infoWindow.open(this.map, CSMarker);
     });
 
              
@@ -1114,19 +988,17 @@ export class MapComponent implements AfterViewInit {
 
     SDMarker.setMap(this.map);
 
-    var SDInfo = new google.maps.InfoWindow({content:""});
-
     var SDContent =
     "<ion-list> <h4 align='center'>Stinger Dome</ion-title></h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text></ion-item></ion-list>"+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/sd.jpg><div>"
+    "<div align ='center'><img width='45%' src=assets/BuildingImages/sd.jpg></div>"
 
     google.maps.event.addListener(SDMarker, 'click', function() 
     {
-      SDInfo.setContent(SDContent);
+      infoWindow.setContent(SDContent);
 
-      SDInfo.open(this.map, SDMarker);
+      infoWindow.open(this.map, SDMarker);
     });
 
     
@@ -1146,25 +1018,22 @@ export class MapComponent implements AfterViewInit {
 
     PCMarker.setMap(this.map);
 
-    var PCInfo = new google.maps.InfoWindow({content:""});
-
     var PCContent =
     "<ion-list><h4 align='center'>PERFORM Centre</ion-title></h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>PERFORM Centre</option>"+
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    "PERFORM Centre"+
+    "</p></ion-item>"+
     "</ion-list>"+
 
-    "<div align ='center'><img width='55%' src=assets/BuildingImages/pc.jpg><div>"
+    "<div align ='center'><img width='55%' src=assets/BuildingImages/pc.jpg></div>"
 
     google.maps.event.addListener(PCMarker, 'click', function() 
     {
-      PCInfo.setContent(PCContent);
+      infoWindow.setContent(PCContent);
 
-      PCInfo.open(this.map, PCMarker);
+      infoWindow.open(this.map, PCMarker);
     });
 
 
@@ -1185,25 +1054,22 @@ export class MapComponent implements AfterViewInit {
 
     CGMarker.setMap(this.map);
 
-    var CGInfo = new google.maps.InfoWindow({content:""});
-
     var CGContent =
     "<ion-list> <h4 align='center'>Concordia Gymnasium</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Gymnasium</option>"+
-    "</select></ion-item>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    "Gymnasium"+
+    "</p></ion-item>"+
     "</ion-list>"+
 
-    "<div align ='center'><img width='55%' src=assets/BuildingImages/cg.jpg><div>"
+    "<div align ='center'><img width='60%' src=assets/BuildingImages/cg.jpg></div>"
 
     google.maps.event.addListener(CGMarker, 'click', function() 
     {
-      CGInfo.setContent(CGContent);
+      infoWindow.setContent(CGContent);
 
-      CGInfo.open(this.map, CGMarker);
+      infoWindow.open(this.map, CGMarker);
     });
 
 
@@ -1223,34 +1089,27 @@ export class MapComponent implements AfterViewInit {
 
     PSMarker.setMap(this.map);
 
-    var PSInfo = new google.maps.InfoWindow({content:""});
-
     var PSContent =
     "<ion-list> <h4 align='center'>Physical Services Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Environmental Health and Safety</option>"+
-    "<option value=''>Facilities Management</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    
+    "Environmental Health and Safety<br/><br/>"+
+    "Facilities Management"+
+    "</p></ion-item>"+
+    "</ion-list><br/></div>"+
 
-    "<div align ='center'><ion-button id='vl'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id='ps'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(PSMarker, 'click', function() 
     {
-      PSInfo.setContent(PSContent);
+      infoWindow.setContent(PSContent);
 
-      PSInfo.open(this.map, PSMarker);
+      infoWindow.open(this.map, PSMarker);
     });
 
-    PSInfo.addListener('domready', () => {
-      document.getElementById("ps").addEventListener("click", () => {
-        this.enterBuilding("ps");
-      });
-    });  
-    
     
     var TBMarker = new google.maps.Marker
     ({
@@ -1268,17 +1127,15 @@ export class MapComponent implements AfterViewInit {
 
     TBMarker.setMap(this.map);
 
-    var TBInfo = new google.maps.InfoWindow({content:""});
-
     var TBContent =
     "<ion-list><h4 align='center'>Terrebonne Building</h4>" +
-    "<ion-item><ion-text><label><b>Address: </b></label>7079 Rue de Terrebonne, Montréal, QC H4B 2B4 </ion-text></ion-item> </ion-list>"
+    "<ion-item><ion-text><label><b>Address: </b></label>7079 Rue de Terrebonne, Montréal, QC H4B 2B4 </ion-text></ion-item> </ion-list><br/>"
 
     google.maps.event.addListener(TBMarker, 'click', function() 
     {
-      TBInfo.setContent(TBContent);
+      infoWindow.setContent(TBContent);
 
-      TBInfo.open(this.map, TBMarker);
+      infoWindow.open(this.map, TBMarker);
     });
 
 
@@ -1298,18 +1155,16 @@ export class MapComponent implements AfterViewInit {
 
     SIMarker.setMap(this.map);
 
-    var SIInfo = new google.maps.InfoWindow({content:""});
-
     var SIContent =
     "<ion-list><h4 align='center'>Saint Ignatius of Loyola</h4>" +
-    "<ion-item><ion-text><label><b>Address: </b></label>4455 Rue West Broadway, Montréal, QC H4B 2A7</ion-text> </ion-item></ion-list>" +
-    "<div align ='center'><img width='55%' src=assets/BuildingImages/si.png><div>"
+    "<ion-item><ion-text><label><b>Address: </b></label>4455 Rue West Broadway, Montréal, QC H4B 2A7</ion-text> </ion-item></ion-list><br/>" +
+    "<div align ='center'><img width='55%' src=assets/BuildingImages/si.png></div>"
 
     google.maps.event.addListener(SIMarker, 'click', function() 
     {
-      SIInfo.setContent(SIContent);
+      infoWindow.setContent(SIContent);
 
-      SIInfo.open(this.map, SIMarker);
+      infoWindow.open(this.map, SIMarker);
     });
 
 
@@ -1329,33 +1184,25 @@ export class MapComponent implements AfterViewInit {
 
     GEMarker.setMap(this.map);
 
-    var GEInfo = new google.maps.InfoWindow({content:""});
-
     var GEContent =
     "<ion-list><h4 align='center'>Centre for Structural and Functional Genomics</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Centre for Structural and Functional Genomics</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    "Centre for Structural and Functional Genomics"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/ge.jpg><div>" +
+    "<div align ='center'><img width='45%' src=assets/BuildingImages/ge.jpg></div></div>" +
     "<div align ='center'><ion-button id='ge'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(GEMarker, 'click', function() 
     {
-      GEInfo.setContent(GEContent);
+      infoWindow.setContent(GEContent);
 
-      GEInfo.open(this.map, GEMarker);
+      infoWindow.open(this.map, GEMarker);
     });
-
-    GEInfo.addListener('domready', () => {
-      document.getElementById("ge").addEventListener("click", () => {
-        this.enterBuilding("ge");
-      });
-    });  
 
     
     var JRMarker = new google.maps.Marker
@@ -1374,27 +1221,24 @@ export class MapComponent implements AfterViewInit {
 
     JRMarker.setMap(this.map);
 
-    var JRInfo = new google.maps.InfoWindow({content:""});
-
     var JRContent =
     "<ion-list><h4 align='center'>Jesuit Residence</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec</ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Student Residence</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    "Student Residence"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/jr.jpg><div>" 
 
     google.maps.event.addListener(JRMarker, 'click', function() 
     {
-      JRInfo.setContent(JRContent);
+      infoWindow.setContent(JRContent);
 
-      JRInfo.open(this.map, JRMarker);
+      infoWindow.open(this.map, JRMarker);
     });
-
 
 
     var SRMarker = new google.maps.Marker
@@ -1413,23 +1257,21 @@ export class MapComponent implements AfterViewInit {
 
     SRMarker.setMap(this.map);
 
-    var SRInfo = new google.maps.InfoWindow({content:""});
-
     var SRContent =
     "<ion-list><h4 align='center'>Student Residence</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7079 Rue de Terrebonne, Montréal, QC H4B 2B4</ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>Student Residence</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    "Student Residence"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"
 
     google.maps.event.addListener(SRMarker, 'click', function() 
     {
-      SRInfo.setContent(SRContent);
+      infoWindow.setContent(SRContent);
 
-      SRInfo.open(this.map, SRMarker);
+      infoWindow.open(this.map, SRMarker);
     });
 
     
@@ -1449,40 +1291,33 @@ export class MapComponent implements AfterViewInit {
 
     FCMarker.setMap(this.map);
 
-    var FCInfo = new google.maps.InfoWindow({content:""});
-
     var FCContent =
     "<ion-list><h4 align='center'>F.C. Smith Building</h4>" +
+    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><label style='margin-right:1.5em'><b>Services: </b></label> <select style='width:32%;'>" +
-    "<option value=''>View</option>"+
-    "<option value=''>F.C. Smith Auditorium</option>"+
-    "<option value=''>Cazalet Theater</option>"+
-    "<option value=''>Concordia Multi-Faith and Spirituality Centre</option>"+
-    "</select></ion-item>"+
-    "</ion-list>"+
+    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
+    "F.C. Smith Auditorium<br/><br/>"+
+    "Cazalet Theater<br/><br/>"+
+    "Concordia Multi-Faith and Spirituality Centre"+
+    "</p></ion-item>"+
+    "</ion-list><br/>"+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/fc.jpeg><div>" 
+    "<div align ='center'><img width='45%' src=assets/BuildingImages/fc.jpeg></div></div>" 
     "<div align ='center'><ion-button id='fc'>Enter Building</ion-button></div>";
 
     google.maps.event.addListener(FCMarker, 'click', function() 
     {
-      FCInfo.setContent(FCContent);
+      infoWindow.setContent(FCContent);
 
-      FCInfo.open(this.map, FCMarker);
+      infoWindow.open(this.map, FCMarker);
     });
 
-    FCInfo.addListener('domready', () => {
-      document.getElementById("fc").addEventListener("click", () => {
-        this.enterBuilding("fc");
-      });
-    });  
-
    
+
     //var hallTest = new google.maps.LatLng(45.497194, -73.578886) //Variable to test containsLocation
     
-     //For current location
+    //For current location
     var currentLoc = this.getCurrentLocation();
     var currentBuilding = ""; //For Content of user marker info window
     var currentCampus = "";
@@ -1490,7 +1325,6 @@ export class MapComponent implements AfterViewInit {
     //Listener to the user location marker
     userLocationMarker.addListener('click', function()
     {
-      //let userLocation = this.getCurrentLocation();
       //Check if user location is inside a Concordia campus
       if(google.maps.geometry.poly.containsLocation(currentLoc, sjwP) == true)
       {
@@ -1618,10 +1452,144 @@ export class MapComponent implements AfterViewInit {
       userContent =
           "<ion-list><h4 align='center'>Concordia University</h4>" +
           "<ion-item><ion-text><label><b>Current Campus: </b></label>"+currentCampus+"</ion-text></ion-item>"+
-          "<ion-item><ion-text><label><b>Current Building: </b></label>"+currentBuilding+"</ion-text></ion-item></ion-list>"
-      userInfoWindow.setContent(userContent);
-      userInfoWindow.open(this.map, userLocationMarker);
+          "<ion-item><ion-text><label><b>Current Building: </b></label>"+currentBuilding+"</ion-text></ion-item></ion-list><br/>"
+      infoWindow.setContent(userContent);
+      infoWindow.open(this.map, userLocationMarker);
     });
+
+
+    //Listener for the "enter building" button of info window
+    infoWindow.addListener('domready', () => {
+      if(document.getElementById("hall"))
+      {
+        document.getElementById("hall").addEventListener("click", () => {
+          this.enterBuilding("hall");
+        });
+      }
+      
+      else if(document.getElementById("ev"))
+      {
+        document.getElementById("ev").addEventListener("click", () =>
+        {
+           this.enterBuilding("ev");
+        });
+      }
+
+      else if(document.getElementById("lb"))
+      {
+        document.getElementById("lb").addEventListener("click", () =>
+        {
+           this.enterBuilding("lb");
+        });
+      }     
+      else if(document.getElementById("fg"))
+      {
+        document.getElementById("fg").addEventListener("click", () =>
+        {
+           this.enterBuilding("fg");
+        });
+      }
+      else if(document.getElementById("mb"))
+      {
+        document.getElementById("mb").addEventListener("click", () =>
+        {
+           this.enterBuilding("mb");
+        });
+      }     
+      else if(document.getElementById("va"))
+      {
+        document.getElementById("va").addEventListener("click", () =>
+        {
+           this.enterBuilding("va");
+        });
+      }
+      else if(document.getElementById("gn"))
+      {
+        document.getElementById("gn").addEventListener("click", () =>
+        {
+           this.enterBuilding("gn");
+        });
+      }     
+      else if(document.getElementById("cj"))
+      {
+        document.getElementById("cj").addEventListener("click", () =>
+        {
+           this.enterBuilding("cj");
+        });
+      }
+      else if(document.getElementById("sc"))
+      {
+        document.getElementById("sc").addEventListener("click", () =>
+        {
+           this.enterBuilding("sc");
+        });
+      }     
+      else if(document.getElementById("lj"))
+      {
+        document.getElementById("lj").addEventListener("click", () =>
+        {
+           this.enterBuilding("lj");
+        });
+      }
+      else if(document.getElementById("cb"))
+      {
+        document.getElementById("cb").addEventListener("click", () =>
+        {
+           this.enterBuilding("cb");
+        });
+      }     
+      else if(document.getElementById("ad"))
+      {
+        document.getElementById("ad").addEventListener("click", () =>
+        {
+           this.enterBuilding("ad");
+        });
+      }
+      else if(document.getElementById("py"))
+      {
+        document.getElementById("py").addEventListener("click", () =>
+        {
+           this.enterBuilding("py");
+        });
+      }     
+      else if(document.getElementById("vl"))
+      {
+        document.getElementById("vl").addEventListener("click", () =>
+        {
+           this.enterBuilding("vl");
+        });
+      }
+      else if(document.getElementById("ps"))
+      {
+        document.getElementById("ps").addEventListener("click", () =>
+        {
+           this.enterBuilding("ps");
+        });
+      }     
+      else if(document.getElementById("ge"))
+      {
+        document.getElementById("ge").addEventListener("click", () =>
+        {
+           this.enterBuilding("ge");
+        });
+      }
+      else if(document.getElementById("fc"))
+      {
+        document.getElementById("fc").addEventListener("click", () =>
+        {
+           this.enterBuilding("fc");
+        });
+      }     
+
+    });
+
+    //Closes info window when clicking somewhere else on map
+    google.maps.event.addListener(this.map, 'click', function() {
+      if (infoWindow) {
+          infoWindow.close();
+      }
+  });
+  
   }
 
   
