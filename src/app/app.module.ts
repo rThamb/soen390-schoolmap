@@ -18,6 +18,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { IndoorPathingService } from './services/indoorPathing/indoor-pathing.service';
 import { ReadGridService } from './services/readGrid/read-grid.service' 
 import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapping.service' 
+import { BuildingFactoryService } from './services/BuildingFactory/building-factory.service'
 
 
 
@@ -45,7 +46,8 @@ import { NewRouteComponent } from './components/new-route/new-route.component';
     Geolocation,
     IndoorPathingService,
     ReadGridService,
-    GpsGridMappingService
+    GpsGridMappingService,
+    BuildingFactoryService
   ],
   bootstrap: [AppComponent]
 })

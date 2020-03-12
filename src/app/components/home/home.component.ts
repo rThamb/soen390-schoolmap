@@ -3,6 +3,8 @@ import { ReadGridService } from '../../services/readGrid/read-grid.service'
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
 import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service' 
 import { Location } from '../../models/Location'
+import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
+import { Building } from '../../models/Building'
 
 
 @Component({
@@ -26,8 +28,8 @@ export class HomeComponent implements OnInit {
   floor: any;
 
   constructor(private service:ReadGridService, private service2: GpsGridMappingService,
-  private service3: IndoorPathingService ) { 
-    this.testIndoorPathing();
+  private service3: IndoorPathingService, private bService: BuildingFactoryService ) { 
+    this.testBuilding();
     //this.service2.getFloorTest();
     //this.setFloor();
   }
@@ -52,14 +54,17 @@ export class HomeComponent implements OnInit {
       this.service3.getPathForDestinationOnSameFloor(new Location(45.497082, -73.578647, 0) , grid[0], "H840");
       debugger;
     });
-
-
-
-    
-
-
     //let floors = await this.service.getBuildingFloors("HB");
     //let path = this.service3.getPathForDestinationOnSameFloor(null, grid, "H840", "H890"); 
     //console.log(path);
+  }
+
+  testBuilding(){
+    debugger; 
+    this.bService.loadBuilding("HB").then((building: Building) => {
+      debugger;
+      let floor = building.getFloorByCode("8");
+      debugger;
+    });
   }
 }

@@ -20,12 +20,16 @@ export class ReadGridService {
     this.directoryPath = "./assets/binary_floor_layouts/"; 
 
     let filenames = {
-      "HB": "HB_Building.json" 
+      "HB": "HB.json" 
     }; 
 
     this.floorFileNameMap = filenames;
   }
 
+  /**
+   * Async method that will load all floors plans for a given building. 
+   * @param keyName   Dictionary, where key is the floor key and value is the floor object.
+   */
   async createGrid(keyName: string)
   {
     debugger;
@@ -45,8 +49,9 @@ export class ReadGridService {
   }
 
   private jsonToFloor(json: any) : any{
-    let floors = [];
+    let floors = {};
     let floorsData = json.floors;
+    let floorKeys = json.floorsKeys;
 
     //json['property'] - how to access values
 
@@ -62,7 +67,7 @@ export class ReadGridService {
      floor.setFloorTileGrid(this.createTileGrid(curFloor.binaryGrid));
      var binaryGrid = curFloor.binaryGrid;
      floor.pointsOfInterest = curFloor.POI; 
-     floors.push(floor);
+     floors[floorKeys[i]] = floor;
     }
     return floors;
   }

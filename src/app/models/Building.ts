@@ -9,10 +9,18 @@ export class Building
 
     //dictionary with
     private floors: any;
+    private buildingKey: string;
 
     constructor()
     {
     
+    }
+
+    public getBuildingKey(){
+        return this.buildingKey;
+    }
+    public setBuildingKey(key){
+        this.buildingKey = key;
     }
 
     public getBuildingLocation()
@@ -40,7 +48,11 @@ export class Building
         this.floors.push(f);
     }
 
-    public getFloorByCode(key: string){
-
+    /**
+     * Returns the floor plan for the level specified for the building.
+     * @param key           Level number
+     */
+    public getFloorByCode(key: string): Floor{
+        return this.floors[this.buildingKey + key];
     }
 }
