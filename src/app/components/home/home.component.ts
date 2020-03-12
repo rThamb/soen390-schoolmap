@@ -43,13 +43,17 @@ export class HomeComponent implements OnInit {
   }
 
 
+  
   testIndoorPathing(){
     this.service.createGrid("HB").then((grid) => {
       debugger;
-      let point =  this.service2.getFloorGridCoordinate(new Coordinate(45.497082, -73.578647) , grid[0]);
-      let expect = "7,18"; 
+      //let point =  this.service2.getFloorGridCoordinate(new Location(45.497082, -73.578647, 0) , grid[0]);
+      let expect = "8,17"; 
+      this.service3.getPathForDestinationOnSameFloor(new Location(45.497082, -73.578647, 0) , grid[0], "H840");
       debugger;
     });
+
+
 
     
 

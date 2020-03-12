@@ -70,4 +70,26 @@ export class Floor
     {
         this.rooms.push(r);
     }
+
+    public getBinaryGrid(): any{
+
+        debugger;
+        let binaryGrid: number[][] = [];
+
+        let length = this.floorTileGrid.length;
+        let width = this.floorTileGrid[0].length;
+        let arr = [];
+        for(let i = 0; i < length; i++){
+        arr = [];
+            let currentRow = this.floorTileGrid[i];
+            for(let j = 0; j < width; j++){
+                let num: FloorTile = currentRow[j];
+                let tile = num.getPathfinderCode();
+                arr.push(tile);
+            }
+        binaryGrid.push(arr);
+        arr = [];
+        }
+        return binaryGrid;
+    }
 }

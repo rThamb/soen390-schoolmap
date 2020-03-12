@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Floor } from '../../models/Floor' ;
 import { Location } from '../../models/Location';
+import { FloorTile } from '../../models/FloorTile'
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class ReadGridService {
 
   async createGrid(keyName: string)
   {
+    debugger;
     try{
       let floorPlan: Floor = null;
       let filename = this.directoryPath + this.floorFileNameMap[keyName]; 
@@ -57,10 +59,31 @@ export class ReadGridService {
      floor.topRightCornerGPS = new Location(curFloor.topRightLat, curFloor.topRightLong, 0);
      floor.bottomLeftCornerGPS = new Location(curFloor.bottomLeftLat, curFloor.bottomLeftLong, 0);
      floor.bottomRightCornerGPS = new Location(curFloor.bottomRightLat, curFloor.bottomRightLong, 0);
+     floor.setFloorTileGrid(this.createTileGrid(curFloor.binaryGrid));
      var binaryGrid = curFloor.binaryGrid;
      floor.pointsOfInterest = curFloor.POI; 
      floors.push(floor);
     }
     return floors;
+  }
+
+  private createTileGrid(grid: number[][]): any{
+    let tileGrid: FloorTile[][] = [];
+
+    let length = grid.length;
+    let width = grid[0].length;
+    let arr = [];
+    for(let i = 0; i < length; i++){
+      arr = [];
+      let currentRow = grid[i];
+      for(let j = 0; j < width; j++){
+        let num = currentRow[j];
+        let tile = new FloorTile(null, num);
+        arr.push(tile);
+      }
+      tileGrid.push(arr);
+      arr = [];
+    }
+    return tileGrid;
   }
 }

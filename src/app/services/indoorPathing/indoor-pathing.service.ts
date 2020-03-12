@@ -3,7 +3,7 @@ import { stringify } from 'querystring';
 import { Floor } from '../../models/Floor';
 import { ReadGridService } from '../readGrid/read-grid.service';
 import { Location } from '../../models/Location';
-
+import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
 
 
 declare var require: any;
@@ -15,15 +15,17 @@ const pf = require('pathfinding');
 })
 export class IndoorPathingService {
 
-  constructor(private service: ReadGridService) 
+  constructor(private service: ReadGridService, private gpsmapping: GpsGridMappingService) 
   { }
 
-   getPathForDestinationOnSameFloor(userPostion: Location, floor: Floor, startClass, endClass: string)
+  getPathForDestinationOnSameFloor(userPosition: Location, floor: Floor, endClass: string)
    {
 
     //ignore userPostion for now
-    let startX = floor.pointsOfInterest[startClass]["x"];
-    let startY = floor.pointsOfInterest[startClass]["y"];
+    let points =  this.gpsmapping.getFloorGridCoordinate(userPosition, floor);
+
+    let startX = points["x"];
+    let startY = points["y"];
 
     let endX = floor.pointsOfInterest[endClass]["x"];
     let endY = floor.pointsOfInterest[endClass]["y"];
@@ -34,16 +36,7 @@ export class IndoorPathingService {
 
   private getBinaryGrid(floor: Floor)
   {
-    let binaryGrid = [
-      [1, 0, 1, 1],
-      [1, 0, 1, 1],
-      [1, 0, 0, 1],
-      [1, 1, 0, 1]
-    ];
-
-    
-
-    return binaryGrid;
+    return floor.getBinaryGrid();
   }
 
   
@@ -53,7 +46,7 @@ export class IndoorPathingService {
     floor.setWidth(10);
     floor.setHeight(10);
 
-    let grid = new pf.Grid(this.getBinaryGrid(floor));
+    let grid = new pf.Grid(floor.getBinaryGrid());
     let finder = new pf.AStarFinder();
     let path = finder.findPath(1, 0, 2, 3, grid);
     
@@ -63,7 +56,7 @@ export class IndoorPathingService {
 
   determineOptimalPath(startX, startY, endX, endY, floor){
 
-    let grid = new pf.Grid(this.getBinaryGrid(floor));
+    let grid = new pf.Grid(floor.getBinaryGrid());
     let finder = new pf.AStarFinder();
     let path = finder.findPath(startX, startY, endX, endY, grid);
     return path;

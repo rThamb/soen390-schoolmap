@@ -41,13 +41,17 @@ Y
   }
   */
 
-  getFloorGridCoordinate(userPosition: Location, currentFloor: Floor): string {
-    let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), currentFloor);
-    let y = this.mapUserLongitudeToYCoordinate(userPosition.getLng(), currentFloor);
-    //let x = this.mapUserLatitudeToXCoordinate(userPosition.latitude, userPosition.longitude, currentFloor);
-    //let y = this.mapUserLongitudeToYCoordinate(userPosition.latitude, userPosition.longitude, currentFloor);
-    //return x + "," + y; 
-    return x + "," + y;
+  getFloorGridCoordinate(userPosition: Location, currentFloor: Floor) {
+    //let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), currentFloor);
+    //let y = this.mapUserLongitudeToYCoordinate(userPosition.getLng(), currentFloor);
+    let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
+    let y = this.mapUserLongitudeToYCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
+    
+    let coordinates = {
+      x : x,
+      y: y
+    };
+    return coordinates;
   }
 
 
@@ -64,7 +68,7 @@ Y
     return this.determineGridCoordinate(lat, lowX, highX, gpsDeltaPerCell, numberCells);
     */
 
-    let numberCells = floor.pathfindingFloorGrid[0].length;
+    let numberCells = floor.getFloorTileGrid()[0].length;//pathfindingFloorGrid[0].length;
     let highX = floor.topRightCornerGPS.longitude;
     let highY = floor.topRightCornerGPS.latitude;
     let lowX = floor.topLeftCornerGPS.longitude;
@@ -72,7 +76,7 @@ Y
     let gpsDeltaPerCell = this.getDeltaSize(lowX, lowY, highX, highY, numberCells);
 
     let distance = this.distanceBetweenLineAndPoint(long, lat, lowX, lowY, 
-      floor.bottomLeftCorrnerGPS.longitude, floor.bottomLeftCorrnerGPS.latitude);
+      floor.bottomLeftCornerGPS.longitude, floor.bottomLeftCornerGPS.latitude);
 
     let i = 0;
     let value = distance - gpsDeltaPerCell;
@@ -89,11 +93,11 @@ Y
 
   private mapUserLongitudeToYCoordinate(lat, long: number, floor: Floor){
     
-    let numberCells = floor.pathfindingFloorGrid.length;
+    let numberCells = floor.getFloorTileGrid().length;
     let highX = floor.topLeftCornerGPS.longitude;
     let highY = floor.topLeftCornerGPS.latitude;
-    let lowX = floor.bottomLeftCorrnerGPS.longitude;
-    let lowY = floor.bottomLeftCorrnerGPS.latitude;
+    let lowX = floor.bottomLeftCornerGPS.longitude;
+    let lowY = floor.bottomLeftCornerGPS.latitude;
     let gpsDeltaPerCell = this.getDeltaSize(lowX, lowY, highX, highY, numberCells);
 
     let distance = this.distanceBetweenLineAndPoint(long, lat, highX, highY, 
