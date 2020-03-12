@@ -1,4 +1,3 @@
-import { ToggleComponent } from './components/toggle/toggle.component';
 import { NgModule } from '@angular/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,12 +21,21 @@ import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapp
 
 
 //Component imports
-import { MapComponent } from './components/map/map.component';
-
-import { LocateMeComponent } from './components/locate-me/locate-me.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
 import { HomeComponent } from './components/home/home.component';
+import { LocateMeComponent } from './components/locate-me/locate-me.component';
+import { MapComponent } from './components/map/map.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
+import { NearbyEventsComponent } from './components/nearby-events/nearby-events.component';
+import { NearbyRestaurantsComponent } from './components/nearby-restaurants/nearby-restaurants.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
+import { ReportIssuesComponent } from './components/report-issues/report-issues.component';
+import { SafetyComponent } from './components/safety/safety.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
+import { ToggleComponent } from './components/toggle/toggle.component';
+
 
 
 
@@ -35,7 +43,9 @@ import { NewRouteComponent } from './components/new-route/new-route.component';
 
 @NgModule({
 
-  declarations: [AppComponent, MapComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent, NewRouteComponent],
+  declarations: [AppComponent, MapComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent, 
+                NewRouteComponent, AboutUsComponent, NearbyEventsComponent, NearbyRestaurantsComponent, ReportIssuesComponent,
+                SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
   entryComponents: [],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [
