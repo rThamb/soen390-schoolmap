@@ -1,6 +1,7 @@
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { NgModule } from '@angular/core';
 
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -37,7 +38,7 @@ import { NewRouteComponent } from './components/new-route/new-route.component';
 
   declarations: [AppComponent, MapComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent, NewRouteComponent],
   entryComponents: [],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,FormsModule],
   providers: [
     StatusBar,
     SplashScreen,
