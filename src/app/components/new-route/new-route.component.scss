@@ -4,13 +4,18 @@
  }
  
  .transportButtons{
-    
+    height: 50px;
  }
 
  #form{
-     
+    
+ }
+
+ #directionsPanel{
+    overflow: auto;
+    height: 400px;
  }
 
  #transportMode{
-    height: 30px;
+    height: min-content;
  }

@@ -19,8 +19,12 @@ export class NewRouteComponent  {
   constructor() { }
 
   setMap(){
+    
     //creates an instance of the map to use in the backend, HOWEVER this create a new google map, need to change to use our own map
     var map = new google.maps.Map(document.getElementById('map'));
+
+    //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
+    this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
     this.directionsRenderer.setMap(map);
   }
 
