@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
+import { GridCoordinate } from '../../models/GridCoordinate';
+
 
 
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * This class is used to map a GPS coordinate (long, lat) to a floor grid coordinate. 
+ */
 export class GpsGridMappingService {
 
   /* 
@@ -41,17 +47,13 @@ Y
   }
   */
 
-  getFloorGridCoordinate(userPosition: Location, currentFloor: Floor) {
+  getFloorGridCoordinate(userPosition: Location, currentFloor: Floor) : GridCoordinate{
     //let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), currentFloor);
     //let y = this.mapUserLongitudeToYCoordinate(userPosition.getLng(), currentFloor);
     let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
     let y = this.mapUserLongitudeToYCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
     
-    let coordinates = {
-      x : x,
-      y: y
-    };
-    return coordinates;
+    return new GridCoordinate(x, y);
   }
 
 
@@ -86,9 +88,6 @@ Y
     }
 
     return i;
-
-
-
   }
 
   private mapUserLongitudeToYCoordinate(lat, long: number, floor: Floor){

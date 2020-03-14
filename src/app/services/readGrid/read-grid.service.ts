@@ -56,7 +56,6 @@ export class ReadGridService {
 
     let curFloor = null;
     for(let i = 0; i < floorsData.length; i++){
-
      curFloor = floorsData[i]; 
      let floor: Floor = new Floor();
      floor.topLeftCornerGPS = new Location(curFloor.topLeftLat, curFloor.topLeftLong, 0);
@@ -64,7 +63,7 @@ export class ReadGridService {
      floor.bottomLeftCornerGPS = new Location(curFloor.bottomLeftLat, curFloor.bottomLeftLong, 0);
      floor.bottomRightCornerGPS = new Location(curFloor.bottomRightLat, curFloor.bottomRightLong, 0);
      floor.setFloorTileGrid(this.createTileGrid(curFloor.binaryGrid));
-     var binaryGrid = curFloor.binaryGrid;
+     floor.setFloorLevel(curFloor.level)
      floor.pointsOfInterest = curFloor.POI; 
      floors[floorKeys[i]] = floor;
     }

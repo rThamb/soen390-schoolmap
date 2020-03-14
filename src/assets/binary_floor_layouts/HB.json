@@ -2,6 +2,7 @@
     "floorsKeys": ["HB8", "HB9"], 
     "floors":[
     {
+    "level": 8,
     "topLeftLat": 45.497165, 
     "topLeftLong": -73.579545,
     "topRightLat": 45.497709, 
@@ -57,6 +58,10 @@
         "Escalator-Down": {
             "x": 9,
             "y": 6
+        }, 
+        "Elevator" : {
+            "x": 12, 
+            "y": 15
         },       
         "Stairs": [
             {
@@ -72,6 +77,7 @@
     },
 
     {
+    "level": 9,
     "topLeftLat": 45.497165, 
     "topLeftLong": -73.579545,
     "topRightLat": 45.497709, 

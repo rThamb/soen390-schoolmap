@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
       debugger;
       //let point =  this.service2.getFloorGridCoordinate(new Location(45.497082, -73.578647, 0) , grid[0]);
       let expect = "8,17"; 
-      this.service3.getPathForDestinationOnSameFloor(new Location(45.497082, -73.578647, 0) , grid[0], "H840");
+      //this.service3.getPathForDestinationOnSameFloor(new Location(45.497082, -73.578647, 0) , grid[0], "H840");
       debugger;
     });
     //let floors = await this.service.getBuildingFloors("HB");
@@ -65,13 +65,20 @@ export class HomeComponent implements OnInit {
     debugger; 
     this.bService.loadBuilding("HB").then((building: Building) => {
       debugger;
-      let classes = building.getAllClassroomCodes();
+      /*let classes = building.getAllClassroomCodes();
       let floor : Floor = building.getFloorLevel("8");
       let a = floor.getClassroomCoordinate("HB840");
       let b =floor.getUp_EscalatorCoordinate();
       let c = floor.getDown_EscalatorCoordinate();
       let d = floor.getMensWashroom();
       let e = floor.getWomensWashroom();
+      */
+      //let ninethfloor  = building.getFloorLevel("9");
+      //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
+      let userPosition = new Location(45.497139, -73.578743, 0);
+      let curFloor = building.getFloorLevel("8"); 
+      let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB967");
+      
       debugger;
     });
   }

@@ -72,6 +72,19 @@ export class Floor
         this.rooms.push(r);
     }
 
+    public getAllPointsOfInterest(){
+        /*
+        let pois = this.floors[curFloor].pointsOfInterest;
+            let classRooms = Object.keys(pois);
+
+            for(let j = 0; j < classRooms.length; j++){
+                let str = classRooms[j];
+                if(str.substring(0, this.buildingKey.length) === this.buildingKey)
+                    classroomCodes.push(str);
+            }
+            */
+    }
+
     public getBinaryGrid(): any{
 
         let binaryGrid: number[][] = [];
@@ -93,20 +106,30 @@ export class Floor
         return binaryGrid;
     }
 
-    public getMensWashroom(){
+    public getMensWashroom(): GridCoordinate{
         let key = "Washroom";
         let washroomCoor = this.pointsOfInterest[key]["Men"];
         return new GridCoordinate(washroomCoor["x"], washroomCoor["y"]); 
     }
-    public getWomensWashroom(){
+    public getWomensWashroom(): GridCoordinate{
         let key = "Washroom";
         let washroomCoor = this.pointsOfInterest[key]["Women"];
         return new GridCoordinate(washroomCoor["x"], washroomCoor["y"]); 
     }
 
-    public getStairsCoordinates(){
+    public getStairsCoordinate(): GridCoordinate[]{
         let key = "Stairs";
+        
+        //list is returned
+        let stairs = this.pointsOfInterest[key];
 
+        let coordinates = []; 
+        for(let i = 0; i < stairs.length; i++){
+            let coor = new GridCoordinate(stairs[i]["x"], stairs[i]["y"]);
+            coordinates.push(coor);
+        }
+
+        return coordinates; 
     }
 
     public getUp_EscalatorCoordinate(): GridCoordinate{
