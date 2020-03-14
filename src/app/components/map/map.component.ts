@@ -98,7 +98,7 @@ export class MapComponent implements AfterViewInit {
 
     // Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
     var userLocationMarker = new google.maps.Marker({
-      position: this.userLocation.getGoogleLatLng(),
+      position: this.getCurrentLocation(),
       map: this.map
     });
 
@@ -1482,19 +1482,21 @@ export class MapComponent implements AfterViewInit {
    
     //var hallTest = new google.maps.LatLng(45.497194, -73.578886) //Variable to test containsLocation
     
-    var currentLoc = this; //For current location
+     //For current location
+    var currentLoc = this.getCurrentLocation();
     var currentBuilding = ""; //For Content of user marker info window
     var currentCampus = "";
 
     //Listener to the user location marker
     userLocationMarker.addListener('click', function()
     {
+      //let userLocation = this.getCurrentLocation();
       //Check if user location is inside a Concordia campus
-      if(google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), sjwP) == true)
+      if(google.maps.geometry.poly.containsLocation(currentLoc, sjwP) == true)
       {
         currentCampus = "Sir George Williams Campus";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), loyolaP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, loyolaP) == true))
       {
         currentCampus = "Loyola Campus";
       }
@@ -1505,106 +1507,106 @@ export class MapComponent implements AfterViewInit {
 
 
       //Check if user location is inside a Concordia building
-      if(google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), hallP) == true)
+      if(google.maps.geometry.poly.containsLocation(currentLoc, hallP) == true)
       {
         currentBuilding = "Hall Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), molsonP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, molsonP) == true))
       {
         currentBuilding = "John Molson Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), EVP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, EVP) == true))
       {
         currentBuilding = "Engineering, Computer Science and Visual Arts Integrated Complex";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), lbP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, lbP) == true))
       {
         currentBuilding = "J.W. McConnel Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), visualArtsP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, visualArtsP) == true))
       {
         currentBuilding = "Visual Arts Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), faubourgP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, faubourgP) == true))
       {
         currentBuilding = "Faubourg Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), greyNunsP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, greyNunsP) == true))
       {
         currentBuilding = "Grey Nuns Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), journalismP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, journalismP) == true))
       {
         currentBuilding = "Communication Studies and Journalism Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), scienceComplexP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, scienceComplexP) == true))
       {
         currentBuilding = "Richard J. Renaud Science Complex";
       }
       
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), jesuitP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, jesuitP) == true))
       {
         currentBuilding = "Loyola Jesuit Hall and Conference Centre";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), centralBuildingP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, centralBuildingP) == true))
       {
         currentBuilding = "Central Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), adminP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, adminP) == true))
       {
         currentBuilding = "Administration Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), psyP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, psyP) == true))
       {
         currentBuilding = "Psychology Building";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), vanierLibraryP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, vanierLibraryP) == true))
       {
         currentBuilding = "Vanier Library";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), stingerStadiumP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, stingerStadiumP) == true))
       {
         currentBuilding = "Concordia Stadium";
       }
 
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), stingerDomeP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, stingerDomeP) == true))
       {
         currentBuilding = "Stinger Dome";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), athleticCampP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, athleticCampP) == true))
       {
         currentBuilding = "PERFORM Centre";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), loyolaGymP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, loyolaGymP) == true))
       {
         currentBuilding = "Concordia Gymnasium";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), phyServiceP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, phyServiceP) == true))
       {
         currentBuilding = "Physical Services Building<";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), centerArtsP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, centerArtsP) == true))
       {
         currentBuilding = "Terrebonne Building";
       }
       
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), saintIgnatiusP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, saintIgnatiusP) == true))
       {
         currentBuilding = "Saint Ignatius of Loyola";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), structuralCenterP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, structuralCenterP) == true))
       {
         currentBuilding = "Centre for Structural and Functional Genomics";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), jesuitResidenceP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, jesuitResidenceP) == true))
       {
         currentBuilding = "Jesuit Residence";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), studentResidencesP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, studentResidencesP) == true))
       {
         currentBuilding = "Student Residence";
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc.getCurrentLocation(), chapelP) == true))
+      else if((google.maps.geometry.poly.containsLocation(currentLoc, chapelP) == true))
       {
         currentBuilding = "F.C. Smith Building<";
       }
@@ -1698,7 +1700,6 @@ export class MapComponent implements AfterViewInit {
         console.log("In " + id + " building.");
         break;
     }  
-
 
   }
 
