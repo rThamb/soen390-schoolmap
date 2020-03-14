@@ -1,12 +1,23 @@
-<form (ngSubmit)="getDirections()">
+<form id="form" (ngSubmit)="getDirections()">
     <ion-toolbar class="toolbar" style="margin-top: 60px;">
         <ion-item>
-        <ion-input [(ngModel)]="directions.start" name='start' placeholder="Start"></ion-input>
+            <ion-input [(ngModel)]="directions.start" name='start' placeholder="Start"></ion-input>
         </ion-item>
         <ion-item>
-        <ion-input [(ngModel)]="directions.destination" name='destination' placeholder="Destination"></ion-input>
+            <ion-input [(ngModel)]="directions.destination" name='destination' placeholder="Destination"></ion-input>
         </ion-item>
-        <ion-button  type="submit" block>Get Directions</ion-button>
+        <ion-segment id="transportMode">
+            <ion-segment-button class="transportButtons" id="walking">
+              <ion-label>WALKING</ion-label>
+            </ion-segment-button>
+            <ion-segment-button class="transportButtons" id="driving">
+              <ion-label>DRIVING</ion-label>
+            </ion-segment-button>
+            <ion-segment-button class="transportButtons" id="transit">
+                <ion-label>PUBLIC TRANSIT</ion-label>
+              </ion-segment-button>
+          </ion-segment>
+        <ion-button  type="submit" expand="full" (click)="getTransportation()">Get Directions</ion-button>
     </ion-toolbar> 
 </form>
 
