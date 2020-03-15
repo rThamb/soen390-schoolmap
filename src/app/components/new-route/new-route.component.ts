@@ -83,6 +83,53 @@ export class NewRouteComponent  {
       }
     });
   }
+
+  async getNextShuttleTime(departureCampus){
+    
+    let res = await fetch("./assets/shuttle_bus/departureTimes.json");
+    let json = await res.json();
+    let currentDate = new Date('2020-03-13 19:50');
+    //Only consider the shuttle bus schedule after 7:15 am on that particular day.
+    let timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + " " + "7:15");
+    let dayOfWeek = currentDate.getDay();
+    let times = null;
+
+    //Depending on which campus user is departing from and the day of the week, fetch the corresponding schedule.
+    if(departureCampus == "loyola") {
+      if(dayOfWeek > 0 && dayOfWeek < 5){
+        times = json.mondayToThursday.fromLoyola;
+      }else
+        if(dayOfWeek == 5){
+          times = json.friday.fromLoyola;
+      }
+    }else {
+      if(dayOfWeek > 0 && dayOfWeek < 5){
+        times = json.mondayToThursday.fromSGW;
+      }else
+        if(dayOfWeek == 5){
+          times = json.friday.fromSGW;
+      }
+    }
+
+    /**
+     * If it is a weekend or is not yet 7:15 am no shuttle bus time will be returned (returns null).
+     * Else convert all times from strings to date objects and get the next shuttle departure time
+     * (if any) given the current time.
+     */
+    let nextShuttleTime = null; 
+    if(times != null && currentDate >= timeBeforeShuttleStarts){
+      
+      for (let i = 0; i < times.length; i++)
+        times[i] = new Date(currentDate.toLocaleDateString('en-US') + " " + times[i]);
+    
+      let counter = 0;
+      nextShuttleTime = times[counter]; 
+      while(currentDate > nextShuttleTime && counter <= times.length){
+        nextShuttleTime = times[counter++];
+      }
+    }
+    return nextShuttleTime;
+  }
   
 
 }
