@@ -9,6 +9,7 @@ import { Campus } from 'src/app/models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
+import { Variable } from '@angular/compiler/src/render3/r3_ast';
 
 
 declare var google;
@@ -324,8 +325,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    hallMarker.setMap(this.map);
-
     var hallContent =
     "<ion-list> <h4 align='center'>Henry F. Hall Building </h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -361,6 +360,8 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, hallMarker);
     });
 
+  
+
     //EV Building Marker and info window
     var EVMarker = new google.maps.Marker
     ({
@@ -376,7 +377,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    EVMarker.setMap(this.map);
 
     var EVContent =
     "<ion-list><h4 align='center'>Engineering, Computer Science and Visual Arts Integrated Complex</h4>" +
@@ -428,7 +428,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    LBMarker.setMap(this.map);
 
     var LBContent =
     "<ion-list> <h4 align='center'>J.W. McConnel Building</h4>" +
@@ -479,7 +478,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    FGMarker.setMap(this.map);
 
     var FGContent =
     "<ion-list> <h4 align='center'>Faubourg Building </h4>" +
@@ -526,8 +524,6 @@ export class MapComponent implements AfterViewInit {
           fontSize: fontSize,
       },
     });
-
-    MBMarker.setMap(this.map);
 
     var MBContent =
     "<ion-list> <h4 align='center'>John Molson Building</h4>" +
@@ -579,8 +575,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    VAMarker.setMap(this.map);
-
     var VAContent =
     "<ion-list> <h4 align='center'>Visual Arts Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -624,8 +618,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    GNMarker.setMap(this.map);
-
     var GNContent =
     "<ion-list> <h4 align='center'>Grey Nuns Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -663,8 +655,6 @@ export class MapComponent implements AfterViewInit {
           fontSize: fontSize,
       },
     });
-
-    CJMarker.setMap(this.map);
 
     var CJContent =
     "<ion-list> <h4 align='center'>Communication Studies and Journalism Building</h4>" +
@@ -705,7 +695,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    SCMarker.setMap(this.map);
 
     var SCContent =
     "<ion-list><h4 align='center'>Richard J. Renaud Science Complex</h4>" +
@@ -757,8 +746,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    LJMarker.setMap(this.map);
-
     var LJContent =
     "<ion-list><h4 align='center'>Loyola Jesuit Hall and Conference Centre</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -794,8 +781,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    CBMarker.setMap(this.map);
-
     var CBContent =
     "<ion-list><h4 align='center'>Central Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -830,8 +815,6 @@ export class MapComponent implements AfterViewInit {
           fontSize: fontSize,
       },
     });
-
-    ADMarker.setMap(this.map);
 
     var ADContent =
     "<ion-list> <h4 align='center'>Administration Building</h4>" +
@@ -882,8 +865,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    PYMarker.setMap(this.map);
-
     var PYContent =
     "<ion-list> <h4 align='center'>Psychology Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -920,8 +901,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    VLMarker.setMap(this.map);
-
     var VLContent =
     "<ion-list><h4 align='center'>Vanier Library</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -956,8 +935,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    CSMarker.setMap(this.map);
-
     var CSContent =
     "<ion-list> <h4 align='center'>Concordia Stadium</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text> </ion-item></ion-list>"+
@@ -986,8 +963,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    SDMarker.setMap(this.map);
-
     var SDContent =
     "<ion-list> <h4 align='center'>Stinger Dome</ion-title></h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text></ion-item></ion-list>"+
@@ -1015,8 +990,6 @@ export class MapComponent implements AfterViewInit {
           fontSize: fontSize,
       },
     });
-
-    PCMarker.setMap(this.map);
 
     var PCContent =
     "<ion-list><h4 align='center'>PERFORM Centre</ion-title></h4>" +
@@ -1052,8 +1025,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    CGMarker.setMap(this.map);
-
     var CGContent =
     "<ion-list> <h4 align='center'>Concordia Gymnasium</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
@@ -1086,8 +1057,6 @@ export class MapComponent implements AfterViewInit {
           fontSize: fontSize,
       },
     });
-
-    PSMarker.setMap(this.map);
 
     var PSContent =
     "<ion-list> <h4 align='center'>Physical Services Building</h4>" +
@@ -1125,8 +1094,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    TBMarker.setMap(this.map);
-
     var TBContent =
     "<ion-list><h4 align='center'>Terrebonne Building</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7079 Rue de Terrebonne, Montréal, QC H4B 2B4 </ion-text></ion-item> </ion-list><br/>"
@@ -1152,8 +1119,6 @@ export class MapComponent implements AfterViewInit {
           fontSize: fontSize,
       },
     });
-
-    SIMarker.setMap(this.map);
 
     var SIContent =
     "<ion-list><h4 align='center'>Saint Ignatius of Loyola</h4>" +
@@ -1181,8 +1146,6 @@ export class MapComponent implements AfterViewInit {
           fontSize: fontSize,
       },
     });
-
-    GEMarker.setMap(this.map);
 
     var GEContent =
     "<ion-list><h4 align='center'>Centre for Structural and Functional Genomics</h4>" +
@@ -1219,8 +1182,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    JRMarker.setMap(this.map);
-
     var JRContent =
     "<ion-list><h4 align='center'>Jesuit Residence</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -1255,8 +1216,6 @@ export class MapComponent implements AfterViewInit {
       },
     });
 
-    SRMarker.setMap(this.map);
-
     var SRContent =
     "<ion-list><h4 align='center'>Student Residence</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -1288,8 +1247,6 @@ export class MapComponent implements AfterViewInit {
           fontSize: fontSize,
       },
     });
-
-    FCMarker.setMap(this.map);
 
     var FCContent =
     "<ion-list><h4 align='center'>F.C. Smith Building</h4>" +
@@ -1463,7 +1420,8 @@ export class MapComponent implements AfterViewInit {
       if(document.getElementById("hall"))
       {
         document.getElementById("hall").addEventListener("click", () => {
-          this.enterBuilding("hall");
+          infoWindow.close();
+          this.enterBuilding("hall", hallP, hallMarker);
         });
       }
       
@@ -1471,7 +1429,7 @@ export class MapComponent implements AfterViewInit {
       {
         document.getElementById("ev").addEventListener("click", () =>
         {
-           this.enterBuilding("ev");
+           this.enterBuilding("ev", EVP, EVMarker);
         });
       }
 
@@ -1479,105 +1437,105 @@ export class MapComponent implements AfterViewInit {
       {
         document.getElementById("lb").addEventListener("click", () =>
         {
-           this.enterBuilding("lb");
+           this.enterBuilding("lb", lbP, LBMarker);
         });
       }     
       else if(document.getElementById("fg"))
       {
         document.getElementById("fg").addEventListener("click", () =>
         {
-           this.enterBuilding("fg");
+           this.enterBuilding("fg", faubourgP, FGMarker);
         });
       }
       else if(document.getElementById("mb"))
       {
         document.getElementById("mb").addEventListener("click", () =>
         {
-           this.enterBuilding("mb");
+           this.enterBuilding("mb", molsonP, MBMarker);
         });
       }     
       else if(document.getElementById("va"))
       {
         document.getElementById("va").addEventListener("click", () =>
         {
-           this.enterBuilding("va");
+           this.enterBuilding("va", visualArtsP, VAMarker);
         });
       }
       else if(document.getElementById("gn"))
       {
         document.getElementById("gn").addEventListener("click", () =>
         {
-           this.enterBuilding("gn");
+           this.enterBuilding("gn", greyNunsP, GNMarker);
         });
       }     
       else if(document.getElementById("cj"))
       {
         document.getElementById("cj").addEventListener("click", () =>
         {
-           this.enterBuilding("cj");
+           this.enterBuilding("cj", journalismP, CJMarker);
         });
       }
       else if(document.getElementById("sc"))
       {
         document.getElementById("sc").addEventListener("click", () =>
         {
-           this.enterBuilding("sc");
+           this.enterBuilding("sc", scienceComplexP, SCMarker);
         });
       }     
       else if(document.getElementById("lj"))
       {
         document.getElementById("lj").addEventListener("click", () =>
         {
-           this.enterBuilding("lj");
+           this.enterBuilding("lj", jesuitP, LJMarker);
         });
       }
       else if(document.getElementById("cb"))
       {
         document.getElementById("cb").addEventListener("click", () =>
         {
-           this.enterBuilding("cb");
+           this.enterBuilding("cb", centralBuildingP, CBMarker);
         });
       }     
       else if(document.getElementById("ad"))
       {
         document.getElementById("ad").addEventListener("click", () =>
         {
-           this.enterBuilding("ad");
+           this.enterBuilding("ad", adminP, ADMarker);
         });
       }
       else if(document.getElementById("py"))
       {
         document.getElementById("py").addEventListener("click", () =>
         {
-           this.enterBuilding("py");
+           this.enterBuilding("py", psyP, PYMarker);
         });
       }     
       else if(document.getElementById("vl"))
       {
         document.getElementById("vl").addEventListener("click", () =>
         {
-           this.enterBuilding("vl");
+           this.enterBuilding("vl", vanierLibraryP, VLMarker);
         });
       }
       else if(document.getElementById("ps"))
       {
         document.getElementById("ps").addEventListener("click", () =>
         {
-           this.enterBuilding("ps");
+           this.enterBuilding("ps", phyServiceP, PSMarker);
         });
       }     
       else if(document.getElementById("ge"))
       {
         document.getElementById("ge").addEventListener("click", () =>
         {
-           this.enterBuilding("ge");
+           this.enterBuilding("ge", structuralCenterP, GEMarker);
         });
       }
       else if(document.getElementById("fc"))
       {
         document.getElementById("fc").addEventListener("click", () =>
         {
-           this.enterBuilding("fc");
+           this.enterBuilding("fc", chapelP, FCMarker);
         });
       }     
 
@@ -1595,13 +1553,17 @@ export class MapComponent implements AfterViewInit {
   
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
   // Prototype for now
-  async enterBuilding(id: string)
-  {
+  async enterBuilding(id: string, polygon, marker)
+  {          
+
     switch (id) 
     {
       //Hall Building
       case 'hall':
-          console.log("In " + id + " building.");
+          console.log("In " + id + " building.");   
+          polygon.setVisible(false);
+          marker.setVisible(false);
+          this.indoorView();
           break;
       //EV building
       case 'ev':
@@ -1668,6 +1630,30 @@ export class MapComponent implements AfterViewInit {
         console.log("In " + id + " building.");
         break;
     }  
+
+  }
+
+  indoorView(): void
+  {
+
+    var hallOverlay;
+
+    var imageBoundHall = {
+      north: 45.497735, //Top
+      south: 45.496807, //Bottom
+      east: -73.578316, //Right
+      west: -73.579586 //Left
+    };
+  
+    hallOverlay = new google.maps.GroundOverlay(
+        'assets/FloorImages/Hall/hall-8.png', 
+        imageBoundHall);
+        
+    hallOverlay.setMap(this.map);
+
+    //Zoom in
+    this.map.setCenter({lat: 45.497280, lng: -73.578940});
+    this.map.setZoom(19);
 
   }
 
