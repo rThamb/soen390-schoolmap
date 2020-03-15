@@ -1,11 +1,13 @@
 import { UserSettings } from './UserSettings'
 import { UserSchedule } from './UserSchedule'
+import {Location} from './Location'
 
 /**
  * Class responsible for holding information regarding the User that needs to be accessed during runtime 
  */
 export class User
 {
+    private location: Location
     private settings: UserSettings;
     private schedule: UserSchedule;
 
@@ -33,5 +35,15 @@ export class User
     public setSchedule(s: UserSchedule)
     {
         this.schedule = s;
+    }
+
+    public getLocation()
+    {
+        return this.location;
+    }
+
+    public setLocation(l: Location)
+    {
+        this.location = l;
     }
 }
