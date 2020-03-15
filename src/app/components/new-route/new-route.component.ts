@@ -84,11 +84,35 @@ export class NewRouteComponent  {
     });
   }
 
+  
+  //This parametrized function is going to be used primarly for the indoor to outdoor feature
+  getDirection(start:string, destination:string) {
+
+    //this is a reference to the map
+    this.setMap();
+    
+    //we Need to figure out how to dynamically get the users method of transportation
+    var travelMode = this.getTransportation()
+
+    this.directionsService.route({
+      origin: start,
+      destination: destination,
+      travelMode: travelMode
+    }, (response, status) => {
+      if (status === 'OK') {
+        this.directionsRenderer.setDirections(response);
+      } else {
+        window.alert('Request to directions API failed: ' + status);
+      }
+    });
+  }
+
   async getNextShuttleTime(departureCampus){
     
     let res = await fetch("./assets/shuttle_bus/departureTimes.json");
     let json = await res.json();
-    let currentDate = new Date('2020-03-13 19:50');
+    let currentDate = new Date();
+
     //Only consider the shuttle bus schedule after 7:15 am on that particular day.
     let timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + " " + "7:15");
     let dayOfWeek = currentDate.getDay();
