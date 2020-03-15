@@ -1,6 +1,7 @@
 import { FloorTile } from './FloorTile';
 import { Location } from './Location';
 import { Room } from './Room';
+import { GridCoordinate } from './GridCoordinate'
 
 // This class represents the Floors that are stored in Buildings
 // Each Floor instance stores a pathfinding grid configuration, it's level and POI locations.
@@ -69,5 +70,89 @@ export class Floor
     public addRoom(r: Room)
     {
         this.rooms.push(r);
+    }
+
+    public getAllPointsOfInterest(){
+        /*
+        let pois = this.floors[curFloor].pointsOfInterest;
+            let classRooms = Object.keys(pois);
+
+            for(let j = 0; j < classRooms.length; j++){
+                let str = classRooms[j];
+                if(str.substring(0, this.buildingKey.length) === this.buildingKey)
+                    classroomCodes.push(str);
+            }
+            */
+    }
+
+    public getBinaryGrid(): any{
+
+        let binaryGrid: number[][] = [];
+
+        let length = this.floorTileGrid.length;
+        let width = this.floorTileGrid[0].length;
+        let arr = [];
+        for(let i = 0; i < length; i++){
+        arr = [];
+            let currentRow = this.floorTileGrid[i];
+            for(let j = 0; j < width; j++){
+                let num: FloorTile = currentRow[j];
+                let tile = num.getPathfinderCode();
+                arr.push(tile);
+            }
+        binaryGrid.push(arr);
+        arr = [];
+        }
+        return binaryGrid;
+    }
+
+    public getMensWashroom(): GridCoordinate{
+        let key = "Washroom";
+        let washroomCoor = this.pointsOfInterest[key]["Men"];
+        return new GridCoordinate(washroomCoor["x"], washroomCoor["y"]); 
+    }
+    public getWomensWashroom(): GridCoordinate{
+        let key = "Washroom";
+        let washroomCoor = this.pointsOfInterest[key]["Women"];
+        return new GridCoordinate(washroomCoor["x"], washroomCoor["y"]); 
+    }
+
+    public getStairsCoordinate(): GridCoordinate[]{
+        let key = "Stairs";
+        
+        //list is returned
+        let stairs = this.pointsOfInterest[key];
+
+        let coordinates = []; 
+        for(let i = 0; i < stairs.length; i++){
+            let coor = new GridCoordinate(stairs[i]["x"], stairs[i]["y"]);
+            coordinates.push(coor);
+        }
+
+        return coordinates; 
+    }
+
+    public getUp_EscalatorCoordinate(): GridCoordinate{
+        let key = "Escalator-Up";
+        return this.getCoordinate(key); 
+    }
+
+    public getDown_EscalatorCoordinate(): GridCoordinate{
+        let key = "Escalator-Down";
+        return this.getCoordinate(key); 
+    }
+
+    public getElevatorCoordinate(): GridCoordinate{
+        let key = "Elevator";
+        return this.getCoordinate(key); 
+    }
+
+    public getClassroomCoordinate(classCode: string): GridCoordinate{
+        return this.getCoordinate(classCode); 
+    }
+
+    private getCoordinate(key: string): GridCoordinate{
+        let coor = new GridCoordinate(this.pointsOfInterest[key]["x"], this.pointsOfInterest[key]["y"]);
+        return coor;
     }
 }
