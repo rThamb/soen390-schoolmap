@@ -1,10 +1,32 @@
-.safety{
+.safety {
   background-color: #EDF0F4;
+  min-height: 100%;
 }
-.title{
-text-align:center;color:#074AA2;font-weight: bold;border-style:solid;font-size: larger;}
 
-.p1{text-align:justify;color:#195CB3;padding:5%;font-weight: bold;}
-.title2{padding:3%;color:#074AA2;font-weight: bold;font-size: larger;}
-.info{
-color:#195CB3;padding:5%;}
+.title {
+    text-align:center;
+    padding:3%;
+    color:#074AA2;
+    font-weight: bold;
+    border-style: solid;
+    font-size: larger;
+  }
+
+.p1 {
+    text-align:justify;
+    color:#195CB3;
+    padding:5%;
+    font-weight: bold;
+  }
+
+.title2 {
+    padding:3%;
+    color:#074AA2;
+    font-weight: bold;
+    font-size: larger;
+  }
+
+.info {
+    color:#195CB3;
+    padding:5%;
+}
