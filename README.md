@@ -34,7 +34,7 @@ ON MAC:
 
 5. Run the application. "ionic serve"
 
-**Deploying the app onto an Android device :
+## Deploying the app onto an Android device :
 
 1. Ensure you have Java JDK 8, Android Studio and updated Android SDK tools, platforms and component dependencies.
 
