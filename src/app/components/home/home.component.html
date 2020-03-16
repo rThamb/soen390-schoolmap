@@ -11,6 +11,12 @@
         <app-toggle (toggleevent)=map.focusMap($event)></app-toggle>
         <app-map class="map" #map></app-map>
         <app-locate-me (locateevent)="map.getCurrentLocation()"></app-locate-me>
+<ion-content padding>
+        <ion-item>
+                <ion-label floating>Enter Address</ion-label>
+                <ion-input id="txtHome" type="text"></ion-input>
+        </ion-item>
+</ion-content>
 
 
 <!-- inject other component like the one above to construct your view 
