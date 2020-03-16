@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NearbyEventsComponent } from './nearby-events.component';
+import { NearbyPointsOfInterestComponent } from './nearby-points-of-interest.component';
 
-describe('NearbyEventsComponent', () => {
-  let component: NearbyEventsComponent;
-  let fixture: ComponentFixture<NearbyEventsComponent>;
+describe('NearbyPointsOfInterestComponent', () => {
+  let component: NearbyPointsOfInterestComponent;
+  let fixture: ComponentFixture<NearbyPointsOfInterestComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NearbyEventsComponent ],
+      declarations: [ NearbyPointsOfInterestComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NearbyEventsComponent);
+    fixture = TestBed.createComponent(NearbyPointsOfInterestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
