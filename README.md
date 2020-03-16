@@ -34,6 +34,22 @@ ON MAC:
 
 5. Run the application. "ionic serve"
 
+**Deploying the app onto an Android device :
+
+1. Ensure you have Java JDK 8, Android Studio and updated Android SDK tools, platforms and component dependencies.
+
+2. Open Android Studio.
+
+3. Click Tools & select SDK Manager.
+
+4. Install the most recent Android versions found in Android SDK (should have at least Android 8.0 and above).
+
+5. Plug your Android device into your PC.
+
+6. Ensure that Developer Mode is enabled on your device (quick google search can help with this).
+
+7. Change to your codes directory and run the following command: ionic cordova run android --device
+
  **For simulator (mobile) view, run :
     ionic cordova build ios
     ionic cordova emulate ios
