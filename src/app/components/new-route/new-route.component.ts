@@ -16,6 +16,11 @@ export class NewRouteComponent  {
   directionsRenderer = new google.maps.DirectionsRenderer;
   directions = {}
 
+  //Possible key words that would be searched to get either of the campuses
+  sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o"];
+  loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke"];
+
+
   constructor() { }
 
   setMap(){
@@ -24,8 +29,58 @@ export class NewRouteComponent  {
     var map = new google.maps.Map(document.getElementById('map'));
 
     //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
-    this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+    //this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
     this.directionsRenderer.setMap(map);
+  }
+
+
+  //verifies is a given input fields alludes to the downtown campus
+  isSGW(inputField: string):boolean{
+    inputField = inputField.toLowerCase();
+    if(this.sgwCampus.includes(inputField))
+      return true;
+    else
+      return false;
+  }
+  
+  //verifies is a given input fields alludes to the loyola campus
+  isLoyola(inputField: string):boolean{
+    inputField = inputField.toLowerCase();
+    if(this.loyolaCampus.includes(inputField))
+      return true;
+    else
+      return false;
+  }
+
+  /*
+  *--PROBABLY wont need this, directly check if its sgw or loyola--
+  *determines if give input field is one of the 2 schools 
+  */
+  isSchool(inputField: string):boolean {
+    inputField = inputField.toLowerCase();
+    if(this.sgwCampus.includes(inputField) || this.loyolaCampus.includes(inputField))
+      return true;
+    else
+      false;
+  }
+
+  //determines if the user is travelling between campuses, if so suggest the shuttle bus
+  displayShuttle(){
+    let start = this.directions['start'].toLowerCase();
+    let destination = this.directions['destination'].toLowerCase();
+    let shuttleDisplay = document.getElementById('shuttle');
+    
+    if(this.isSchool(start) && this.isSchool(destination)){
+      if(this.isSGW(start) && this.isLoyola(destination)) {
+        shuttleDisplay.style.display="block";
+      }
+      else if(this.isLoyola(start) && this.isSGW(destination)) {
+        shuttleDisplay.style.display="block";
+      }
+    }
+    else
+    shuttleDisplay.style.display="none";
+
   }
 
   //Verifies is the user selected walking as their method of transportation
@@ -52,9 +107,17 @@ export class NewRouteComponent  {
     }
   }
 
+  //Verifies is the user selected wpublic transit as their method of transportation
+  isShuttle(): string{
+    var button = document.getElementById('shuttle');
+    if(button.classList.contains('segment-button-checked')) {
+      return "SHUTTLE"
+    }
+  }
+
   //Determines which of the 3 available modes of transportation was selected
   getTransportation():string{
-    if(this.isWalking() === "WALKING"){
+    if(this.isWalking() === "WALKING" || this.isShuttle() === "SHUTTLE"){
       return("WALKING")
     }
     else if (this.isTransit() === "TRANSIT"){

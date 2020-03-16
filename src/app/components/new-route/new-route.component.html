@@ -1,10 +1,10 @@
 <form id="form" (ngSubmit)="getDirections()">
     <ion-toolbar class="toolbar" style="margin-top: 60px;">
         <ion-item>
-            <ion-input [(ngModel)]="directions.start" name='start' placeholder="Start"></ion-input>
+            <ion-input [(ngModel)]="directions.start" (ionChange) = "displayShuttle()" name='start' placeholder="Start"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-input [(ngModel)]="directions.destination" name='destination' placeholder="Destination"></ion-input>
+            <ion-input [(ngModel)]="directions.destination" (ionChange) = "displayShuttle()" name='destination' placeholder="Destination"></ion-input>
         </ion-item>
         <ion-segment id="transportMode">
             <ion-segment-button class="transportButtons" id="walking">
@@ -15,11 +15,15 @@
             </ion-segment-button>
             <ion-segment-button class="transportButtons" id="transit">
                 <ion-label>PUBLIC TRANSIT</ion-label>
-              </ion-segment-button>
+            </ion-segment-button>
+            <ion-segment-button [style.display]="'none'" class="transportButtons" id="shuttle">
+              <ion-label>SHUTTLE BUS</ion-label>
+          </ion-segment-button>
           </ion-segment>
         <ion-button  type="submit" expand="full" (click)="getTransportation()">Get Directions</ion-button>
     </ion-toolbar> 
 </form>
 
-<div id="directionsPanel"></div>
+<!-- Div to display step by step direction in text for any given route -->
+<!-- <div id="directionsPanel"></div> -->
 <app-map id="map" class="map" #map></app-map>
