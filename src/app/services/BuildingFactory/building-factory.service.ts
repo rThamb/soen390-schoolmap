@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Building } from 'src/app/models/Building';
+import { Building } from '../../models/Building';
 import { Room } from '../../models/Room';
 import { Location } from '../../models/Location';
-import { Floor } from 'src/app/models/Floor';
+import { Floor } from '../../models/Floor';
+import { ReadGridService } from '../readGrid/read-grid.service' 
+
 
 declare var require: any;
 const fs: any = require('fs');
@@ -17,7 +19,7 @@ const fs: any = require('fs');
 })
 export class BuildingFactoryService {
 
-  constructor() { }
+  constructor(private floorService:ReadGridService) { }
 
   /**
    * Fetches the building data from the JSON file parameter and loads it into a Building object
@@ -60,6 +62,14 @@ export class BuildingFactoryService {
       building.addFloor(floor);
     }
     
+    return building;
+  }
+
+  public async loadBuilding(buildingKey: string){
+    let building = new Building();
+    building.setBuildingKey(buildingKey);
+    let floorsDictionary = await this.floorService.createGrid(buildingKey);
+    building.setFloors(floorsDictionary);
     return building;
   }
 }

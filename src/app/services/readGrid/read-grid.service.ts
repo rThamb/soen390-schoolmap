@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Floor } from '../../models/Floor' ;
 import { Location } from '../../models/Location';
+import { FloorTile } from '../../models/FloorTile'
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +20,16 @@ export class ReadGridService {
     this.directoryPath = "./assets/binary_floor_layouts/"; 
 
     let filenames = {
-      "H8": "H8_Floor.json" 
-    };
+      "HB": "HB.json" 
+    }; 
 
     this.floorFileNameMap = filenames;
   }
 
+  /**
+   * Async method that will load all floors plans for a given building. 
+   * @param keyName   Dictionary, where key is the floor key and value is the floor object.
+   */
   async createGrid(keyName: string)
   {
     try{
@@ -42,18 +47,46 @@ export class ReadGridService {
     }
   }
 
-  private jsonToFloor(json: any) : Floor{
+  private jsonToFloor(json: any) : any{
+    let floors = {};
+    let floorsData = json.floors;
+    let floorKeys = json.floorsKeys;
+
     //json['property'] - how to access values
-     let floor = new Floor();
-     floor.topLeftCornerGPS = new Location(json.topLeftLat, json.topLeftLong, 0);
-     floor.topRightCornerGPS = new Location(json.topRightLat, json.topRightLong, 0);
-     floor.bottomLeftCornerGPS = new Location(json.bottomLeftLat, json.bottomLeftLong, 0);
-     floor.bottomRightCornerGPS = new Location(json.bottomRightLat, json.bottomRightLong, 0);
-     //floor.pathfindingFloorGrid = json.binaryGrid;
-     
 
+    let curFloor = null;
+    for(let i = 0; i < floorsData.length; i++){
+     curFloor = floorsData[i]; 
+     let floor: Floor = new Floor();
+     floor.topLeftCornerGPS = new Location(curFloor.topLeftLat, curFloor.topLeftLong, 0);
+     floor.topRightCornerGPS = new Location(curFloor.topRightLat, curFloor.topRightLong, 0);
+     floor.bottomLeftCornerGPS = new Location(curFloor.bottomLeftLat, curFloor.bottomLeftLong, 0);
+     floor.bottomRightCornerGPS = new Location(curFloor.bottomRightLat, curFloor.bottomRightLong, 0);
+     floor.setFloorTileGrid(this.createTileGrid(curFloor.binaryGrid));
+     floor.setFloorLevel(curFloor.level)
+     floor.pointsOfInterest = curFloor.POI; 
+     floors[floorKeys[i]] = floor;
+    }
+    return floors;
+  }
 
-     floor.pointsOfInterest = json.POI; 
-     return floor;
+  private createTileGrid(grid: number[][]): any{
+    let tileGrid: FloorTile[][] = [];
+
+    let length = grid.length;
+    let width = grid[0].length;
+    let arr = [];
+    for(let i = 0; i < length; i++){
+      arr = [];
+      let currentRow = grid[i];
+      for(let j = 0; j < width; j++){
+        let num = currentRow[j];
+        let tile = new FloorTile(null, num);
+        arr.push(tile);
+      }
+      tileGrid.push(arr);
+      arr = [];
+    }
+    return tileGrid;
   }
 }
