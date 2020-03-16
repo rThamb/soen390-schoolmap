@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
 
   setFloor(){
     this.service.createGrid("HB").then((grid) => {
-      debugger;
+    
       this.floor = grid;
     });
   }
@@ -50,11 +50,11 @@ export class HomeComponent implements OnInit {
   
   testIndoorPathing(){
     this.service.createGrid("HB").then((grid) => {
-      debugger;
+      
       //let point =  this.service2.getFloorGridCoordinate(new Location(45.497082, -73.578647, 0) , grid[0]);
       let expect = "8,17"; 
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497082, -73.578647, 0) , grid[0], "H840");
-      debugger;
+      
     });
     //let floors = await this.service.getBuildingFloors("HB");
     //let path = this.service3.getPathForDestinationOnSameFloor(null, grid, "H840", "H890"); 
@@ -62,9 +62,9 @@ export class HomeComponent implements OnInit {
   }
 
   testBuilding(){
-    debugger; 
+     
     this.bService.loadBuilding("HB").then((building: Building) => {
-      debugger;
+      
       /*let classes = building.getAllClassroomCodes();
       let floor : Floor = building.getFloorLevel("8");
       let a = floor.getClassroomCoordinate("HB840");
@@ -78,8 +78,7 @@ export class HomeComponent implements OnInit {
       let userPosition = new Location(45.497139, -73.578743, 0);
       let curFloor = building.getFloorLevel("8"); 
       let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB967");
-      
-      debugger;
+     
     });
   }
 }
