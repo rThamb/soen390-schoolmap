@@ -23,12 +23,12 @@ import { BuildingFactoryService } from './services/BuildingFactory/building-fact
 
 //Component imports
 import { AboutUsComponent } from './components/about-us/about-us.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 import { HomeComponent } from './components/home/home.component';
 import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { MapComponent } from './components/map/map.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
-import { NearbyEventsComponent } from './components/nearby-events/nearby-events.component';
-import { NearbyRestaurantsComponent } from './components/nearby-restaurants/nearby-restaurants.component';
+import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
 import { ReportIssuesComponent } from './components/report-issues/report-issues.component';
 import { SafetyComponent } from './components/safety/safety.component';
@@ -44,8 +44,8 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 
 @NgModule({
 
-  declarations: [AppComponent, MapComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent, 
-                NewRouteComponent, AboutUsComponent, NearbyEventsComponent, NearbyRestaurantsComponent, ReportIssuesComponent,
+  declarations: [AppComponent, MapComponent, FavoritesComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent, 
+                NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, ReportIssuesComponent,
                 SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
   entryComponents: [],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
