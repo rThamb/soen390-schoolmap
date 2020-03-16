@@ -14,7 +14,6 @@ import {User} from '../../models/User'
 
 declare var google;
 
-
 /**
  * MapComponent class. Contains the map object and attributes for all google map related services.
  * Also contains data for both campuses and is injected with our services.
