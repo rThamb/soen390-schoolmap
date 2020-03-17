@@ -15,6 +15,8 @@ export class DirectionsComponent{
   directionsRenderer = new google.maps.DirectionsRenderer;
   directions = {}
   shuttleTimeValue = "";
+  travelDistance = "";
+  travelDuration = "";
   map:any;
 
   //Possible key words that would be searched to get either of the campuses
@@ -33,6 +35,7 @@ export class DirectionsComponent{
     
     //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
     //this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+
     this.directionsRenderer.setMap(this.map);
 
     //temporary: to display next shuttle time
@@ -62,7 +65,6 @@ export class DirectionsComponent{
   }
 
   /*
-  *--PROBABLY wont need this, directly check if its sgw or loyola--
   *determines if give input field is one of the 2 schools 
   */
   isSchool(inputField: string):boolean {
@@ -90,7 +92,7 @@ export class DirectionsComponent{
         this.getNextShuttleTime('SGW').then((nextShuttleTime) => {
           if(nextShuttleTime){
             shuttleDisplay.style.display="block";
-            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + nextShuttleTime.getMinutes();
+            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
           }
         });
       }
@@ -98,7 +100,7 @@ export class DirectionsComponent{
         this.getNextShuttleTime('loyola').then((nextShuttleTime) => {
           if(nextShuttleTime){
             shuttleDisplay.style.display="block";
-            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + nextShuttleTime.getMinutes();
+            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
           }
         });
       }
@@ -153,6 +155,18 @@ export class DirectionsComponent{
     }
   }
 
+  displayTravelInfo(response: any) {
+    let infoPanel = document.getElementById('travelinfo');
+    this.travelDistance = "Travel Distance: " + response.routes[0].legs[0].distance.text;
+    
+    if (this.isShuttle() === "SHUTTLE")
+      this.travelDuration = "Estimated Travel Time: 30 mins";
+    else
+      this.travelDuration = "Estimated Travel Time: " + response.routes[0].legs[0].duration.text;
+    
+    infoPanel.style.display = "block";
+  }
+
   //Uses the google API to determin the route and draws the path on the map
   getDirections() {
     //this is a reference to the map
@@ -165,6 +179,7 @@ export class DirectionsComponent{
       travelMode: travelMode
     }, (response, status) => {
       if (status === 'OK') {
+        this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
       } else {
         window.alert('Request to directions API failed: ' + status);

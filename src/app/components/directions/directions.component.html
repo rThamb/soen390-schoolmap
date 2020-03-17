@@ -29,3 +29,16 @@
 
  <!-- Temporary: to display shuttle bus time -->
  <ion-textarea rows="2"  [(ngModel)]="shuttleTimeValue" [style.display]="'none'" id="shuttletime" readonly> </ion-textarea>
+
+ <ion-grid [style.display]="'none'" id="travelinfo">
+  <ion-row>
+    <ion-col>
+      <ion-textarea [(ngModel)]="travelDistance"></ion-textarea>
+    </ion-col>
+    <ion-col>
+      <ion-textarea [(ngModel)]="travelDuration"></ion-textarea>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+ 
