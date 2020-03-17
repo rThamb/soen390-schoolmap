@@ -11,16 +11,11 @@ export class Floor
     private floorTileGrid: FloorTile[][];
     private width: number;
     private height: number;
-    private rooms: Room[];
-
-    //Temporary variables for prototyping
     public topRightCornerGPS: Location;
     public topLeftCornerGPS: Location;
     public bottomLeftCornerGPS: Location;
     public bottomRightCornerGPS: Location;
-    
-    public pointsOfInterest: any;
-    //-------------------------------------
+    public pointsOfInterest: any; // Dictionary of POIs
 
     constructor()
     {
@@ -65,11 +60,6 @@ export class Floor
     public setHeight(h: number)
     {
         this.height = h;
-    }
-
-    public addRoom(r: Room)
-    {
-        this.rooms.push(r);
     }
 
     public getAllPointsOfInterest(){

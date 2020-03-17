@@ -11,7 +11,6 @@ export class Building
     private floors: any;
     private buildingKey: string;
 
-
     private classrooms: string[];
 
     constructor()
