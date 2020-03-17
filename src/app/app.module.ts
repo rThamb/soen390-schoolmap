@@ -24,7 +24,9 @@ import { BuildingFactoryService } from './services/BuildingFactory/building-fact
 //Component imports
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
+import { GoButtonComponent } from './components/go-button/go-button.component';
 import { HomeComponent } from './components/home/home.component';
+import { HomeSearchComponent } from './components/home-search/home-search.component';
 import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { MapComponent } from './components/map/map.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
@@ -44,9 +46,9 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 
 @NgModule({
 
-  declarations: [AppComponent, MapComponent, FavoritesComponent, HomeComponent, MenubarComponent, ToggleComponent, LocateMeComponent, 
-                NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, ReportIssuesComponent,
-                SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
+  declarations: [AppComponent, MapComponent, FavoritesComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
+                ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, 
+                ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
   entryComponents: [],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [
