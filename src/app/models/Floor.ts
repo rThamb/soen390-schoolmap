@@ -1,6 +1,5 @@
 import { FloorTile } from './FloorTile';
 import { Location } from './Location';
-import { Room } from './Room';
 import { GridCoordinate } from './GridCoordinate'
 
 // This class represents the Floors that are stored in Buildings
