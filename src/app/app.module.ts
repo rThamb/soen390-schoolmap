@@ -36,7 +36,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
-
+import {IonicStorageModule} from '@ionic/storage';
 
 
 
@@ -48,7 +48,7 @@ import { ToggleComponent } from './components/toggle/toggle.component';
                 NewRouteComponent, AboutUsComponent, NearbyEventsComponent, NearbyRestaurantsComponent, ReportIssuesComponent,
                 SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
   entryComponents: [],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,
