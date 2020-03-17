@@ -140,7 +140,7 @@ export class IndoorPathingService {
     currentFloor: Floor, destination: string){
 
       let path = null;
-      let buildingKey = building.getBuildingKey();
+      let buildingKey = building.getBuildingKey(); 
       //check if user wants to go to a classroom
       if(destination.indexOf(buildingKey) != -1){
         //going to a classroom
@@ -180,12 +180,5 @@ export class IndoorPathingService {
   private getFloorLevelFromDestination(buildingkey: string, destKey: string){
     return Math.trunc(parseInt(destKey.replace("HB", "")) / 100);
   }
-
-
-
-
-
-  
-  
 
 }

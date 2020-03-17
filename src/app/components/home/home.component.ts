@@ -75,10 +75,13 @@ export class HomeComponent implements OnInit {
       */
       //let ninethfloor  = building.getFloorLevel("9");
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
-      let userPosition = new Location(45.497139, -73.578743, 0);
-      let curFloor = building.getFloorLevel("8"); 
-      let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB967");
+      //let userPosition = new Location(45.497139, -73.578743, 0);
+      //let curFloor = building.getFloorLevel("8"); 
+      //let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB967");
      
+      debugger;
+      let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
+
     });
   }
 }

@@ -4,12 +4,16 @@ import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathin
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
+import { Building } from '../../models/Building';
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service';
 import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
+
+import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
+
 
 
 declare var google;
@@ -37,7 +41,9 @@ export class MapComponent implements AfterViewInit {
   private loyola: Campus;
 
   // Injects the component class with imported services
-  constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
+  constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, 
+    private indoorPathingService: IndoorPathingService, private myService: ReadGridService,
+  private mappingService: GpsGridMappingService) 
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
@@ -72,7 +78,10 @@ export class MapComponent implements AfterViewInit {
 
     this.initOverlays();
 
-    this.drawPath(null);
+    this.buildingFactory.loadBuilding("HB").then((building: Building) => {
+      this.drawPath(null, building.getFloorLevel("8"));
+    });
+    
   }
 
   // Gets the current location of user and focuses map to that point
@@ -1663,18 +1672,21 @@ export class MapComponent implements AfterViewInit {
    * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
    * @param locationList 
    */
-  drawPath(locationList: Location[])
+  drawPath(locationList: Location[], floor: Floor)
   {
+    debugger; 
     var pathCoordinates = [];
+    locationList = this.mappingService.getLngLatForPath(floor, null);
 
-    locationList.forEach((location: Location) => {
+    for(let i = 0; i < locationList.length; i++){
+      let location = locationList[i]; 
       pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
-    });
+    }
 
     var path = new google.maps.Polyline({
       path: pathCoordinates,
       geodesic: true,
-      strokeColor: '#FF0000',
+      strokeColor: '#008080',
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
