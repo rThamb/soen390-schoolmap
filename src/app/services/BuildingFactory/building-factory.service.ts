@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Building } from '../../models/Building';
-import { Room } from '../../models/Room';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
 import { ReadGridService } from '../readGrid/read-grid.service' 

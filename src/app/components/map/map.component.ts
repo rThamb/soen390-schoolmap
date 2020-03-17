@@ -4,8 +4,8 @@ import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathin
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
-import { BuildingFactoryService } from 'src/app/services/BuildingFactory/building-factory.service';
-import { Campus } from 'src/app/models/Campus';
+import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service';
+import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
@@ -71,6 +71,8 @@ export class MapComponent implements AfterViewInit {
     });
 
     this.initOverlays();
+
+    this.drawPath(null);
   }
 
   // Gets the current location of user and focuses map to that point
@@ -1657,5 +1659,27 @@ export class MapComponent implements AfterViewInit {
 
   }
 
+  /**
+   * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
+   * @param locationList 
+   */
+  drawPath(locationList: Location[])
+  {
+    var pathCoordinates = [];
+
+    locationList.forEach((location: Location) => {
+      pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
+    });
+
+    var path = new google.maps.Polyline({
+      path: pathCoordinates,
+      geodesic: true,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    path.setMap(this.map);
+  }
 
 }
