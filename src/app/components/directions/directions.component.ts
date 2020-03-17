@@ -39,7 +39,8 @@ export class DirectionsComponent{
 
   //verifies is a given input fields alludes to the downtown campus
   isSGW(inputField: string):boolean{
-    inputField = inputField.toLowerCase();
+    if(inputField)
+      inputField = inputField.toLowerCase();
     if(this.sgwCampus.includes(inputField))
       return true;
     else
@@ -48,7 +49,8 @@ export class DirectionsComponent{
   
   //verifies is a given input fields alludes to the loyola campus
   isLoyola(inputField: string):boolean{
-    inputField = inputField.toLowerCase();
+    if(inputField)
+      inputField = inputField.toLowerCase();
     if(this.loyolaCampus.includes(inputField))
       return true;
     else
@@ -60,7 +62,8 @@ export class DirectionsComponent{
   *determines if give input field is one of the 2 schools 
   */
   isSchool(inputField: string):boolean {
-    inputField = inputField.toLowerCase();
+    if(inputField)
+      inputField = inputField.toLowerCase();
     if(this.sgwCampus.includes(inputField) || this.loyolaCampus.includes(inputField))
       return true;
     else
@@ -69,10 +72,15 @@ export class DirectionsComponent{
 
   //determines if the user is travelling between campuses, if so suggest the shuttle bus
   displayShuttle(){
-    let start = this.directions['start'].toLowerCase();
-    let destination = this.directions['destination'].toLowerCase();
+    let start = this.directions['start'];
+    let destination = this.directions['destination'];
     let shuttleDisplay = document.getElementById('shuttle');
     
+    if(start && destination){
+      start = start.toLowerCase();
+      destination = destination.toLowerCase();
+    }
+
     if(this.isSchool(start) && this.isSchool(destination)){
       if(this.isSGW(start) && this.isLoyola(destination)) {
         shuttleDisplay.style.display="block";
@@ -82,7 +90,7 @@ export class DirectionsComponent{
       }
     }
     else
-    shuttleDisplay.style.display="none";
+      shuttleDisplay.style.display="none";
 
   }
 
