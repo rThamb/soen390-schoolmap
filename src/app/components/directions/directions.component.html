@@ -1,27 +1,33 @@
 <form id="form" (ngSubmit)="getDirections()">
-  <ion-toolbar class="toolbar" style="margin-top: 60px;">
-      <ion-item>
+  <ion-header>
+  <ion-toolbar class="toolbar">
+
+      <ion-item  class="inputItem">
           <ion-input [(ngModel)]="directions.start" (ionChange) = "displayShuttle()" name='start' placeholder="Start"></ion-input>
       </ion-item>
-      <ion-item>
+
+      <ion-item  class="inputItem">
           <ion-input [(ngModel)]="directions.destination" (ionChange) = "displayShuttle()" name='destination' placeholder="Destination"></ion-input>
       </ion-item>
-      <ion-segment id="transportMode">
-          <ion-segment-button class="transportButtons" id="walking">
-            <ion-label>WALKING</ion-label>
+    </ion-toolbar> 
+
+    <ion-segment  class="transportationMethod">
+          <ion-segment-button  id="walking">
+            <ion-icon name="walk" size="large"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button class="transportButtons" id="driving">
-            <ion-label>DRIVING</ion-label>
+          <ion-segment-button id="driving">
+            <ion-icon name="car" size="large"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button class="transportButtons" id="transit">
-              <ion-label>PUBLIC TRANSIT</ion-label>
+          <ion-segment-button id="transit">
+              <ion-icon name="train" size="large"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button [style.display]="'none'" class="transportButtons" id="shuttle">
-            <ion-label>SHUTTLE BUS</ion-label>
+          <ion-segment-button [style.display]="'none'" id="shuttle">
+            <ion-icon name="bus" size="large"></ion-icon>
         </ion-segment-button>
         </ion-segment>
-      <ion-button  type="submit" expand="full" (click)="getTransportation()">Get Directions</ion-button>
-  </ion-toolbar> 
+
+      <ion-button collapse="true"  type="submit" expand="full" (click)="getTransportation()">Get Directions</ion-button>
+    </ion-header>
 </form>
 
 <!-- Div to display step by step direction in text for any given route -->

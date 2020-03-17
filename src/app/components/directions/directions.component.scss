@@ -1,16 +1,16 @@
-.transportButtons{
-    height: 50px;
+ .toolbar{
+   margin-top: 57px;
  }
 
- #form{
-    
+ .inputItem{
+      --highlight-color-valid: #488aff;
+ }
+
+ .transportationMethod{
+    min-height: 10px;
  }
 
  #directionsPanel{
     overflow: auto;
     height: 400px;
- }
-
- #transportMode{
-    height: min-content;
  }
