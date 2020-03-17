@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReadGridService } from '../../services/readGrid/read-grid.service' 
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
 import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service' 
@@ -6,6 +6,7 @@ import { Location } from '../../models/Location'
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
 import { Building } from '../../models/Building'
 import { Floor } from '../../models/Floor'
+import { MapComponent } from '../map/map.component'
 
 
 
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
     THIS EXAMPLE/CODE WILL OBVIOUSLY BE REMOVED IN THE LATER FUTURE. Please use this as a simply reference to help.
   */
 
+  @ViewChild('map', {static: false}) mapHandle: MapComponent;
   floor: any;
 
   constructor(private service:ReadGridService, private service2: GpsGridMappingService,
@@ -63,6 +65,7 @@ export class HomeComponent implements OnInit {
 
   testBuilding(){
      
+    debugger;
     this.bService.loadBuilding("HB").then((building: Building) => {
       
       /*let classes = building.getAllClassroomCodes();
@@ -75,12 +78,16 @@ export class HomeComponent implements OnInit {
       */
       //let ninethfloor  = building.getFloorLevel("9");
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
-      //let userPosition = new Location(45.497139, -73.578743, 0);
-      //let curFloor = building.getFloorLevel("8"); 
-      //let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB967");
-     
       debugger;
-      let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
+      let userPosition = new Location(45.497139, -73.578743, 0);
+      let curFloor = building.getFloorLevel("8"); 
+      let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB967");
+      
+      let pathElevator: Location[] = pathGoingUp["route"]["Elevator"];
+
+      this.mapHandle.drawPath(pathElevator);
+      debugger;
+      //let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
 
     });
   }

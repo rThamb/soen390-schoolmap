@@ -73,8 +73,6 @@ export class MapComponent implements AfterViewInit {
     });
 
     this.initOverlays();
-
-    this.drawPath(null);
   }
 
   // Gets the current location of user and focuses map to that point
@@ -1682,8 +1680,9 @@ export class MapComponent implements AfterViewInit {
    */
   drawPath(locationList: Location[])
   {
+    debugger;
     var pathCoordinates = [];
-
+    
     locationList.forEach((location: Location) => {
       pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
     });

@@ -184,7 +184,6 @@ Y
   //topLeft, topRight
   private getLngLatForCoordinate(x, y, ref1Lng, ref1Lat, ref2Lng, ref2Lat, ref3Lng, ref3Lat, sizeX, sizeY){
 
-    debugger;
     //determine shift vector
     //shift size amount lng distance
 
@@ -215,9 +214,6 @@ Y
 
   public getLngLatForPath(floor: Floor, path: any): Location[]{
 
-    debugger;
-    path = [ [2,3], [3,3], [4,3], [5, 3], [6,3], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8], [7,9]];
-    //path = [ [0,0], [19,0], [18,18], [0,18], [0,0]]
     let markers : Location[] = [];
     
     for(let i = 0; i < path.length; i++){
@@ -232,7 +228,6 @@ Y
       markers.push(loc);
     }
 
-    debugger;
     return markers;
     
   
