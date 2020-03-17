@@ -11,10 +11,10 @@ declare var google
 export class DirectionsComponent{
 
   
- 
   directionsService = new google.maps.DirectionsService;
   directionsRenderer = new google.maps.DirectionsRenderer;
   directions = {}
+  shuttleTimeValue = "";
   map:any;
 
   //Possible key words that would be searched to get either of the campuses
@@ -34,6 +34,10 @@ export class DirectionsComponent{
     //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
     //this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
     this.directionsRenderer.setMap(this.map);
+
+    //temporary: to display next shuttle time
+    if(this.isShuttle())
+      document.getElementById('shuttletime').style.display = "block";
   }
 
 
@@ -83,10 +87,20 @@ export class DirectionsComponent{
 
     if(this.isSchool(start) && this.isSchool(destination)){
       if(this.isSGW(start) && this.isLoyola(destination)) {
-        shuttleDisplay.style.display="block";
+        this.getNextShuttleTime('SGW').then((nextShuttleTime) => {
+          if(nextShuttleTime){
+            shuttleDisplay.style.display="block";
+            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + nextShuttleTime.getMinutes();
+          }
+        });
       }
       else if(this.isLoyola(start) && this.isSGW(destination)) {
-        shuttleDisplay.style.display="block";
+        this.getNextShuttleTime('loyola').then((nextShuttleTime) => {
+          if(nextShuttleTime){
+            shuttleDisplay.style.display="block";
+            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + nextShuttleTime.getMinutes();
+          }
+        });
       }
     }
     else
@@ -181,6 +195,7 @@ export class DirectionsComponent{
     });
   }
 
+  //Given the departure campus, retrieves the time of next shuttle bus leaving that campus (if any)
   async getNextShuttleTime(departureCampus){
     
     let res = await fetch("./assets/shuttle_bus/departureTimes.json");
