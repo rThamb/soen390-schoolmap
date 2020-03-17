@@ -12,6 +12,8 @@ import { overlays } from './BuildingOverlayPoints'
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {Building} from '../../models/Building'
 import {IndoorPOI} from '../../models/IndoorPOI'
+import { MapService } from '../../services/map/map.service'
+
 
 
 declare var google;
@@ -39,7 +41,7 @@ export class MapComponent implements AfterViewInit {
   private loyola: Campus;
 
   // Injects the component class with imported services
-  constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
+  constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
@@ -73,6 +75,12 @@ export class MapComponent implements AfterViewInit {
     });
 
     this.initOverlays();
+    this.setDirectionsMap();
+  }
+
+  //sets an instance of the map to a service which injects it to other components
+  setDirectionsMap(){
+    this.mapService.setMap(this.map);
   }
 
   // Gets the current location of user and focuses map to that point

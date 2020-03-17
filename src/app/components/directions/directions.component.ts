@@ -1,4 +1,5 @@
-import { Component, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
+import {MapService} from '../../services/map/map.service';
 
 declare var google
 
@@ -7,29 +8,32 @@ declare var google
   templateUrl: './directions.component.html',
   styleUrls: ['./directions.component.scss'],
 })
-export class DirectionsComponent {
+export class DirectionsComponent{
 
   
  
   directionsService = new google.maps.DirectionsService;
   directionsRenderer = new google.maps.DirectionsRenderer;
   directions = {}
+  map:any;
 
   //Possible key words that would be searched to get either of the campuses
   sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o"];
   loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke"];
 
 
-  constructor() { }
+  constructor(private mapSrevice : MapService) { }
+
+  
 
   setMap(){
     
-    //creates an instance of the map to use in the backend, HOWEVER this create a new google map, need to change to use our own map
-    var map = new google.maps.Map(document.getElementById('map'));
-
+    //retrieves an instance of the map (with the overlays) via a service
+    this.map = this.mapSrevice.getMap();
+    
     //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
     //this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
-    this.directionsRenderer.setMap(map);
+    this.directionsRenderer.setMap(this.map);
   }
 
 
