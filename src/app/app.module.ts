@@ -26,10 +26,11 @@ import { BuildingFactoryService } from './services/BuildingFactory/building-fact
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
-import { HomeComponent } from './components/home/home.component';
 import { HomeSearchComponent } from './components/home-search/home-search.component';
-import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { MapComponent } from './components/map/map.component';
+import { DirectionsComponent } from './components/directions/directions.component';
+import { LocateMeComponent } from './components/locate-me/locate-me.component';
+import { HomeComponent } from './components/home/home.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
 import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
