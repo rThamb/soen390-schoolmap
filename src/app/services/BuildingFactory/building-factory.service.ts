@@ -24,7 +24,6 @@ export class BuildingFactoryService {
    * Fetches the building data from the JSON file parameter and loads it into a Building object
    * returns the building object. This class is injected into the MapComponent as a service.
    */
-
   public async loadBuilding(buildingKey: string){
     let building = new Building();
     building.setBuildingKey(buildingKey);

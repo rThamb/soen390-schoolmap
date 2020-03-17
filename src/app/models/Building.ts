@@ -10,7 +10,6 @@ export class Building
     //dictionary with
     private floors: any;
     private buildingKey: string;
-
     private classrooms: string[];
 
     constructor()

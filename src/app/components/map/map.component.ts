@@ -4,16 +4,14 @@ import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathin
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
-import { Building } from '../../models/Building';
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service';
 import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
-
-import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
-
+import {Building} from '../../models/Building'
+import {IndoorPOI} from '../../models/IndoorPOI'
 
 
 declare var google;
@@ -41,9 +39,7 @@ export class MapComponent implements AfterViewInit {
   private loyola: Campus;
 
   // Injects the component class with imported services
-  constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, 
-    private indoorPathingService: IndoorPathingService, private myService: ReadGridService,
-  private mappingService: GpsGridMappingService) 
+  constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
@@ -78,10 +74,7 @@ export class MapComponent implements AfterViewInit {
 
     this.initOverlays();
 
-    this.buildingFactory.loadBuilding("HB").then((building: Building) => {
-      this.drawPath(null, building.getFloorLevel("8"));
-    });
-    
+    this.drawPath(null);
   }
 
   // Gets the current location of user and focuses map to that point
@@ -1563,7 +1556,6 @@ export class MapComponent implements AfterViewInit {
 
   
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
-  // Prototype for now
   async enterBuilding(id: string, polygon, marker)
   {          
 
@@ -1575,6 +1567,22 @@ export class MapComponent implements AfterViewInit {
           polygon.setVisible(false);
           marker.setVisible(false);
           this.indoorView();
+          let b: Building = await this.buildingFactory.loadBuilding('HB');
+          let floor8: Floor = b.getFloors()[0];
+
+          let poiMarkers = []
+
+          for(let i = 0; i < floor8.getPois().length; i++)
+          {
+            let poi = floor8.getPois()[i];
+
+            poiMarkers.push(new google.maps.Marker({
+              position: poi.getGoogleLatLng(),
+              map: this.map,
+              title: 'Here'
+            }))
+          }
+                  
           break;
       //EV building
       case 'ev':
@@ -1672,21 +1680,18 @@ export class MapComponent implements AfterViewInit {
    * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
    * @param locationList 
    */
-  drawPath(locationList: Location[], floor: Floor)
+  drawPath(locationList: Location[])
   {
-    debugger; 
     var pathCoordinates = [];
-    locationList = this.mappingService.getLngLatForPath(floor, null);
 
-    for(let i = 0; i < locationList.length; i++){
-      let location = locationList[i]; 
+    locationList.forEach((location: Location) => {
       pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
-    }
+    });
 
     var path = new google.maps.Polyline({
       path: pathCoordinates,
       geodesic: true,
-      strokeColor: '#008080',
+      strokeColor: '#FF0000',
       strokeOpacity: 1.0,
       strokeWeight: 2
     });

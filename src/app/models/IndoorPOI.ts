@@ -1,14 +1,16 @@
 import { GridCoordinate } from './GridCoordinate'
+import {Location} from './Location'
 
 // IndoorPOI class represents any indoor point of interest within the floor
 // that is locatable. The type attribute specifies what kind of POI.
 
-export class IndoorPOI
+export class IndoorPOI extends Location
 {
     private key: string;
     private coord: GridCoordinate;
-    constructor(xCoord: number, yCoord: number, k: string)
-    {
+    constructor(lat: number, lng: number, xCoord: number, yCoord: number, k: string)
+    {  
+        super(lat, lng, 0);
         this.coord = new GridCoordinate(xCoord, yCoord);
         this.key = k;
     }
@@ -32,6 +34,8 @@ export class IndoorPOI
     {
         this.coord = c;
     }
+
+
 
 
 }

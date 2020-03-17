@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Floor } from '../../models/Floor' ;
 import { Location } from '../../models/Location';
 import { FloorTile } from '../../models/FloorTile'
+import { IndoorPOI } from '../../models/IndoorPOI'
 
 @Injectable({
   providedIn: 'root'
@@ -88,5 +89,10 @@ export class ReadGridService {
       arr = [];
     }
     return tileGrid;
+  }
+
+  private getPointsOfInterest(poi: any): IndoorPOI[]
+  {
+    return null;
   }
 }

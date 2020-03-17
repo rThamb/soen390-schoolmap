@@ -1,6 +1,7 @@
 import { FloorTile } from './FloorTile';
 import { Location } from './Location';
 import { GridCoordinate } from './GridCoordinate'
+import { IndoorPOI } from './IndoorPOI'
 
 // This class represents the Floors that are stored in Buildings
 // Each Floor instance stores a pathfinding grid configuration, it's level and POI locations.
@@ -15,6 +16,8 @@ export class Floor
     public bottomLeftCornerGPS: Location;
     public bottomRightCornerGPS: Location;
     public pointsOfInterest: any; // Dictionary of POIs
+
+    private pois: IndoorPOI[];
 
     constructor()
     {
@@ -59,6 +62,16 @@ export class Floor
     public setHeight(h: number)
     {
         this.height = h;
+    }
+
+    public getPois()
+    {
+        return this.pois
+    }
+
+    public setPois(p: IndoorPOI[])
+    {
+        this.pois = p;
     }
 
     public getAllPointsOfInterest(){
