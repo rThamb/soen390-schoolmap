@@ -1,27 +1,29 @@
 import { IndoorPOI } from './IndoorPOI';
+import {GridCoordinate} from './GridCoordinate'
 
 // This class represents every walkable/unwalkable tile on a floor that is used by pathfindingjs
 // pathfindercode = 0 = walkable & 1 = unwalkable.
 // Also contains Indoor Point of Interest located at that point
 export class FloorTile
 {
-    private poi: IndoorPOI;
+    private location: Location; // Lat/Lng
     private pathfinderCode: number; // 0 or 1
-
-    constructor(p: IndoorPOI, pfc: number)
+    public tileCoord: GridCoordinate;
+    
+    constructor(l: Location, pfc: number)
     {
-        this.poi = p;
+        this.location = l;
         this.pathfinderCode = pfc;
     }
 
-    public getPOI()
+    public getLocation()
     {
-        return this.poi;
+        return this.location;
     }
 
-    public setPOI(p: IndoorPOI)
+    public setLocation(l: Location)
     {
-        this.poi = p;
+        this.location = l;
     }
 
     public getPathfinderCode()
@@ -34,5 +36,8 @@ export class FloorTile
         this.pathfinderCode = c;
     }
 
+    
+
 
 }
+
