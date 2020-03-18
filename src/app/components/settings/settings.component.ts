@@ -86,19 +86,25 @@ export class SettingsComponent implements OnInit {
     
   }
 
+  triggerAccessibilityEvent()
+  {
+    console.log('Toggle Accessibility ON')
+  }
+
+
   triggerElevatorEvent()
   {
-
+    console.log('Toggle Elevator')
   }
 
   triggerStairsEvent()
   {
-
+    console.log('Toggle Stairs ON')
   }
 
   triggerEscalatorEvent()
   {
-
+    console.log('Toggle Escalator ON')
   }
 
   triggerLanguagePreferenceEvent()
@@ -108,7 +114,7 @@ export class SettingsComponent implements OnInit {
 
   triggerGoogleSyncEvent()
   {
-
+    console.log('Toggle google ON')
   }
 
 }

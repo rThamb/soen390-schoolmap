@@ -1,97 +1,71 @@
 <div class="settings">
-  <ul class="settings-list">
-    <li class="title">
-        <!--TODO: the back arrow should redirect to main menu-->
-          <!--<button  (click)="LoadNewPage('/Home')">-->
-              <ion-icon name="arrow-back"></ion-icon>
-          <!--</button>-->
-          <ion-icon name="settings"></ion-icon>
-          Settings</li>
-    <hr>
-    <li>Language</li>
-    <hr>
-    <li>
-      <p class="alignleft">
+
+<!--Settings Header-->
+  <ion-item lines="full" class="Linescolor">
+    <ion-icon name="settings" size="large"></ion-icon>
+    <h2>Settings</h2>
+  </ion-item>
+
+<!--List of all options in settings menu-->
+  <ion-list>
+    <ion-item button class="Linescolor">     
+      Language
+    </ion-item>
+
+    <ion-item button class="Linescolor">
       Preferences
-      </p>
-      <p class="alignright">
-      </p>
-      <div style="clear: both;"></div>
-    </li>
-    <hr>
-    <ul class="subList1">
-      <li class="exception">
-        <p class="alignleft"> <ion-icon name="body"></ion-icon>
-          Accessibility</p>
-        <p class="alignright">
-          <label class="switch">
-            <input type="checkbox">
-            <span class="slider round"></span>
-          </label>
-        </p>
-        <div style="clear: both;"></div>
-      </li>
-      <hr>
-      <ul class="subList2">
-        <li class="exception">
-          <p class="alignleft">Elevators</p>
+    </ion-item>
 
-          <p class="alignright">
-            <label class="switch">
-              <input type="checkbox">
-              <span class="slider round"></span>
-            </label>
-          </p>
+<!--Accessibility should toggle other options when toggled-->
+    <ion-item  class="Linescolor">
+      <ion-icon name="body"></ion-icon> 
+        Accessibility
+      <ion-label>
+        <ion-toggle class="alignright" (ionChange)="triggerAccessibilityEvent()"></ion-toggle>
+      </ion-label>
+    </ion-item>
 
-          <div style="clear: both;"></div>
+<!--Accessibility Options-->
+    <ion-list>
 
-        </li>
-        <hr>
-        <li class="exception">
-          <p class="alignleft">Stairs</p>
+      <ion-item class="NestedList">
+        Elevators
+        <ion-label>
+          <ion-toggle class="alignright" (ionChange)="triggerElevatorEvent()"></ion-toggle>
+          </ion-label>
+      </ion-item>
 
-          <p class="alignright">
-            <label class="switch">
-              <input type="checkbox">
-              <span class="slider round"></span>
-            </label>
-          </p>
+      <ion-item class="NestedList">
+        Stairs
+        <ion-label>
+          <ion-toggle class="alignright" (ionChange)="triggerStairsEvent()"></ion-toggle>
+          </ion-label>
+      </ion-item>
 
-          <div style="clear: both;"></div>
+      <ion-item class="NestedList">
+        Escalators
+        <ion-label>
+          <ion-toggle class="alignright" (ionChange)="triggerEscalatorEvent()"></ion-toggle>
+        </ion-label>
+      </ion-item>
 
-        </li>
-        <hr>
-        <li class="exception">
-          <p class="alignleft">Escalators</p>
+    </ion-list>
 
-          <p class="alignright">
-          <label class="switch">
-            <input type="checkbox">
-            <span class="slider round"></span>
-          </label>
-          </p>
-          <div style="clear: both;"></div>
 
-        </li>
-      </ul>
-    </ul>
-    <hr>
-    <li>
-      <p class="alignleft">Google Calendar Sync</p>
 
-      <p class="alignright">
-        <label class="switch">
-          <input type="checkbox">
-          <span class="slider round"></span>
-        </label>
-      </p>
-      <div style="clear: both;"></div>
+    <ion-item class="Linescolor">
+      Google Calendar Sync
+      <ion-label>
+        <ion-toggle class="alignright" (ionChange)="triggerGoogleSyncEvent()"></ion-toggle>
+      </ion-label>
+    </ion-item>
 
-    </li>
-    <hr>
-    <li>Notifications</li>
-  </ul>
-  <hr>
+    <ion-item button class="Linescolor">
+      Notifications
+    </ion-item>
+
+  </ion-list>
+
 </div>
 
 
