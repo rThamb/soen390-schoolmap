@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -38,7 +38,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
-
+import {IonicStorageModule} from '@ionic/storage';
 
 
 
@@ -50,7 +50,8 @@ import { ToggleComponent } from './components/toggle/toggle.component';
                 ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, 
                 ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
   entryComponents: [],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
+  imports: [HttpClientModule, BrowserModule, FormsModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, IonicStorageModule.forRoot({name: 'appDB',
+  driverOrder: ['sqlite', 'websql', 'indexeddb']})],
   providers: [
     StatusBar,
     SplashScreen,

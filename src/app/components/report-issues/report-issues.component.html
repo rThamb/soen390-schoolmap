@@ -1,15 +1,16 @@
-<p>
-  report-issues works!
-</p>
-<p>
-  report-issues works!
-</p>
-<p>
-  report-issues works!
-</p>
-<p>
-  report-issues works!
-</p>
-<p>
-  report-issues works!
-</p>
+<div class="container reportIssue">
+  <h1>Report an Issue</h1>
+  <hr>
+  <p class="text-primary">Please, describe the issue you’ve encountered in detail,
+    so our technical team could have all the relevant information to solve your problem. </p>
+  <form [formGroup]="issue" (ngSubmit)="ReportAnIssueForm()">
+    <ion-item>
+      <ion-input placeholder="E-mail" type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea placeholder="Message" formControlName="message"></ion-textarea>
+    </ion-item>
+    <br>
+    <button type="submit" [disabled]="!issue.valid">Submit</button>
+  </form>
+</div>
