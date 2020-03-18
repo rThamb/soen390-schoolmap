@@ -9,15 +9,18 @@ import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
-<<<<<<< HEAD
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {Building} from '../../models/Building'
 import {IndoorPOI} from '../../models/IndoorPOI'
+<<<<<<< HEAD
 import { MapService } from '../../services/map/map.service'
 
 =======
 import {User} from '../../models/User'
 >>>>>>> UC-62 & UC-48 & UC-123 -- Added User instance to the MapComponent class. User location is now derived from User object instead of the Location variable of MapComponent. All other user information should now be stored in the User instance of MapComponent (ex: courses, settings, etc...)
+=======
+import {User} from '../../models/User'
+>>>>>>> Fixed another conflict
 
 
 declare var google;
