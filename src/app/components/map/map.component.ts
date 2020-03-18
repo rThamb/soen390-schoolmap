@@ -9,13 +9,10 @@ import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
-<<<<<<< HEAD
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {Building} from '../../models/Building'
 import {IndoorPOI} from '../../models/IndoorPOI'
-=======
 import {User} from '../../models/User'
->>>>>>> UserPreferences
 
 
 declare var google;
