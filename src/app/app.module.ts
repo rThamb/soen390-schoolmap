@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -43,6 +43,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 
+import {IonicStorageModule} from '@ionic/storage';
 
 
 
@@ -54,7 +55,12 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
                 ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, 
                 ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
   entryComponents: [],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,NgxDatatableModule],
+
+
+
+  imports: [HttpClientModule, BrowserModule, FormsModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,NgxDatatableModule, IonicStorageModule.forRoot({name: 'appDB',
+  driverOrder: ['sqlite', 'websql', 'indexeddb']})],
+
   providers: [
     StatusBar,
     SplashScreen,

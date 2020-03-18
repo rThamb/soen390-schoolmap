@@ -12,10 +12,10 @@ import { overlays } from './BuildingOverlayPoints'
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {Building} from '../../models/Building'
 import {IndoorPOI} from '../../models/IndoorPOI'
+import {User} from '../../models/User'
 
 
 declare var google;
-
 
 /**
  * MapComponent class. Contains the map object and attributes for all google map related services.
@@ -31,7 +31,7 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef;
  
   public map: any; // google.maps.Map
-  private userLocation: Location = new Location(0, 0, 0);
+  private user: User;
   private mapOptions; // Object
   private userMarker; // google.maps.Marker
 
@@ -43,6 +43,7 @@ export class MapComponent implements AfterViewInit {
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
+    this.user = new User();
   }
 
   ngAfterViewInit(): void {
@@ -54,11 +55,10 @@ export class MapComponent implements AfterViewInit {
     // Gets current position of user
     const resp = await this.geolocation.getCurrentPosition();
 
-    this.userLocation.setLat(resp.coords.latitude);
-    this.userLocation.setLng(resp.coords.longitude);
+    this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
 
     this.mapOptions = {
-      center: this.userLocation.getGoogleLatLng(),
+      center: this.user.getLocation().getGoogleLatLng(),
       zoom: 17,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -67,7 +67,7 @@ export class MapComponent implements AfterViewInit {
     this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
 
     this.userMarker = new google.maps.Marker({
-      position: this.userLocation.getGoogleLatLng(),
+      position: this.user.getLocation().getGoogleLatLng(),
       map: this.map,
       title: 'Here'
     });
@@ -78,14 +78,13 @@ export class MapComponent implements AfterViewInit {
   // Gets the current location of user and focuses map to that point
   getCurrentLocation(){
     this.geolocation.getCurrentPosition().then((resp) => {
-      this.userLocation.setLat(resp.coords.latitude);
-      this.userLocation.setLng(resp.coords.longitude);
-      this.focusMap(this.userLocation);
+      this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
+      this.focusMap(this.user.getLocation());
     }).catch((error) => {
       console.log('Error getting location', error);
     });
 
-    return this.userLocation.getGoogleLatLng();
+    return this.user.getLocation().getGoogleLatLng();
   }
 
   // Re-center the map based on location parameter
