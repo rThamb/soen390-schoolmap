@@ -8,8 +8,12 @@
 
 <!--List of all options in settings menu-->
   <ion-list>
-    <ion-item button class="Linescolor">     
-      Language
+    <ion-item button class="Linescolor" lines="inset">     
+      <ion-label>Language</ion-label>
+      <ion-select value="English">
+        <ion-select-option value="English">English</ion-select-option>
+        <ion-select-option value="French">French</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item button class="Linescolor">
@@ -20,9 +24,6 @@
     <ion-item  class="Linescolor">
       <ion-icon name="body"></ion-icon> 
         Accessibility
-      <ion-label>
-        <ion-toggle class="alignright" (ionChange)="triggerAccessibilityEvent()"></ion-toggle>
-      </ion-label>
     </ion-item>
 
 <!--Accessibility Options-->
@@ -32,14 +33,14 @@
         Elevators
         <ion-label>
           <ion-toggle class="alignright" (ionChange)="triggerElevatorEvent()"></ion-toggle>
-          </ion-label>
+        </ion-label>
       </ion-item>
 
       <ion-item class="NestedList">
         Stairs
         <ion-label>
           <ion-toggle class="alignright" (ionChange)="triggerStairsEvent()"></ion-toggle>
-          </ion-label>
+        </ion-label>
       </ion-item>
 
       <ion-item class="NestedList">
