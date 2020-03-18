@@ -184,7 +184,6 @@ Y
   //topLeft, topRight
   private getLngLatForCoordinate(x, y, ref1Lng, ref1Lat, ref2Lng, ref2Lat, ref3Lng, ref3Lat, sizeX, sizeY){
 
-    debugger;
     //determine shift vector
     //shift size amount lng distance
 
@@ -194,8 +193,8 @@ Y
     //components (avg)
 
 
-    let xAddition = shiftVectorXComponent * (x + 2); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
-    let yAddition = shiftVectorYComponent * (x + 2);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
+    let xAddition = shiftVectorXComponent * (x + 1.5); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
+    let yAddition = shiftVectorYComponent * (x + 1.5);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
     
     let positionAfterXShiftLng = ref1Lng + xAddition;
     let positionAffterXShiftLat = ref1Lat + yAddition;
@@ -204,8 +203,8 @@ Y
     shiftVectorXComponent = (ref3Lng - ref1Lng) / sizeY; //x of X axis shift
     shiftVectorYComponent = (ref3Lat - ref1Lat) / sizeY; //y of X axis shift
 
-    xAddition = shiftVectorXComponent * (y + 1);//((shiftVectorXComponent * y + shiftVectorXComponent * (y + 1)) / 2.0);
-    yAddition = shiftVectorYComponent * (y + 1);// ((shiftVectorYComponent * y + shiftVectorYComponent * (y + 1)) / 2.0);
+    xAddition = shiftVectorXComponent * (y + 0.75);//((shiftVectorXComponent * y + shiftVectorXComponent * (y + 1)) / 2.0);
+    yAddition = shiftVectorYComponent * (y + 0.75);// ((shiftVectorYComponent * y + shiftVectorYComponent * (y + 1)) / 2.0);
 
     let LngForCoordinate = positionAfterXShiftLng + xAddition;
     let LatForCoordinate = positionAffterXShiftLat + yAddition;
@@ -215,9 +214,6 @@ Y
 
   public getLngLatForPath(floor: Floor, path: any): Location[]{
 
-    debugger;
-    path = [ [2,3], [3,3], [4,3], [5, 3], [6,3], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8], [7,9]];
-    //path = [ [0,0], [19,0], [18,18], [0,18], [0,0]]
     let markers : Location[] = [];
     
     for(let i = 0; i < path.length; i++){
@@ -232,7 +228,6 @@ Y
       markers.push(loc);
     }
 
-    debugger;
     return markers;
     
   

@@ -35,42 +35,58 @@
     "POI": {
         "HB840": {
             "x": 2,
-            "y": 5
+            "y": 5,
+            "lat": 45.497386, 
+            "lng": -73.578535
         }, 
          "HB890": {
             "x": 16,
-            "y": 9
+            "y": 9,
+            "lat": 45.497097,
+            "lng": -73.579132
         },
-        "Washroom": {
-            "Men": {
-                "x": 6, 
-                "y" : 15
-            }, 
-            "Women": {
+        "Washroom-Men": {
+            "x": 6, 
+            "y" : 15,
+            "lat": 0, 
+            "lng": 0
+        },
+        "Washroom-Women": {
                 "x": 9, 
-                "y": 3  
-            }  
-        },
+                "y": 3,
+                "lat": 0, 
+                "lng": 0  
+        },  
         "Escalator-Up": {
             "x": 9,
-            "y": 11
+            "y": 11,
+            "lat": 0, 
+            "lng": 0
         }, 
         "Escalator-Down": {
             "x": 9,
-            "y": 6
+            "y": 6,
+            "lat": 0, 
+            "lng": 0
         }, 
         "Elevator" : {
             "x": 12, 
-            "y": 15
+            "y": 11,
+            "lat": 0, 
+            "lng": 0
         },       
         "Stairs": [
             {
                 "x": 4,
-                "y": 15
+                "y": 15,
+                "lat": 0, 
+                "lng": 0
             },
             {
                 "x": 4,
-                "y": 3
+                "y": 3,
+                "lat": 0, 
+                "lng": 0
             } 
         ]
         }
@@ -110,34 +126,46 @@
     "POI": {
         "HB967": {
             "x": 11,
-            "y": 5
+            "y": 5,
+            "lat": 0, 
+            "lng": 0
         }, 
-        "Washroom": {
-            "Men": {
+        "Washroom-Men": {
+            "x": 0, 
+            "y" : 0,
+            "lat": 0, 
+            "lng": 0
+        },
+        "Washroom-Women": {
                 "x": 0, 
-                "y" : 0
-            }, 
-            "Women": {
-                "x": 0, 
-                "y": 0  
-            }  
+                "y": 0,
+                "lat": 0, 
+                "lng": 0  
         },
         "Escalator-Up": {
             "x": 0,
-            "y": 0
+            "y": 0,
+            "lat": 0, 
+            "lng": 0
         }, 
         "Escalator-Down": {
             "x": 0,
-            "y": 0
+            "y": 0,
+            "lat": 0, 
+            "lng": 0
         },       
         "Stairs": [
             {
                 "x": 0,
-                "y": 0
+                "y": 0,
+                "lat": 0, 
+                "lng": 0
             },
             {
                 "x": 0,
-                "y": 0
+                "y": 0,
+                "lat": 0, 
+                "lng": 0
             } 
         ]
         }
