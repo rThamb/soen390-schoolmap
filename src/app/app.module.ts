@@ -48,7 +48,8 @@ import {IonicStorageModule} from '@ionic/storage';
                 NewRouteComponent, AboutUsComponent, NearbyEventsComponent, NearbyRestaurantsComponent, ReportIssuesComponent,
                 SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
   entryComponents: [],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, IonicStorageModule.forRoot()],
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, IonicStorageModule.forRoot({      name: 'appDB',
+  driverOrder: ['sqlite', 'websql', 'indexeddb']})],
   providers: [
     StatusBar,
     SplashScreen,

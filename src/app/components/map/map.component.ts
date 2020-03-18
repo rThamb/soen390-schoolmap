@@ -4,8 +4,8 @@ import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathin
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
-import { BuildingFactoryService } from 'src/app/services/BuildingFactory/building-factory.service';
-import { Campus } from 'src/app/models/Campus';
+import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service';
+import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
