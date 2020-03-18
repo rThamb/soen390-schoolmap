@@ -43,6 +43,8 @@ export class MapComponent implements AfterViewInit {
   private sgw: Campus;
   private loyola: Campus;
 
+  private level: string; //Value selected in the floor dropdown
+
   // Injects the component class with imported services
   constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
   {
@@ -1282,7 +1284,6 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, FCMarker);
     });
 
-   
 
     //var hallTest = new google.maps.LatLng(45.497194, -73.578886) //Variable to test containsLocation
     
@@ -1566,12 +1567,15 @@ export class MapComponent implements AfterViewInit {
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
   async enterBuilding(id: string, polygon, marker)
   {          
+    polygon.setVisible(false);
+    marker.setVisible(false);
 
     switch (id) 
     {
       //Hall Building
       case 'hall':
           console.log("In " + id + " building.");   
+<<<<<<< HEAD
           polygon.setVisible(false);
           marker.setVisible(false);
           this.indoorView();
@@ -1591,10 +1595,14 @@ export class MapComponent implements AfterViewInit {
             }))
           }
                   
+=======
+          this.indoorView(polygon, marker);
+>>>>>>> UC-23: Added dropdown to switch between floors, and exit button
           break;
       //EV building
       case 'ev':
           console.log("In " + id + " building.");
+          
           break;
       //Library Building
       case 'lb':
@@ -1658,12 +1666,12 @@ export class MapComponent implements AfterViewInit {
         break;
     }  
 
+
   }
 
-  indoorView(): void
+  indoorView(polygon, marker): void
   {
-
-    var hallOverlay;
+    var hallIndoorOverlay;
 
     var imageBoundHall = {
       north: 45.497735, //Top
@@ -1672,15 +1680,126 @@ export class MapComponent implements AfterViewInit {
       west: -73.579586 //Left
     };
   
-    hallOverlay = new google.maps.GroundOverlay(
-        'assets/FloorImages/Hall/hall-8.png', 
+    var h8Floor = 'assets/FloorImages/Hall/hall-8.png';
+    var h9Floor = 'assets/FloorImages/Hall/hall-9.png';
+    
+    hallIndoorOverlay = new google.maps.GroundOverlay(
+        h8Floor, 
         imageBoundHall);
         
-    hallOverlay.setMap(this.map);
+        hallIndoorOverlay.setMap(this.map);
 
     //Zoom in
     this.map.setCenter({lat: 45.497280, lng: -73.578940});
     this.map.setZoom(19);
+    // // Limit the zoom level
+    // google.maps.event.addListener(this.map, 'zoom_changed', function() {
+    //   if (this.map.getZoom() < 20) 
+    //   console.log("zxoom");
+    //   this.map.setZoom(5);
+    // });
+
+
+    this.map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
+    let self = this;
+    var empty = "";
+
+    // Create a div to hold the control.
+    var controlFloorDiv = document.createElement('div');
+    var controlExitDiv = document.createElement('div');
+
+    // Set CSS for the control border
+    var controlFloorUI = document.createElement('div');
+    controlFloorUI.style.backgroundColor = '#fff';
+    controlFloorUI.style.border = '2px solid #fff';
+    controlFloorUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+    controlFloorDiv.appendChild(controlFloorUI);
+
+    // Set CSS for the control interior
+    var controlFloorText = document.createElement('div');
+    controlFloorText.style.fontSize = '16px';
+    controlFloorText.style.lineHeight = '38px';
+    controlFloorText.style.paddingLeft = '5px';
+    controlFloorText.style.paddingRight = '5px';
+
+    var floorDropdown = 
+    "<ion-label style='margin-right:1em'><b>Floor</b></ion-label>" +
+    "<select id ='floors'>" +
+    "<option value='1' id ='1'>H1</option>"+
+    "<option value='2' id ='2'>H2</option>"+
+    "<option value='3' id ='3'>H3</option>"+
+    "<option value='4' id ='4'>H4</option>"+
+    "</select>";
+
+
+    controlFloorText.innerHTML = floorDropdown;
+    controlFloorUI.appendChild(controlFloorText);
+
+    // Set CSS for the control border
+    var controlExitUI = document.createElement('div');
+    controlExitUI.style.marginBottom = '22px';
+    controlExitDiv.appendChild(controlExitUI);
+
+    // Set CSS for the control interior
+    var controlExitText = document.createElement('div');
+    var exitButton = '<ion-button>Exit Building</ion-button>'
+    controlExitText.innerHTML = exitButton;
+    controlExitUI.appendChild(controlExitText);
+
+    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlFloorDiv);
+    this.map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlExitDiv);
+
+    //Listener for dropdown
+    google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e) {      
+
+      if(this.value == 1)
+      {
+        hallIndoorOverlay.setMap(null);  
+        hallIndoorOverlay = new google.maps.GroundOverlay(
+        h8Floor, 
+        imageBoundHall);
+        hallIndoorOverlay.setMap(self.map);
+        console.log("value: " + this.value);
+      }
+
+      else if(this.value == 2)
+      {       
+        hallIndoorOverlay.setMap(null);  
+        hallIndoorOverlay = new google.maps.GroundOverlay(
+        h9Floor, 
+        imageBoundHall);
+        hallIndoorOverlay.setMap(self.map);
+        console.log("value: " + this.value);
+      }
+
+      else if(this.value == 3)
+      {       hallIndoorOverlay.setMap(null);  
+
+      }
+
+      else if(this.value == 4)
+      {       hallIndoorOverlay.setMap(null);  
+
+      }
+      
+
+
+    });
+
+
+    controlExitUI.addEventListener('click', function() {
+      hallIndoorOverlay.setMap(null);  
+      polygon.setVisible(true);
+      marker.setVisible(true);
+      controlExitText.innerHTML = empty;
+      controlFloorText.innerHTML = empty;
+      self.map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false});
+      self.map.setZoom(18);
+
+    });
+
+
+
 
   }
 
