@@ -40,6 +40,19 @@ ON MAC:
 
 The project will be deployed onto localhost:8101. If you run into problems, message the team.
 
+## How to Deploy to Android Device
+
+1. Ensure you have Java JDK8, Android Studio and updated Android SDK tools, platform and component dependencies.
+
+2. Open Android Studio, select tools, click on SDK manager and install the most recent versions of android (must have at least Android 8.0).
+
+3. Plug in your Android device to your PC and enabled developer mode.
+
+4. Open a terminal and select the directory which the project is stored in.
+
+5. Run the following command: ionic cordova run android --device
+
+6. If your phone is unlocked it should take about 30 seconds for the app to appear and be installed onto your device.
 
 ## Learn Ionic Framework 
 
