@@ -16,11 +16,11 @@ export class SettingsComponent implements OnInit {
   public languagePreference: string;
   public useGoogleCalendarSync: boolean;
 
-  constructor(private storage: Storage) { 
+  constructor(private storage: Storage) {
 
     // storage.ready() will wait for initialization of module before starting any actions
     storage.ready().then(() => {
-      
+
       // Set useElevator key/value
       storage.get('useElevator').then((uE) => {
         if(uE == null)
