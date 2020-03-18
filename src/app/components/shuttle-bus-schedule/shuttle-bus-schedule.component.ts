@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
+import data from '../../../assets/Shuttlebussched/schedule.json';
 
 @Component({
   selector: 'app-shuttle-bus-schedule',
@@ -9,37 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShuttleBusScheduleComponent implements OnInit {
  
-
-  constructor(private httpService: HttpClient) { }
-  arro: string [];
-  arrt: string [];
-  arrth: string [];
+tableStyle='bootstrap';
+  constructor() { 
+    console.log(this.arro);
+  }
+  arro=data.monday;
+  arr1=data.friday;
+  
+  
 
   ngOnInit() {
-    this.httpService.get('./assets/Shuttlebussched/schedule.json').subscribe(
-      data => {
-        this.arro = data as string [];  // FILL THE ARRAY WITH DATA.
-        console.log(this.arro);
-      },
-      (err: HttpErrorResponse) => {
-        console.log (err.message);
-      });
-      this.httpService.get('./assets/Shuttlebussched/scheduletwo.json').subscribe(
-        data => {
-          this.arrt = data as string [];  // FILL THE ARRAY WITH DATA.
-          console.log(this.arrt);
-        },
-        (err: HttpErrorResponse) => {
-          console.log (err.message);
-        });
-        this.httpService.get('./assets/Shuttlebussched/schedulethree.json').subscribe(
-          data => {
-            this.arrth = data as string [];  // FILL THE ARRAY WITH DATA.
-            console.log(this.arrth);
-          },
-          (err: HttpErrorResponse) => {
-            console.log (err.message);
-          });
+
+  }
+  changeStyle(){
+    if (this.tableStyle=='bootstrap')
+    this.tableStyle='dark';
+    else if (this.tableStyle=='dark')
+    this.tableStyle='bootstrap';
+    
   }
 
 

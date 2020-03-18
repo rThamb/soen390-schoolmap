@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit {
           this.useElevator = uE;
         }
       });
-    // Set the useStairs key/value
+    // Set the useStairs key/values
       storage.get('useStairs').then((uS) => {
         if(uS == null)
         {

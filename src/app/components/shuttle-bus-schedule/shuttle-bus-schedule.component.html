@@ -1,49 +1,51 @@
 <head></head>
 <body>
-<ion-content> 
-  <div padding>
+<ion-content>
+  <ion-toolbar style="padding-top: 1.5cm;">
+    <ion-buttons slot="end">
+    <ion-button (click)="changeStyle()">
+      <ion-icon name="bulb"slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
   
-  <table *ngIf="arro">
-      <!-- ADD HEADERS -->
-      <tr> Monday-Thursday</tr>
-      <tr>
-          <th>Departures from Loyola</th>
-              <th>Departures from S.G.W</th>
-                  
-      </tr>
-
-      <!-- BIND ARRAY TO TABLE -->
-      <tr *ngFor="let bus of arro">
-          <td>{{bus.DepartLoyolaMO}}</td>
-              <td>{{bus.DepartSMO}}</td>            
-      </tr> 
-      <tr>From/De 11:30 to/à 20:00
-        A bus leaves each campus every 30 – 35 minutes.
-        Départ de la navette aux 30 – 35 minutes.</tr>
-      
-      <tr *ngFor="let bus of arrt">
-        <td>{{bus.DepartLoyolaMT}}</td>
-            <td>{{bus.DepartSMT}}</td> 
-            <tr>*Last departure</tr> 
+  </ion-toolbar>
+  <h3 class="monday">Monday to Thursday bus schedule</h3>
+  
+  
     
-  </table>
-  </div>
-  <div padding> 
-    <table  *ngIf="arrth">
-        <!-- ADD HEADERS -->
-        <tr>Friday</tr>
-        <tr>
-            <th>Departures from Loyola</th>
-                <th>Departures from S.G.W</th>
-                  
-        </tr>
-        <tr *ngFor="let bus of arrth">
-          <td>{{bus.DepartLoyolaF}}</td>
-              <td>{{bus.DepartSF}}</td>
-                         
-      </tr> 
-      <tr>*Last departure</tr> 
-        </table>
-        </div>
-      </ion-content>
-    </body>
+  
+  <ngx-datatable
+  [rows]="arro"
+  [ngClass]="tableStyle"
+  [rowHeight]="'auto'"
+  [headerHeight]="50"
+  [columnMode]="'force'">
+  <ngx-datatable-column name="Departure from Loyola"
+                        prop="loym"
+                        [sortable]="false"></ngx-datatable-column>
+  <ngx-datatable-column name="Departure from SGW"
+                        prop="sgwm"
+                        [sortable]="false"></ngx-datatable-column>
+    </ngx-datatable>
+  <h3 class="friday">Friday bus schedule</h3>
+  <ngx-datatable
+  [rows]="arr1"
+  [ngClass]="tableStyle"
+  [rowHeight]="'auto'"
+  [headerHeight]="50"
+  [columnMode]="'force'">
+  <ngx-datatable-column name="Departure from Loyola"
+                        prop="loyf"
+                        [sortable]="false"></ngx-datatable-column>
+  <ngx-datatable-column name="Departure from SGW"
+                        prop="sgwf"
+                        [sortable]="false"></ngx-datatable-column>
+  
+  
+                     
+    
+    </ngx-datatable>
+
+  
+</ion-content>
+</body>
