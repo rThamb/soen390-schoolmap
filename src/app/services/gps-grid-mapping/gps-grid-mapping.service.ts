@@ -193,8 +193,8 @@ Y
     //components (avg)
 
 
-    let xAddition = shiftVectorXComponent * (x + 2); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
-    let yAddition = shiftVectorYComponent * (x + 2);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
+    let xAddition = shiftVectorXComponent * (x + 1.5); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
+    let yAddition = shiftVectorYComponent * (x + 1.5);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
     
     let positionAfterXShiftLng = ref1Lng + xAddition;
     let positionAffterXShiftLat = ref1Lat + yAddition;
@@ -203,8 +203,8 @@ Y
     shiftVectorXComponent = (ref3Lng - ref1Lng) / sizeY; //x of X axis shift
     shiftVectorYComponent = (ref3Lat - ref1Lat) / sizeY; //y of X axis shift
 
-    xAddition = shiftVectorXComponent * (y + 1);//((shiftVectorXComponent * y + shiftVectorXComponent * (y + 1)) / 2.0);
-    yAddition = shiftVectorYComponent * (y + 1);// ((shiftVectorYComponent * y + shiftVectorYComponent * (y + 1)) / 2.0);
+    xAddition = shiftVectorXComponent * (y + 0.75);//((shiftVectorXComponent * y + shiftVectorXComponent * (y + 1)) / 2.0);
+    yAddition = shiftVectorYComponent * (y + 0.75);// ((shiftVectorYComponent * y + shiftVectorYComponent * (y + 1)) / 2.0);
 
     let LngForCoordinate = positionAfterXShiftLng + xAddition;
     let LatForCoordinate = positionAffterXShiftLat + yAddition;
