@@ -1680,7 +1680,7 @@ export class MapComponent implements AfterViewInit {
    */
   drawPath(locationList: Location[])
   {
-    debugger;
+    //debugger;
     var pathCoordinates = [];
     
     locationList.forEach((location: Location) => {
@@ -1690,9 +1690,23 @@ export class MapComponent implements AfterViewInit {
     var path = new google.maps.Polyline({
       path: pathCoordinates,
       geodesic: true,
-      strokeColor: '#FF0000',
+      strokeColor: '#0000FF',
       strokeOpacity: 1.0,
       strokeWeight: 2
+    });
+
+    const startMarker = new google.maps.Marker({
+      position: locationList[0].getGoogleLatLng(),
+      map: this.map,
+      title: 'Here',
+      label:'S'
+    });
+
+    const endMarker = new google.maps.Marker({
+      position: locationList[locationList.length - 1].getGoogleLatLng(),
+      map: this.map,
+      title: 'Here',
+      label: 'E'
     });
 
     path.setMap(this.map);

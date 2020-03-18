@@ -79,11 +79,11 @@ export class HomeComponent implements OnInit {
       //let ninethfloor  = building.getFloorLevel("9");
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
       debugger;
-      let userPosition = new Location(45.497139, -73.578743, 0);
+      let userPosition = new Location(45.497192, -73.579329, 0);
       let curFloor = building.getFloorLevel("8"); 
-      let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB967");
+      let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB890");
       
-      let pathElevator: Location[] = pathGoingUp["route"]["Elevator"];
+      let pathElevator: Location[] = pathGoingUp["route"];
 
       this.mapHandle.drawPath(pathElevator);
       debugger;
