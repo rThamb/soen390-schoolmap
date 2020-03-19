@@ -34,7 +34,7 @@ export class ReportIssuesComponent {
     // });
 
     let email = {
-      to: 'ogomaa.concordia@gmail.com',
+      to: 'mapsconcordia1@gmail.com',
       cc: [],
       bcc: [],
       sender: this.sender,
