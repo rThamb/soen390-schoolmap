@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NearbyRestaurantsComponent } from './nearby-restaurants.component';
+import { GoButtonComponent } from './go-button.component';
 
-describe('NearbyRestaurantsComponent', () => {
-  let component: NearbyRestaurantsComponent;
-  let fixture: ComponentFixture<NearbyRestaurantsComponent>;
+describe('GoButtonComponent', () => {
+  let component: GoButtonComponent;
+  let fixture: ComponentFixture<GoButtonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NearbyRestaurantsComponent ],
+      declarations: [ GoButtonComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NearbyRestaurantsComponent);
+    fixture = TestBed.createComponent(GoButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

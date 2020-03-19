@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NearbyEventsComponent } from './nearby-events.component';
+import { HomeSearchComponent } from './home-search.component';
 
-describe('NearbyEventsComponent', () => {
-  let component: NearbyEventsComponent;
-  let fixture: ComponentFixture<NearbyEventsComponent>;
+describe('HomeSearchComponent', () => {
+  let component: HomeSearchComponent;
+  let fixture: ComponentFixture<HomeSearchComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NearbyEventsComponent ],
+      declarations: [ HomeSearchComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NearbyEventsComponent);
+    fixture = TestBed.createComponent(HomeSearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

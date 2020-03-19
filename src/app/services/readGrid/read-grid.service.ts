@@ -3,6 +3,7 @@ import { Floor } from '../../models/Floor' ;
 import { Location } from '../../models/Location';
 import { FloorTile } from '../../models/FloorTile'
 import { Building } from '../../models/Building';
+import { IndoorPOI } from '../../models/IndoorPOI'
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,7 @@ export class ReadGridService {
   }
 
   private jsonToFloor(json: any) : any{
+
     let floors = {};
     let floorsData = json.floors;
     let floorKeys = json.floorsKeys;
@@ -65,7 +67,8 @@ export class ReadGridService {
      floor.bottomRightCornerGPS = new Location(curFloor.bottomRightLat, curFloor.bottomRightLong, 0);
      floor.setFloorTileGrid(this.createTileGrid(curFloor.binaryGrid));
      floor.setFloorLevel(curFloor.level)
-     floor.pointsOfInterest = curFloor.POI; 
+     floor.pointsOfInterest = curFloor.POI;
+     floor.setPois(this.getPointsOfInterest(curFloor.POI));
      floors[floorKeys[i]] = floor;
     }
     return floors;
@@ -121,4 +124,29 @@ export class ReadGridService {
 
 
     
+  private getPointsOfInterest(poi: any): IndoorPOI[]
+  {
+      let keys = Object.keys(poi);
+      let pois: IndoorPOI[] = [];
+
+      for(let i =0; i<keys.length; i++){
+
+        let key = keys[i];
+
+        if(key != "Stairs"){
+          let curPoint = poi[key];
+          let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
+          pois.push(obj);
+        }
+        else{//handle stair POIS differently
+          let stairsPois = poi[key]; //an array
+          for(let i =0; i < stairsPois.length; i++){
+            let curPoint = stairsPois[i];
+            let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
+            pois.push(obj);
+          }    
+        }    
+      }
+      return pois;
+  }
 }

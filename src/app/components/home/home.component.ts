@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReadGridService } from '../../services/readGrid/read-grid.service' 
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
 import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service' 
@@ -6,6 +6,7 @@ import { Location } from '../../models/Location'
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
 import { Building } from '../../models/Building'
 import { Floor } from '../../models/Floor'
+import { MapComponent } from '../map/map.component'
 
 
 
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
     THIS EXAMPLE/CODE WILL OBVIOUSLY BE REMOVED IN THE LATER FUTURE. Please use this as a simply reference to help.
   */
 
+  @ViewChild('map', {static: false}) mapHandle: MapComponent;
   floor: any;
 
   constructor(private service:ReadGridService, private service2: GpsGridMappingService,
@@ -41,7 +43,7 @@ export class HomeComponent implements OnInit {
 
   setFloor(){
     this.service.createGrid("HB").then((grid) => {
-      debugger;
+    
       this.floor = grid;
     });
   }
@@ -50,11 +52,11 @@ export class HomeComponent implements OnInit {
   
   testIndoorPathing(){
     this.service.createGrid("HB").then((grid) => {
-      debugger;
+      
       //let point =  this.service2.getFloorGridCoordinate(new Location(45.497082, -73.578647, 0) , grid[0]);
       let expect = "8,17"; 
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497082, -73.578647, 0) , grid[0], "H840");
-      debugger;
+      
     });
     //let floors = await this.service.getBuildingFloors("HB");
     //let path = this.service3.getPathForDestinationOnSameFloor(null, grid, "H840", "H890"); 
@@ -62,9 +64,10 @@ export class HomeComponent implements OnInit {
   }
 
   testBuilding(){
-    debugger; 
+     
+    debugger;
     this.bService.loadBuilding("HB").then((building: Building) => {
-      debugger;
+      
       /*let classes = building.getAllClassroomCodes();
       let floor : Floor = building.getFloorLevel("8");
       let a = floor.getClassroomCoordinate("HB840");
@@ -75,11 +78,17 @@ export class HomeComponent implements OnInit {
       */
       //let ninethfloor  = building.getFloorLevel("9");
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
-      let userPosition = new Location(45.497139, -73.578743, 0);
-      let curFloor = building.getFloorLevel("8"); 
-      let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB967");
-      
       debugger;
+      let userPosition = new Location(45.497192, -73.579329, 0);
+      let curFloor = building.getFloorLevel("8"); 
+      let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB890");
+      
+      let pathElevator: Location[] = pathGoingUp["route"];
+
+      this.mapHandle.drawPath(pathElevator);
+      debugger;
+      //let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
+
     });
   }
 }

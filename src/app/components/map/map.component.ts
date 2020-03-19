@@ -4,17 +4,18 @@ import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathin
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
-import { BuildingFactoryService } from 'src/app/services/BuildingFactory/building-factory.service';
-import { Campus } from 'src/app/models/Campus';
+import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service';
+import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Building } from '../../models/Building';
+import {IndoorPOI} from '../../models/IndoorPOI'
+import {User} from '../../models/User'
 
 
 declare var google;
-
 
 /**
  * MapComponent class. Contains the map object and attributes for all google map related services.
@@ -30,7 +31,7 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef;
  
   public map: any; // google.maps.Map
-  private userLocation: Location = new Location(0, 0, 0);
+  private user: User;
   private mapOptions; // Object
   private userMarker; // google.maps.Marker
 
@@ -42,6 +43,7 @@ export class MapComponent implements AfterViewInit {
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
+    this.user = new User();
   }
 
   ngAfterViewInit(): void {
@@ -53,11 +55,10 @@ export class MapComponent implements AfterViewInit {
     // Gets current position of user
     const resp = await this.geolocation.getCurrentPosition();
 
-    this.userLocation.setLat(resp.coords.latitude);
-    this.userLocation.setLng(resp.coords.longitude);
+    this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
 
     this.mapOptions = {
-      center: this.userLocation.getGoogleLatLng(),
+      center: this.user.getLocation().getGoogleLatLng(),
       zoom: 17,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -66,7 +67,7 @@ export class MapComponent implements AfterViewInit {
     this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
 
     this.userMarker = new google.maps.Marker({
-      position: this.userLocation.getGoogleLatLng(),
+      position: this.user.getLocation().getGoogleLatLng(),
       map: this.map,
       title: 'Here'
     });
@@ -77,14 +78,13 @@ export class MapComponent implements AfterViewInit {
   // Gets the current location of user and focuses map to that point
   getCurrentLocation(){
     this.geolocation.getCurrentPosition().then((resp) => {
-      this.userLocation.setLat(resp.coords.latitude);
-      this.userLocation.setLng(resp.coords.longitude);
-      this.focusMap(this.userLocation);
+      this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
+      this.focusMap(this.user.getLocation());
     }).catch((error) => {
       console.log('Error getting location', error);
     });
 
-    return this.userLocation.getGoogleLatLng();
+    return this.user.getLocation().getGoogleLatLng();
   }
 
   // Re-center the map based on location parameter
@@ -1566,6 +1566,21 @@ export class MapComponent implements AfterViewInit {
 
           this.indoorView(buildingInfo, polygon, marker);
 
+          let floor8: Floor = b.getFloors()[0];
+
+          let poiMarkers = []
+
+          for(let i = 0; i < floor8.getPois().length; i++)
+          {
+            let poi = floor8.getPois()[i];
+
+            poiMarkers.push(new google.maps.Marker({
+              position: poi.getGoogleLatLng(),
+              map: this.map,
+              title: 'Here'
+            }))
+          }
+                  
           break;
       //EV building
       case 'ev':
@@ -1760,5 +1775,42 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
+   * @param locationList 
+   */
+  drawPath(locationList: Location[])
+  {
+    //debugger;
+    var pathCoordinates = [];
+    
+    locationList.forEach((location: Location) => {
+      pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
+    });
+
+    var path = new google.maps.Polyline({
+      path: pathCoordinates,
+      geodesic: true,
+      strokeColor: '#0000FF',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    const startMarker = new google.maps.Marker({
+      position: locationList[0].getGoogleLatLng(),
+      map: this.map,
+      title: 'Here',
+      label:'S'
+    });
+
+    const endMarker = new google.maps.Marker({
+      position: locationList[locationList.length - 1].getGoogleLatLng(),
+      map: this.map,
+      title: 'Here',
+      label: 'E'
+    });
+
+    path.setMap(this.map);
+  }
 
 }

@@ -166,4 +166,71 @@ Y
     return distance;
   }
 
+
+
+
+
+  //method used for hall
+  public setLngLatForFloorTiles(floor: Floor){
+
+    let floorTiles = floor.getFloorTileGrid();
+
+  }
+
+
+
+
+
+  //topLeft, topRight
+  private getLngLatForCoordinate(x, y, ref1Lng, ref1Lat, ref2Lng, ref2Lat, ref3Lng, ref3Lat, sizeX, sizeY){
+
+    //determine shift vector
+    //shift size amount lng distance
+
+    let shiftVectorXComponent = (ref2Lng - ref1Lng) / sizeX; //x of X axis shift
+    let shiftVectorYComponent = (ref2Lat - ref1Lat) / sizeX; //y of X axis shift
+
+    //components (avg)
+
+
+    let xAddition = shiftVectorXComponent * (x + 1.5); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
+    let yAddition = shiftVectorYComponent * (x + 1.5);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
+    
+    let positionAfterXShiftLng = ref1Lng + xAddition;
+    let positionAffterXShiftLat = ref1Lat + yAddition;
+
+    //determine how much to shift down
+    shiftVectorXComponent = (ref3Lng - ref1Lng) / sizeY; //x of X axis shift
+    shiftVectorYComponent = (ref3Lat - ref1Lat) / sizeY; //y of X axis shift
+
+    xAddition = shiftVectorXComponent * (y + 0.75);//((shiftVectorXComponent * y + shiftVectorXComponent * (y + 1)) / 2.0);
+    yAddition = shiftVectorYComponent * (y + 0.75);// ((shiftVectorYComponent * y + shiftVectorYComponent * (y + 1)) / 2.0);
+
+    let LngForCoordinate = positionAfterXShiftLng + xAddition;
+    let LatForCoordinate = positionAffterXShiftLat + yAddition;
+
+    return new Location(LatForCoordinate, LngForCoordinate, 0);
+  }
+
+  public getLngLatForPath(floor: Floor, path: any): Location[]{
+
+    let markers : Location[] = [];
+    
+    for(let i = 0; i < path.length; i++){
+      let element = path[i];
+      let x = element[0];
+      let y = element[1];
+
+      let loc = this.getLngLatForCoordinate(x, y, floor.topLeftCornerGPS.getLng(), floor.topLeftCornerGPS.getLat(), 
+                                                    floor.topRightCornerGPS.getLng(), floor.topRightCornerGPS.getLat(), 
+                                                    floor.bottomLeftCornerGPS.getLng(), floor.bottomLeftCornerGPS.getLat(), 
+                                                    floor.getFloorTileGrid()[0].length, floor.getFloorTileGrid().length);
+      markers.push(loc);
+    }
+
+    return markers;
+    
+  
+  }
+
 }

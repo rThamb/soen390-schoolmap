@@ -1,7 +1,7 @@
 import { FloorTile } from './FloorTile';
 import { Location } from './Location';
-import { Room } from './Room';
 import { GridCoordinate } from './GridCoordinate'
+import { IndoorPOI } from './IndoorPOI'
 
 // This class represents the Floors that are stored in Buildings
 // Each Floor instance stores a pathfinding grid configuration, it's level and POI locations.
@@ -11,16 +11,13 @@ export class Floor
     private floorTileGrid: FloorTile[][];
     private width: number;
     private height: number;
-    private rooms: Room[];
-
-    //Temporary variables for prototyping
     public topRightCornerGPS: Location;
     public topLeftCornerGPS: Location;
     public bottomLeftCornerGPS: Location;
     public bottomRightCornerGPS: Location;
-    
-    public pointsOfInterest: any;
-    //-------------------------------------
+    public pointsOfInterest: any; // Dictionary of POIs
+
+    private pois: IndoorPOI[];
 
     constructor()
     {
@@ -67,22 +64,14 @@ export class Floor
         this.height = h;
     }
 
-    public addRoom(r: Room)
+    public getPois()
     {
-        this.rooms.push(r);
+        return this.pois
     }
 
-    public getAllPointsOfInterest(){
-        /*
-        let pois = this.floors[curFloor].pointsOfInterest;
-            let classRooms = Object.keys(pois);
-
-            for(let j = 0; j < classRooms.length; j++){
-                let str = classRooms[j];
-                if(str.substring(0, this.buildingKey.length) === this.buildingKey)
-                    classroomCodes.push(str);
-            }
-            */
+    public setPois(p: IndoorPOI[])
+    {
+        this.pois = p;
     }
 
     public getBinaryGrid(): any{
@@ -107,13 +96,13 @@ export class Floor
     }
 
     public getMensWashroom(): GridCoordinate{
-        let key = "Washroom";
-        let washroomCoor = this.pointsOfInterest[key]["Men"];
+        let key = "Washroom-Men";
+        let washroomCoor = this.pointsOfInterest[key];
         return new GridCoordinate(washroomCoor["x"], washroomCoor["y"]); 
     }
     public getWomensWashroom(): GridCoordinate{
-        let key = "Washroom";
-        let washroomCoor = this.pointsOfInterest[key]["Women"];
+        let key = "Washroom-Women";
+        let washroomCoor = this.pointsOfInterest[key];
         return new GridCoordinate(washroomCoor["x"], washroomCoor["y"]); 
     }
 
@@ -128,7 +117,6 @@ export class Floor
             let coor = new GridCoordinate(stairs[i]["x"], stairs[i]["y"]);
             coordinates.push(coor);
         }
-
         return coordinates; 
     }
 

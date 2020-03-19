@@ -1,0 +1,56 @@
+.reportIssue{
+  margin-top: 3.5rem;
+}
+hr {
+  height: 1px;
+  background-color: dodgerblue;
+  box-sizing: content-box;
+  margin-top: 15px;
+  margin-bottom: 16px;
+  margin-left: -31pt;
+
+}
+p {
+  margin: 14px;
+  color: #3a8cf0;
+}
+
+h1 {
+  margin-top: 20px;
+  font-size: 26px;
+  color: #3a8cf0;
+  margin-left: 1rem;
+}
+
+ion-input, ion-textarea{
+  width: 100%;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #3a8cf0;
+  border-radius: 1px;
+  box-sizing: border-box;
+}
+ion-textarea{
+  height: 250px;
+}
+
+button {
+  background-color: #3a8cf0;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 16px;
+  margin: -7px 17px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  float: right;
+  padding: 12px 30px;
+
+}
+button:disabled{
+  background-color: dimgrey;
+
+}

@@ -160,20 +160,34 @@ export class IndoorPathingService {
             pathEscalator = this.getPathForEscalatorDownOnSameFloor(userPosition, currentFloor);
           }
 
-          let paths = {
-            "Stairs": pathStairs,
-            "Elevator": pathElevator,
-            "Escalator": pathEscalator
+          path = {
+            "Stairs": this.gpsmapping.getLngLatForPath(currentFloor, pathStairs),
+            "Elevator": this.gpsmapping.getLngLatForPath(currentFloor, pathElevator),
+            "Escalator": this.gpsmapping.getLngLatForPath(currentFloor, pathEscalator)
           };
 
-          return paths;
+          let returnObject = {
+            "destOnFloor": false,
+            "route": path
+          };
+          return returnObject;
         }
       }
       else{
         //user is not going to a class room
         if(destination === "Washroom")
-          return this.getPathToClosestWashroom(userPosition, currentFloor, "M");          
+           path = this.getPathToClosestWashroom(userPosition, currentFloor, "M");          
       }
+
+      let lngLatPath = this.gpsmapping.getLngLatForPath(currentFloor, path);
+
+    
+      let returnObject = {
+        "destOnFloor": true,
+        "route": lngLatPath
+      };
+
+      return returnObject;
   }
 
 
@@ -181,11 +195,5 @@ export class IndoorPathingService {
     return Math.trunc(parseInt(destKey.replace("HB", "")) / 100);
   }
 
-
-
-
-
-
-  
 
 }
