@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Floor } from '../../models/Floor' ;
 import { Location } from '../../models/Location';
 import { FloorTile } from '../../models/FloorTile'
+<<<<<<< HEAD
 import { IndoorPOI } from '../../models/IndoorPOI'
+=======
+import { Building } from '../../models/Building';
+>>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +60,7 @@ export class ReadGridService {
 
     //json['property'] - how to access values
 
-    let curFloor = null;
+    let curFloor = null; 
     for(let i = 0; i < floorsData.length; i++){
      curFloor = floorsData[i]; 
      let floor: Floor = new Floor();
@@ -93,6 +97,7 @@ export class ReadGridService {
     return tileGrid;
   }
 
+<<<<<<< HEAD
   private getPointsOfInterest(poi: any): IndoorPOI[]
   {
       let keys = Object.keys(poi);
@@ -118,4 +123,36 @@ export class ReadGridService {
       }
       return pois;
   }
+=======
+ //Loads a Building json file, and returns a dictionary with informations about it
+ async buildingInfo(keyName: string)
+ {
+   let buildingInformation = {}; //Dictionary
+
+  try{
+    let filename = "./assets/buildings/" + this.floorFileNameMap[keyName]; //Using /buildings directory for now. 
+
+    let res = await fetch(filename);
+    let json = await res.json();
+    let buildingData = json;
+
+    //Add to buildingInformation Dictionnary
+    buildingInformation["totalFloors"] = buildingData.totalFloors;
+    buildingInformation["bound"] = buildingData.bound;
+    buildingInformation["Location"] = buildingData.Location;
+    buildingInformation["Floors"] = buildingData.Floors;
+  }
+  catch(err)
+  {
+    console.log("Error thrown in Read-Grid.Service line:(108-120)");
+    return null;
+  }
+
+  return buildingInformation;
+}
+  
+
+
+    
+>>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
 }

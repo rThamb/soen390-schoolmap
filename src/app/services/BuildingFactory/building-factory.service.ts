@@ -29,6 +29,11 @@ export class BuildingFactoryService {
     building.setBuildingKey(buildingKey);
     let floorsDictionary = await this.floorService.createGrid(buildingKey);
     building.setFloors(floorsDictionary);
+
+    //Set dictionnary for building
+    let buildingData = await this.floorService.buildingInfo(buildingKey);
+    building.setBuildingInfo(buildingData);
+    
     return building;
   }
 }
