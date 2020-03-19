@@ -5,12 +5,26 @@
         "lng":-73.578920
     },
 
+    "totalFloors":
+    {
+        "nFloors": 12
+    },
+
+    "bound":
+    {
+        "north": 45.497735,
+        "south": 45.496807,
+        "east": -73.578316,
+        "west": -73.579586 
+    },
+
     "Floors":
     [
         {
             "level":8,
             "width":20,
             "height":20,
+            "img": "assets/FloorImages/Hall/hall-8.png",
             "pathfindingGrid":
             [
                 [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
@@ -60,11 +74,13 @@
                     "y": 9
                 }
             }
+
         },
         {
             "level":9,
             "width":20,
             "height":20,
+            "img": "assets/FloorImages/Hall/hall-9.png",
             "pathfindingGrid":[],
             "POI":
             {

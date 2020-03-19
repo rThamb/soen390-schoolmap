@@ -10,6 +10,7 @@ import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
+import { Building } from '../../models/Building';
 
 
 declare var google;
@@ -35,8 +36,6 @@ export class MapComponent implements AfterViewInit {
 
   private sgw: Campus;
   private loyola: Campus;
-
-  private level: string; //Value selected in the floor dropdown
 
   // Injects the component class with imported services
   constructor(private geolocation: Geolocation, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
@@ -307,10 +306,10 @@ export class MapComponent implements AfterViewInit {
     studentResidencesP.setMap(this.map);
 
     //Text properties for all buildings
-    var markerColor = 'purple';
+    var markerColor = 'black';
     var fontWeight = 'bold';
     var fontSize = '30px';
-    var iconEmpty = '../res/img/empty.png';
+    var iconEmpty = ''//'../res/img/empty.png';
 
     //Hall Building Marker and info window
     var hallMarker = new google.maps.Marker
@@ -1422,7 +1421,7 @@ export class MapComponent implements AfterViewInit {
       {
         document.getElementById("hall").addEventListener("click", () => {
           infoWindow.close();
-          this.enterBuilding("hall", hallP, hallMarker);
+          this.enterBuilding("HB", hallP, hallMarker);
         });
       }
       
@@ -1550,26 +1549,27 @@ export class MapComponent implements AfterViewInit {
   });
   
   }
-
   
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
-  // Prototype for now
-  async enterBuilding(id: string, polygon, marker)
+  async enterBuilding(id: string, polygon: any, marker: any)
   {          
-    polygon.setVisible(false);
-    marker.setVisible(false);
-
     switch (id) 
     {
       //Hall Building
-      case 'hall':
-          console.log("In " + id + " building.");   
-          this.indoorView(polygon, marker);
+      case 'HB':
+          console.log("In " + id + " building.");     
+          polygon.setVisible(false);
+          marker.setVisible(false);
+
+          let b: Building = await this.buildingFactory.loadBuilding(id);
+          let buildingInfo = b.getBuildingInfo();
+
+          this.indoorView(buildingInfo, polygon, marker);
+
           break;
       //EV building
       case 'ev':
           console.log("In " + id + " building.");
-          
           break;
       //Library Building
       case 'lb':
@@ -1636,126 +1636,120 @@ export class MapComponent implements AfterViewInit {
 
   }
 
-  indoorView(polygon, marker): void
+  /**
+   * This method is called when user presses "Enter building" button, and it shows a drop down menu and exit button
+   * which allows the user to view different floors in the building.
+   * @param buildingInfo is a dictionary that holds informations about the buildings
+   * @param polygon is the building layer
+   * @param marker is the building marker
+   */
+  indoorView(buildingInfo: any, polygon: any, marker: any): void
   {
-    var hallIndoorOverlay;
+    let floorImage = ""; //Holds the image path
+    var indoorOverlay; //Layer on top of building
+    let self = this;
+    let empty = "";
 
-    var imageBoundHall = {
-      north: 45.497735, //Top
-      south: 45.496807, //Bottom
-      east: -73.578316, //Right
-      west: -73.579586 //Left
+    var imageBound = {
+      north: buildingInfo["bound"].north, //Top
+      south: buildingInfo["bound"].south, //Bottom
+      east: buildingInfo["bound"].east, //Right
+      west: buildingInfo["bound"].west //Left
     };
-  
-    var h8Floor = 'assets/FloorImages/Hall/hall-8.png';
-    var h9Floor = 'assets/FloorImages/Hall/hall-9.png';
-    
-    hallIndoorOverlay = new google.maps.GroundOverlay(
-        h8Floor, 
-        imageBoundHall);
-        
-        hallIndoorOverlay.setMap(this.map);
+
+    indoorOverlay = new google.maps.GroundOverlay(
+        floorImage, 
+        imageBound);
+        indoorOverlay.setMap(this.map);
 
     //Zoom in
-    this.map.setCenter({lat: 45.497280, lng: -73.578940});
+    this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
     this.map.setZoom(19);
-    // // Limit the zoom level
-    // google.maps.event.addListener(this.map, 'zoom_changed', function() {
-    //   if (this.map.getZoom() < 20) 
-    //   console.log("zxoom");
-    //   this.map.setZoom(5);
-    // });
-
-
+    //No zoom or drag anymore
     this.map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
-    let self = this;
-    var empty = "";
 
-    // Create a div to hold the control.
+    //Dropdown content
+    var selectContent= ""; 
+    for(let i = 1; i <= buildingInfo["totalFloors"].nFloors; i++)
+    {
+      selectContent += "<option value="+i+">"+i+"</option>";
+    }
+
+    var floorDropdown = 
+    "<ion-label style='margin-right:1em'><b>Floor</b></ion-label>" +
+    "<select id ='floors'>" + 
+    selectContent +
+    "</select>";
+
+    // Create a div to hold the control for dropdown and Exit button
     var controlFloorDiv = document.createElement('div');
     var controlExitDiv = document.createElement('div');
 
-    // Set CSS for the control border
+    // Set CSS for the control border of Floor
     var controlFloorUI = document.createElement('div');
     controlFloorUI.style.backgroundColor = '#fff';
     controlFloorUI.style.border = '2px solid #fff';
     controlFloorUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-    controlFloorDiv.appendChild(controlFloorUI);
 
-    // Set CSS for the control interior
+    // Set CSS for the control interior of Floor
     var controlFloorText = document.createElement('div');
     controlFloorText.style.fontSize = '16px';
     controlFloorText.style.lineHeight = '38px';
     controlFloorText.style.paddingLeft = '5px';
     controlFloorText.style.paddingRight = '5px';
-
-    var floorDropdown = 
-    "<ion-label style='margin-right:1em'><b>Floor</b></ion-label>" +
-    "<select id ='floors'>" +
-    "<option value='1' id ='1'>H1</option>"+
-    "<option value='2' id ='2'>H2</option>"+
-    "<option value='3' id ='3'>H3</option>"+
-    "<option value='4' id ='4'>H4</option>"+
-    "</select>";
-
-
     controlFloorText.innerHTML = floorDropdown;
-    controlFloorUI.appendChild(controlFloorText);
 
-    // Set CSS for the control border
+    // Set CSS for the control border of Exit
     var controlExitUI = document.createElement('div');
     controlExitUI.style.marginBottom = '22px';
-    controlExitDiv.appendChild(controlExitUI);
 
-    // Set CSS for the control interior
+    // Set CSS for the control interior of Exit
     var controlExitText = document.createElement('div');
     var exitButton = '<ion-button>Exit Building</ion-button>'
     controlExitText.innerHTML = exitButton;
+
+    //Add child div inside parent div
+    controlFloorDiv.appendChild(controlFloorUI);
+    controlFloorUI.appendChild(controlFloorText);
+
+    controlExitDiv.appendChild(controlExitUI);
     controlExitUI.appendChild(controlExitText);
 
+    //Push the div into the map
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlFloorDiv);
     this.map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlExitDiv);
 
     //Listener for dropdown
-    google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e) {      
-
-      if(this.value == 1)
+    google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e) 
+    {    
+      for(let i = 0; i <buildingInfo["totalFloors"].nFloors; i++)
       {
-        hallIndoorOverlay.setMap(null);  
-        hallIndoorOverlay = new google.maps.GroundOverlay(
-        h8Floor, 
-        imageBoundHall);
-        hallIndoorOverlay.setMap(self.map);
-        console.log("value: " + this.value);
+        if(buildingInfo["Floors"][i] != undefined)
+        {
+          if(this.value == buildingInfo["Floors"][i].level)
+          {
+            floorImage = buildingInfo["Floors"][i].img;
+            indoorOverlay.setMap(null);  
+            indoorOverlay = new google.maps.GroundOverlay(
+                floorImage, 
+                imageBound);
+            indoorOverlay.setMap(self.map);
+            break;
+          }
+          else
+          { 
+            continue;
+          }
+        }
+        //If no image found, then there is no layer
+        indoorOverlay.setMap(null);
       }
-
-      else if(this.value == 2)
-      {       
-        hallIndoorOverlay.setMap(null);  
-        hallIndoorOverlay = new google.maps.GroundOverlay(
-        h9Floor, 
-        imageBoundHall);
-        hallIndoorOverlay.setMap(self.map);
-        console.log("value: " + this.value);
-      }
-
-      else if(this.value == 3)
-      {       hallIndoorOverlay.setMap(null);  
-
-      }
-
-      else if(this.value == 4)
-      {       hallIndoorOverlay.setMap(null);  
-
-      }
-      
-
 
     });
 
-
+    //Listener for Exit button
     controlExitUI.addEventListener('click', function() {
-      hallIndoorOverlay.setMap(null);  
+      indoorOverlay.setMap(null);  
       polygon.setVisible(true);
       marker.setVisible(true);
       controlExitText.innerHTML = empty;
@@ -1764,10 +1758,6 @@ export class MapComponent implements AfterViewInit {
       self.map.setZoom(18);
 
     });
-
-
-
-
   }
 
 

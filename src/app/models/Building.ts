@@ -14,6 +14,8 @@ export class Building
 
     private classrooms: string[];
 
+    private buildingInfo: any; //Dictionnary
+
     constructor()
     {
     
@@ -85,5 +87,16 @@ export class Building
         }
 
         return this.classrooms;
+    }
+
+    //Dictionnary with a building information
+    public setBuildingInfo(buildingInfos: any)
+    {
+        this.buildingInfo = buildingInfos;
+    }
+
+    public getBuildingInfo()
+    {
+        return this.buildingInfo;
     }
 }
