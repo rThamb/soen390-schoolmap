@@ -2,11 +2,8 @@ import { Injectable } from '@angular/core';
 import { Floor } from '../../models/Floor' ;
 import { Location } from '../../models/Location';
 import { FloorTile } from '../../models/FloorTile'
-<<<<<<< HEAD
 import { IndoorPOI } from '../../models/IndoorPOI'
-=======
 import { Building } from '../../models/Building';
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
 
 @Injectable({
   providedIn: 'root'
@@ -97,7 +94,6 @@ export class ReadGridService {
     return tileGrid;
   }
 
-<<<<<<< HEAD
   private getPointsOfInterest(poi: any): IndoorPOI[]
   {
       let keys = Object.keys(poi);
@@ -123,7 +119,6 @@ export class ReadGridService {
       }
       return pois;
   }
-=======
  //Loads a Building json file, and returns a dictionary with informations about it
  async buildingInfo(keyName: string)
  {
@@ -154,5 +149,4 @@ export class ReadGridService {
 
 
     
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
 }

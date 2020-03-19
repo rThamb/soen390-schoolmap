@@ -10,14 +10,10 @@ import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
-<<<<<<< HEAD
 import {Building} from '../../models/Building'
 import {IndoorPOI} from '../../models/IndoorPOI'
 import { MapService } from '../../services/map/map.service'
 
-=======
-import { Building } from '../../models/Building';
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
 
 
 declare var google;
@@ -1565,35 +1561,6 @@ export class MapComponent implements AfterViewInit {
   }
   
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
-<<<<<<< HEAD
-  async enterBuilding(id: string, polygon, marker)
-  {          
-
-    switch (id) 
-    {
-      //Hall Building
-      case 'hall':
-          console.log("In " + id + " building.");   
-          polygon.setVisible(false);
-          marker.setVisible(false);
-          this.indoorView();
-          let b: Building = await this.buildingFactory.loadBuilding('HB');
-          let floor8: Floor = b.getFloors()[0];
-
-          let poiMarkers = []
-
-          for(let i = 0; i < floor8.getPois().length; i++)
-          {
-            let poi = floor8.getPois()[i];
-
-            poiMarkers.push(new google.maps.Marker({
-              position: poi.getGoogleLatLng(),
-              map: this.map,
-              title: 'Here'
-            }))
-          }
-                  
-=======
   async enterBuilding(id: string, polygon: any, marker: any)
   {          
     switch (id) 
@@ -1609,7 +1576,6 @@ export class MapComponent implements AfterViewInit {
 
           this.indoorView(buildingInfo, polygon, marker);
 
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
           break;
       //EV building
       case 'ev':
@@ -1679,12 +1645,6 @@ export class MapComponent implements AfterViewInit {
 
   }
 
-<<<<<<< HEAD
-  indoorView(): void
-  {
-
-    var hallOverlay;
-=======
   /**
    * This method is called when user presses "Enter building" button, and it shows a drop down menu and exit button
    * which allows the user to view different floors in the building.
@@ -1698,7 +1658,6 @@ export class MapComponent implements AfterViewInit {
     var indoorOverlay; //Layer on top of building
     let self = this;
     let empty = "";
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
 
     var imageBound = {
       north: buildingInfo["bound"].north, //Top
@@ -1706,34 +1665,15 @@ export class MapComponent implements AfterViewInit {
       east: buildingInfo["bound"].east, //Right
       west: buildingInfo["bound"].west //Left
     };
-<<<<<<< HEAD
-  
-    hallOverlay = new google.maps.GroundOverlay(
-        'assets/FloorImages/Hall/hall-8.png', 
-        imageBoundHall);
-        
-    hallOverlay.setMap(this.map);
-=======
 
     indoorOverlay = new google.maps.GroundOverlay(
         floorImage, 
         imageBound);
         indoorOverlay.setMap(this.map);
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
 
     //Zoom in
     this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
     this.map.setZoom(19);
-<<<<<<< HEAD
-
-  }
-
-
-
-
-
-
-=======
     //No zoom or drag anymore
     this.map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
 
@@ -1813,14 +1753,11 @@ export class MapComponent implements AfterViewInit {
         //If no image found, then there is no layer
         indoorOverlay.setMap(null);
       }
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
+    });
 
-
-<<<<<<< HEAD
-
-=======
     //Listener for Exit button
-    controlExitUI.addEventListener('click', function() {
+    controlExitUI.addEventListener('click', function() 
+    {
       indoorOverlay.setMap(null);  
       polygon.setVisible(true);
       marker.setVisible(true);
@@ -1828,8 +1765,11 @@ export class MapComponent implements AfterViewInit {
       controlFloorText.innerHTML = empty;
       self.map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false});
       self.map.setZoom(18);
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
-
+    });
+      
+  }
+    
+  
 
 
 
@@ -1852,7 +1792,6 @@ export class MapComponent implements AfterViewInit {
     locationList.forEach((location: Location) => {
       pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
     });
-<<<<<<< HEAD
 
     var path = new google.maps.Polyline({
       path: pathCoordinates,
@@ -1877,8 +1816,6 @@ export class MapComponent implements AfterViewInit {
     });
 
     path.setMap(this.map);
-=======
->>>>>>> UC-23: (Done) User can see map of the floors of Hall Building
   }
 
 }
