@@ -12,30 +12,24 @@ export class SettingsComponent implements OnInit {
 
   public useElevator: boolean;
   public useStairs: boolean;
-  public useEscalators: boolean;
+  public useEscalator: boolean;
   public languagePreference: string;
-  public googleSync: boolean;
+  public useGoogleCalendarSync: boolean;
 
-  @Output() useElevatorEvent = new EventEmitter();
-  @Output() useStairsEvent = new EventEmitter();
-  @Output() useEscalatorsEvent = new EventEmitter();
+  constructor(private storage: Storage) {
 
-  @Output() languagePreferenceEvent = new EventEmitter();
-  @Output() googleSyncEvent = new EventEmitter();
+    // storage.ready() will wait for initialization of module before starting any actions
+    storage.ready().then(() => {
 
-
-  constructor(private storage: Storage) { 
-    debugger;
-
-    storage.ready().then(()=>{
       // Set useElevator key/value
       storage.get('useElevator').then((uE) => {
         if(uE == null)
         {
           storage.set('useElevator', true);
+          this.useElevator = true;
         }
         else{
-          console.log(uE);
+          this.useElevator = uE;
         }
       });
     // Set the useStairs key/value
@@ -43,78 +37,54 @@ export class SettingsComponent implements OnInit {
         if(uS == null)
         {
           storage.set('useStairs', true);
+          this.useStairs = true;
         }
         else{
-          console.log(uS);
+          this.useStairs = uS;
         }
       });
     // Set the useEscalators key/value
-      storage.get('useEscalators').then((uE) => {
+      storage.get('useEscalator').then((uE) => {
         if(uE == null)
         {
-          storage.set('useEscalators', true);
+          storage.set('useEscalator', true);
+          this.useEscalator = true;
         }
         else{
-          console.log(uE);
+          this.useEscalator = uE;
         }
       });
     // Set the languagePreference key/value
       storage.get('languagePreference').then((lP) => {
         if(lP == null)
         {
-          storage.set('languagePreference', true);
+          storage.set('languagePreference', 'English');
+          this.languagePreference = 'English';
         }
         else{
           console.log(lP);
         }
       });
     // Set the googleSync key/value
-      storage.get('googleSync').then((gS) => {
+      storage.get('useGoogleCalendarSync').then((gS) => {
         if(gS == null)
         {
-          storage.set('googleSync', true);
+          storage.set('useGoogleCalendarSync', false);
+          this.useGoogleCalendarSync = false;
         }
         else{
-          console.log(gS);
+          this.useGoogleCalendarSync = gS;
         }
       });
     });
-
   }
 
-  ngOnInit() {
-    
-  }
-
-  triggerAccessibilityEvent()
+  // Stores the newly set value for the settting 
+  onChangeSetting(key: string, value: any)
   {
-    console.log('Toggle Accessibility ON')
+    this.storage.set(key, value);
   }
 
-
-  triggerElevatorEvent()
-  {
-    console.log('Toggle Elevator')
-  }
-
-  triggerStairsEvent()
-  {
-    console.log('Toggle Stairs ON')
-  }
-
-  triggerEscalatorEvent()
-  {
-    console.log('Toggle Escalator ON')
-  }
-
-  triggerLanguagePreferenceEvent()
-  {
-
-  }
-
-  triggerGoogleSyncEvent()
-  {
-    console.log('Toggle google ON')
-  }
+  ngOnInit() {}
 
 }
