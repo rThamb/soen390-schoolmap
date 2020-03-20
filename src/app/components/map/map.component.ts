@@ -1675,7 +1675,7 @@ export class MapComponent implements AfterViewInit {
     this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
     this.map.setZoom(19);
     //No zoom or drag anymore
-    this.map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
+    this.map.setOptions({draggable: false, scrollwheel: false, disableDoubleClickZoom: true});
 
     //Dropdown content
     var selectContent= ""; 
@@ -1763,22 +1763,11 @@ export class MapComponent implements AfterViewInit {
       marker.setVisible(true);
       controlExitText.innerHTML = empty;
       controlFloorText.innerHTML = empty;
-      self.map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false});
+      self.map.setOptions({draggable: true, scrollwheel: true, disableDoubleClickZoom: false});
       self.map.setZoom(18);
     });
       
   }
-    
-  
-
-
-
-
-
-
-
-
-
 
   /**
    * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
@@ -1818,4 +1807,11 @@ export class MapComponent implements AfterViewInit {
     path.setMap(this.map);
   }
 
+  searchLocation(location: Location)
+  {
+    
+  }
+
 }
+
+
