@@ -21,7 +21,7 @@ export class IndoorPathingService {
   { }
 
 
-  private getPathToClosestWashroom(userPosition: Location, floor: Floor, gender: string){
+  private getPathToClosestWashroom(userPosition: GridCoordinate, floor: Floor, gender: string){
     
     let dest: GridCoordinate = null;
 
@@ -31,8 +31,7 @@ export class IndoorPathingService {
     else
       dest = floor.getWomensWashroom();
 
-    let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, floor);    
-    let path = this.determineOptimalPath(userPos.x, userPos.y, dest.x, dest.y, floor);
+    let path = this.determineOptimalPath(userPosition, dest, floor);
     return path;
   }
 
@@ -46,25 +45,23 @@ export class IndoorPathingService {
    * @param floor 
    * @param endClass 
    */
-  private getPathForClassroomOnSameFloor(userPosition: Location, floor: Floor, endClass: string)
+  private getPathForClassroomOnSameFloor(userPosition: GridCoordinate, floor: Floor, endClass: string)
    {
     //ignore userPostion for now
-    let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, floor);
     let dest: GridCoordinate = floor.getClassroomCoordinate(endClass);
-    
-    let path = this.determineOptimalPath(userPos.x, userPos.y, dest.x, dest.y, floor);
+    let path = this.determineOptimalPath(userPosition, dest, floor);
     return path;
   }
 
-  private getPathForStairsOnSameFloor(userPosition: Location, floor: Floor){
-    let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, floor);
+  private getPathForStairsOnSameFloor(userPosition: GridCoordinate, floor: Floor){
+   
     let dests: GridCoordinate[] = floor.getStairsCoordinate();
     let path = null; 
     let routeDistance = 0;
     //for each stair, determine the closest set of stairs
     for(let i =0; i < dests.length; i++){
       let dest = dests[i];
-      let curPath = this.determineOptimalPath(userPos.x, userPos.y, dest.x, dest.y, floor);
+      let curPath = this.determineOptimalPath(userPosition, dest, floor);
 
       if(routeDistance == 0 || curPath.length < routeDistance){
         path = curPath;
@@ -74,31 +71,24 @@ export class IndoorPathingService {
     return path;
   }
 
-  private getPathForElevatorOnSameFloor(userPosition: Location, floor: Floor){
-    let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, floor);
+  private getPathForElevatorOnSameFloor(userPosition: GridCoordinate, floor: Floor){
+    
     let dest: GridCoordinate = floor.getElevatorCoordinate();
-
-    let path = this.determineOptimalPath(userPos.x, userPos.y, dest.x, dest.y, floor);
+    let path = this.determineOptimalPath(userPosition, dest, floor);
     return path;
   }
 
-  private getPathForEscalatorUpOnSameFloor(userPosition: Location, floor: Floor){
-    let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, floor);
+  private getPathForEscalatorUpOnSameFloor(userPosition: GridCoordinate, floor: Floor){
     let dest: GridCoordinate = floor.getUp_EscalatorCoordinate();
-
-    let path = this.determineOptimalPath(userPos.x, userPos.y, dest.x, dest.y, floor);
+    let path = this.determineOptimalPath(userPosition, dest, floor);
     return path;
   } 
 
-  private getPathForEscalatorDownOnSameFloor(userPosition: Location, floor: Floor){
-    let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, floor);
+  private getPathForEscalatorDownOnSameFloor(userPosition: GridCoordinate, floor: Floor){
     let dest: GridCoordinate = floor.getDown_EscalatorCoordinate();
-
-    let path = this.determineOptimalPath(userPos.x, userPos.y, dest.x, dest.y, floor);
+    let path = this.determineOptimalPath(userPosition, dest, floor);
     return path;
   } 
-
-  
   
   /**
    * Method uses A* closure to find closest path given 2 points.
@@ -108,15 +98,12 @@ export class IndoorPathingService {
    * @param endY 
    * @param floor 
    */
-  private determineOptimalPath(startX, startY, endX, endY, floor){
+  private determineOptimalPath(start: GridCoordinate, end: GridCoordinate, floor: Floor){
     let binaryGrid = floor.getBinaryGrid();
-
-    let a = binaryGrid[startY][startX]; 
-    let b = binaryGrid[endY][endX];
 
     let grid = new pf.Grid(binaryGrid);
     let finder = new pf.AStarFinder();
-    let path = finder.findPath(startX, startY, endX, endY, grid);
+    let path = finder.findPath(start.x, start.y, end.x, end.y, grid);
     return path;
   }
 
@@ -136,28 +123,45 @@ export class IndoorPathingService {
    *          current to elevator
    *          current to ecalator
    */
-  determineRouteToDestination(userPosition: Location, building: Building, 
+
+  determineRouteToDestinationBasedOnUserPosition(userPosition: Location, building: Building, 
+    currentFloor: Floor, destination: string){
+
+    let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, currentFloor);
+    return this.determineRouteToDestination(userPos, building, currentFloor, destination); 
+
+  }
+  determineRouteClassroomToClassroom(classStart: string, classDest: string, 
+    building: Building, currentFloor: Floor){
+
+      let startingFloor = this.getFloorLevelFromDestination(building.getBuildingKey(), classStart);
+      let classStartCoordinate: GridCoordinate = building.getFloorLevel(startingFloor + "").getClassroomCoordinate(classStart);
+      return this.determineRouteToDestination(classStartCoordinate, building, currentFloor, classDest); 
+  }
+
+  private determineRouteToDestination(startPostition: GridCoordinate, building: Building, 
     currentFloor: Floor, destination: string){
 
       let path = null;
       let buildingKey = building.getBuildingKey();
+
       //check if user wants to go to a classroom
       if(destination.indexOf(buildingKey) != -1){
         //going to a classroom
         let destFloor = this.getFloorLevelFromDestination(buildingKey, destination);
 
         if(currentFloor.getFloorLevel() == destFloor){
-          path = this.getPathForClassroomOnSameFloor(userPosition, currentFloor, destination);
+          path = this.getPathForClassroomOnSameFloor(startPostition, currentFloor, destination);
         }
         else{
-          let pathStairs = this.getPathForStairsOnSameFloor(userPosition, currentFloor); 
-          let pathElevator = this.getPathForElevatorOnSameFloor(userPosition, currentFloor);
+          let pathStairs = this.getPathForStairsOnSameFloor(startPostition, currentFloor); 
+          let pathElevator = this.getPathForElevatorOnSameFloor(startPostition, currentFloor);
           let pathEscalator = null;
           if(currentFloor.getFloorLevel() < destFloor){
-            pathEscalator = this.getPathForEscalatorUpOnSameFloor(userPosition, currentFloor);
+            pathEscalator = this.getPathForEscalatorUpOnSameFloor(startPostition, currentFloor);
           }
           else if(currentFloor.getFloorLevel() > destFloor){
-            pathEscalator = this.getPathForEscalatorDownOnSameFloor(userPosition, currentFloor);
+            pathEscalator = this.getPathForEscalatorDownOnSameFloor(startPostition, currentFloor);
           }
 
           path = {
@@ -176,7 +180,7 @@ export class IndoorPathingService {
       else{
         //user is not going to a class room
         if(destination === "Washroom")
-           path = this.getPathToClosestWashroom(userPosition, currentFloor, "M");          
+           path = this.getPathToClosestWashroom(startPostition, currentFloor, "M");          
       }
 
       let lngLatPath = this.gpsmapping.getLngLatForPath(currentFloor, path);

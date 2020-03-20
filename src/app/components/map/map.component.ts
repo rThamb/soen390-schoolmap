@@ -1548,23 +1548,18 @@ export class MapComponent implements AfterViewInit {
    * @param polygon is the building layer
    * @param marker is the building marker
    */
-  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string): void {
+  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string): void
+  {
+    let floorImage = "assets/FloorImages/Hall/hall-8.png"; //Holds the image path
+    var indoorOverlay; //Layer on top of building
+    let self = this;
+    let empty = "";
 
-
-    if (building == 'HALL') {
-
-
-
-    let floorImage = ''; // Holds the image path
-    let indoorOverlay; // Layer on top of building
-    const self = this;
-    const empty = '';
-
-    let imageBound = {
-      north: buildingInfo['bound'].north, // Top
-      south: buildingInfo['bound'].south, // Bottom
-      east: buildingInfo['bound'].east, // Right
-      west: buildingInfo['bound'].west // Left
+    var imageBound = {
+      north: buildingInfo["bound"].north, //Top
+      south: buildingInfo["bound"].south, //Bottom
+      east: buildingInfo["bound"].east, //Right
+      west: buildingInfo["bound"].west //Left
     };
 
     indoorOverlay = new google.maps.GroundOverlay(
@@ -1686,7 +1681,6 @@ export class MapComponent implements AfterViewInit {
       self.map.setZoom(18);
       self.clearAllPOIMarkers();
     });
-  }
 
   }
 
@@ -1756,6 +1750,47 @@ export class MapComponent implements AfterViewInit {
     });
 
     this.poiMarkers = [];
+  }
+
+
+  /**
+   * 
+   * @param level Method used to 
+   */
+  showHallBuildingIndoor(level: string){
+    //focus on overall hall
+    this.focusMap(new Location(45.497194, -73.578886, 0));
+
+    //show the floor selected
+    let hall = overlays.hall.overlayPoints;
+
+    //need actual instance
+    var hallP = new google.maps.Polygon({
+      paths: hall,
+      fillColor: 'deepskyblue',
+    });
+
+    let markerColorVar = 'black';
+    let fontWeightVar = 'bold';
+    let fontSizeVar = '30px';
+    let iconEmpty = ''//'../res/img/empty.png';
+
+    //need acutal instance
+    let hallMarker = new google.maps.Marker
+    ({
+      position: {lat: 45.497092, lng: -73.578974},
+      map: this.map,
+      icon: iconEmpty,
+      label: 
+      {
+          color: markerColorVar,
+          fontWeight: fontWeightVar,
+          text: 'HALL',
+          fontSize: fontSizeVar,
+      },
+    });
+
+    this.enterBuilding("HB", hallP, hallMarker);
   }
 
 }

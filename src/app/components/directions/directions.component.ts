@@ -1,7 +1,17 @@
-import { Component, OnInit, AfterViewInit} from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {MapService} from '../../services/map/map.service';
+import { MapComponent} from '../../components/map/map.component'
+import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service' 
+import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Storage } from '@ionic/storage';
+
+//models 
+import { Building } from '../../models/Building'
+import { Floor } from '../../models/Floor'
+import { Location } from '../../models/Location'
+
+
 
 declare var google
 
@@ -12,7 +22,8 @@ declare var google
 })
 export class DirectionsComponent{
 
-  
+  @ViewChild('map', {static: false}) mapHandle: MapComponent;
+
   directionsService = new google.maps.DirectionsService;
   directionsRenderer = new google.maps.DirectionsRenderer;
   directions = {}
@@ -26,7 +37,9 @@ export class DirectionsComponent{
   loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke", "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"];
 
 
-  constructor(private geolocation: Geolocation, private mapSrevice : MapService, private storage: Storage) 
+  constructor(private geolocation: Geolocation, private mapSrevice : MapService, private storage: Storage,
+              private indoorService: IndoorPathingService,
+              private buildFactoryService: BuildingFactoryService) 
   {
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
@@ -193,6 +206,7 @@ export class DirectionsComponent{
 
   //Uses the google API to determin the route and draws the path on the map
   getDirections() {
+    debugger;
     //this is a reference to the map
     this.setMap();
     var travelMode = this.getTransportation()
@@ -200,11 +214,25 @@ export class DirectionsComponent{
     var clearDirections = document.getElementById('clearDirections')
     let directionsForm = document.getElementById('form') 
 
-    this.directionsService.route({
+
+    //-----------------------------------------
+  
+    let start = this.directions['start'];
+    let destination = this.directions['destination'];
+
+    debugger;
+    if(this.useIndoorDirections(start, destination)){
+      //focus the map onto building
+      this.mapHandle.showHallBuildingIndoor("8");
+      this.drawIndoorPath(start, destination);
+    }
+    else{
+      //use out directions
+      this.directionsService.route({
       origin: this.validateInput(this.directions['start']),
       destination: this.validateInput(this.directions['destination']),
       travelMode: travelMode,
-    }, (response, status) => {
+      }, (response, status) => {
       if (status === 'OK') {
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
@@ -215,6 +243,10 @@ export class DirectionsComponent{
         window.alert('Request to directions API failed: ' + status);
       }
     });
+    }
+
+    //---------------------------------------------------------
+
   }
 
   
@@ -315,5 +347,38 @@ export class DirectionsComponent{
     }
     return nextShuttleTime;
   }
+
+
+
+
+  /**
+   * ---------------------------------------------------------------------------
+   *  
+   * The methods below are used for indoor pathing
+   * 
+   * 
+   * 
+   * -----------------------------------------------------------------------------------
+   */
+
+
+
+
+  //check if indoor directions required
+  useIndoorDirections(start: string, dest: string){
+    
+    //preform some check to determine if indoor is need
+    
+    return true;
+  }
+
+  async drawIndoorPath(start: string, end: string){
+    let building : Building = await this.buildFactoryService.loadBuilding("HB"); 
+    let currentFloor: Floor = building.getFloorLevel("8");
+    let classToClass = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor);
+    let pathDraw: Location[] = classToClass["route"];
+    this.mapHandle.drawPath(pathDraw);
+  }
+
 
 }

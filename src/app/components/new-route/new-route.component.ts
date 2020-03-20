@@ -1,4 +1,5 @@
 import {Component,ViewChild, ElementRef} from '@angular/core';
+import { MapComponent } from '../map/map.component'
 
 declare var google
 
