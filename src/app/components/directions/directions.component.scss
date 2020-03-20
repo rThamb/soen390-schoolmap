@@ -10,6 +10,26 @@
     min-height: 10px;
  }
 
+ .travel{
+    text-align: center;
+    font-weight: 500;
+    color:  #488aff;
+ }
+
+ #shuttletime{
+   font-size: 100%;
+   overflow: hidden;
+   height:100px;
+   text-align: center;
+ }
+ 
+ #travelinfo{
+   padding-bottom: 80px;
+   padding-top: 2px;
+   height: 10px;
+   border-bottom: solid 2px #488aff;
+ }
+
  #directionsPanel{
     overflow: auto;
     height: 400px;

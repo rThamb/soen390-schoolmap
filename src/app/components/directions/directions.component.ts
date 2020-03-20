@@ -92,7 +92,7 @@ export class DirectionsComponent{
         this.getNextShuttleTime('SGW').then((nextShuttleTime) => {
           if(nextShuttleTime){
             shuttleDisplay.style.display="block";
-            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
+            this.shuttleTimeValue = "Next shuttle: \n" + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
           }
         });
       }
@@ -100,7 +100,7 @@ export class DirectionsComponent{
         this.getNextShuttleTime('loyola').then((nextShuttleTime) => {
           if(nextShuttleTime){
             shuttleDisplay.style.display="block";
-            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
+            this.shuttleTimeValue = "Next shuttle: \n" + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
           }
         });
       }
@@ -157,12 +157,12 @@ export class DirectionsComponent{
 
   displayTravelInfo(response: any) {
     let infoPanel = document.getElementById('travelinfo');
-    this.travelDistance = "Travel Distance: " + response.routes[0].legs[0].distance.text;
+    this.travelDistance = "Distance: \n" + response.routes[0].legs[0].distance.text;
     
     if (this.isShuttle() === "SHUTTLE")
-      this.travelDuration = "Estimated Travel Time: 30 mins";
+      this.travelDuration = "ETA: \n30 mins";
     else
-      this.travelDuration = "Estimated Travel Time: " + response.routes[0].legs[0].duration.text;
+      this.travelDuration = "ETA: \n" + response.routes[0].legs[0].duration.text;
     
     infoPanel.style.display = "block";
   }
@@ -215,7 +215,7 @@ export class DirectionsComponent{
     
     let res = await fetch("./assets/shuttle_bus/departureTimes.json");
     let json = await res.json();
-    let currentDate = new Date();
+    let currentDate = new Date('2020-03-18 10:00');
 
     //Only consider the shuttle bus schedule after 7:15 am on that particular day.
     let timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + " " + "7:15");

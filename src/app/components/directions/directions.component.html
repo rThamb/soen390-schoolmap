@@ -34,17 +34,18 @@
  <!-- <div id="directionsPanel"></div> -->
 
  <!-- Temporary: to display shuttle bus time -->
- <ion-textarea rows="2"  [(ngModel)]="shuttleTimeValue" [style.display]="'none'" id="shuttletime" readonly> </ion-textarea>
 
- <ion-grid [style.display]="'none'" id="travelinfo">
+<ion-grid [style.display]="'none'" id="travelinfo">
   <ion-row>
     <ion-col>
-      <ion-textarea [(ngModel)]="travelDistance"></ion-textarea>
+      <ion-textarea auto-grow="true" [(ngModel)]="travelDistance" class="travel" readonly></ion-textarea>
     </ion-col>
     <ion-col>
-      <ion-textarea [(ngModel)]="travelDuration"></ion-textarea>
+      <ion-textarea auto-grow="true" [(ngModel)]="travelDuration" class="travel" readonly></ion-textarea>
+    </ion-col>
+    <ion-col>
+      <ion-textarea [(ngModel)]="shuttleTimeValue" id="shuttletime" [style.display]="'none'" class="travel" readonly> </ion-textarea>
     </ion-col>
   </ion-row>
 </ion-grid>
-
  
