@@ -1793,23 +1793,38 @@ export class MapComponent implements AfterViewInit {
     const startMarker = new google.maps.Marker({
       position: locationList[0].getGoogleLatLng(),
       map: this.map,
-      title: 'Here',
+      title: 'Start',
       label:'S'
     });
 
     const endMarker = new google.maps.Marker({
       position: locationList[locationList.length - 1].getGoogleLatLng(),
       map: this.map,
-      title: 'Here',
+      title: 'End',
       label: 'E'
     });
 
     path.setMap(this.map);
   }
 
-  searchLocation(location: Location)
+  // Retrieves the POI searched from home-search component and locates it on the map
+  goToIndoorPOI(poi: IndoorPOI)
   {
-    
+    this.focusMap(poi);
+
+    var POIMarker = new google.maps.Marker({
+      position: poi.getGoogleLatLng(),
+      map: this.map,
+      title: poi.getKey(),
+      label: poi.getKey()
+    });
+
+    if(poi.getKey().startsWith("HB"))
+    {
+      POIMarker.label = poi.getKey().replace('B','');
+    }
+
+    this.map.setZoom(20);
   }
 
 }

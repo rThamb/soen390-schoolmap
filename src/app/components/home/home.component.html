@@ -8,7 +8,7 @@
 
 -->     
 
-        <app-home-search class="search" color="primary"></app-home-search>
+        <app-home-search class="search" color="primary" (searchIndoorPOIEvent)="map.goToIndoorPOI($event)" ></app-home-search>
         <app-toggle (toggleevent)=map.focusMap($event)></app-toggle>
         <app-map class="map" #map></app-map>
         <app-locate-me (locateevent)="map.getCurrentLocation()"></app-locate-me>

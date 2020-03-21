@@ -12,7 +12,7 @@ import { IndoorPOI } from '../../models/IndoorPOI'
 })
 export class HomeSearchComponent implements OnInit {
 
-  @Output() private roomCode = new EventEmitter();
+  @Output() private searchIndoorPOIEvent = new EventEmitter();
 
   constructor(private bf: BuildingFactoryService) 
   {
@@ -21,15 +21,13 @@ export class HomeSearchComponent implements OnInit {
 
   ngOnInit() {}
 
-
   // Loads the hall building (for now) and iterates through all classrooms to find a match. If success, send event to map component.
   goToSearchResult(sr: string)
   {
-
     this.bf.loadBuilding("HB").then((hb) =>{
       debugger;
       let floorLevel: number = Math.trunc(parseInt(sr.replace("HB", "")) / 100);
-      let floor: Floor = hb.getFloorLevel(stringify(floorLevel));
+      let floor: Floor = hb.getFloorLevel(floorLevel + "");
       
       let floorPois: IndoorPOI[] = floor.getPois();
       console.log(floorPois);
@@ -39,6 +37,7 @@ export class HomeSearchComponent implements OnInit {
         if(floorPois[i].getKey() == sr)
         {
           console.log(floorPois[i].getKey());
+          this.searchIndoorPOIEvent.emit(floorPois[i]);
         }
       }
 
