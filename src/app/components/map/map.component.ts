@@ -52,15 +52,14 @@ export class MapComponent implements AfterViewInit {
   private onMapMarkers : any;
   private onMapPolygons: any;
 
+  //The following variables are used for indoor mode
+
   //variables for indoor mode 
-  private currentFloor: number;
-  private currentActiveRoute: any;
+  private currentActiveFloorInBuilding: number;
+  public currentActiveRoute: any;
   
-  //dictionary use to hold route for each floor need for journey
+  //dictionary used to hold route for each floor need for journey
   private indoorTransitionDirections: any; 
-
-
-
 
   // Injects the component class with imported services
   constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService)
@@ -74,7 +73,7 @@ export class MapComponent implements AfterViewInit {
     this.onMapPolygons = {};
     indoorModeEnable = false; 
     exitIndoorModeFunc = null;
-    this.currentFloor = 0;
+    this.currentActiveFloorInBuilding = 0;
     this.currentActiveRoute = {};
   }
 
@@ -1665,6 +1664,8 @@ export class MapComponent implements AfterViewInit {
       {
         if(buildingInfo["Floors"][i] != undefined)
         {
+          this.currentFloor = this.value;
+
           if(this.value == buildingInfo["Floors"][i].level)
           {
             floorImage = buildingInfo["Floors"][i].img;
@@ -1722,6 +1723,7 @@ export class MapComponent implements AfterViewInit {
       componentContext.removePreviouslyDrawnPath();
       componentContext.setTransitionsPaths(null);
       indoorModeEnable = false; 
+      componentContext.currentActiveFloorInBuilding = 0;
 
       console.log("Status of indoor mode flag (on Exit): " + indoorModeEnable);
     }
@@ -1818,6 +1820,7 @@ export class MapComponent implements AfterViewInit {
   }
 
 
+<<<<<<< HEAD
   // Clears all POI markers from the map component
   clearAllPOIMarkers()
   {
@@ -1829,13 +1832,16 @@ export class MapComponent implements AfterViewInit {
   }
 
 
+=======
+>>>>>>> UC-47: Toggle between indoor and outdoor working. Entering a new route in indoor mode works, but to set floor number again.
   /**
    * Method used  to focus in on a give building
    * @param level Method used to 
    */
-  showHallBuildingIndoor(level: string){
+  showHallBuildingIndoor(){
     //focus on overall hall
-    this.focusMap(new Location(45.497194, -73.578886, 0));
+    if(!indoorModeEnable)
+      this.focusMap(new Location(45.497194, -73.578886, 0));
     //show the floor selected
     let buildingKey = "HB";
     var hallP = this.onMapPolygons[buildingKey];
@@ -1843,7 +1849,13 @@ export class MapComponent implements AfterViewInit {
     this.enterBuilding(buildingKey, hallP, hallMarker);
   }
 
-  showFloorMapForBuilding(floorNumTransition: string){
+  showFloorMapForBuilding(curFloorNum: string){
+
+    let floorNumTransition: string = curFloorNum;
+
+    if(this.currentActiveFloorInBuilding != 0)
+      floorNumTransition = this.currentActiveFloorInBuilding + "";
+
     //get the path for
     if(this.indoorTransitionDirections[floorNumTransition] == undefined || this.indoorTransitionDirections[floorNumTransition] == null){
       this.removePreviouslyDrawnPath();
@@ -1854,6 +1866,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   setTransitionsPaths(transitions: any){
+    this.removePreviouslyDrawnPath();
     this.indoorTransitionDirections = transitions;
   }
 

@@ -223,13 +223,16 @@ export class DirectionsComponent{
 
     
     if(this.useIndoorDirections(start, destination)){
+      //**** remove outdoor route if enable 
+
       //focus the map onto building
-      this.mapHandle.showHallBuildingIndoor("8");
+      this.mapHandle.showHallBuildingIndoor();
       this.drawIndoorPath(start, destination);
     }
     else{
       //use out directions
 
+      //quit indoor mode if enabled
       this.mapHandle.quitIndoorMode();
 
       this.directionsService.route({
@@ -410,7 +413,8 @@ export class DirectionsComponent{
     let classToClass = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, Transitions.Escalator);
 
     //set transition map
-    this.mapHandle.setTransitionsPaths(classToClass);    
+    this.mapHandle.setTransitionsPaths(classToClass);   
+    //this.mapHandle.showFloorMapForBuilding(); 
   }
 
 
