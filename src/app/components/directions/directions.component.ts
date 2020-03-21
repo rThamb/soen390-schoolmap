@@ -181,8 +181,8 @@ export class DirectionsComponent{
     //this is a reference to the map
     this.setMap();
     var travelMode = this.getTransportation()
-    var form = document.getElementById('form')
     var directionsPanel = document.getElementById('directionsPanel')
+    let directionsForm = document.getElementById('form') 
 
     this.directionsService.route({
       origin: this.validateInput(this.directions['start']),
@@ -192,7 +192,7 @@ export class DirectionsComponent{
       if (status === 'OK') {
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
-        form.style.display="none";
+        directionsForm.style.display="none";
         directionsPanel.style.display="block";
       } else {
         window.alert('Request to directions API failed: ' + status);
@@ -221,6 +221,19 @@ export class DirectionsComponent{
         window.alert('Request to directions API failed: ' + status);
       }
     });
+  }
+
+  //Method for clearing the map of the line, removing text directions and enabling the to/from view
+  clearDirections() {
+    let directionsForm = document.getElementById('form')
+
+    if(this.directionsRenderer != null)
+    {  
+      this.directionsRenderer.setMap(null);
+      directionsForm.style.display="block";
+      document.getElementById('travelinfo').style.display="none"
+      document.getElementById('directionsPanel').style.display="none"
+    }
   }
 
   //Given the departure campus, retrieves the time of next shuttle bus leaving that campus (if any)
