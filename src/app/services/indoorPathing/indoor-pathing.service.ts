@@ -6,6 +6,7 @@ import { ReadGridService } from '../readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
 import { GridCoordinate } from '../../models/GridCoordinate'
+import { Transitions } from '../../models/Transitions'
 
 
 declare var require: any;
@@ -124,22 +125,103 @@ export class IndoorPathingService {
    *          current to ecalator
    */
 
-  determineRouteToDestinationBasedOnUserPosition(userPosition: Location, building: Building, 
-    currentFloor: Floor, destination: string){
+  //service method 
+  public determineRouteToDestinationBasedOnUserPosition(userPosition: Location, building: Building, 
+    currentFloor: Floor, destination: string, option: Transitions){
 
     let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, currentFloor);
-    return this.determineRouteToDestination(userPos, building, currentFloor, destination); 
-
+    return this.determineRouteToDestination(userPos, building, currentFloor, destination, option); 
   }
-  determineRouteClassroomToClassroom(classStart: string, classDest: string, 
-    building: Building, currentFloor: Floor){
+  
+  //service method
+  public determineRouteClassroomToClassroom(classStart: string, classDest: string, 
+    building: Building, currentFloor: Floor, option: Transitions){
 
       let startingFloor = this.getFloorLevelFromDestination(building.getBuildingKey(), classStart);
       let classStartCoordinate: GridCoordinate = building.getFloorLevel(startingFloor + "").getClassroomCoordinate(classStart);
-      return this.determineRouteToDestination(classStartCoordinate, building, currentFloor, classDest); 
+      return this.determineRouteToDestination(classStartCoordinate, building, currentFloor, classDest, option); 
   }
 
+
   private determineRouteToDestination(startPostition: GridCoordinate, building: Building, 
+    currentFloor: Floor, destination: string, option: Transitions): any{
+
+      //key (str, floor#) => Location[]
+      let journey = {};
+
+      let currentGridLocation = startPostition;
+      let startFloor = currentFloor.getFloorLevel();
+      let currentFloorNum = startFloor; 
+      let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
+
+      for(let i = currentFloorNum; i < destinationLevel + 1;){
+        
+        let currentFloorPath = [];
+        //check if we need to transition
+        if(i != destinationLevel){
+          //need to transition
+          currentFloorPath = this.getTransitionPathForOption(option, currentGridLocation, currentFloor);
+
+          //currently transitioning
+            /*  
+              When transitioning, stair and elevators don't change the grid position (latLng) when changing
+              floors. Elevator and Stairs are directly up/down on another floor, so no change in x,y position
+
+
+              Escalators on the other hand change users grid position each time they go up/down. 
+              So we'll need to update currentlocation each time we transition.
+            */
+
+            //set grid location once you reach the top.
+            if(option = Transitions.Escalator)
+             currentGridLocation = building.getFloorLevel((i + 1) + "").getUp_EscalatorCoordinate();
+        }
+        else{
+          if(i == destinationLevel){
+            currentFloorPath = this.getPathForClassroomOnSameFloor(currentGridLocation, currentFloor, destination);
+          }
+        }
+
+        journey[i + ""] = this.gpsmapping.getLngLatForPath(currentFloor, currentFloorPath);
+        i++;//go up a floor
+        currentFloor = building.getFloorLevel(i + "");
+      }
+
+      return journey;
+  }
+
+  private getTransitionPathForOption(option: Transitions, start: GridCoordinate, currentFloor: Floor){
+
+    let path = [];
+    switch(option)
+    {
+      case Transitions.Stairs:
+        return this.getPathForStairsOnSameFloor(start, currentFloor)[0];
+      case Transitions.Escalator:
+        return this.getPathForEscalatorUpOnSameFloor(start, currentFloor);
+      case Transitions.Elavator:
+        return this.getPathForElevatorOnSameFloor(start, currentFloor);
+    }
+
+    return path;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  private determineRouteForCurrentFloor(startPostition: GridCoordinate, building: Building, 
     currentFloor: Floor, destination: string){
 
       let path = null;
@@ -179,13 +261,24 @@ export class IndoorPathingService {
       }
       else{
         //user is not going to a class room
-        if(destination === "Washroom")
-           path = this.getPathToClosestWashroom(startPostition, currentFloor, "M");          
+
+        switch(destination){
+          case "Mens Washroom":
+            path = this.getPathToClosestWashroom(startPostition, currentFloor, "M");
+            break; 
+          case "Womens Washroom":
+            path = this.getPathToClosestWashroom(startPostition, currentFloor, "F");
+            break; 
+          case "Stairs":
+            path = this.getPathForStairsOnSameFloor(startPostition, currentFloor);
+            break;
+          case "Elevator":
+            path = this.getPathForElevatorOnSameFloor(startPostition, currentFloor);
+            break;
+        }
       }
 
-      let lngLatPath = this.gpsmapping.getLngLatForPath(currentFloor, path);
-
-    
+      let lngLatPath = this.gpsmapping.getLngLatForPath(currentFloor, path);  
       let returnObject = {
         "destOnFloor": true,
         "route": lngLatPath

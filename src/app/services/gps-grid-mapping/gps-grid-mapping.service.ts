@@ -193,8 +193,8 @@ Y
     //components (avg)
 
 
-    let xAddition = shiftVectorXComponent * (x + 1.5); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
-    let yAddition = shiftVectorYComponent * (x + 1.5);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
+    let xAddition = shiftVectorXComponent * (x + 1.25); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
+    let yAddition = shiftVectorYComponent * (x + 1.25);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
     
     let positionAfterXShiftLng = ref1Lng + xAddition;
     let positionAffterXShiftLat = ref1Lat + yAddition;
@@ -229,7 +229,6 @@ Y
     }
 
     return markers;
-    
   
   }
 

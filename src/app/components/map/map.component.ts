@@ -19,6 +19,12 @@ import { MapService } from '../../services/map/map.service';
 
 declare var google;
 
+var componentContext = null;
+var indoorModeEnable; 
+var exitIndoorModeFunc;
+
+
+
 /**
  * MapComponent class. Contains the map object and attributes for all google map related services.
  * Also contains data for both campuses and is injected with our services.
@@ -41,12 +47,35 @@ export class MapComponent implements AfterViewInit {
   private sgw: Campus;
   private loyola: Campus;
 
+
+  //vars for drawing
+  private onMapMarkers : any;
+  private onMapPolygons: any;
+
+  //variables for indoor mode 
+  private currentFloor: number;
+  private currentActiveRoute: any;
+  
+  //dictionary use to hold route for each floor need for journey
+  private indoorTransitionDirections: any; 
+
+
+
+
   // Injects the component class with imported services
   constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService)
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
-    this.user = new User();
+
+
+    componentContext = this;
+    this.onMapMarkers = {};
+    this.onMapPolygons = {};
+    indoorModeEnable = false; 
+    exitIndoorModeFunc = null;
+    this.currentFloor = 0;
+    this.currentActiveRoute = {};
   }
 
   ngAfterViewInit(): void {
@@ -182,6 +211,8 @@ export class MapComponent implements AfterViewInit {
       fillColor: fColor,
     });
     hallP.setMap(this.map);
+    this.onMapPolygons["HB"] = hallP; 
+
 
     let molsonP = new google.maps.Polygon({
       paths: molson,
@@ -347,6 +378,7 @@ export class MapComponent implements AfterViewInit {
           fontSize,
       },
     });
+    this.onMapMarkers["HB"] = hallMarker;
 
     let hallContent =
     '<ion-list> <h4 align=\'center\'>Henry F. Hall Building </h4>' +
@@ -1548,7 +1580,7 @@ export class MapComponent implements AfterViewInit {
    * @param polygon is the building layer
    * @param marker is the building marker
    */
-  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string): void
+  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string, usingPOI: boolean): void
   {
     let floorImage = "assets/FloorImages/Hall/hall-8.png"; //Holds the image path
     var indoorOverlay; //Layer on top of building
@@ -1567,11 +1599,13 @@ export class MapComponent implements AfterViewInit {
         imageBound);
     indoorOverlay.setMap(this.map);
 
-    // Zoom in
-    this.map.setCenter({lat: buildingInfo['Location'].lat, lng: buildingInfo['Location'].lng});
-    this.map.setZoom(19);
-    // No zoom or drag anymore
-    this.map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
+    //ONLY DO the below work if entering indoor mode for the first time
+    if(!indoorModeEnable){
+    //Zoom in
+    this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
+    this.map.setZoom(18);
+    //No zoom or drag anymore
+    this.map.setOptions({draggable: false, scrollwheel: false, disableDoubleClickZoom: true});
 
     // Dropdown content
     let selectContent = '';
@@ -1586,17 +1620,17 @@ export class MapComponent implements AfterViewInit {
     '</select>';
 
     // Create a div to hold the control for dropdown and Exit button
-    let controlFloorDiv = document.createElement('div');
-    let controlExitDiv = document.createElement('div');
+    var controlFloorDiv = document.createElement('div');
+    var controlExitDiv = document.createElement('div');
 
     // Set CSS for the control border of Floor
-    let controlFloorUI = document.createElement('div');
+    var controlFloorUI = document.createElement('div');
     controlFloorUI.style.backgroundColor = '#fff';
     controlFloorUI.style.border = '2px solid #fff';
     controlFloorUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
 
     // Set CSS for the control interior of Floor
-    let controlFloorText = document.createElement('div');
+    var controlFloorText = document.createElement('div');
     controlFloorText.style.fontSize = '16px';
     controlFloorText.style.lineHeight = '38px';
     controlFloorText.style.paddingLeft = '5px';
@@ -1604,11 +1638,11 @@ export class MapComponent implements AfterViewInit {
     controlFloorText.innerHTML = floorDropdown;
 
     // Set CSS for the control border of Exit
-    let controlExitUI = document.createElement('div');
+    var controlExitUI = document.createElement('div');
     controlExitUI.style.marginBottom = '22px';
 
     // Set CSS for the control interior of Exit
-    let controlExitText = document.createElement('div');
+    var controlExitText = document.createElement('div');
     let exitButton = '<ion-button>Exit Building</ion-button>';
     controlExitText.innerHTML = exitButton;
 
@@ -1623,23 +1657,24 @@ export class MapComponent implements AfterViewInit {
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlFloorDiv);
     this.map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlExitDiv);
 
-    // Listener for dropdown
-    google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e)
-    {
-      self.clearAllPOIMarkers();
-
-      for (let i = 0; i < buildingInfo['totalFloors'].nFloors; i++) {
-        if (buildingInfo['Floors'][i] != undefined) {
-          if (this.value == buildingInfo['Floors'][i].level) {
-            floorImage = buildingInfo['Floors'][i].img;
-            indoorOverlay.setMap(null);
+    //define dropdown handler here
+    var floorDropDownHander = function(e) 
+    {    
+      this.clearAllPOIMarkers();
+      for(let i = 0; i <buildingInfo["totalFloors"].nFloors; i++)
+      {
+        if(buildingInfo["Floors"][i] != undefined)
+        {
+          if(this.value == buildingInfo["Floors"][i].level)
+          {
+            floorImage = buildingInfo["Floors"][i].img;
+            indoorOverlay.setMap(null);  
             indoorOverlay = new google.maps.GroundOverlay(
                 floorImage,
                 imageBound);
             indoorOverlay.setMap(self.map);
 
-            
-
+          if(usingPOI){
             const floorLevel = buildingInfo['Floors'][i].level;
             const currentFloor: Floor = buildingFloors['HB' + floorLevel];
 
@@ -1654,44 +1689,63 @@ export class MapComponent implements AfterViewInit {
                   label: poi.getKey()
                 }));
               });
-
             }
-
-            break;
+          }
+          componentContext.showFloorMapForBuilding(this.value + "");
+          break;
           } else {
+              componentContext.removePreviouslyDrawnPath();
+          }
             continue;
           }
         }
         // If no image found, then there is no layer
         indoorOverlay.setMap(null);
       }
+    }
 
+    google.maps.event.addDomListener(document.getElementById('floors'), 'change', floorDropDownHander); 
 
-
-    });
-
-    // Listener for Exit button
-    controlExitUI.addEventListener('click', function() {
-      indoorOverlay.setMap(null);
+    
+    exitIndoorModeFunc = function() 
+    {
+      indoorOverlay.setMap(null);  
       polygon.setVisible(true);
       marker.setVisible(true);
+
       controlExitText.innerHTML = empty;
       controlFloorText.innerHTML = empty;
       self.map.setOptions({draggable: true, scrollwheel: true, disableDoubleClickZoom: false});
       self.map.setZoom(18);
-      self.clearAllPOIMarkers();
-    });
 
+      //indoor mode values
+      componentContext.removePreviouslyDrawnPath();
+      componentContext.setTransitionsPaths(null);
+      indoorModeEnable = false; 
+
+      console.log("Status of indoor mode flag (on Exit): " + indoorModeEnable);
+    }
+    
+    //Listener for Exit button
+    controlExitUI.addEventListener('click', exitIndoorModeFunc);
+
+    //flag that indoor mode is active
+    indoorModeEnable = true; 
+    //close if line 1698 (if(!this.indoorModeEnable))
+      
   }
+    
+  
 
   /**
    * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
    * @param locationList
    */
-  drawPath(locationList: Location[]) {
-    // debugger;
-    let pathCoordinates = [];
-
+  drawPath(locationList: Location[])
+  {
+    this.removePreviouslyDrawnPath();
+    var pathCoordinates = [];
+    
     locationList.forEach((location: Location) => {
       pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
     });
@@ -1704,19 +1758,31 @@ export class MapComponent implements AfterViewInit {
       strokeWeight: 2
     });
 
+    let startLabel = "Start";
+
     const startMarker = new google.maps.Marker({
       position: locationList[0].getGoogleLatLng(),
       map: this.map,
-      title: 'Start',
-      label: 'S'
+      title: 'Here',
+      label: startLabel
     });
+
+
+    let endLabel = "End";
 
     const endMarker = new google.maps.Marker({
       position: locationList[locationList.length - 1].getGoogleLatLng(),
       map: this.map,
       title: 'End',
-      label: 'E'
+      label: endLabel
     });
+
+    //remember marker instance to disable later
+    this.currentActiveRoute = {
+      "path": path, 
+      "startMark": startMarker, 
+      "endMark": endMarker
+    };
 
     path.setMap(this.map);
   }
@@ -1741,6 +1807,16 @@ export class MapComponent implements AfterViewInit {
 
     this.map.setZoom(20);
   }
+  removePreviouslyDrawnPath(){
+    if(this.currentActiveRoute["path"] != undefined || this.currentActiveRoute["path"] != null){
+      //hide or remove the current route drawn
+      this.currentActiveRoute["path"].setMap(null);
+      this.currentActiveRoute["startMark"].setMap(null);
+      this.currentActiveRoute["endMark"].setMap(null);
+      this.currentActiveRoute = {};
+    }
+  }
+
 
   // Clears all POI markers from the map component
   clearAllPOIMarkers()
@@ -1754,45 +1830,41 @@ export class MapComponent implements AfterViewInit {
 
 
   /**
-   * 
+   * Method used  to focus in on a give building
    * @param level Method used to 
    */
   showHallBuildingIndoor(level: string){
     //focus on overall hall
     this.focusMap(new Location(45.497194, -73.578886, 0));
-
     //show the floor selected
-    let hall = overlays.hall.overlayPoints;
-
-    //need actual instance
-    var hallP = new google.maps.Polygon({
-      paths: hall,
-      fillColor: 'deepskyblue',
-    });
-
-    let markerColorVar = 'black';
-    let fontWeightVar = 'bold';
-    let fontSizeVar = '30px';
-    let iconEmpty = ''//'../res/img/empty.png';
-
-    //need acutal instance
-    let hallMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.497092, lng: -73.578974},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColorVar,
-          fontWeight: fontWeightVar,
-          text: 'HALL',
-          fontSize: fontSizeVar,
-      },
-    });
-
-    this.enterBuilding("HB", hallP, hallMarker);
+    let buildingKey = "HB";
+    var hallP = this.onMapPolygons[buildingKey];
+    let hallMarker = this.onMapMarkers[buildingKey]
+    this.enterBuilding(buildingKey, hallP, hallMarker);
   }
 
+  showFloorMapForBuilding(floorNumTransition: string){
+    //get the path for
+    if(this.indoorTransitionDirections[floorNumTransition] == undefined || this.indoorTransitionDirections[floorNumTransition] == null){
+      this.removePreviouslyDrawnPath();
+    }else{
+      let path: Location[] = this.indoorTransitionDirections[floorNumTransition];
+      this.drawPath(path);
+    }
+  }
+
+  setTransitionsPaths(transitions: any){
+    this.indoorTransitionDirections = transitions;
+  }
+
+  isIndoorModeActive(): boolean{
+    return indoorModeEnable;
+  }
+
+  quitIndoorMode(){
+    if(indoorModeEnable)
+      exitIndoorModeFunc();
+  }
 }
 
 

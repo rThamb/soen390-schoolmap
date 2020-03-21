@@ -7,6 +7,7 @@ import { BuildingFactoryService } from '../../services/BuildingFactory/building-
 import { Building } from '../../models/Building'
 import { Floor } from '../../models/Floor'
 import { MapComponent } from '../map/map.component'
+import { Transitions } from '../../models/Transitions'
 
 
 
@@ -80,9 +81,9 @@ export class HomeComponent implements OnInit {
       //let pathGoingUp = this.service3.determineRouteToDestinationBasedOnUserPosition(userPosition, building, curFloor, "HB890");
       
       let a = "HB840";
-      let b = "HB890";
+      let b = "HB967";
 
-      let classToClass = this.service3.determineRouteClassroomToClassroom(a, b, building, curFloor);
+      let classToClass = this.service3.determineRouteClassroomToClassroom(a, b, building, curFloor, Transitions.Escalator);
 
       let pathDraw: Location[] = classToClass["route"];
 

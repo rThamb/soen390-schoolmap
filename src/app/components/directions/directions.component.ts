@@ -10,6 +10,8 @@ import { Storage } from '@ionic/storage';
 import { Building } from '../../models/Building'
 import { Floor } from '../../models/Floor'
 import { Location } from '../../models/Location'
+import { Transitions } from '../../models/Transitions'
+
 
 
 
@@ -206,7 +208,6 @@ export class DirectionsComponent{
 
   //Uses the google API to determin the route and draws the path on the map
   getDirections() {
-    debugger;
     //this is a reference to the map
     this.setMap();
     var travelMode = this.getTransportation()
@@ -220,7 +221,7 @@ export class DirectionsComponent{
     let start = this.directions['start'];
     let destination = this.directions['destination'];
 
-    debugger;
+    
     if(this.useIndoorDirections(start, destination)){
       //focus the map onto building
       this.mapHandle.showHallBuildingIndoor("8");
@@ -228,6 +229,9 @@ export class DirectionsComponent{
     }
     else{
       //use out directions
+
+      this.mapHandle.quitIndoorMode();
+
       this.directionsService.route({
       origin: this.validateInput(this.directions['start']),
       destination: this.validateInput(this.directions['destination']),
@@ -368,16 +372,45 @@ export class DirectionsComponent{
   useIndoorDirections(start: string, dest: string){
     
     //preform some check to determine if indoor is need
+
+    //check if start and destination are 
+
+    //1. check if within a length
     
-    return true;
+    if(start.length == 5 || start.length == 6){
+      if(dest.length == 5 || dest.length == 6){
+
+        let startBuildCode = start.substring(0,2);
+        let startBuildFloor = start.substring(2, start.length - 1);
+        let endBuildCode = dest.substring(0,2); 
+        let endBuildFloor = dest.substring(2, dest.length - 1);
+
+        let cond1 = !this.checkAllNums(startBuildCode);
+        let cond2 = this.checkAllNums(startBuildFloor);
+
+        let cond3 = !this.checkAllNums(endBuildCode);
+        let cond4 = this.checkAllNums(endBuildFloor);
+
+        return cond1 && cond2 && cond3 && cond4;
+      }  
+    }
+    
+    return false;   
+  }
+
+  private checkAllNums(val: string){
+    let onlyNum = /^\d+$/.test(val);
+    return onlyNum;
   }
 
   async drawIndoorPath(start: string, end: string){
+    
     let building : Building = await this.buildFactoryService.loadBuilding("HB"); 
     let currentFloor: Floor = building.getFloorLevel("8");
-    let classToClass = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor);
-    let pathDraw: Location[] = classToClass["route"];
-    this.mapHandle.drawPath(pathDraw);
+    let classToClass = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, Transitions.Escalator);
+
+    //set transition map
+    this.mapHandle.setTransitionsPaths(classToClass);    
   }
 
 
