@@ -408,14 +408,25 @@ export class DirectionsComponent{
 
   async drawIndoorPath(start: string, end: string){
     
-    let building : Building = await this.buildFactoryService.loadBuilding("HB"); 
-    let currentFloor: Floor = building.getFloorLevel("8");
+    let buildingCode = this.getBuildingCode(start);
+    let floorLevel = this.getFloorNum(start, buildingCode);
+
+    let building : Building = await this.buildFactoryService.loadBuilding(buildingCode); 
+    let currentFloor: Floor = building.getFloorLevel(floorLevel + "");
     let classToClass = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, Transitions.Escalator);
 
     //set transition map
     this.mapHandle.setTransitionsPaths(classToClass);   
-    //this.mapHandle.showFloorMapForBuilding(); 
   }
+
+  private getFloorNum(start: string, buildingCode: string){
+    return Math.trunc(parseInt(start.replace(buildingCode, "")) / 100);
+  }
+
+  private getBuildingCode(start: string){
+    return start.substring(0,2);
+  }
+
 
 
 }

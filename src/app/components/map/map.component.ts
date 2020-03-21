@@ -1581,7 +1581,7 @@ export class MapComponent implements AfterViewInit {
    */
   indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string, usingPOI: boolean): void
   {
-    let floorImage = "assets/FloorImages/Hall/hall-8.png"; //Holds the image path
+    let floorImage = ""; //Holds the image path
     var indoorOverlay; //Layer on top of building
     let self = this;
     let empty = "";

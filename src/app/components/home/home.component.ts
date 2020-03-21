@@ -77,11 +77,11 @@ export class HomeComponent implements OnInit {
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
       //debugger;
       let userPosition = new Location(45.497192, -73.579329, 0);
-      let curFloor = building.getFloorLevel("8"); 
+      let curFloor = building.getFloorLevel("9"); 
       //let pathGoingUp = this.service3.determineRouteToDestinationBasedOnUserPosition(userPosition, building, curFloor, "HB890");
       
-      let a = "HB840";
-      let b = "HB967";
+      let a = "HB922";
+      let b = "HB840";
 
       let classToClass = this.service3.determineRouteClassroomToClassroom(a, b, building, curFloor, Transitions.Escalator);
 
