@@ -20,8 +20,8 @@ export class DirectionsComponent{
   map:any;
 
   //Possible key words that would be searched to get either of the campuses
-  sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o"];
-  loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke"];
+  sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building", "hall","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o","1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"];
+  loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke", "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"];
 
 
   constructor(private mapSrevice : MapService) { }
@@ -34,7 +34,7 @@ export class DirectionsComponent{
     this.map = this.mapSrevice.getMap();
     
     //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
-    //this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+    this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
 
     this.directionsRenderer.setMap(this.map);
 
@@ -167,20 +167,33 @@ export class DirectionsComponent{
     infoPanel.style.display = "block";
   }
 
+  validateInput(input: string): string {
+    if(this.isSGW(input))
+      return "1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"
+    else if(this.isLoyola(input))
+      return "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"
+    else
+      return input
+  }
+
   //Uses the google API to determin the route and draws the path on the map
   getDirections() {
     //this is a reference to the map
     this.setMap();
     var travelMode = this.getTransportation()
+    var form = document.getElementById('form')
+    var directionsPanel = document.getElementById('directionsPanel')
 
     this.directionsService.route({
-      origin: this.directions['start'],
-      destination: this.directions['destination'],
+      origin: this.validateInput(this.directions['start']),
+      destination: this.validateInput(this.directions['destination']),
       travelMode: travelMode
     }, (response, status) => {
       if (status === 'OK') {
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
+        form.style.display="none";
+        directionsPanel.style.display="block";
       } else {
         window.alert('Request to directions API failed: ' + status);
       }

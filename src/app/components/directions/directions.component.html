@@ -1,4 +1,4 @@
-<form id="form" (ngSubmit)="getDirections()">
+<form id="form" (ngSubmit)="getDirections()" [style.display]="'block'">
   <ion-header>
   <ion-toolbar class="toolbar">
 
@@ -31,7 +31,7 @@
 </form>
 
 <!-- Div to display step by step direction in text for any given route -->
- <!-- <div id="directionsPanel"></div> -->
+ <div id="directionsPanel" [style.display]="'none'"></div>
 
  <!-- Temporary: to display shuttle bus time -->
 

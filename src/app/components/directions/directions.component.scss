@@ -16,6 +16,10 @@
     color:  #488aff;
  }
 
+ .adp-directions{
+   margin: 0px;
+ }
+
  #shuttletime{
    font-size: 100%;
    overflow: hidden;
@@ -27,10 +31,12 @@
    padding-bottom: 80px;
    padding-top: 2px;
    height: 10px;
+   border-top: solid 2px #488aff;
    border-bottom: solid 2px #488aff;
  }
 
  #directionsPanel{
     overflow: auto;
-    height: 400px;
+    height: 217px;
+    padding-top: 47px;
  }
