@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Floor } from '../../models/Floor' ;
 import { Location } from '../../models/Location';
 import { FloorTile } from '../../models/FloorTile'
-import { IndoorPOI } from '../../models/IndoorPOI'
 import { Building } from '../../models/Building';
+import { IndoorPOI } from '../../models/IndoorPOI'
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,8 @@ export class ReadGridService {
     this.directoryPath = "./assets/binary_floor_layouts/"; 
 
     let filenames = {
-      "HB": "HB.json" 
+      "HB": "HB.json",
+      "ev": "ev.json" 
     }; 
 
     this.floorFileNameMap = filenames;
@@ -94,31 +95,6 @@ export class ReadGridService {
     return tileGrid;
   }
 
-  private getPointsOfInterest(poi: any): IndoorPOI[]
-  {
-      let keys = Object.keys(poi);
-      let pois: IndoorPOI[] = [];
-
-      for(let i =0; i<keys.length; i++){
-
-        let key = keys[i];
-
-        if(key != "Stairs"){
-          let curPoint = poi[key];
-          let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
-          pois.push(obj);
-        }
-        else{//handle stair POIS differently
-          let stairsPois = poi[key]; //an array
-          for(let i =0; i < stairsPois.length; i++){
-            let curPoint = stairsPois[i];
-            let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
-            pois.push(obj);
-          }    
-        }    
-      }
-      return pois;
-  }
  //Loads a Building json file, and returns a dictionary with informations about it
  async buildingInfo(keyName: string)
  {
@@ -149,4 +125,29 @@ export class ReadGridService {
 
 
     
+  private getPointsOfInterest(poi: any): IndoorPOI[]
+  {
+      let keys = Object.keys(poi);
+      let pois: IndoorPOI[] = [];
+
+      for(let i =0; i<keys.length; i++){
+
+        let key = keys[i];
+
+        if(key != "Stairs"){
+          let curPoint = poi[key];
+          let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
+          pois.push(obj);
+        }
+        else{//handle stair POIS differently
+          let stairsPois = poi[key]; //an array
+          for(let i =0; i < stairsPois.length; i++){
+            let curPoint = stairsPois[i];
+            let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
+            pois.push(obj);
+          }    
+        }    
+      }
+      return pois;
+  } 
 }

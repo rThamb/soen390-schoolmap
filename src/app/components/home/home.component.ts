@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
 
   testBuilding(){
      
-    debugger;
+    //debugger;
     this.bService.loadBuilding("HB").then((building: Building) => {
       
       /*let classes = building.getAllClassroomCodes();
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
       */
       //let ninethfloor  = building.getFloorLevel("9");
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
-      debugger;
+      //debugger;
       let userPosition = new Location(45.497192, -73.579329, 0);
       let curFloor = building.getFloorLevel("8"); 
       let pathGoingUp = this.service3.determineRouteToDestination(userPosition, building, curFloor, "HB890");
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
       let pathElevator: Location[] = pathGoingUp["route"];
 
       this.mapHandle.drawPath(pathElevator);
-      debugger;
+      //debugger;
       //let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
 
     });

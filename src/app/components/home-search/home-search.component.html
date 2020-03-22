@@ -1,4 +1,4 @@
 <ion-toolbar color="primary">
-  <ion-searchbar color="light"></ion-searchbar>
+  <ion-searchbar (search)="goToSearchResult(searchResult)" color="light" [(ngModel)]="searchResult"></ion-searchbar>
 </ion-toolbar>
 

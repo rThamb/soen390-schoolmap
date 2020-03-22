@@ -1,4 +1,4 @@
-<form id="form" (ngSubmit)="getDirections()">
+<form id="form" (ngSubmit)="getDirections()" [style.display]="'block'">
   <ion-header>
   <ion-toolbar class="toolbar">
 
@@ -30,21 +30,24 @@
     </ion-header>
 </form>
 
-<!-- Div to display step by step direction in text for any given route -->
- <!-- <div id="directionsPanel"></div> -->
-
  <!-- Temporary: to display shuttle bus time -->
- <ion-textarea rows="2"  [(ngModel)]="shuttleTimeValue" [style.display]="'none'" id="shuttletime" readonly> </ion-textarea>
 
- <ion-grid [style.display]="'none'" id="travelinfo">
+<ion-grid [style.display]="'none'" id="travelinfo">
   <ion-row>
     <ion-col>
-      <ion-textarea [(ngModel)]="travelDistance"></ion-textarea>
+      <ion-textarea auto-grow="true" [(ngModel)]="travelDistance" class="travel" readonly></ion-textarea>
     </ion-col>
     <ion-col>
-      <ion-textarea [(ngModel)]="travelDuration"></ion-textarea>
+      <ion-textarea auto-grow="true" [(ngModel)]="travelDuration" class="travel" readonly></ion-textarea>
+    </ion-col>
+    <ion-col>
+      <ion-textarea [(ngModel)]="shuttleTimeValue" id="shuttletime" [style.display]="'none'" class="travel" readonly> </ion-textarea>
     </ion-col>
   </ion-row>
 </ion-grid>
+ 
+<!-- Div to display step by step direction in text for any given route -->
 
+<div id="directionsPanel" [style.display]="'none'"></div>
+<ion-button [style.display]="'none'" collapse="true"  id="clearDirections" type="submit" expand="full" (click)="clearDirections()">Clear Directions</ion-button>
  

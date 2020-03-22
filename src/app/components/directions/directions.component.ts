@@ -20,8 +20,8 @@ export class DirectionsComponent{
   map:any;
 
   //Possible key words that would be searched to get either of the campuses
-  sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o"];
-  loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke"];
+  sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building", "hall","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o","1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"];
+  loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke", "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"];
 
 
   constructor(private mapSrevice : MapService) { }
@@ -34,7 +34,7 @@ export class DirectionsComponent{
     this.map = this.mapSrevice.getMap();
     
     //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
-    //this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+    this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
 
     this.directionsRenderer.setMap(this.map);
 
@@ -92,7 +92,7 @@ export class DirectionsComponent{
         this.getNextShuttleTime('SGW').then((nextShuttleTime) => {
           if(nextShuttleTime){
             shuttleDisplay.style.display="block";
-            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
+            this.shuttleTimeValue = "Next shuttle: \n" + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
           }
         });
       }
@@ -100,7 +100,7 @@ export class DirectionsComponent{
         this.getNextShuttleTime('loyola').then((nextShuttleTime) => {
           if(nextShuttleTime){
             shuttleDisplay.style.display="block";
-            this.shuttleTimeValue = "Next shuttle departing at: " + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
+            this.shuttleTimeValue = "Next shuttle: \n" + nextShuttleTime.getHours() + ":" + (nextShuttleTime.getMinutes() < 10 ? '0' + nextShuttleTime.getMinutes() : nextShuttleTime.getMinutes());
           }
         });
       }
@@ -157,14 +157,23 @@ export class DirectionsComponent{
 
   displayTravelInfo(response: any) {
     let infoPanel = document.getElementById('travelinfo');
-    this.travelDistance = "Travel Distance: " + response.routes[0].legs[0].distance.text;
+    this.travelDistance = "Distance: \n" + response.routes[0].legs[0].distance.text;
     
     if (this.isShuttle() === "SHUTTLE")
-      this.travelDuration = "Estimated Travel Time: 30 mins";
+      this.travelDuration = "ETA: \n30 mins";
     else
-      this.travelDuration = "Estimated Travel Time: " + response.routes[0].legs[0].duration.text;
+      this.travelDuration = "ETA: \n" + response.routes[0].legs[0].duration.text;
     
-    infoPanel.style.display = "block";
+      infoPanel.style.display = "block";
+    }
+
+  validateInput(input: string): string {
+    if(this.isSGW(input))
+      return "1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"
+    else if(this.isLoyola(input))
+      return "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"
+    else
+      return input
   }
 
   //Uses the google API to determin the route and draws the path on the map
@@ -172,15 +181,21 @@ export class DirectionsComponent{
     //this is a reference to the map
     this.setMap();
     var travelMode = this.getTransportation()
+    var directionsPanel = document.getElementById('directionsPanel')
+    var clearDirections = document.getElementById('clearDirections')
+    let directionsForm = document.getElementById('form') 
 
     this.directionsService.route({
-      origin: this.directions['start'],
-      destination: this.directions['destination'],
-      travelMode: travelMode
+      origin: this.validateInput(this.directions['start']),
+      destination: this.validateInput(this.directions['destination']),
+      travelMode: travelMode,
     }, (response, status) => {
       if (status === 'OK') {
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
+        directionsForm.style.display="none";
+        directionsPanel.style.display="block";
+        clearDirections.style.display="block";
       } else {
         window.alert('Request to directions API failed: ' + status);
       }
@@ -210,12 +225,26 @@ export class DirectionsComponent{
     });
   }
 
+  //Method for clearing the map of the line, removing text directions and enabling the to/from view
+  clearDirections() {
+    let directionsForm = document.getElementById('form')
+
+    if(this.directionsRenderer != null)
+    {  
+      this.directionsRenderer.setMap(null);
+      directionsForm.style.display="block";
+      document.getElementById('travelinfo').style.display="none"
+      document.getElementById('directionsPanel').style.display="none"
+      document.getElementById('clearDirections').style.display="none"
+    }
+  }
+
   //Given the departure campus, retrieves the time of next shuttle bus leaving that campus (if any)
   async getNextShuttleTime(departureCampus){
     
     let res = await fetch("./assets/shuttle_bus/departureTimes.json");
     let json = await res.json();
-    let currentDate = new Date();
+    let currentDate = new Date('2020-03-18 10:00');
 
     //Only consider the shuttle bus schedule after 7:15 am on that particular day.
     let timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + " " + "7:15");

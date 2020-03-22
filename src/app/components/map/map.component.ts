@@ -10,14 +10,14 @@ import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints'
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
-import {Building} from '../../models/Building'
+import { Building } from '../../models/Building';
 import {IndoorPOI} from '../../models/IndoorPOI'
+import {User} from '../../models/User'
 import { MapService } from '../../services/map/map.service'
 
 
 
 declare var google;
-
 
 /**
  * MapComponent class. Contains the map object and attributes for all google map related services.
@@ -33,7 +33,7 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef;
  
   public map: any; // google.maps.Map
-  private userLocation: Location = new Location(0, 0, 0);
+  private user: User;
   private mapOptions; // Object
   private userMarker; // google.maps.Marker
 
@@ -55,6 +55,7 @@ export class MapComponent implements AfterViewInit {
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
+    this.user = new User();
   }
 
   ngAfterViewInit(): void {
@@ -64,13 +65,16 @@ export class MapComponent implements AfterViewInit {
   // Initializes the map object with default values
   async initMap(){
     // Gets current position of user
-    const resp = await this.geolocation.getCurrentPosition();
+    const resp:any = await this.geolocation.getCurrentPosition({timeout: 30000, enableHighAccuracy: true}).catch((error) => {
+      console.log('Error getting location', error);
+    });
+    
+    let centerMapCoordinate;
 
-    this.userLocation.setLat(resp.coords.latitude);
-    this.userLocation.setLng(resp.coords.longitude);
+    this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
 
     this.mapOptions = {
-      center: this.userLocation.getGoogleLatLng(),
+      center: this.user.getLocation().getGoogleLatLng(),
       zoom: 17,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -78,11 +82,13 @@ export class MapComponent implements AfterViewInit {
 
     this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
 
-    this.userMarker = new google.maps.Marker({
-      position: this.userLocation.getGoogleLatLng(),
-      map: this.map,
-      title: 'Here'
-    });
+    if(resp){
+      this.userMarker = new google.maps.Marker({
+        position: this.user.getLocation().getGoogleLatLng(),
+        map: this.map,
+        title: 'Here'
+      });
+    }
 
     this.initOverlays();
     this.setDirectionsMap();
@@ -96,14 +102,13 @@ export class MapComponent implements AfterViewInit {
   // Gets the current location of user and focuses map to that point
   getCurrentLocation(){
     this.geolocation.getCurrentPosition().then((resp) => {
-      this.userLocation.setLat(resp.coords.latitude);
-      this.userLocation.setLng(resp.coords.longitude);
-      this.focusMap(this.userLocation);
+      this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
+      this.focusMap(this.user.getLocation());
     }).catch((error) => {
       console.log('Error getting location', error);
     });
 
-    return this.userLocation.getGoogleLatLng();
+    return this.user.getLocation().getGoogleLatLng();
   }
 
   // Re-center the map based on location parameter
@@ -870,7 +875,6 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, FCMarker);
     });
 
-   
 
     //var hallTest = new google.maps.LatLng(45.497194, -73.578886) //Variable to test containsLocation
     
@@ -1167,6 +1171,8 @@ export class MapComponent implements AfterViewInit {
       case 'HB':
           console.log("In " + id + " building.");     
 
+          let floor8: Floor = b.getFloors()[0];
+          
 
           break;
       //EV building
@@ -1235,6 +1241,7 @@ export class MapComponent implements AfterViewInit {
         console.log("In " + id + " building.");
         break;
     }  
+
 
   }
 
@@ -1360,11 +1367,11 @@ export class MapComponent implements AfterViewInit {
         //If no image found, then there is no layer
         indoorOverlay.setMap(null);
       }
+
     });
 
     //Listener for Exit button
-    controlExitUI.addEventListener('click', function() 
-    {
+    controlExitUI.addEventListener('click', function() {
       indoorOverlay.setMap(null);  
       polygon.setVisible(true);
       marker.setVisible(true);
@@ -1455,18 +1462,40 @@ export class MapComponent implements AfterViewInit {
     const startMarker = new google.maps.Marker({
       position: locationList[0].getGoogleLatLng(),
       map: this.map,
-      title: 'Here',
+      title: 'Start',
       label:'S'
     });
 
     const endMarker = new google.maps.Marker({
       position: locationList[locationList.length - 1].getGoogleLatLng(),
       map: this.map,
-      title: 'Here',
+      title: 'End',
       label: 'E'
     });
 
     path.setMap(this.map);
   }
 
+  // Retrieves the POI searched from home-search component and locates it on the map
+  goToIndoorPOI(poi: IndoorPOI)
+  {
+    this.focusMap(poi);
+
+    var POIMarker = new google.maps.Marker({
+      position: poi.getGoogleLatLng(),
+      map: this.map,
+      title: poi.getKey(),
+      label: poi.getKey()
+    });
+
+    if(poi.getKey().startsWith("HB"))
+    {
+      POIMarker.label = poi.getKey().replace('B','');
+    }
+
+    this.map.setZoom(20);
+  }
+
 }
+
+

@@ -40,11 +40,8 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
-import {IonicStorageModule} from '@ionic/storage';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
-
-
+import {IonicStorageModule} from '@ionic/storage';
 
 
 
