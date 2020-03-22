@@ -1686,7 +1686,7 @@ export class MapComponent implements AfterViewInit {
     this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
     this.map.setZoom(19);
     //No zoom or drag anymore
-    this.map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
+    this.map.setOptions({draggable: false, scrollwheel: false, disableDoubleClickZoom: true});
 
     //Dropdown content
     var selectContent= ""; 
@@ -1774,22 +1774,11 @@ export class MapComponent implements AfterViewInit {
       marker.setVisible(true);
       controlExitText.innerHTML = empty;
       controlFloorText.innerHTML = empty;
-      self.map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false});
+      self.map.setOptions({draggable: true, scrollwheel: true, disableDoubleClickZoom: false});
       self.map.setZoom(18);
     });
       
   }
-    
-  
-
-
-
-
-
-
-
-
-
 
   /**
    * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
@@ -1815,18 +1804,40 @@ export class MapComponent implements AfterViewInit {
     const startMarker = new google.maps.Marker({
       position: locationList[0].getGoogleLatLng(),
       map: this.map,
-      title: 'Here',
+      title: 'Start',
       label:'S'
     });
 
     const endMarker = new google.maps.Marker({
       position: locationList[locationList.length - 1].getGoogleLatLng(),
       map: this.map,
-      title: 'Here',
+      title: 'End',
       label: 'E'
     });
 
     path.setMap(this.map);
   }
 
+  // Retrieves the POI searched from home-search component and locates it on the map
+  goToIndoorPOI(poi: IndoorPOI)
+  {
+    this.focusMap(poi);
+
+    var POIMarker = new google.maps.Marker({
+      position: poi.getGoogleLatLng(),
+      map: this.map,
+      title: poi.getKey(),
+      label: poi.getKey()
+    });
+
+    if(poi.getKey().startsWith("HB"))
+    {
+      POIMarker.label = poi.getKey().replace('B','');
+    }
+
+    this.map.setZoom(20);
+  }
+
 }
+
+
