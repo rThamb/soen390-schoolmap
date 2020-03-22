@@ -164,8 +164,8 @@ export class DirectionsComponent{
     else
       this.travelDuration = "ETA: \n" + response.routes[0].legs[0].duration.text;
     
-    infoPanel.style.display = "block";
-  }
+      infoPanel.style.display = "block";
+    }
 
   validateInput(input: string): string {
     if(this.isSGW(input))
@@ -182,18 +182,20 @@ export class DirectionsComponent{
     this.setMap();
     var travelMode = this.getTransportation()
     var directionsPanel = document.getElementById('directionsPanel')
+    var clearDirections = document.getElementById('clearDirections')
     let directionsForm = document.getElementById('form') 
 
     this.directionsService.route({
       origin: this.validateInput(this.directions['start']),
       destination: this.validateInput(this.directions['destination']),
-      travelMode: travelMode
+      travelMode: travelMode,
     }, (response, status) => {
       if (status === 'OK') {
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
         directionsForm.style.display="none";
         directionsPanel.style.display="block";
+        clearDirections.style.display="block";
       } else {
         window.alert('Request to directions API failed: ' + status);
       }
@@ -233,6 +235,7 @@ export class DirectionsComponent{
       directionsForm.style.display="block";
       document.getElementById('travelinfo').style.display="none"
       document.getElementById('directionsPanel').style.display="none"
+      document.getElementById('clearDirections').style.display="none"
     }
   }
 

@@ -30,13 +30,6 @@
     </ion-header>
 </form>
 
-<!-- Div to display step by step direction in text for any given route -->
-
- <div id="directionsPanel" [style.display]="'none'">
-  <ion-button collapse="true"  id="clearDirections" type="submit" expand="full" (click)="clearDirections()">Clear Directions</ion-button>
- </div>
- 
-
  <!-- Temporary: to display shuttle bus time -->
 
 <ion-grid [style.display]="'none'" id="travelinfo">
@@ -52,4 +45,9 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+ 
+<!-- Div to display step by step direction in text for any given route -->
+
+<div id="directionsPanel" [style.display]="'none'"></div>
+<ion-button [style.display]="'none'" collapse="true"  id="clearDirections" type="submit" expand="full" (click)="clearDirections()">Clear Directions</ion-button>
  
