@@ -123,7 +123,6 @@ export class MapComponent implements AfterViewInit {
 
     var infoWindow = new google.maps.InfoWindow(); //This will be used for all markers
 
-    // Refactor later: should use userMarker instead of userLocationMarker but info window doesnt open
     var userLocationMarker = new google.maps.Marker({
       position: this.getCurrentLocation(),
       map: this.map
@@ -196,6 +195,26 @@ export class MapComponent implements AfterViewInit {
     var jesuitResidenceP = this.createPolygon(jesuitResidence, buildingType);
     var studentResidencesP = this.createPolygon(studentResidences, buildingType);
 
+    //Building IDs (for those with indoor view)
+    var hallID = "HB";
+    var evID = "ev";
+    var lbID = "LB";
+    var fgID = "Faubourg";
+    var mbID = "MB";
+    var vaID = "VisualArts";
+    var gnID = "GreyNuns";
+    var cjID = "JournalismBuilding";
+    var scID = "ScienceComplex";
+    var ljID = "JesuitHall";
+    var cbID = "CentralBuilding";
+    var adID = "AdministrationBuilding";
+    var pyID = "PsychologyBuilding";
+    var vlID = "VanierLibrary";
+    var psID = "PhysicalService";
+    var geID = "StructuralCenter";
+    var fcID = "SmithBuilding";
+
+
     //Hall Building Marker and info window
     var hallCenter = {lat: 45.497092, lng: -73.578974};
     var hallMarker = this.createMarker(hallCenter, "HALL")
@@ -226,14 +245,16 @@ export class MapComponent implements AfterViewInit {
   
     "</ion-list><br/>"+
     "<div align ='center'><img width='50%' src=assets/BuildingImages/HallBuilding.jpg></div></div>" +
-    "<div align ='center'><ion-button id='hall'>Enter Building</ion-button></div>"
+    "<div align ='center'><ion-button id="+hallID+">Enter Building</ion-button></div>"
 
-    google.maps.event.addListener(hallMarker, 'click', function() 
-    {
-      infoWindow.setContent(hallContent);
+    this.markerListener(hallMarker, hallContent, infoWindow);
 
-      infoWindow.open(this.map, hallMarker);
-    });
+    // google.maps.event.addListener(hallMarker, 'click', function() 
+    // {
+    //   infoWindow.setContent(hallContent);
+
+    //   infoWindow.open(this.map, hallMarker);
+    // });
 
   
     //EV Building Marker and info window
@@ -265,19 +286,14 @@ export class MapComponent implements AfterViewInit {
       "</ion-item>"+
       "</ion-list><br/>"+
       "<div align ='center'><img width='45%' src=assets/BuildingImages/ev.jpg></div></div>" +
-      "<div align ='center'><ion-button id='ev'>Enter Building</ion-button></div>"
+      "<div align ='center'><ion-button id="+evID+">Enter Building</ion-button></div>"
 
-    google.maps.event.addListener(EVMarker, 'click', function() 
-    {
-      infoWindow.setContent(EVContent);
-      infoWindow.open(this.map, EVMarker);
-    });
+    this.markerListener(EVMarker, EVContent, infoWindow);
+
           
     //LB Building Marker and info window
     var lbCenter = {lat: 45.496708, lng: -73.577912};
     var LBMarker = this.createMarker(lbCenter, "LB")
-
-
     var LBContent =
     "<ion-list> <h4 align='center'>J.W. McConnel Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -304,19 +320,12 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='70%' src=assets/BuildingImages/LB.jpg></div></div>" +
-    "<div align ='center'><ion-button id='lb'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+lbID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(LBMarker, 'click', function() 
-    {
-      infoWindow.setContent(LBContent);
-
-      infoWindow.open(this.map, LBMarker);
-    });
+    this.markerListener(LBMarker, LBContent, infoWindow);
 
     var fgCenter = {lat: 45.494115, lng: -73.578223};
     var FGMarker = this.createMarker(fgCenter, "FG")
-
-
     var FGContent =
     "<ion-list> <h4 align='center'>Faubourg Building </h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -339,18 +348,12 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='60%' src=assets/BuildingImages/fb.jpg></div></div>" +
-    "<div align ='center'><ion-button id='fg'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+fgID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(FGMarker, 'click', function() 
-    {
-      infoWindow.setContent(FGContent);
-
-      infoWindow.open(this.map, FGMarker);
-    });
+    this.markerListener(FGMarker, FGContent, infoWindow);
 
     var mbCenter = {lat: 45.495095, lng: -73.578854};
     var MBMarker = this.createMarker(mbCenter, "MB")
-
     var MBContent =
     "<ion-list> <h4 align='center'>John Molson Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -377,18 +380,12 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='50%' src=assets/BuildingImages/JMSB.jpg></div></div>" +
-    "<div align ='center'><ion-button id='mb'>Enter Building</ion-button></div>"
+    "<div align ='center'><ion-button id="+mbID+">Enter Building</ion-button></div>"
 
-    google.maps.event.addListener(MBMarker, 'click', function() 
-    {
-      infoWindow.setContent(MBContent);
-
-      infoWindow.open(this.map, MBMarker);
-    });
+    this.markerListener(MBMarker, MBContent, infoWindow);
 
     var vaCenter = {lat: 45.495530, lng: -73.573845};
     var VAMarker = this.createMarker(vaCenter, "VA")
-
     var VAContent =
     "<ion-list> <h4 align='center'>Visual Arts Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -407,19 +404,12 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='75%' src=assets/BuildingImages/va.jpg></div></div>" +
-    "<div align ='center'><ion-button id='va'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+vaID+">Enter Building</ion-button></div>";
 
-
-    google.maps.event.addListener(VAMarker, 'click', function() 
-    {
-      infoWindow.setContent(VAContent);
-
-      infoWindow.open(this.map, VAMarker);
-    });
+    this.markerListener(VAMarker, VAContent, infoWindow);
 
     var gnCenter = {lat: 45.493432, lng: -73.576705};
     var GNMarker = this.createMarker(gnCenter, "GN")
-
     var GNContent =
     "<ion-list> <h4 align='center'>Grey Nuns Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -433,20 +423,14 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='55%' src=assets/BuildingImages/gn.jpg></div></div>" +
-    "<div align ='center'><ion-button id='gn'>Enter Building</ion-button></p><div>";
+    "<div align ='center'><ion-button id="+gnID+">Enter Building</ion-button></p><div>";
 
-    google.maps.event.addListener(GNMarker, 'click', function() 
-    {
-      infoWindow.setContent(GNContent);
-
-      infoWindow.open(this.map, GNMarker);
-    });
+    this.markerListener(GNMarker, GNContent, infoWindow);
 
   
     //Loyola Campus
     var cjCenter = {lat: 45.457395, lng: -73.640399};
     var CJMarker = this.createMarker(cjCenter, "CJ")
-
     var CJContent =
     "<ion-list> <h4 align='center'>Communication Studies and Journalism Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -462,20 +446,13 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='55%' src=assets/BuildingImages/cj.jpg></div></div>" +
-    "<div align ='center'><ion-button id='cj'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+cjID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(CJMarker, 'click', function() 
-    {
-      infoWindow.setContent(CJContent);
-
-      infoWindow.open(this.map, CJMarker);
-    });
-
+    this.markerListener(CJMarker, CJContent, infoWindow);
 
 
     var scCenter = {lat: 45.457605, lng: -73.641512};
     var SCMarker = this.createMarker(scCenter, "SC");
-
     var SCContent =
     "<ion-list><h4 align='center'>Richard J. Renaud Science Complex</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -502,15 +479,9 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='60%'  src=assets/BuildingImages/sc.jpg></div></div>" +
-    "<div align = 'center'><ion-button id='sc'>Enter Building</ion-button></div>";
+    "<div align = 'center'><ion-button id="+scID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(SCMarker, 'click', function() 
-    {
-      infoWindow.setContent(SCContent);
-
-      infoWindow.open(this.map, SCMarker);
-    });
-
+    this.markerListener(SCMarker, SCContent, infoWindow);
 
 
     var ljCenter = {lat: 45.458514, lng: -73.641082};
@@ -528,14 +499,9 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='50%'  src=assets/BuildingImages/lj.jpg></div></div>" +
-    "<div align = 'center'><ion-button id='lj'>Enter Building</ion-button></div>";
+    "<div align = 'center'><ion-button id="+ljID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(LJMarker, 'click', function() 
-    {
-      infoWindow.setContent(LJContent);
-
-      infoWindow.open(this.map, LJMarker);
-    });
+    this.markerListener(LJMarker, LJContent, infoWindow);
 
 
     var cbCenter = {lat: 45.458236, lng: -73.640345};
@@ -552,18 +518,12 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"+
     "<div align ='center'><img width='50%'  src=assets/BuildingImages/cb.jpg></div></div>" +
-    "<div align = 'center'><ion-button id='cb'>Enter Building</ion-button></div>";
+    "<div align = 'center'><ion-button id="+cbID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(CBMarker, 'click', function() 
-    {
-      infoWindow.setContent(CBContent);
-
-      infoWindow.open(this.map, CBMarker);
-    });
+    this.markerListener(CBMarker, CBContent, infoWindow);
 
     var adCenter = {lat: 45.458070, lng: -73.639732};
     var ADMarker = this.createMarker(adCenter, "AD");
-
     var ADContent =
     "<ion-list> <h4 align='center'>Administration Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -589,19 +549,13 @@ export class MapComponent implements AfterViewInit {
     "</ion-list><br/>"+
 
     "<div align ='center'><img width='55%' src=assets/BuildingImages/ad.jpg></div></div>" +
-    "<div align ='center'><ion-button id='ad'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+adID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(ADMarker, 'click', function() 
-    {
-      infoWindow.setContent(ADContent);
-
-      infoWindow.open(this.map, ADMarker);
-    });
+    this.markerListener(ADMarker, ADContent, infoWindow);
 
 
     var pyCenter = {lat: 45.458894, lng: -73.640568};
     var PYMarker = this.createMarker(pyCenter, "PY");
-
     var PYContent =
     "<ion-list> <h4 align='center'>Psychology Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -614,19 +568,13 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item></ion-list><br/>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/py.jpg></div></div>" +
-    "<div align ='center'><ion-button id='py'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+pyID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(PYMarker, 'click', function() 
-    {
-      infoWindow.setContent(PYContent);
-
-      infoWindow.open(this.map, PYMarker);
-    });
+    this.markerListener(PYMarker, PYContent, infoWindow);
 
 
     var vlCenter = {lat: 45.458932, lng: -73.638512};
     var VLMarker = this.createMarker(vlCenter, "VL");
-
     var VLContent =
     "<ion-list><h4 align='center'>Vanier Library</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -638,53 +586,35 @@ export class MapComponent implements AfterViewInit {
     "</ion-list><br/>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/vl.jpg></div></div>" +
-    "<div align ='center'><ion-button id='vl'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+vlID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(VLMarker, 'click', function() 
-    {
-      infoWindow.setContent(VLContent);
-
-      infoWindow.open(this.map, VLMarker);
-    });
+    this.markerListener(VLMarker, VLContent, infoWindow);
            
 
     var csCenter = {lat: 45.458008, lng: -73.637248};
     var CSMarker = this.createMarker(csCenter, "CS");
-
     var CSContent =
     "<ion-list> <h4 align='center'>Concordia Stadium</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text> </ion-item></ion-list>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/cs.jpg></div>"
 
-    google.maps.event.addListener(CSMarker, 'click', function() 
-    {
-      infoWindow.setContent(CSContent);
-
-      infoWindow.open(this.map, CSMarker);
-    });
+    this.markerListener(CSMarker, CSContent, infoWindow);
 
              
     var sdCenter = {lat: 45.457525, lng: -73.636085};
     var SDMarker = this.createMarker(sdCenter, "SD");
-
     var SDContent =
     "<ion-list> <h4 align='center'>Stinger Dome</ion-title></h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text></ion-item></ion-list>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/sd.jpg></div>"
 
-    google.maps.event.addListener(SDMarker, 'click', function() 
-    {
-      infoWindow.setContent(SDContent);
-
-      infoWindow.open(this.map, SDMarker);
-    });
+    this.markerListener(SDMarker, SDContent, infoWindow);
 
     
     var pcCenter = {lat: 45.456701, lng: -73.637558};
     var PCMarker = this.createMarker(pcCenter, "PC");
-
     var PCContent =
     "<ion-list><h4 align='center'>PERFORM Centre</ion-title></h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
@@ -696,17 +626,11 @@ export class MapComponent implements AfterViewInit {
 
     "<div align ='center'><img width='55%' src=assets/BuildingImages/pc.jpg></div>"
 
-    google.maps.event.addListener(PCMarker, 'click', function() 
-    {
-      infoWindow.setContent(PCContent);
-
-      infoWindow.open(this.map, PCMarker);
-    });
+    this.markerListener(PCMarker, PCContent, infoWindow);
 
 
     var cgCenter = {lat: 45.456910, lng: -73.638250};
     var CGMarker = this.createMarker(cgCenter, "CG");
-
     var CGContent =
     "<ion-list> <h4 align='center'>Concordia Gymnasium</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
@@ -718,17 +642,11 @@ export class MapComponent implements AfterViewInit {
 
     "<div align ='center'><img width='60%' src=assets/BuildingImages/cg.jpg></div>"
 
-    google.maps.event.addListener(CGMarker, 'click', function() 
-    {
-      infoWindow.setContent(CGContent);
-
-      infoWindow.open(this.map, CGMarker);
-    });
+    this.markerListener(CGMarker, CGContent, infoWindow);
 
 
     var psCenter = {lat: 45.459523, lng: -73.639727};
     var PSMarker = this.createMarker(psCenter, "PS");
-
     var PSContent =
     "<ion-list> <h4 align='center'>Physical Services Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -741,50 +659,32 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/></div>"+
 
-    "<div align ='center'><ion-button id='ps'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+psID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(PSMarker, 'click', function() 
-    {
-      infoWindow.setContent(PSContent);
-
-      infoWindow.open(this.map, PSMarker);
-    });
+    this.markerListener(PSMarker, PSContent, infoWindow);
 
 
     var tbCenter = {lat:45.459969, lng: -73.640887};
     var TBMarker = this.createMarker(tbCenter, "TB");
-
     var TBContent =
     "<ion-list><h4 align='center'>Terrebonne Building</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7079 Rue de Terrebonne, Montréal, QC H4B 2B4 </ion-text></ion-item> </ion-list><br/>"
 
-    google.maps.event.addListener(TBMarker, 'click', function() 
-    {
-      infoWindow.setContent(TBContent);
-
-      infoWindow.open(this.map, TBMarker);
-    });
+    this.markerListener(TBMarker, TBContent, infoWindow);
 
 
     var siCenter = {lat:45.457724, lng: -73.642326};
     var SIMarker = this.createMarker(siCenter, "SI");
-
     var SIContent =
     "<ion-list><h4 align='center'>Saint Ignatius of Loyola</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>4455 Rue West Broadway, Montréal, QC H4B 2A7</ion-text> </ion-item></ion-list><br/>" +
     "<div align ='center'><img width='55%' src=assets/BuildingImages/si.png></div>"
 
-    google.maps.event.addListener(SIMarker, 'click', function() 
-    {
-      infoWindow.setContent(SIContent);
-
-      infoWindow.open(this.map, SIMarker);
-    });
+    this.markerListener(SIMarker, SIContent, infoWindow);
 
 
     var geCenter = {lat: 45.456857, lng: -73.640421};
     var GEMarker = this.createMarker(geCenter, "GE");
-
     var GEContent =
     "<ion-list><h4 align='center'>Centre for Structural and Functional Genomics</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -796,19 +696,13 @@ export class MapComponent implements AfterViewInit {
     "</ion-list><br/>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/ge.jpg></div></div>" +
-    "<div align ='center'><ion-button id='ge'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+geID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(GEMarker, 'click', function() 
-    {
-      infoWindow.setContent(GEContent);
-
-      infoWindow.open(this.map, GEMarker);
-    });
+    this.markerListener(GEMarker, GEContent, infoWindow);
 
     
     var jrCenter = {lat: 45.458454, lng: -73.643229};
     var JRMarker = this.createMarker(jrCenter, "JR");
-
     var JRContent =
     "<ion-list><h4 align='center'>Jesuit Residence</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -821,17 +715,11 @@ export class MapComponent implements AfterViewInit {
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/jr.jpg><div>" 
 
-    google.maps.event.addListener(JRMarker, 'click', function() 
-    {
-      infoWindow.setContent(JRContent);
-
-      infoWindow.open(this.map, JRMarker);
-    });
+    this.markerListener(JRMarker, JRContent, infoWindow);
 
 
     var srCenter = {lat: 45.459204, lng: -73.641761};
     var SRMarker = this.createMarker(srCenter, "SR");
-
     var SRContent =
     "<ion-list><h4 align='center'>Student Residence</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -842,17 +730,11 @@ export class MapComponent implements AfterViewInit {
     "</p></ion-item>"+
     "</ion-list><br/>"
 
-    google.maps.event.addListener(SRMarker, 'click', function() 
-    {
-      infoWindow.setContent(SRContent);
-
-      infoWindow.open(this.map, SRMarker);
-    });
+    this.markerListener(SRMarker, SRContent, infoWindow);
 
     
     var fcCenter = {lat: 45.458460, lng: -73.639219};
     var FCMarker = this.createMarker(fcCenter, "FC");
-
     var FCContent =
     "<ion-list><h4 align='center'>F.C. Smith Building</h4>" +
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
@@ -866,14 +748,9 @@ export class MapComponent implements AfterViewInit {
     "</ion-list><br/>"+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/fc.jpeg></div></div>" 
-    "<div align ='center'><ion-button id='fc'>Enter Building</ion-button></div>";
+    "<div align ='center'><ion-button id="+fcID+">Enter Building</ion-button></div>";
 
-    google.maps.event.addListener(FCMarker, 'click', function() 
-    {
-      infoWindow.setContent(FCContent);
-
-      infoWindow.open(this.map, FCMarker);
-    });
+    this.markerListener(FCMarker, FCContent, infoWindow);
 
 
     //var hallTest = new google.maps.LatLng(45.497194, -73.578886) //Variable to test containsLocation
@@ -1020,129 +897,74 @@ export class MapComponent implements AfterViewInit {
 
     //Listener for the "enter building" button of info window
     infoWindow.addListener('domready', () => {
-      if(document.getElementById("hall"))
+      if(document.getElementById(hallID))
       {
-        document.getElementById("hall").addEventListener("click", () => {
-          infoWindow.close();
-          this.enterBuilding("HB", hallP, hallMarker);
-        });
+        this.enterBuildingEventListener(hallID, hallP, hallMarker, infoWindow);
       }
-      
-      else if(document.getElementById("ev"))
+      else if(document.getElementById(evID))
       {
-        document.getElementById("ev").addEventListener("click", () =>
-        {
-          infoWindow.close();
-          this.enterBuilding("ev", EVP, EVMarker);
-        });
+        this.enterBuildingEventListener(evID, EVP, EVMarker, infoWindow);
       }
-
-      else if(document.getElementById("lb"))
+      else if(document.getElementById(lbID))
       {
-        document.getElementById("lb").addEventListener("click", () =>
-        {
-           this.enterBuilding("lb", lbP, LBMarker);
-        });
+        this.enterBuildingEventListener(lbID, lbP, LBMarker, infoWindow);
       }     
-      else if(document.getElementById("fg"))
+      else if(document.getElementById(fgID))
       {
-        document.getElementById("fg").addEventListener("click", () =>
-        {
-           this.enterBuilding("fg", faubourgP, FGMarker);
-        });
+        this.enterBuildingEventListener(fgID, faubourgP, FGMarker, infoWindow);
       }
-      else if(document.getElementById("mb"))
+      else if(document.getElementById(mbID))
       {
-        document.getElementById("mb").addEventListener("click", () =>
-        {
-           this.enterBuilding("mb", molsonP, MBMarker);
-        });
+        this.enterBuildingEventListener(mbID, molsonP, MBMarker, infoWindow);
       }     
-      else if(document.getElementById("va"))
+      else if(document.getElementById(vaID))
       {
-        document.getElementById("va").addEventListener("click", () =>
-        {
-           this.enterBuilding("va", visualArtsP, VAMarker);
-        });
+        this.enterBuildingEventListener(vaID, visualArtsP, VAMarker, infoWindow);
       }
-      else if(document.getElementById("gn"))
+      else if(document.getElementById(gnID))
       {
-        document.getElementById("gn").addEventListener("click", () =>
-        {
-           this.enterBuilding("gn", greyNunsP, GNMarker);
-        });
+        this.enterBuildingEventListener(gnID, greyNunsP, GNMarker, infoWindow);
       }     
-      else if(document.getElementById("cj"))
+      else if(document.getElementById(cjID))
       {
-        document.getElementById("cj").addEventListener("click", () =>
-        {
-           this.enterBuilding("cj", journalismP, CJMarker);
-        });
+        this.enterBuildingEventListener(cjID, journalismP, CJMarker, infoWindow);
       }
-      else if(document.getElementById("sc"))
+      else if(document.getElementById(scID))
       {
-        document.getElementById("sc").addEventListener("click", () =>
-        {
-           this.enterBuilding("sc", scienceComplexP, SCMarker);
-        });
+        this.enterBuildingEventListener(scID, scienceComplexP, SCMarker, infoWindow);
       }     
-      else if(document.getElementById("lj"))
+      else if(document.getElementById(ljID))
       {
-        document.getElementById("lj").addEventListener("click", () =>
-        {
-           this.enterBuilding("lj", jesuitP, LJMarker);
-        });
+        this.enterBuildingEventListener(ljID, jesuitP, LJMarker, infoWindow);
       }
-      else if(document.getElementById("cb"))
+      else if(document.getElementById(cbID))
       {
-        document.getElementById("cb").addEventListener("click", () =>
-        {
-           this.enterBuilding("cb", centralBuildingP, CBMarker);
-        });
+        this.enterBuildingEventListener(cbID, centralBuildingP, CBMarker, infoWindow);
       }     
-      else if(document.getElementById("ad"))
+      else if(document.getElementById(adID))
       {
-        document.getElementById("ad").addEventListener("click", () =>
-        {
-           this.enterBuilding("ad", adminP, ADMarker);
-        });
+        this.enterBuildingEventListener(adID, adminP, ADMarker, infoWindow);
       }
-      else if(document.getElementById("py"))
+      else if(document.getElementById(pyID))
       {
-        document.getElementById("py").addEventListener("click", () =>
-        {
-           this.enterBuilding("py", psyP, PYMarker);
-        });
+        this.enterBuildingEventListener(pyID, psyP, PYMarker, infoWindow);
       }     
-      else if(document.getElementById("vl"))
+      else if(document.getElementById(vlID))
       {
-        document.getElementById("vl").addEventListener("click", () =>
-        {
-           this.enterBuilding("vl", vanierLibraryP, VLMarker);
-        });
+        this.enterBuildingEventListener(vlID, vanierLibraryP, VLMarker, infoWindow);
       }
-      else if(document.getElementById("ps"))
+      else if(document.getElementById(psID))
       {
-        document.getElementById("ps").addEventListener("click", () =>
-        {
-           this.enterBuilding("ps", phyServiceP, PSMarker);
-        });
+        this.enterBuildingEventListener(psID, phyServiceP, PSMarker, infoWindow);
       }     
-      else if(document.getElementById("ge"))
+      else if(document.getElementById(geID))
       {
-        document.getElementById("ge").addEventListener("click", () =>
-        {
-           this.enterBuilding("ge", structuralCenterP, GEMarker);
-        });
+        this.enterBuildingEventListener(geID, structuralCenterP, GEMarker, infoWindow);
       }
-      else if(document.getElementById("fc"))
+      else if(document.getElementById(fcID))
       {
-        document.getElementById("fc").addEventListener("click", () =>
-        {
-           this.enterBuilding("fc", chapelP, FCMarker);
-        });
+        this.enterBuildingEventListener(fcID, chapelP, FCMarker, infoWindow);
       }     
-
     });
 
     //Closes info window when clicking somewhere else on map
@@ -1172,72 +994,69 @@ export class MapComponent implements AfterViewInit {
           console.log("In " + id + " building.");     
 
           let floor8: Floor = b.getFloors()[0];
-          
-
           break;
       //EV building
       case 'ev':
           console.log("In " + id + " building.");
-          
           break;
       //Library Building
-      case 'lb':
+      case 'LB':
           console.log("In " + id + " building.");
           break;
       //Faubourg Building
-      case 'fg':
+      case 'Faubourg':
           console.log("In " + id + " building.");
           break;
       //John Molson Building
-      case 'mb':
+      case 'MB':
           console.log("In " + id + " building.");
           break;
       //Visual Arts Building
-      case 'va':
+      case 'VisualArts':
           console.log("In " + id + " building.");
           break;
       //Grey Nuns Building
-      case 'gn':
+      case 'GreyNuns':
           console.log("In " + id + " building.");
           break;
       //Communications & Journalism Building
-      case 'cj':
+      case 'JournalismBuilding':
           console.log("In " + id + " building.");
           break;
       //Renaud Science Complex
-      case 'sc':
+      case 'ScienceComplex':
           console.log("In " + id + " building.");
           break;
       //Loyola Jesuit Hall and Conference Centre
-      case 'lj':
+      case 'JesuitHall':
           console.log("In " + id + " building.");
           break;
       //Central Building
-      case 'cb':
+      case 'CentralBuilding':
           console.log("In " + id + " building.");
           break;
       //Administration Building
-      case 'ad':
+      case 'AdministrationBuilding':
           console.log("In " + id + " building.");
           break;
       //Psychology Building
-      case 'py':
+      case 'PsychologyBuilding':
           console.log("In " + id + " building.");
           break;
       //F.C. Smith Building/Loyola Chapel
-      case 'fc':
+      case 'SmithBuilding':
         console.log("In " + id + " building.");
           break;
       //Vanier Library Building
-      case 'vl':
+      case 'VanierLibrary':
           console.log("In " + id + " building.");
           break;
       //Physical Services Building
-      case 'ps':
+      case 'PhysicalService':
           console.log("In " + id + " building.");
           break;
       //Centre for Structural and Functional Genomics
-      case 'ge':
+      case 'StructuralCenter':
         console.log("In " + id + " building.");
         break;
     }  
@@ -1425,6 +1244,24 @@ export class MapComponent implements AfterViewInit {
 
     return marker;
     
+  }
+
+  markerListener(marker: any, content: string, window: any)
+  {
+    google.maps.event.addListener(marker, 'click', function() 
+    {
+      window.setContent(content);
+      window.open(this.map, marker);
+    });
+
+  }
+
+  enterBuildingEventListener(id: string, polygon: any, marker: any, window: any)
+  {
+    document.getElementById(id).addEventListener("click", () => {
+      window.close();
+      this.enterBuilding(id, polygon, marker);
+    });
   }
     
   

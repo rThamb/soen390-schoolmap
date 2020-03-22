@@ -2,15 +2,8 @@
     "floorsKeys": ["HB8", "HB9"], 
     "floors":[
     {
-    "level": 8,
-    "topLeftLat": 45.497165, 
-    "topLeftLong": -73.579545,
-    "topRightLat": 45.497709, 
-    "topRightLong": -73.579038,
-    "bottomLeftLat": 45.496829, 
-    "bottomLeftLong": -73.578850,
-    "bottomRightLat": 45.497373, 
-    "bottomRightLong": -73.578342,
+    "level": null,
+
     "binaryGrid": [
                     [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
                     [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
@@ -33,62 +26,7 @@
                     [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1]
                 ],
     "POI": {
-        "HB840": {
-            "x": 2,
-            "y": 5,
-            "lat": 45.497386, 
-            "lng": -73.578535
-        }, 
-         "HB890": {
-            "x": 16,
-            "y": 9,
-            "lat": 45.497097,
-            "lng": -73.579132
-        },
-        "Washroom-Men": {
-            "x": 6, 
-            "y" : 15,
-            "lat": 0, 
-            "lng": 0
-        },
-        "Washroom-Women": {
-                "x": 9, 
-                "y": 3,
-                "lat": 0, 
-                "lng": 0  
-        },  
-        "Escalator-Up": {
-            "x": 9,
-            "y": 11,
-            "lat": 0, 
-            "lng": 0
-        }, 
-        "Escalator-Down": {
-            "x": 9,
-            "y": 6,
-            "lat": 0, 
-            "lng": 0
-        }, 
-        "Elevator" : {
-            "x": 12, 
-            "y": 11,
-            "lat": 0, 
-            "lng": 0
-        },       
-        "Stairs": [
-            {
-                "x": 4,
-                "y": 15,
-                "lat": 0, 
-                "lng": 0
-            },
-            {
-                "x": 4,
-                "y": 3,
-                "lat": 0, 
-                "lng": 0
-            } 
-        ]
+        
         }
     },
 
