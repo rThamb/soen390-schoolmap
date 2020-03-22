@@ -94,36 +94,7 @@ export class ReadGridService {
     }
     return tileGrid;
   }
-
- //Loads a Building json file, and returns a dictionary with informations about it
- async buildingInfo(keyName: string)
- {
-   let buildingInformation = {}; //Dictionary
-
-  try{
-    let filename = "./assets/buildings/" + this.floorFileNameMap[keyName]; //Using /buildings directory for now. 
-
-    let res = await fetch(filename);
-    let json = await res.json();
-    let buildingData = json;
-
-    //Add to buildingInformation Dictionnary
-    buildingInformation["totalFloors"] = buildingData.totalFloors;
-    buildingInformation["bound"] = buildingData.bound;
-    buildingInformation["Location"] = buildingData.Location;
-    buildingInformation["Floors"] = buildingData.Floors;
-  }
-  catch(err)
-  {
-    console.log("Error thrown in Read-Grid.Service line:(108-120)");
-    return null;
-  }
-
-  return buildingInformation;
-}
   
-
-
     
   private getPointsOfInterest(poi: any): IndoorPOI[]
   {
@@ -150,4 +121,31 @@ export class ReadGridService {
       }
       return pois;
   } 
+
+   //Loads a Building json file, and returns a dictionary with informations about it
+ async buildingInfo(keyName: string)
+ {
+   let buildingInformation = {}; //Dictionary
+
+  try{
+    let filename = "./assets/buildings/" + this.floorFileNameMap[keyName]; //Using /buildings directory for now. 
+
+    let res = await fetch(filename);
+    let json = await res.json();
+    let buildingData = json;
+
+    //Add to buildingInformation Dictionnary
+    buildingInformation["totalFloors"] = buildingData.totalFloors;
+    buildingInformation["bound"] = buildingData.bound;
+    buildingInformation["Location"] = buildingData.Location;
+    buildingInformation["Floors"] = buildingData.Floors;
+  }
+  catch(err)
+  {
+    console.log("Error thrown in Read-Grid.Service line:(108-120)");
+    return null;
+  }
+
+  return buildingInformation;
+}
 }

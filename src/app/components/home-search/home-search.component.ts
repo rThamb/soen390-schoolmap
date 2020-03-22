@@ -25,7 +25,7 @@ export class HomeSearchComponent implements OnInit {
   goToSearchResult(sr: string)
   {
     this.bf.loadBuilding("HB").then((hb) =>{
-      debugger;
+
       let floorLevel: number = Math.trunc(parseInt(sr.replace("HB", "")) / 100);
       let floor: Floor = hb.getFloorLevel(floorLevel + "");
       
@@ -43,6 +43,7 @@ export class HomeSearchComponent implements OnInit {
 
     });
   }
+  
 
 
 

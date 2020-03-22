@@ -1,5 +1,6 @@
 import { Component} from '@angular/core';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 
 @Component({
@@ -10,18 +11,42 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class ReportIssuesComponent {
 
+  sender: '';
+  subject: '';
+  body: '';
+
   private issue : FormGroup;
 
-  constructor( private formBuilder: FormBuilder ) {
+  constructor( private formBuilder: FormBuilder, private emailComposer: EmailComposer) {
     this.issue = this.formBuilder.group({
       email: ['', Validators.required],
-      message: ['', Validators.required],
+      subject: ['', Validators.required],
+      message: ['', Validators.required]
     });
   }
-  ReportAnIssueForm(){
-    //TODO store user input in a file instead of saving it in console
-    //this is only for testing--- to be removed
-    console.log(this.issue.value)
+
+  send(){
+    console.log(this.issue.value);
+
+    // this.emailComposer.isAvailable().then((available: boolean) =>{
+    //   if(available) {
+    //   }
+    // });
+
+    let email = {
+      to: 'mapsconcordia1@gmail.com',
+      cc: [],
+      bcc: [],
+      sender: this.sender,
+      subject: this.subject,
+      body: this.body,
+      isHtml: true,
+      app: "Gmail"
+    };
+
+// Send a text message using default options
+    this.emailComposer.open(email);
+
   }
 
 }

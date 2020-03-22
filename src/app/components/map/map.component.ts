@@ -8,12 +8,12 @@ import { BuildingFactoryService } from '../../services/BuildingFactory/building-
 import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
 import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
-import { overlays } from './BuildingOverlayPoints'
+import { overlays } from './BuildingOverlayPoints';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Building } from '../../models/Building';
-import {IndoorPOI} from '../../models/IndoorPOI'
-import {User} from '../../models/User'
-import { MapService } from '../../services/map/map.service'
+import {IndoorPOI} from '../../models/IndoorPOI';
+import {User} from '../../models/User';
+import { MapService } from '../../services/map/map.service';
 
 
 
@@ -31,11 +31,12 @@ declare var google;
 export class MapComponent implements AfterViewInit {
 
   @ViewChild('googleMap', {static: false}) googleMap: ElementRef;
- 
+
   public map: any; // google.maps.Map
   private user: User;
   private mapOptions; // Object
   private userMarker; // google.maps.Marker
+  private poiMarkers = []; // google.maps.Marker[]
 
   private sgw: Campus;
   private loyola: Campus;
@@ -51,7 +52,7 @@ export class MapComponent implements AfterViewInit {
 
 
   // Injects the component class with imported services
-  constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
+  constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService)
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
@@ -63,12 +64,12 @@ export class MapComponent implements AfterViewInit {
   }
 
   // Initializes the map object with default values
-  async initMap(){
+  async initMap() {
     // Gets current position of user
-    const resp:any = await this.geolocation.getCurrentPosition({timeout: 30000, enableHighAccuracy: true}).catch((error) => {
+    const resp: any = await this.geolocation.getCurrentPosition({timeout: 30000, enableHighAccuracy: true}).catch((error) => {
       console.log('Error getting location', error);
     });
-    
+
     let centerMapCoordinate;
 
     this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
@@ -78,11 +79,11 @@ export class MapComponent implements AfterViewInit {
       zoom: 17,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    };
 
     this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
 
-    if(resp){
+    if (resp) {
       this.userMarker = new google.maps.Marker({
         position: this.user.getLocation().getGoogleLatLng(),
         map: this.map,
@@ -94,13 +95,13 @@ export class MapComponent implements AfterViewInit {
     this.setDirectionsMap();
   }
 
-  //sets an instance of the map to a service which injects it to other components
-  setDirectionsMap(){
+  // sets an instance of the map to a service which injects it to other components
+  setDirectionsMap() {
     this.mapService.setMap(this.map);
   }
 
   // Gets the current location of user and focuses map to that point
-  getCurrentLocation(){
+  getCurrentLocation() {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
       this.focusMap(this.user.getLocation());
@@ -121,9 +122,10 @@ export class MapComponent implements AfterViewInit {
   initOverlays()
   {
 
-    var infoWindow = new google.maps.InfoWindow(); //This will be used for all markers
+    let infoWindow = new google.maps.InfoWindow(); // This will be used for all markers
 
-    var userLocationMarker = new google.maps.Marker({
+
+    let userLocationMarker = new google.maps.Marker({
       position: this.getCurrentLocation(),
       map: this.map
     });
@@ -487,10 +489,12 @@ export class MapComponent implements AfterViewInit {
     var ljCenter = {lat: 45.458514, lng: -73.641082};
     var LJMarker = this.createMarker(ljCenter, "LJ");
 
-    var LJContent =
-    "<ion-list><h4 align='center'>Loyola Jesuit Hall and Conference Centre</h4>" +
-    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
-    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6<ion-text> </ion-item>"+
+    let LJContent =
+    '<ion-list><h4 align=\'center\'>Loyola Jesuit Hall and Conference Centre</h4>' +
+    '<div style=\'max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;\'>' +
+    '<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6<ion-text> </ion-item>'+
+
+    '<ion-item><p><label style=\'margin-right:1.5em\'><b>Services: </b></label> <br/><br/>' +
 
     "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
     
@@ -507,10 +511,10 @@ export class MapComponent implements AfterViewInit {
     var cbCenter = {lat: 45.458236, lng: -73.640345};
     var CBMarker = this.createMarker(cbCenter, "CB");
 
-    var CBContent =
-    "<ion-list><h4 align='center'>Central Building</h4>" +
-    "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
-    "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 2B5</ion-text></ion-item>"+
+    let CBContent =
+    '<ion-list><h4 align=\'center\'>Central Building</h4>' +
+    '<div style=\'max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;\'>' +
+    '<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 2B5</ion-text></ion-item>'+
 
     "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
     "Concordia Student Union<br/><br/>"+
@@ -580,10 +584,10 @@ export class MapComponent implements AfterViewInit {
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
-    "Library"+
-    "</p></ion-item>"+
-    "</ion-list><br/>"+
+    '<ion-item><p><label style=\'margin-right:1.5em\'><b>Services: </b></label> <br/><br/>' +
+    'Library'+
+    '</p></ion-item>'+
+    '</ion-list><br/>'+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/vl.jpg></div></div>" +
     "<div align ='center'><ion-button id="+vlID+">Enter Building</ion-button></div>";
@@ -597,7 +601,7 @@ export class MapComponent implements AfterViewInit {
     "<ion-list> <h4 align='center'>Concordia Stadium</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text> </ion-item></ion-list>"+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/cs.jpg></div>"
+    '<div align =\'center\'><img width=\'45%\' src=assets/BuildingImages/cs.jpg></div>'
 
     this.markerListener(CSMarker, CSContent, infoWindow);
 
@@ -608,7 +612,7 @@ export class MapComponent implements AfterViewInit {
     "<ion-list> <h4 align='center'>Stinger Dome</ion-title></h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R2</ion-text></ion-item></ion-list>"+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/sd.jpg></div>"
+    '<div align =\'center\'><img width=\'45%\' src=assets/BuildingImages/sd.jpg></div>'
 
     this.markerListener(SDMarker, SDContent, infoWindow);
 
@@ -619,12 +623,12 @@ export class MapComponent implements AfterViewInit {
     "<ion-list><h4 align='center'>PERFORM Centre</ion-title></h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
-    "PERFORM Centre"+
-    "</p></ion-item>"+
-    "</ion-list>"+
+    '<ion-item><p><label style=\'margin-right:1.5em\'><b>Services: </b></label> <br/><br/>' +
+    'PERFORM Centre'+
+    '</p></ion-item>'+
+    '</ion-list>'+
 
-    "<div align ='center'><img width='55%' src=assets/BuildingImages/pc.jpg></div>"
+    '<div align =\'center\'><img width=\'55%\' src=assets/BuildingImages/pc.jpg></div>'
 
     this.markerListener(PCMarker, PCContent, infoWindow);
 
@@ -635,12 +639,12 @@ export class MapComponent implements AfterViewInit {
     "<ion-list> <h4 align='center'>Concordia Gymnasium</h4>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7200 Sherbrooke St W Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
 
-    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
-    "Gymnasium"+
-    "</p></ion-item>"+
-    "</ion-list>"+
+    '<ion-item><p><label style=\'margin-right:1.5em\'><b>Services: </b></label> <br/><br/>' +
+    'Gymnasium'+
+    '</p></ion-item>'+
+    '</ion-list>'+
 
-    "<div align ='center'><img width='60%' src=assets/BuildingImages/cg.jpg></div>"
+    '<div align =\'center\'><img width=\'60%\' src=assets/BuildingImages/cg.jpg></div>'
 
     this.markerListener(CGMarker, CGContent, infoWindow);
 
@@ -652,12 +656,10 @@ export class MapComponent implements AfterViewInit {
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6 </ion-text></ion-item>"+
 
-    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
-    
-    "Environmental Health and Safety<br/><br/>"+
-    "Facilities Management"+
-    "</p></ion-item>"+
-    "</ion-list><br/></div>"+
+    'Environmental Health and Safety<br/><br/>'+
+    'Facilities Management'+
+    '</p></ion-item>'+
+    '</ion-list><br/></div>'+
 
     "<div align ='center'><ion-button id="+psID+">Enter Building</ion-button></div>";
 
@@ -690,10 +692,10 @@ export class MapComponent implements AfterViewInit {
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
-    "Centre for Structural and Functional Genomics"+
-    "</p></ion-item>"+
-    "</ion-list><br/>"+
+    '<ion-item><p><label style=\'margin-right:1.5em\'><b>Services: </b></label> <br/><br/>' +
+    'Centre for Structural and Functional Genomics'+
+    '</p></ion-item>'+
+    '</ion-list><br/>'+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/ge.jpg></div></div>" +
     "<div align ='center'><ion-button id="+geID+">Enter Building</ion-button></div>";
@@ -708,12 +710,12 @@ export class MapComponent implements AfterViewInit {
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec</ion-text> </ion-item>"+
 
-    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
-    "Student Residence"+
-    "</p></ion-item>"+
-    "</ion-list><br/>"+
+    '<ion-item><p><label style=\'margin-right:1.5em\'><b>Services: </b></label> <br/><br/>' +
+    'Student Residence'+
+    '</p></ion-item>'+
+    '</ion-list><br/>'+
 
-    "<div align ='center'><img width='45%' src=assets/BuildingImages/jr.jpg><div>" 
+    '<div align =\'center\'><img width=\'45%\' src=assets/BuildingImages/jr.jpg><div>'
 
     this.markerListener(JRMarker, JRContent, infoWindow);
 
@@ -725,10 +727,10 @@ export class MapComponent implements AfterViewInit {
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7079 Rue de Terrebonne, Montréal, QC H4B 2B4</ion-text> </ion-item>"+
 
-    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
-    "Student Residence"+
-    "</p></ion-item>"+
-    "</ion-list><br/>"
+    '<ion-item><p><label style=\'margin-right:1.5em\'><b>Services: </b></label> <br/><br/>' +
+    'Student Residence'+
+    '</p></ion-item>'+
+    '</ion-list><br/>'
 
     this.markerListener(SRMarker, SRContent, infoWindow);
 
@@ -740,12 +742,12 @@ export class MapComponent implements AfterViewInit {
     "<div style='max-height:250px; overflow:scroll;overflow-x:hidden;overflow-y:scroll;'>" +
     "<ion-item><ion-text><label><b>Address: </b></label>7141 Sherbrooke St W, Montreal, Quebec H4B 1R6</ion-text> </ion-item>"+
 
-    "<ion-item><p><label style='margin-right:1.5em'><b>Services: </b></label> <br/><br/>" +
-    "F.C. Smith Auditorium<br/><br/>"+
-    "Cazalet Theater<br/><br/>"+
-    "Concordia Multi-Faith and Spirituality Centre"+
-    "</p></ion-item>"+
-    "</ion-list><br/>"+
+    '<ion-item><p><label style=\'margin-right:1.5em\'><b>Services: </b></label> <br/><br/>' +
+    'F.C. Smith Auditorium<br/><br/>'+
+    'Cazalet Theater<br/><br/>'+
+    'Concordia Multi-Faith and Spirituality Centre'+
+    '</p></ion-item>'+
+    '</ion-list><br/>'+
 
     "<div align ='center'><img width='45%' src=assets/BuildingImages/fc.jpeg></div></div>" 
     "<div align ='center'><ion-button id="+fcID+">Enter Building</ion-button></div>";
@@ -753,149 +755,90 @@ export class MapComponent implements AfterViewInit {
     this.markerListener(FCMarker, FCContent, infoWindow);
 
 
-    //var hallTest = new google.maps.LatLng(45.497194, -73.578886) //Variable to test containsLocation
-    
-    //For current location
-    var currentLoc = this.getCurrentLocation();
-    var currentBuilding = ""; //For Content of user marker info window
-    var currentCampus = "";
+    // var hallTest = new google.maps.LatLng(45.497194, -73.578886) //Variable to test containsLocation
 
-    //Listener to the user location marker
-    userLocationMarker.addListener('click', function()
-    {
-      //Check if user location is inside a Concordia campus
-      if(google.maps.geometry.poly.containsLocation(currentLoc, sjwP) == true)
-      {
-        currentCampus = "Sir George Williams Campus";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, loyolaP) == true))
-      {
-        currentCampus = "Loyola Campus";
-      }
-      else
-      {
-        currentCampus = "N/A";
-      }    
+    // For current location
+    let currentLoc = this.getCurrentLocation();
+    let currentBuilding = ''; // For Content of user marker info window
+    let currentCampus = '';
 
-      //Check if user location is inside a Concordia building
-      if(google.maps.geometry.poly.containsLocation(currentLoc, hallP) == true)
-      {
-        currentBuilding = "Hall Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, molsonP) == true))
-      {
-        currentBuilding = "John Molson Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, EVP) == true))
-      {
-        currentBuilding = "Engineering, Computer Science and Visual Arts Integrated Complex";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, lbP) == true))
-      {
-        currentBuilding = "J.W. McConnel Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, visualArtsP) == true))
-      {
-        currentBuilding = "Visual Arts Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, faubourgP) == true))
-      {
-        currentBuilding = "Faubourg Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, greyNunsP) == true))
-      {
-        currentBuilding = "Grey Nuns Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, journalismP) == true))
-      {
-        currentBuilding = "Communication Studies and Journalism Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, scienceComplexP) == true))
-      {
-        currentBuilding = "Richard J. Renaud Science Complex";
-      }
-      
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, jesuitP) == true))
-      {
-        currentBuilding = "Loyola Jesuit Hall and Conference Centre";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, centralBuildingP) == true))
-      {
-        currentBuilding = "Central Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, adminP) == true))
-      {
-        currentBuilding = "Administration Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, psyP) == true))
-      {
-        currentBuilding = "Psychology Building";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, vanierLibraryP) == true))
-      {
-        currentBuilding = "Vanier Library";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, stingerStadiumP) == true))
-      {
-        currentBuilding = "Concordia Stadium";
+    // Listener to the user location marker
+    userLocationMarker.addListener('click', function() {
+      // Check if user location is inside a Concordia campus
+      if (google.maps.geometry.poly.containsLocation(currentLoc, sjwP) == true) {
+        currentCampus = 'Sir George Williams Campus';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, loyolaP) == true)) {
+        currentCampus = 'Loyola Campus';
+      } else {
+        currentCampus = 'N/A';
       }
 
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, stingerDomeP) == true))
-      {
-        currentBuilding = "Stinger Dome";
+
+      // Check if user location is inside a Concordia building
+      if (google.maps.geometry.poly.containsLocation(currentLoc, hallP) == true) {
+        currentBuilding = 'Hall Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, molsonP) == true)) {
+        currentBuilding = 'John Molson Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, EVP) == true)) {
+        currentBuilding = 'Engineering, Computer Science and Visual Arts Integrated Complex';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, lbP) == true)) {
+        currentBuilding = 'J.W. McConnel Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, visualArtsP) == true)) {
+        currentBuilding = 'Visual Arts Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, faubourgP) == true)) {
+        currentBuilding = 'Faubourg Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, greyNunsP) == true)) {
+        currentBuilding = 'Grey Nuns Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, journalismP) == true)) {
+        currentBuilding = 'Communication Studies and Journalism Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, scienceComplexP) == true)) {
+        currentBuilding = 'Richard J. Renaud Science Complex';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, jesuitP) == true)) {
+        currentBuilding = 'Loyola Jesuit Hall and Conference Centre';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, centralBuildingP) == true)) {
+        currentBuilding = 'Central Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, adminP) == true)) {
+        currentBuilding = 'Administration Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, psyP) == true)) {
+        currentBuilding = 'Psychology Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, vanierLibraryP) == true)) {
+        currentBuilding = 'Vanier Library';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, stingerStadiumP) == true)) {
+        currentBuilding = 'Concordia Stadium';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, stingerDomeP) == true)) {
+        currentBuilding = 'Stinger Dome';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, athleticCampP) == true)) {
+        currentBuilding = 'PERFORM Centre';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, loyolaGymP) == true)) {
+        currentBuilding = 'Concordia Gymnasium';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, phyServiceP) == true)) {
+        currentBuilding = 'Physical Services Building<';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, centerArtsP) == true)) {
+        currentBuilding = 'Terrebonne Building';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, saintIgnatiusP) == true)) {
+        currentBuilding = 'Saint Ignatius of Loyola';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, structuralCenterP) == true)) {
+        currentBuilding = 'Centre for Structural and Functional Genomics';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, jesuitResidenceP) == true)) {
+        currentBuilding = 'Jesuit Residence';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, studentResidencesP) == true)) {
+        currentBuilding = 'Student Residence';
+      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, chapelP) == true)) {
+        currentBuilding = 'F.C. Smith Building<';
+      } else {
+        currentBuilding = 'N/A';
       }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, athleticCampP) == true))
-      {
-        currentBuilding = "PERFORM Centre";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, loyolaGymP) == true))
-      {
-        currentBuilding = "Concordia Gymnasium";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, phyServiceP) == true))
-      {
-        currentBuilding = "Physical Services Building<";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, centerArtsP) == true))
-      {
-        currentBuilding = "Terrebonne Building";
-      }
-      
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, saintIgnatiusP) == true))
-      {
-        currentBuilding = "Saint Ignatius of Loyola";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, structuralCenterP) == true))
-      {
-        currentBuilding = "Centre for Structural and Functional Genomics";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, jesuitResidenceP) == true))
-      {
-        currentBuilding = "Jesuit Residence";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, studentResidencesP) == true))
-      {
-        currentBuilding = "Student Residence";
-      }
-      else if((google.maps.geometry.poly.containsLocation(currentLoc, chapelP) == true))
-      {
-        currentBuilding = "F.C. Smith Building<";
-      }
-      else
-      {
-        currentBuilding = "N/A";
-      }          
 
       userContent =
-          "<ion-list><h4 align='center'>Concordia University</h4>" +
-          "<ion-item><ion-text><label><b>Current Campus: </b></label>"+currentCampus+"</ion-text></ion-item>"+
-          "<ion-item><ion-text><label><b>Current Building: </b></label>"+currentBuilding+"</ion-text></ion-item></ion-list><br/>"
+          '<ion-list><h4 align=\'center\'>Concordia University</h4>' +
+          '<ion-item><ion-text><label><b>Current Campus: </b></label>'+ currentCampus +'</ion-text></ion-item>'+
+          '<ion-item><ion-text><label><b>Current Building: </b></label>'+ currentBuilding +'</ion-text></ion-item></ion-list><br/>'
       infoWindow.setContent(userContent);
       infoWindow.open(this.map, userLocationMarker);
     });
 
 
-    //Listener for the "enter building" button of info window
+    // Listener for the "enter building" button of info window
     infoWindow.addListener('domready', () => {
       if(document.getElementById(hallID))
       {
@@ -967,15 +910,15 @@ export class MapComponent implements AfterViewInit {
       }     
     });
 
-    //Closes info window when clicking somewhere else on map
+    // Closes info window when clicking somewhere else on map
     google.maps.event.addListener(this.map, 'click', function() {
       if (infoWindow) {
           infoWindow.close();
       }
   });
-  
+
   }
-  
+
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
   async enterBuilding(id: string, polygon: any, marker: any)
   {             
@@ -984,20 +927,23 @@ export class MapComponent implements AfterViewInit {
 
     let b: Building = await this.buildingFactory.loadBuilding(id);
     let buildingInfo = b.getBuildingInfo();
-
-    this.indoorView(buildingInfo, polygon, marker);  
+    const buildingFloors = b.getFloors();
+    //this.indoorView(buildingInfo, polygon, marker);  
          
     switch (id) 
     {
-      //Hall Building
+      // Hall Building
       case 'HB':
-          console.log("In " + id + " building.");     
+          console.log('In ' + id + ' building.');
 
-          let floor8: Floor = b.getFloors()[0];
+          
+
+          this.indoorView(buildingInfo, polygon, marker, buildingFloors, 'HALL');
+
           break;
-      //EV building
+      // EV building
       case 'ev':
-          console.log("In " + id + " building.");
+          console.log('In ' + id + ' building.');
           break;
       //Library Building
       case 'LB':
@@ -1059,7 +1005,7 @@ export class MapComponent implements AfterViewInit {
       case 'StructuralCenter':
         console.log("In " + id + " building.");
         break;
-    }  
+    }
 
 
   }
@@ -1071,24 +1017,29 @@ export class MapComponent implements AfterViewInit {
    * @param polygon is the building layer
    * @param marker is the building marker
    */
-  indoorView(buildingInfo: any, polygon: any, marker: any): void
-  {
-    let floorImage = ""; //Holds the image path
-    var indoorOverlay; //Layer on top of building
-    let self = this;
-    let empty = "";
+  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string): void {
 
-    var imageBound = {
-      north: buildingInfo["bound"].north, //Top
-      south: buildingInfo["bound"].south, //Bottom
-      east: buildingInfo["bound"].east, //Right
-      west: buildingInfo["bound"].west //Left
+
+    if (building == 'HALL') {
+
+
+
+    let floorImage = ''; // Holds the image path
+    let indoorOverlay; // Layer on top of building
+    const self = this;
+    const empty = '';
+
+    let imageBound = {
+      north: buildingInfo['bound'].north, // Top
+      south: buildingInfo['bound'].south, // Bottom
+      east: buildingInfo['bound'].east, // Right
+      west: buildingInfo['bound'].west // Left
     };
 
     indoorOverlay = new google.maps.GroundOverlay(
-        floorImage, 
+        floorImage,
         imageBound);
-        indoorOverlay.setMap(this.map);
+    indoorOverlay.setMap(this.map);
 
     //Zoom in
     this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
@@ -1109,31 +1060,30 @@ export class MapComponent implements AfterViewInit {
     //No zoom or drag anymore
     this.map.setOptions({minZoom: 18});
 
-    //Dropdown content
-    var selectContent= ""; 
-    for(let i = 1; i <= buildingInfo["totalFloors"].nFloors; i++)
-    {
-      selectContent += "<option value="+i+">"+i+"</option>";
+    // Dropdown content
+    let selectContent = '';
+    for (let i = 1; i <= buildingInfo['totalFloors'].nFloors; i++) {
+      selectContent += '<option value='+ i +'>'+ i + "</option>";
     }
 
-    var floorDropdown = 
-    "<ion-label style='margin-right:1em'><b>Floor</b></ion-label>" +
-    "<select id ='floors'>" + 
+    let floorDropdown =
+    '<ion-label style=\'margin-right:1em\'><b>Floor</b></ion-label>' +
+    '<select id =\'floors\'>' +
     selectContent +
-    "</select>";
+    '</select>';
 
     // Create a div to hold the control for dropdown and Exit button
-    var controlFloorDiv = document.createElement('div');
-    var controlExitDiv = document.createElement('div');
+    let controlFloorDiv = document.createElement('div');
+    let controlExitDiv = document.createElement('div');
 
     // Set CSS for the control border of Floor
-    var controlFloorUI = document.createElement('div');
+    let controlFloorUI = document.createElement('div');
     controlFloorUI.style.backgroundColor = '#fff';
     controlFloorUI.style.border = '2px solid #fff';
     controlFloorUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
 
     // Set CSS for the control interior of Floor
-    var controlFloorText = document.createElement('div');
+    let controlFloorText = document.createElement('div');
     controlFloorText.style.fontSize = '16px';
     controlFloorText.style.lineHeight = '38px';
     controlFloorText.style.paddingTop = '5px';
@@ -1142,64 +1092,84 @@ export class MapComponent implements AfterViewInit {
     controlFloorText.innerHTML = floorDropdown;
 
     // Set CSS for the control border of Exit
-    var controlExitUI = document.createElement('div');
+    let controlExitUI = document.createElement('div');
     controlExitUI.style.marginBottom = '22px';
 
     // Set CSS for the control interior of Exit
-    var controlExitText = document.createElement('div');
-    var exitButton = '<ion-button>Exit Building</ion-button>'
+    let controlExitText = document.createElement('div');
+    let exitButton = '<ion-button>Exit Building</ion-button>';
     controlExitText.innerHTML = exitButton;
 
-    //Add child div inside parent div
+    // Add child div inside parent div
     controlFloorDiv.appendChild(controlFloorUI);
     controlFloorUI.appendChild(controlFloorText);
 
     controlExitDiv.appendChild(controlExitUI);
     controlExitUI.appendChild(controlExitText);
 
-    //Push the div into the map
+    // Push the div into the map
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlFloorDiv);
     this.map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlExitDiv);
 
-    //Listener for dropdown
-    google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e) 
-    {    
-      for(let i = 0; i <buildingInfo["totalFloors"].nFloors; i++)
-      {
-        if(buildingInfo["Floors"][i] != undefined)
-        {
-          if(this.value == buildingInfo["Floors"][i].level)
-          {
-            floorImage = buildingInfo["Floors"][i].img;
-            indoorOverlay.setMap(null);  
+    // Listener for dropdown
+    google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e)
+    {
+
+      for (let i = 0; i < buildingInfo['totalFloors'].nFloors; i++) {
+        if (buildingInfo['Floors'][i] != undefined) {
+          if (this.value == buildingInfo['Floors'][i].level) {
+            floorImage = buildingInfo['Floors'][i].img;
+            indoorOverlay.setMap(null);
             indoorOverlay = new google.maps.GroundOverlay(
-                floorImage, 
+                floorImage,
                 imageBound);
             indoorOverlay.setMap(self.map);
+
+            self.clearAllPOIMarkers();
+
+            const floorLevel = buildingInfo['Floors'][i].level;
+            const currentFloor: Floor = buildingFloors['HB' + floorLevel];
+
+            // Check if floor object exists for building before attempting to parse it
+            if (currentFloor != undefined) {
+
+              currentFloor.getPois().forEach((poi) => {
+                self.poiMarkers.push(new google.maps.Marker({
+                  position: poi.getGoogleLatLng(),
+                  map: self.map,
+                  title: poi.getKey(),
+                  label: poi.getKey()
+                }));
+              });
+
+            }
+
             break;
-          }
-          else
-          { 
+          } else {
             continue;
           }
         }
-        //If no image found, then there is no layer
+        // If no image found, then there is no layer
         indoorOverlay.setMap(null);
       }
 
+
+
     });
 
-    //Listener for Exit button
+    // Listener for Exit button
     controlExitUI.addEventListener('click', function() {
-      indoorOverlay.setMap(null);  
+      indoorOverlay.setMap(null);
       polygon.setVisible(true);
       marker.setVisible(true);
       controlExitText.innerHTML = empty;
       controlFloorText.innerHTML = empty;
       self.map.setOptions({minZoom: null});
       self.map.setZoom(18);
+      self.clearAllPOIMarkers();
     });
-      
+  }
+
   }
 
   createPolygon(path: any, type: string): any
@@ -1277,18 +1247,17 @@ export class MapComponent implements AfterViewInit {
 
   /**
    * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
-   * @param locationList 
+   * @param locationList
    */
-  drawPath(locationList: Location[])
-  {
-    //debugger;
-    var pathCoordinates = [];
-    
+  drawPath(locationList: Location[]) {
+    // debugger;
+    let pathCoordinates = [];
+
     locationList.forEach((location: Location) => {
       pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
     });
 
-    var path = new google.maps.Polyline({
+    let path = new google.maps.Polyline({
       path: pathCoordinates,
       geodesic: true,
       strokeColor: '#0000FF',
@@ -1300,7 +1269,7 @@ export class MapComponent implements AfterViewInit {
       position: locationList[0].getGoogleLatLng(),
       map: this.map,
       title: 'Start',
-      label:'S'
+      label: 'S'
     });
 
     const endMarker = new google.maps.Marker({
@@ -1314,23 +1283,34 @@ export class MapComponent implements AfterViewInit {
   }
 
   // Retrieves the POI searched from home-search component and locates it on the map
-  goToIndoorPOI(poi: IndoorPOI)
-  {
+  goToIndoorPOI(poi: IndoorPOI) {
+    this.clearAllPOIMarkers();
     this.focusMap(poi);
 
-    var POIMarker = new google.maps.Marker({
+
+    this.poiMarkers.push(new google.maps.Marker({
       position: poi.getGoogleLatLng(),
       map: this.map,
       title: poi.getKey(),
       label: poi.getKey()
-    });
+    }));
 
-    if(poi.getKey().startsWith("HB"))
-    {
-      POIMarker.label = poi.getKey().replace('B','');
+    if (poi.getKey().startsWith('HB')) {
+      this.poiMarkers[0].label = poi.getKey().replace('B', '');
+      this.poiMarkers[0].title = poi.getKey().replace('B', '');
     }
 
     this.map.setZoom(20);
+  }
+
+  // Clears all POI markers from the map component
+  clearAllPOIMarkers()
+  {
+    this.poiMarkers.forEach((marker) => {
+      marker.setMap(null);
+    });
+
+    this.poiMarkers = [];
   }
 
 }
