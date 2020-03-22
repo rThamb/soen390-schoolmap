@@ -1454,6 +1454,7 @@ export class MapComponent implements AfterViewInit {
           console.log('In ' + id + ' building.');
           polygon.setVisible(false);
           marker.setVisible(false);
+          this.clearAllPOIMarkers();
 
           const b: Building = await this.buildingFactory.loadBuilding(id);
 
@@ -1622,6 +1623,7 @@ export class MapComponent implements AfterViewInit {
     // Listener for dropdown
     google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e)
     {
+      self.clearAllPOIMarkers();
 
       for (let i = 0; i < buildingInfo['totalFloors'].nFloors; i++) {
         if (buildingInfo['Floors'][i] != undefined) {
@@ -1633,7 +1635,7 @@ export class MapComponent implements AfterViewInit {
                 imageBound);
             indoorOverlay.setMap(self.map);
 
-            self.clearAllPOIMarkers();
+            
 
             const floorLevel = buildingInfo['Floors'][i].level;
             const currentFloor: Floor = buildingFloors['HB' + floorLevel];
