@@ -54,13 +54,22 @@ export class MapComponent implements AfterViewInit {
   // Initializes the map object with default values
   async initMap(){
     // Gets current position of user
-    const resp = await this.geolocation.getCurrentPosition();
+    const resp = await this.geolocation.getCurrentPosition({timeout: 30000, enableHighAccuracy: true}).catch((error) => {
+      console.log('Error getting location', error);
+    });
+    
+    let centerMapCoordinate;
 
-    this.userLocation.setLat(resp.coords.latitude);
-    this.userLocation.setLng(resp.coords.longitude);
+    if(resp){
+      this.userLocation.setLat(resp.coords.latitude);
+      this.userLocation.setLng(resp.coords.longitude);
+      centerMapCoordinate = this.userLocation.getGoogleLatLng();
+    }else
+      //If user does not allow access to their current location, default to SGW campus
+      centerMapCoordinate = new google.maps.LatLng(45.494711, -73.577871);
 
     this.mapOptions = {
-      center: this.userLocation.getGoogleLatLng(),
+      center: centerMapCoordinate,
       zoom: 17,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -68,11 +77,13 @@ export class MapComponent implements AfterViewInit {
 
     this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
 
-    this.userMarker = new google.maps.Marker({
-      position: this.userLocation.getGoogleLatLng(),
-      map: this.map,
-      title: 'Here'
-    });
+    if(resp){
+      this.userMarker = new google.maps.Marker({
+        position: this.userLocation.getGoogleLatLng(),
+        map: this.map,
+        title: 'Here'
+      });
+    }
 
     this.initOverlays();
     this.setDirectionsMap();
