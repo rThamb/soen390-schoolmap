@@ -26,10 +26,11 @@ import { BuildingFactoryService } from './services/BuildingFactory/building-fact
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
-import { HomeComponent } from './components/home/home.component';
 import { HomeSearchComponent } from './components/home-search/home-search.component';
-import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { MapComponent } from './components/map/map.component';
+import { DirectionsComponent } from './components/directions/directions.component';
+import { LocateMeComponent } from './components/locate-me/locate-me.component';
+import { HomeComponent } from './components/home/home.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
 import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
@@ -40,9 +41,6 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
-
-
 import {IonicStorageModule} from '@ionic/storage';
 
 
@@ -53,14 +51,10 @@ import {IonicStorageModule} from '@ionic/storage';
 
   declarations: [AppComponent, MapComponent, FavoritesComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
                 ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, 
-                ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
+                ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
-
-
-
-  imports: [HttpClientModule, BrowserModule, FormsModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,NgxDatatableModule, IonicStorageModule.forRoot({name: 'appDB',
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule, IonicStorageModule.forRoot({      name: 'appDB',
   driverOrder: ['sqlite', 'websql', 'indexeddb']})],
-
   providers: [
     StatusBar,
     SplashScreen,

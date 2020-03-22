@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
     "@google/maps": "^1.0.2",
+    "@ionic-native/call-number": "^5.22.0",
     "@ionic-native/core": "^5.22.0",
     "@ionic-native/file": "^5.22.0",
     "@ionic-native/geolocation": "^5.22.0",
@@ -33,6 +34,7 @@
     "@ionic/storage": "^2.2.0",
     "@swimlane/ngx-datatable": "^16.0.3",
     "bootstrap": "^4.4.1",
+    "call-number": "^1.0.1",
     "cordova-android": "^8.1.0",
     "cordova-plugin-advanced-http": "^2.4.1",
     "cordova-plugin-file": "^6.0.2",
@@ -97,7 +99,8 @@
         "GEOLOCATION_USAGE_DESCRIPTION": "to track your walk"
       },
       "cordova-plugin-advanced-http": {},
-      "cordova-plugin-file": {}
+      "cordova-plugin-file": {},
+      "mx.ferreyra.callnumber": {}
     },
     "platforms": [
       "android"

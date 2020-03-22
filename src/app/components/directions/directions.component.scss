@@ -1,0 +1,41 @@
+ .toolbar{
+   margin-top: 57px;
+ }
+
+ .inputItem{
+      --highlight-color-valid: #488aff;
+ }
+
+ .transportationMethod{
+    min-height: 10px;
+ }
+
+ .travel{
+    text-align: center;
+    font-weight: 500;
+    color:  #488aff;
+ }
+
+ .adp-directions{
+   margin: 0px;
+ }
+
+ #shuttletime{
+   font-size: 100%;
+   overflow: hidden;
+   height:100px;
+   text-align: center;
+ }
+ 
+ #travelinfo{
+   padding-bottom: 80px;
+   padding-top: 55px;
+   height: 10px;
+   border-top: solid 2px #488aff;
+   border-bottom: solid 2px #488aff;
+ }
+
+ #directionsPanel{
+    overflow: auto;
+    height: 217px;
+ }
