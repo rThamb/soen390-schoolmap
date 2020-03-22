@@ -91,20 +91,24 @@ export class Building
     // Parses through each floor and returns a list of all IndoorPOI objects of entire building.
     public getAllIndoorPOI()
     {
-        //debugger;
+        debugger;
         let currentFloorPois: IndoorPOI[];
         let allPois: IndoorPOI[];
     
         console.log(this.floors);
-        for(var i = 0; i < this.floors.length; i++)
+        for(var i = 0; i < Object.keys(this.floors).length; i++)
         {
-            currentFloorPois = this.floors[i].getPois();
-
-            for(var j = 0; j < currentFloorPois.length; i++)
+            try{
+                currentFloorPois = this.floors['HB'+(i+1)].getPois();
+                for(var j = 0; j < currentFloorPois.length; i++)
+                {
+                    // push each poi one by one to the list.
+                    console.log(currentFloorPois[j]);
+                    allPois.push(currentFloorPois[j]);
+                }
+            }catch(error)
             {
-                // push each poi one by one to the list.
-                console.log(currentFloorPois[j]);
-                allPois.push(currentFloorPois[j]);
+                console.log(error);
             }
         }
 
