@@ -40,6 +40,16 @@ export class MapComponent implements AfterViewInit {
   private sgw: Campus;
   private loyola: Campus;
 
+  //Color for polygons
+  private fColor = "deepskyblue";
+
+  //Text properties for all markers
+  private markerColor = 'black';
+  private fontWeight = 'bold';
+  private fontSize = '30px';
+  private iconEmpty = ''//'../res/img/empty.png';
+
+
   // Injects the component class with imported services
   constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService) 
   {
@@ -103,7 +113,6 @@ export class MapComponent implements AfterViewInit {
   }
 
   // Spawns the building overlays on top of the map
-  // **WILL BE REFACTORED HEAVILY IN NEXT SPRINT**
   initOverlays()
   {
 
@@ -115,11 +124,7 @@ export class MapComponent implements AfterViewInit {
       map: this.map
     });
 
-    //var userInfoWindow = new google.maps.InfoWindow({content: ""});
     var userContent = "";
-    
-    // Polygon properties for all buildings
-    var fColor = "deepskyblue";
 
     // Declare all overlay points
     var visualArts = overlays.visualArts.overlayPoints;
@@ -149,191 +154,46 @@ export class MapComponent implements AfterViewInit {
     var structuralCenter = overlays.structuralCenter.overlayPoints;
     var jesuitResidence = overlays.jesuitResidence.overlayPoints;
     var studentResidences = overlays.studentResidences.overlayPoints;
+    var sjwPath = [visualArts, sjwCampus];
+
+    //Type of polygon
+    var campusType = "campus";
+    var buildingType = "building";
 
     // Polygon for each campus
-    var sjwP = new google.maps.Polygon({
-      paths: [visualArts, sjwCampus],
-      visible: false
-    });
-    sjwP.setMap(this.map);
-
-    var loyolaP = new google.maps.Polygon({
-      paths: loyolaCampus,
-      visible: false
-    });
-    loyolaP.setMap(this.map);
+    var sjwP = this.createPolygon(sjwPath, campusType);
+    var loyolaP = this.createPolygon(loyolaCampus, campusType);
 
     //Polygon for each building
-    var hallP = new google.maps.Polygon({
-      paths: hall,
-      fillColor: fColor,
-    });
-    hallP.setMap(this.map);
-
-    var molsonP = new google.maps.Polygon({
-      paths: molson,
-      fillColor: fColor,
-    });
-    molsonP.setMap(this.map);
-
-    var faubourgP = new google.maps.Polygon({
-      paths: faubourg,
-      fillColor: fColor,
-    });
-    faubourgP.setMap(this.map);
-
-    var EVP = new google.maps.Polygon({
-      paths: EV,
-      fillColor: fColor,
-    });
-    EVP.setMap(this.map);
-
-    var lbP = new google.maps.Polygon({
-      paths: LB,
-      fillColor: fColor,
-    });
-    lbP.setMap(this.map);
-
-    var visualArtsP = new google.maps.Polygon({
-      paths: visualArts,
-      fillColor: fColor,
-    });
-    visualArtsP.setMap(this.map);
-
-    var greyNunsP = new google.maps.Polygon({
-      paths: greyNuns,
-      fillColor: fColor,
-    });
-    greyNunsP.setMap(this.map);
-
-    var scienceComplexP = new google.maps.Polygon({
-      paths: scienceComplex,
-      fillColor: fColor,
-    });
-    scienceComplexP.setMap(this.map);
-
-    var journalismP = new google.maps.Polygon({
-      paths: journalismBuilding,
-      fillColor: fColor,
-    });
-    journalismP.setMap(this.map);
-
-    var chapelP = new google.maps.Polygon({
-      paths: chapel,
-      fillColor: fColor,
-    });
-    chapelP.setMap(this.map);
-
-    var stingerDomeP = new google.maps.Polygon({
-      paths: stingerDome,
-      fillColor: fColor,
-    });
-    stingerDomeP.setMap(this.map);
-
-    var stingerStadiumP = new google.maps.Polygon({
-      paths: stingerStadium,
-      fillColor: fColor,
-    });
-    stingerStadiumP.setMap(this.map);
-
-    var centralBuildingP = new google.maps.Polygon({
-      paths: centralBuilding,
-      fillColor: fColor,
-    });
-    centralBuildingP.setMap(this.map);
-
-    var vanierLibraryP = new google.maps.Polygon({
-      paths: vanierLibrary,
-      fillColor: fColor,
-    });
-    vanierLibraryP.setMap(this.map);
-
-    var psyP = new google.maps.Polygon({
-      paths: psyBuilding,
-      fillColor: fColor,
-    });
-    psyP.setMap(this.map);
-
-    var adminP = new google.maps.Polygon({
-      paths: adminBuilding,
-      fillColor: fColor,
-    });
-    adminP.setMap(this.map);
-
-    var jesuitP = new google.maps.Polygon({
-      paths: jesuitHall,
-      fillColor: fColor,
-    });
-    jesuitP.setMap(this.map);
-
-    var athleticCampP = new google.maps.Polygon({
-      paths: athleticCamp,
-      fillColor: fColor,
-    });
-    athleticCampP.setMap(this.map);
-
-    var loyolaGymP = new google.maps.Polygon({
-      paths: loyolaGym,
-      fillColor: fColor,
-    });
-    loyolaGymP.setMap(this.map);
-
-    var phyServiceP = new google.maps.Polygon({
-      paths: phyServiceBuilding,
-      fillColor: fColor,
-    });
-    phyServiceP.setMap(this.map);
-  
-    var centerArtsP = new google.maps.Polygon({
-      paths: centerArts,
-      fillColor: fColor,
-    });
-    centerArtsP.setMap(this.map);
-
-    var saintIgnatiusP = new google.maps.Polygon({
-      paths: saintIgnatius,
-      fillColor: fColor,
-    });
-    saintIgnatiusP.setMap(this.map);
-
-    var structuralCenterP = new google.maps.Polygon({
-      paths: structuralCenter,
-      fillColor: fColor,
-    });
-    structuralCenterP.setMap(this.map);
-
-    var jesuitResidenceP = new google.maps.Polygon({
-      paths: jesuitResidence,
-      fillColor: fColor,
-    });
-    jesuitResidenceP.setMap(this.map);
-
-    var studentResidencesP = new google.maps.Polygon({
-      paths: studentResidences,
-      fillColor: fColor,
-    });
-    studentResidencesP.setMap(this.map);
-
-    //Text properties for all buildings
-    var markerColor = 'black';
-    var fontWeight = 'bold';
-    var fontSize = '30px';
-    var iconEmpty = ''//'../res/img/empty.png';
+    var hallP = this.createPolygon(hall, buildingType);
+    var molsonP = this.createPolygon(molson, buildingType);
+    var faubourgP = this.createPolygon(faubourg, buildingType);
+    var EVP = this.createPolygon(EV, buildingType);
+    var lbP = this.createPolygon(LB, buildingType);
+    var visualArtsP = this.createPolygon(visualArts, buildingType);
+    var greyNunsP = this.createPolygon(greyNuns, buildingType);
+    var scienceComplexP = this.createPolygon(scienceComplex, buildingType);
+    var journalismP = this.createPolygon(journalismBuilding, buildingType);
+    var chapelP = this.createPolygon(chapel, buildingType);
+    var stingerDomeP = this.createPolygon(stingerDome, buildingType);
+    var stingerStadiumP = this.createPolygon(stingerStadium, buildingType);
+    var centralBuildingP = this.createPolygon(centralBuilding, buildingType);
+    var vanierLibraryP = this.createPolygon(vanierLibrary, buildingType);
+    var psyP = this.createPolygon(psyBuilding, buildingType);
+    var adminP = this.createPolygon(adminBuilding, buildingType);
+    var jesuitP = this.createPolygon(jesuitHall, buildingType);
+    var athleticCampP = this.createPolygon(athleticCamp, buildingType);
+    var loyolaGymP = this.createPolygon(loyolaGym, buildingType);
+    var phyServiceP = this.createPolygon(phyServiceBuilding, buildingType);
+    var centerArtsP = this.createPolygon(centerArts, buildingType);
+    var saintIgnatiusP = this.createPolygon(saintIgnatius, buildingType);
+    var structuralCenterP = this.createPolygon(structuralCenter, buildingType);
+    var jesuitResidenceP = this.createPolygon(jesuitResidence, buildingType);
+    var studentResidencesP = this.createPolygon(studentResidences, buildingType);
 
     //Hall Building Marker and info window
-    var hallMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.497092, lng: -73.578974},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'HALL',
-          fontSize: fontSize,
-      },
-    });
+    var hallCenter = {lat: 45.497092, lng: -73.578974};
+    var hallMarker = this.createMarker(hallCenter, "HALL")
 
     var hallContent =
     "<ion-list> <h4 align='center'>Henry F. Hall Building </h4>" +
@@ -371,22 +231,9 @@ export class MapComponent implements AfterViewInit {
     });
 
   
-
     //EV Building Marker and info window
-    var EVMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.495470, lng: -73.577780},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'EV',
-          fontSize: fontSize,
-      },
-    });
-
+    var evCenter = {lat: 45.495470, lng: -73.577780};
+    var EVMarker = this.createMarker(evCenter, "EV")
 
     var EVContent =
     "<ion-list><h4 align='center'>Engineering, Computer Science and Visual Arts Integrated Complex</h4>" +
@@ -418,25 +265,12 @@ export class MapComponent implements AfterViewInit {
     google.maps.event.addListener(EVMarker, 'click', function() 
     {
       infoWindow.setContent(EVContent);
-
-
       infoWindow.open(this.map, EVMarker);
     });
           
     //LB Building Marker and info window
-    var LBMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.496708, lng: -73.577912},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'LB',
-          fontSize: fontSize,
-      },
-    });
+    var lbCenter = {lat: 45.496708, lng: -73.577912};
+    var LBMarker = this.createMarker(lbCenter, "LB")
 
 
     var LBContent =
@@ -473,20 +307,9 @@ export class MapComponent implements AfterViewInit {
 
       infoWindow.open(this.map, LBMarker);
     });
-   
-    var FGMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.494115, lng: -73.578223},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'FG',
-          fontSize: fontSize,
-      },
-    });
+
+    var fgCenter = {lat: 45.494115, lng: -73.578223};
+    var FGMarker = this.createMarker(fgCenter, "FG")
 
 
     var FGContent =
@@ -520,20 +343,8 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, FGMarker);
     });
 
-
-    var MBMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.495095, lng: -73.578854},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'MB',
-          fontSize: fontSize,
-      },
-    });
+    var mbCenter = {lat: 45.495095, lng: -73.578854};
+    var MBMarker = this.createMarker(mbCenter, "MB")
 
     var MBContent =
     "<ion-list> <h4 align='center'>John Molson Building</h4>" +
@@ -570,20 +381,8 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, MBMarker);
     });
 
-
-    var VAMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.495530, lng: -73.573845},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'VA',
-          fontSize: fontSize,
-      },
-    });
+    var vaCenter = {lat: 45.495530, lng: -73.573845};
+    var VAMarker = this.createMarker(vaCenter, "VA")
 
     var VAContent =
     "<ion-list> <h4 align='center'>Visual Arts Building</h4>" +
@@ -613,20 +412,8 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, VAMarker);
     });
 
-
-    var GNMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.493432, lng: -73.576705},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'GN',
-          fontSize: fontSize,
-      },
-    });
+    var gnCenter = {lat: 45.493432, lng: -73.576705};
+    var GNMarker = this.createMarker(gnCenter, "GN")
 
     var GNContent =
     "<ion-list> <h4 align='center'>Grey Nuns Building</h4>" +
@@ -652,19 +439,8 @@ export class MapComponent implements AfterViewInit {
 
   
     //Loyola Campus
-    var CJMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.457395, lng: -73.640399},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'CJ',
-          fontSize: fontSize,
-      },
-    });
+    var cjCenter = {lat: 45.457395, lng: -73.640399};
+    var CJMarker = this.createMarker(cjCenter, "CJ")
 
     var CJContent =
     "<ion-list> <h4 align='center'>Communication Studies and Journalism Building</h4>" +
@@ -691,20 +467,9 @@ export class MapComponent implements AfterViewInit {
     });
 
 
-    var SCMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.457605, lng: -73.641512},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'SC',
-          fontSize: fontSize,
-      },
-    });
 
+    var scCenter = {lat: 45.457605, lng: -73.641512};
+    var SCMarker = this.createMarker(scCenter, "SC");
 
     var SCContent =
     "<ion-list><h4 align='center'>Richard J. Renaud Science Complex</h4>" +
@@ -742,19 +507,9 @@ export class MapComponent implements AfterViewInit {
     });
 
 
-    var LJMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.458514, lng: -73.641082},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'LJ',
-          fontSize: fontSize,
-      },
-    });
+
+    var ljCenter = {lat: 45.458514, lng: -73.641082};
+    var LJMarker = this.createMarker(ljCenter, "LJ");
 
     var LJContent =
     "<ion-list><h4 align='center'>Loyola Jesuit Hall and Conference Centre</h4>" +
@@ -777,19 +532,9 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, LJMarker);
     });
 
-    var CBMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.458236, lng: -73.640345},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'CB',
-          fontSize: fontSize,
-      },
-    });
+
+    var cbCenter = {lat: 45.458236, lng: -73.640345};
+    var CBMarker = this.createMarker(cbCenter, "CB");
 
     var CBContent =
     "<ion-list><h4 align='center'>Central Building</h4>" +
@@ -811,20 +556,8 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, CBMarker);
     });
 
-
-    var ADMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.458070, lng: -73.639732},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'AD',
-          fontSize: fontSize,
-      },
-    });
+    var adCenter = {lat: 45.458070, lng: -73.639732};
+    var ADMarker = this.createMarker(adCenter, "AD");
 
     var ADContent =
     "<ion-list> <h4 align='center'>Administration Building</h4>" +
@@ -860,20 +593,9 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, ADMarker);
     });
 
-    
-    var PYMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.458894, lng: -73.640568},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'PY',
-          fontSize: fontSize,
-      },
-    });
+
+    var pyCenter = {lat: 45.458894, lng: -73.640568};
+    var PYMarker = this.createMarker(pyCenter, "PY");
 
     var PYContent =
     "<ion-list> <h4 align='center'>Psychology Building</h4>" +
@@ -896,20 +618,9 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, PYMarker);
     });
 
-       
-    var VLMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.458932, lng: -73.638512},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'VL',
-          fontSize: fontSize,
-      },
-    });
+
+    var vlCenter = {lat: 45.458932, lng: -73.638512};
+    var VLMarker = this.createMarker(vlCenter, "VL");
 
     var VLContent =
     "<ion-list><h4 align='center'>Vanier Library</h4>" +
@@ -931,19 +642,9 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, VLMarker);
     });
            
-    var CSMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.458008, lng: -73.637248 },
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'CS',
-          fontSize: fontSize,
-      },
-    });
+
+    var csCenter = {lat: 45.458008, lng: -73.637248};
+    var CSMarker = this.createMarker(csCenter, "CS");
 
     var CSContent =
     "<ion-list> <h4 align='center'>Concordia Stadium</h4>" +
@@ -959,19 +660,8 @@ export class MapComponent implements AfterViewInit {
     });
 
              
-    var SDMarker = new google.maps.Marker
-    ({
-      position: {lat:45.457525, lng: -73.636085 },
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'SD',
-          fontSize: fontSize,
-      },
-    });
+    var sdCenter = {lat: 45.457525, lng: -73.636085};
+    var SDMarker = this.createMarker(sdCenter, "SD");
 
     var SDContent =
     "<ion-list> <h4 align='center'>Stinger Dome</ion-title></h4>" +
@@ -987,19 +677,8 @@ export class MapComponent implements AfterViewInit {
     });
 
     
-    var PCMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.456701, lng: -73.637558},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'PC',
-          fontSize: fontSize,
-      },
-    });
+    var pcCenter = {lat: 45.456701, lng: -73.637558};
+    var PCMarker = this.createMarker(pcCenter, "PC");
 
     var PCContent =
     "<ion-list><h4 align='center'>PERFORM Centre</ion-title></h4>" +
@@ -1020,20 +699,8 @@ export class MapComponent implements AfterViewInit {
     });
 
 
-
-    var CGMarker = new google.maps.Marker
-    ({
-      position: {lat:45.456910, lng: -73.638250},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'CG',
-          fontSize: fontSize,
-      },
-    });
+    var cgCenter = {lat: 45.456910, lng: -73.638250};
+    var CGMarker = this.createMarker(cgCenter, "CG");
 
     var CGContent =
     "<ion-list> <h4 align='center'>Concordia Gymnasium</h4>" +
@@ -1054,19 +721,8 @@ export class MapComponent implements AfterViewInit {
     });
 
 
-    var PSMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.459523, lng: -73.639727},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'PS',
-          fontSize: fontSize,
-      },
-    });
+    var psCenter = {lat: 45.459523, lng: -73.639727};
+    var PSMarker = this.createMarker(psCenter, "PS");
 
     var PSContent =
     "<ion-list> <h4 align='center'>Physical Services Building</h4>" +
@@ -1089,20 +745,9 @@ export class MapComponent implements AfterViewInit {
       infoWindow.open(this.map, PSMarker);
     });
 
-    
-    var TBMarker = new google.maps.Marker
-    ({
-      position: {lat:45.459969, lng: -73.640887},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'TB',
-          fontSize: fontSize,
-      },
-    });
+
+    var tbCenter = {lat:45.459969, lng: -73.640887};
+    var TBMarker = this.createMarker(tbCenter, "TB");
 
     var TBContent =
     "<ion-list><h4 align='center'>Terrebonne Building</h4>" +
@@ -1116,19 +761,8 @@ export class MapComponent implements AfterViewInit {
     });
 
 
-    var SIMarker = new google.maps.Marker
-    ({
-      position: {lat:45.457724, lng: -73.642326},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'SI',
-          fontSize: fontSize,
-      },
-    });
+    var siCenter = {lat:45.457724, lng: -73.642326};
+    var SIMarker = this.createMarker(siCenter, "SI");
 
     var SIContent =
     "<ion-list><h4 align='center'>Saint Ignatius of Loyola</h4>" +
@@ -1143,19 +777,8 @@ export class MapComponent implements AfterViewInit {
     });
 
 
-    var GEMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.456857, lng: -73.640421},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'GE',
-          fontSize: fontSize,
-      },
-    });
+    var geCenter = {lat: 45.456857, lng: -73.640421};
+    var GEMarker = this.createMarker(geCenter, "GE");
 
     var GEContent =
     "<ion-list><h4 align='center'>Centre for Structural and Functional Genomics</h4>" +
@@ -1178,19 +801,8 @@ export class MapComponent implements AfterViewInit {
     });
 
     
-    var JRMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.458454, lng: -73.643229},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'JR',
-          fontSize: fontSize,
-      },
-    });
+    var jrCenter = {lat: 45.458454, lng: -73.643229};
+    var JRMarker = this.createMarker(jrCenter, "JR");
 
     var JRContent =
     "<ion-list><h4 align='center'>Jesuit Residence</h4>" +
@@ -1212,19 +824,8 @@ export class MapComponent implements AfterViewInit {
     });
 
 
-    var SRMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.459204, lng: -73.641761},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'SR',
-          fontSize: fontSize,
-      },
-    });
+    var srCenter = {lat: 45.459204, lng: -73.641761};
+    var SRMarker = this.createMarker(srCenter, "SR");
 
     var SRContent =
     "<ion-list><h4 align='center'>Student Residence</h4>" +
@@ -1244,19 +845,8 @@ export class MapComponent implements AfterViewInit {
     });
 
     
-    var FCMarker = new google.maps.Marker
-    ({
-      position: {lat: 45.458460, lng: -73.639219},
-      map: this.map,
-      icon: iconEmpty,
-      label: 
-      {
-          color: markerColor,
-          fontWeight: fontWeight,
-          text: 'FC',
-          fontSize: fontSize,
-      },
-    });
+    var fcCenter = {lat: 45.458460, lng: -73.639219};
+    var FCMarker = this.createMarker(fcCenter, "FC");
 
     var FCContent =
     "<ion-list><h4 align='center'>F.C. Smith Building</h4>" +
@@ -1305,7 +895,6 @@ export class MapComponent implements AfterViewInit {
       {
         currentCampus = "N/A";
       }    
-
 
       //Check if user location is inside a Concordia building
       if(google.maps.geometry.poly.containsLocation(currentLoc, hallP) == true)
@@ -1439,7 +1028,8 @@ export class MapComponent implements AfterViewInit {
       {
         document.getElementById("ev").addEventListener("click", () =>
         {
-           this.enterBuilding("ev", EVP, EVMarker);
+          infoWindow.close();
+          this.enterBuilding("ev", EVP, EVMarker);
         });
       }
 
@@ -1562,24 +1152,27 @@ export class MapComponent implements AfterViewInit {
   
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
   async enterBuilding(id: string, polygon: any, marker: any)
-  {          
+  {             
+    polygon.setVisible(false);
+    marker.setVisible(false);
+
+    let b: Building = await this.buildingFactory.loadBuilding(id);
+    let buildingInfo = b.getBuildingInfo();
+
+    this.indoorView(buildingInfo, polygon, marker);  
+         
     switch (id) 
     {
       //Hall Building
       case 'HB':
           console.log("In " + id + " building.");     
-          polygon.setVisible(false);
-          marker.setVisible(false);
 
-          let b: Building = await this.buildingFactory.loadBuilding(id);
-          let buildingInfo = b.getBuildingInfo();
-
-          this.indoorView(buildingInfo, polygon, marker);
 
           break;
       //EV building
       case 'ev':
           console.log("In " + id + " building.");
+          
           break;
       //Library Building
       case 'lb':
@@ -1673,9 +1266,22 @@ export class MapComponent implements AfterViewInit {
 
     //Zoom in
     this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
+
+    // var mapCenter = this.map.getCenter();
+    // console.log(mapCenter);
+    // var location = new google.maps.LatLng(mapCenter .lat(), mapCenter .lng());
+    // console.log(location);
+
+    // bounds of the desired area
+    // var allowedBounds = new google.maps.LatLngBounds(
+    //   new google.maps.LatLng(buildingInfo["bound"].south, buildingInfo["bound"].west), 
+    //   new google.maps.LatLng(buildingInfo["bound"].north, buildingInfo["bound"].east)
+    // );
+
+
     this.map.setZoom(19);
     //No zoom or drag anymore
-    this.map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
+    this.map.setOptions({minZoom: 18});
 
     //Dropdown content
     var selectContent= ""; 
@@ -1704,6 +1310,7 @@ export class MapComponent implements AfterViewInit {
     var controlFloorText = document.createElement('div');
     controlFloorText.style.fontSize = '16px';
     controlFloorText.style.lineHeight = '38px';
+    controlFloorText.style.paddingTop = '5px';
     controlFloorText.style.paddingLeft = '5px';
     controlFloorText.style.paddingRight = '5px';
     controlFloorText.innerHTML = floorDropdown;
@@ -1763,10 +1370,54 @@ export class MapComponent implements AfterViewInit {
       marker.setVisible(true);
       controlExitText.innerHTML = empty;
       controlFloorText.innerHTML = empty;
-      self.map.setOptions({draggable: true, zoomControl: true, scrollwheel: true, disableDoubleClickZoom: false});
+      self.map.setOptions({minZoom: null});
       self.map.setZoom(18);
     });
       
+  }
+
+  createPolygon(path: any, type: string): any
+  {
+    var polygon;
+    if(type == "building")
+    {
+      //Polygon for each building
+      polygon = new google.maps.Polygon({
+        paths: path,
+        fillColor: this.fColor,
+      });
+      polygon.setMap(this.map);
+    }
+    else if (type == "campus")
+    {
+      polygon = new google.maps.Polygon({
+        paths: path,
+        visible: false
+      });
+    }
+    polygon.setMap(this.map);
+
+    return polygon;
+  }
+
+  createMarker(location: any, text: string): any
+  {
+    var marker = new google.maps.Marker
+    ({
+      position: location,
+      map: this.map,
+      icon: this.iconEmpty,
+      label: 
+      {
+          color: this.markerColor,
+          fontWeight: this.fontWeight,
+          text: text,
+          fontSize: this.fontSize,
+      },
+    });
+
+    return marker;
+    
   }
     
   
