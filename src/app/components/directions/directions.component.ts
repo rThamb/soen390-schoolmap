@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit} from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {MapService} from '../../services/map/map.service';
 
 declare var google
@@ -24,7 +25,7 @@ export class DirectionsComponent{
   loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke", "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"];
 
 
-  constructor(private mapSrevice : MapService) { }
+  constructor(private geolocation: Geolocation, private mapSrevice : MapService) { }
 
   
 
@@ -38,9 +39,11 @@ export class DirectionsComponent{
 
     this.directionsRenderer.setMap(this.map);
 
-    //temporary: to display next shuttle time
+    //to display/hide next shuttle time
     if(this.isShuttle())
       document.getElementById('shuttletime').style.display = "block";
+    else
+      document.getElementById('shuttletime').style.display = "none";
   }
 
 
@@ -237,6 +240,19 @@ export class DirectionsComponent{
       document.getElementById('directionsPanel').style.display="none"
       document.getElementById('clearDirections').style.display="none"
     }
+  }
+
+  async useCurrentLocation(){
+
+    let userLocation = await this.geolocation.getCurrentPosition().catch((error) => {
+      console.log('Error getting location', error);
+    });
+
+    if(userLocation)
+      this.directions['start'] = userLocation.coords.latitude + "," + userLocation.coords.longitude;
+    else
+      window.alert("Location services must be enabled in order to access your current location.");
+
   }
 
   //Given the departure campus, retrieves the time of next shuttle bus leaving that campus (if any)

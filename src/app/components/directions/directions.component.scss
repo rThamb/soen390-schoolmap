@@ -3,7 +3,11 @@
  }
 
  .inputItem{
-      --highlight-color-valid: #488aff;
+    --highlight-color-valid: #488aff;
+    button{
+      background-color: Transparent;
+      outline:none;
+    }
  }
 
  .transportationMethod{
