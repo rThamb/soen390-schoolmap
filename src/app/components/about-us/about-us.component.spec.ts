@@ -25,7 +25,7 @@ describe('AboutUsComponent', () => {
   });
 
   it('should contain a paragraph describing the app', () => {
-    const de = fixture.debugElement.query(By.css('[p]'));
+    const de = fixture.debugElement.query(By.css('.infoAboutUs'));
     expect(de.nativeElement.textContent).toContain('ConcordiaGo team');
   });
 
