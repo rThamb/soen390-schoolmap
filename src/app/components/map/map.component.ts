@@ -62,10 +62,18 @@ export class MapComponent implements AfterViewInit {
 
     let centerMapCoordinate;
 
-    this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
+    //Check if user's current location has been retrieved
+    if(resp){
+      this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
+      centerMapCoordinate = this.user.getLocation().getGoogleLatLng();
+    }else{
+      //If user does not allow access to their current location, set their location to a default value and center map on SGW campus
+      this.user.setLocation(new Location(0,0,0));
+      centerMapCoordinate = new google.maps.LatLng(45.494711, -73.577871);
+    }
 
     this.mapOptions = {
-      center: this.user.getLocation().getGoogleLatLng(),
+      center: centerMapCoordinate,
       zoom: 17,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
