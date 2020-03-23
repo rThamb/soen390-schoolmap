@@ -50,10 +50,16 @@ Y
   getFloorGridCoordinate(userPosition: Location, currentFloor: Floor) : GridCoordinate{
     //let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), currentFloor);
     //let y = this.mapUserLongitudeToYCoordinate(userPosition.getLng(), currentFloor);
+
     let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
     let y = this.mapUserLongitudeToYCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
-    
+
+    //check if with in the bound
+    if(!(0 <= x && x < currentFloor.getWidth() && 0 <= y && y < currentFloor.getHeight()))
+      return null; 
+
     return new GridCoordinate(x, y);
+
   }
 
 
@@ -229,7 +235,15 @@ Y
     }
 
     return markers;
-  
+  }
+
+  /**
+   * Used to determine whether or not a user is in a building.
+   * @param userPosition 
+   * @param floor 
+   */
+  public userInBuilding(userPosition: Location, floor: Floor): boolean{
+    return this.getFloorGridCoordinate(userPosition, floor) != null;
   }
 
 }

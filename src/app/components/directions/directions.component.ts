@@ -3,8 +3,12 @@ import {MapService} from '../../services/map/map.service';
 import { MapComponent} from '../../components/map/map.component'
 import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service' 
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
+<<<<<<< HEAD
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Storage } from '@ionic/storage';
+=======
+import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
+>>>>>>> UC 47: Introduced method to determine if user destination building.
 
 //models 
 import { Building } from '../../models/Building'
@@ -41,6 +45,7 @@ export class DirectionsComponent{
 
   constructor(private geolocation: Geolocation, private mapSrevice : MapService, private storage: Storage,
               private indoorService: IndoorPathingService,
+<<<<<<< HEAD
               private buildFactoryService: BuildingFactoryService) 
   {
     storage.ready().then(() => {
@@ -53,6 +58,10 @@ export class DirectionsComponent{
       })
     });
   }
+=======
+              private buildFactoryService: BuildingFactoryService,
+              private gpsMapService: GpsGridMappingService) { }
+>>>>>>> UC 47: Introduced method to determine if user destination building.
 
   
 
@@ -206,7 +215,8 @@ export class DirectionsComponent{
       return input
   }
 
-  //Uses the google API to determin the route and draws the path on the map
+  //Uses the google API to determine the route and draws the path on the map or 
+  //Show indoor paths.
   getDirections() {
     //this is a reference to the map
     this.setMap();
@@ -251,9 +261,6 @@ export class DirectionsComponent{
       }
     });
     }
-
-    //---------------------------------------------------------
-
   }
 
   
@@ -419,6 +426,17 @@ export class DirectionsComponent{
     this.mapHandle.setTransitionsPaths(classToClass);   
   }
 
+
+  async userInStartBuilding(userPosition: Location, destination: string){
+
+    //this method is used when
+    let building : Building = await this.buildFactoryService.loadBuilding(this.getBuildingCode(destination));
+
+    let userInBuilding : boolean = this.gpsMapService.userInBuilding(userPosition, 
+      building.getFloorLevel(this.getFloorNum(destination, building.getBuildingKey()) + ""));
+
+    return true;
+  }
   private getFloorNum(start: string, buildingCode: string){
     return Math.trunc(parseInt(start.replace(buildingCode, "")) / 100);
   }

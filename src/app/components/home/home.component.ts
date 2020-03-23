@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private service:ReadGridService, private service2: GpsGridMappingService,
   private service3: IndoorPathingService, private bService: BuildingFactoryService ) { 
-    //this.testBuilding();
+    this.testBuilding();
     //this.service2.getFloorTest();
     //this.setFloor();
   }
@@ -73,10 +73,20 @@ export class HomeComponent implements OnInit {
       let d = floor.getMensWashroom();
       let e = floor.getWomensWashroom();
       */
-      //let ninethfloor  = building.getFloorLevel("9");
+      debugger;
+      let ninethfloor  = building.getFloorLevel("9");
+      let width = ninethfloor.getWidth();
+      let height = ninethfloor.getHeight();
+
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
-      //debugger;
-      let userPosition = new Location(45.497192, -73.579329, 0);
+      debugger;
+      let userPosition = new Location(45.497291, -73.579071, 0);
+      let isIn = this.service2.userInBuilding(userPosition, ninethfloor);
+
+      debugger;
+
+      
+      /*
       let curFloor = building.getFloorLevel("9"); 
       //let pathGoingUp = this.service3.determineRouteToDestinationBasedOnUserPosition(userPosition, building, curFloor, "HB890");
       
@@ -91,6 +101,7 @@ export class HomeComponent implements OnInit {
       //debugger;
       //let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
 
+      */
     });
   }
 }

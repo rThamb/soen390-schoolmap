@@ -1581,7 +1581,7 @@ export class MapComponent implements AfterViewInit {
    */
   indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string, usingPOI: boolean): void
   {
-    let floorImage = ""; //Holds the image path
+    let floorImage = "assets/FloorImages/Hall/hall-8.png"; //Holds the image path
     var indoorOverlay; //Layer on top of building
     let self = this;
     let empty = "";
@@ -1820,7 +1820,6 @@ export class MapComponent implements AfterViewInit {
   }
 
 
-<<<<<<< HEAD
   // Clears all POI markers from the map component
   clearAllPOIMarkers()
   {
@@ -1832,8 +1831,6 @@ export class MapComponent implements AfterViewInit {
   }
 
 
-=======
->>>>>>> UC-47: Toggle between indoor and outdoor working. Entering a new route in indoor mode works, but to set floor number again.
   /**
    * Method used  to focus in on a give building
    * @param level Method used to 
