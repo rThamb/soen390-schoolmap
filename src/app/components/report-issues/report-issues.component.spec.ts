@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ReportIssuesComponent } from './report-issues.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('ReportIssuesComponent', () => {
   let component: ReportIssuesComponent;
@@ -10,6 +11,7 @@ describe('ReportIssuesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ReportIssuesComponent ],
+      schemas: [NO_ERRORS_SCHEMA],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

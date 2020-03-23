@@ -5,6 +5,7 @@ import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { IonicModule } from '@ionic/angular';
 
 import { MapComponent } from './map.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('MapComponent', () => {
   let component: MapComponent;
@@ -13,6 +14,7 @@ describe('MapComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MapComponent],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [Geolocation, IndoorPathingService, ReadGridService],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
