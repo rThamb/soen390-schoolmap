@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { GoButtonComponent } from './go-button.component';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 import { RouterTestingModule } from '@angular/router/testing';
+import {By} from "@angular/platform-browser";
 
 describe('GoButtonComponent', () => {
   let component: GoButtonComponent;
@@ -25,5 +26,10 @@ describe('GoButtonComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should contain a word describing the app', () => {
+    const de = fixture.debugElement.query(By.css('.locatebut'));
+    expect(de.nativeElement.textContent).toContain('GO');
   });
 });
