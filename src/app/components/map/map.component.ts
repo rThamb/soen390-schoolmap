@@ -1604,7 +1604,7 @@ export class MapComponent implements AfterViewInit {
     this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
     this.map.setZoom(18);
     //No zoom or drag anymore
-    this.map.setOptions({draggable: false, scrollwheel: false, disableDoubleClickZoom: true});
+    this.map.setOptions({draggable: true, zoomControl: false, scrollwheel: true, disableDoubleClickZoom: true});
 
     // Dropdown content
     let selectContent = '';
@@ -1835,9 +1835,9 @@ export class MapComponent implements AfterViewInit {
    * Method used  to focus in on a give building
    * @param level Method used to 
    */
-  showHallBuildingIndoor(){
+  showHallBuildingIndoor(focus: boolean){
     //focus on overall hall
-    if(!indoorModeEnable)
+    if(!indoorModeEnable && focus)
       this.focusMap(new Location(45.497194, -73.578886, 0));
     //show the floor selected
     let buildingKey = "HB";

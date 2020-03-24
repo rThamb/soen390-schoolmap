@@ -1,4 +1,9 @@
 {
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
     "floorsKeys": ["HB8", "HB9"], 
     "floors":[
     {

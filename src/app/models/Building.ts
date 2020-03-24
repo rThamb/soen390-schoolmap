@@ -14,12 +14,20 @@ export class Building
     private classrooms: string[];
 
     private buildingInfo: any; //Dictionnary
+    private buildingName: string;
 
     constructor()
     {
         
     }
 
+    public getBuildingName(){
+        return this.buildingName;
+    }
+    public setBuildingName(name: string){
+        this.buildingName = name;
+    }
+    
     public getBuildingKey(){
         return this.buildingKey;
     }

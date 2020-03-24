@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
 import { GridCoordinate } from '../../models/GridCoordinate';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Building } from '../../models/Building'
+
 
 
 
@@ -17,7 +20,7 @@ export class GpsGridMappingService {
   /* 
     The purpose of this class is to map GPS coordinates to a Floor grid coordinate. 
   */
-  constructor() { }
+  constructor(private geolocation: Geolocation) { }
 
 
   /*
@@ -242,8 +245,17 @@ Y
    * @param userPosition 
    * @param floor 
    */
-  public userInBuilding(userPosition: Location, floor: Floor): boolean{
+  public userInBuilding(userPosition: Location, building: Building): boolean{
+    let keys = Object.keys(building.getFloors());
+    if(keys.length < 1)
+      return false;
+    let floor = building.getFloors()[keys[0]];
     return this.getFloorGridCoordinate(userPosition, floor) != null;
   }
 
+  public async getUserCurrentPosition(){
+    const resp = await this.geolocation.getCurrentPosition();
+    let location: Location = new Location(resp.coords.latitude, resp.coords.longitude, 0);
+    return location;
+  }
 }

@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private service:ReadGridService, private service2: GpsGridMappingService,
   private service3: IndoorPathingService, private bService: BuildingFactoryService ) { 
-    this.testBuilding();
+    //this.testBuilding();
     //this.service2.getFloorTest();
     //this.setFloor();
   }
@@ -80,20 +80,22 @@ export class HomeComponent implements OnInit {
 
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
       debugger;
-      let userPosition = new Location(45.497291, -73.579071, 0);
-      let isIn = this.service2.userInBuilding(userPosition, ninethfloor);
+      //let userPosition = new Location(45.497291, -73.579071, 0);
+      //let isIn = this.service2.userInBuilding(userPosition, building);
 
       debugger;
 
       
-      /*
-      let curFloor = building.getFloorLevel("9"); 
+      
+      let curFloor = building.getFloorLevel("8"); 
       //let pathGoingUp = this.service3.determineRouteToDestinationBasedOnUserPosition(userPosition, building, curFloor, "HB890");
       
       let a = "HB922";
       let b = "HB840";
 
-      let classToClass = this.service3.determineRouteClassroomToClassroom(a, b, building, curFloor, Transitions.Escalator);
+      debugger;
+
+      let classToClass = this.service3.determineRouteToDestinationBasedOnUserPosition(building.getBuildingLocation(), building, curFloor, b, Transitions.Escalator);
 
       let pathDraw: Location[] = classToClass["route"];
 
@@ -101,7 +103,7 @@ export class HomeComponent implements OnInit {
       //debugger;
       //let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
 
-      */
+      
     });
   }
 }

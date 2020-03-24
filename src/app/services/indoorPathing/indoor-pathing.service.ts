@@ -128,7 +128,8 @@ export class IndoorPathingService {
   //service method 
   public determineRouteToDestinationBasedOnUserPosition(userPosition: Location, building: Building, 
     currentFloor: Floor, destination: string, option: Transitions){
-
+    
+    debugger;
     let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, currentFloor);
     return this.determineRouteToDestination(userPos, building, currentFloor, destination, option); 
   }
