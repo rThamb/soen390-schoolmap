@@ -2,8 +2,12 @@
   <ion-header>
   <ion-toolbar class="toolbar">
 
-      <ion-item  class="inputItem">
+      <ion-item class="inputItem">
           <ion-input [(ngModel)]="directions.start" (ionChange) = "displayShuttle()" name='start' placeholder="Start"></ion-input>
+          <button type="button" item-right (click)="useCurrentLocation()">
+            <ion-icon name="locate">
+            </ion-icon>
+          </button>
       </ion-item>
 
       <ion-item  class="inputItem">
