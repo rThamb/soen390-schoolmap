@@ -3,6 +3,7 @@ import { User } from '../../models/User'
 import { EventEmitter } from 'events';
 import {Storage} from '@ionic/storage';
 
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',

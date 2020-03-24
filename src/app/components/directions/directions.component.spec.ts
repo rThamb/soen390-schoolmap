@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { DirectionsComponent } from './directions.component';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
@@ -12,7 +13,8 @@ describe('DirectionsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DirectionsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers:[Geolocation]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DirectionsComponent);
