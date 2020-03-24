@@ -1,0 +1,37 @@
+{
+    "BuildingContent":
+    {
+        "Name": "Central Building",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 2B5",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Concordia Student Union",
+            "Loyola College for Diversity and Sustainability and Loyola"
+        ],
+        "BuildingImg": "assets/BuildingImages/cb.jpg",
+        "ImgWidth": "50%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.458236,
+        "lng": -73.640345
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

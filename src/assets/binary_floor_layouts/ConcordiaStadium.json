@@ -1,0 +1,35 @@
+{
+    "BuildingContent":
+    {
+        "Name": "Concordia Stadium",
+        "Address": "7141 Sherbrooke St W Montreal, Quebec H4B 1R2",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+        ],
+        "BuildingImg": "assets/BuildingImages/cs.jpg",
+        "ImgWidth": "45%",
+        "EnterButton": "false"
+    },
+    "Location":
+    {
+        "lat": 45.495530,
+        "lng": -73.573845
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

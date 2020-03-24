@@ -1,0 +1,36 @@
+{
+    "BuildingContent":
+    {
+        "Name": "Vanier Library",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Library"
+        ],
+        "BuildingImg": "assets/BuildingImages/vl.jpg",
+        "ImgWidth": "45%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.458932,
+        "lng": -73.638512
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

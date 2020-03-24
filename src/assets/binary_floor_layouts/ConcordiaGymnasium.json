@@ -1,0 +1,36 @@
+{
+    "BuildingContent":
+    {
+        "Name": "Concordia Gymnasium",
+        "Address": "7200 Sherbrooke St W Montreal, Quebec H4B 1R6",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Gymnasium"
+        ],
+        "BuildingImg": "assets/BuildingImages/cg.jpg",
+        "ImgWidth": "60%",
+        "EnterButton": "false"
+    },
+    "Location":
+    {
+        "lat": 45.456910,
+        "lng": -73.638250
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

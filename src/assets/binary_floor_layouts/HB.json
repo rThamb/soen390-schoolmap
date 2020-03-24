@@ -1,8 +1,36 @@
 {
+    "BuildingContent":
+    {
+        "Name": "Henry F. Hall Building",
+        "Address": "1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8",
+        "Departments": ["Geography, Planning and Environment", "Political Science, Sociology and Anthropology, Economics", "School of Irish Studies"],
+        "Services": ["Welcome Crew Office", "DB Clarke Theatre", "Dean of Students", "Aboriginal Student Resource Centre", "Concordia Student Union", "IT Service Desk", "Security Office", "Student Success Centre", "Mail Services", "Archives", "Career and Planning Services", "Sexual Assault Ressource Centre (SARC)"],
+        "BuildingImg": "assets/BuildingImages/HallBuilding.jpg",
+        "ImgWidth": "50%",
+        "EnterButton": "true"
+    },
+
+    "Location":
+    {
+        "lat":45.497253,
+        "lng":-73.578920
+    },
+
+    "floorNames": ["H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H10", "H11", "H12"],
+
+    "bound":
+    {
+        "north": 45.497735,
+        "south": 45.496807,
+        "east": -73.578316,
+        "west": -73.579586 
+    },
+
     "floorsKeys": ["HB8", "HB9"], 
     "floors":[
     {
     "level": 8,
+    "img": "assets/FloorImages/Hall/hall-8.png",
     "topLeftLat": 45.497165, 
     "topLeftLong": -73.579545,
     "topRightLat": 45.497709, 
@@ -94,6 +122,7 @@
 
     {
     "level": 9,
+    "img": "assets/FloorImages/Hall/hall-9.png",
     "topLeftLat": 45.497165, 
     "topLeftLong": -73.579545,
     "topRightLat": 45.497709, 

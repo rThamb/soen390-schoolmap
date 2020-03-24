@@ -1,0 +1,38 @@
+{
+    "BuildingContent":
+    {
+        "Name": "F.C. Smith Building",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "F.C. Smith Auditorium",
+            "Cazalet Theater",
+            "Concordia Multi-Faith and Spirituality Centre"
+        ],
+        "BuildingImg": "assets/BuildingImages/fc.jpeg",
+        "ImgWidth": "45%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.458460,
+        "lng": -73.639219
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

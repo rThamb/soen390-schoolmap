@@ -1,0 +1,36 @@
+{
+    "BuildingContent":
+    {
+        "Name": "Jesuit Residence",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Student Residence"
+        ],
+        "BuildingImg": "assets/BuildingImages/jr.jpg",
+        "ImgWidth": "45%",
+        "EnterButton": "false"
+    },
+    "Location":
+    {
+        "lat": 45.458454,
+        "lng": -73.643229
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}
