@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { ToggleComponent } from './toggle.component';
 import {MapComponent} from '../map/map.component';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {By} from "@angular/platform-browser";
 
 describe('ToggleComponent', () => {
   let component: ToggleComponent;
@@ -13,7 +13,7 @@ describe('ToggleComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ToggleComponent, MapComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicModule.forRoot(), NgModule]
+      imports: [IonicModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ToggleComponent);
@@ -21,7 +21,18 @@ describe('ToggleComponent', () => {
     fixture.detectChanges();
   }));
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should contain a word describing the app', () => {
+    const de = fixture.debugElement.query(By.css('.toolbar'));
+    expect(de.nativeElement.textContent).toContain('LOYOLA');
+  });
+
+  it('should contain a word describing the app', () => {
+    const de = fixture.debugElement.query(By.css('.toolbar'));
+    expect(de.nativeElement.textContent).toContain('GEORGE');
+  });
+
 });
