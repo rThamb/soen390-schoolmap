@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {MapService} from '../../services/map/map.service';
+import { Storage } from '@ionic/storage';
 
 declare var google
 
@@ -25,7 +26,18 @@ export class DirectionsComponent{
   loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke", "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"];
 
 
-  constructor(private geolocation: Geolocation, private mapSrevice : MapService) { }
+  constructor(private geolocation: Geolocation, private mapSrevice : MapService, private storage: Storage) 
+  {
+    storage.ready().then(() => {
+      storage.get('newRouteDest').then((value) => {
+        console.log(value);
+        if(value != null || value != undefined || value != '')
+        {
+          this.directions['destination'] = value;
+        }
+      })
+    });
+  }
 
   
 
