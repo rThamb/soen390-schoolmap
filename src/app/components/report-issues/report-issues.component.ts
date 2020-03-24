@@ -28,10 +28,10 @@ export class ReportIssuesComponent {
   send(){
     console.log(this.issue.value);
 
-    // this.emailComposer.isAvailable().then((available: boolean) =>{
-    //   if(available) {
-    //   }
-    // });
+    this.emailComposer.isAvailable().then((available: boolean) =>{
+       if(available) {
+       }
+     });
 
     let email = {
       to: 'mapsconcordia1@gmail.com',
