@@ -7,6 +7,8 @@ import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EmailComposer} from "@ionic-native/email-composer/ngx";
 import { RouterTestingModule } from '@angular/router/testing';
+import {By} from "@angular/platform-browser";
+
 
 describe('ReportIssuesComponent', () => {
   let component: ReportIssuesComponent;
@@ -32,4 +34,20 @@ describe('ReportIssuesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should contain a word describing the app', () => {
+    const de = fixture.debugElement.query(By.css('.reportIssue'));
+    expect(de.nativeElement.textContent).toContain('Issue');
+  });
+
+  it('should contain a word describing the app', () => {
+    const de = fixture.debugElement.query(By.css('.reportIssue'));
+    expect(de.nativeElement.textContent).toContain('describe');
+  });
+
+  it('should contain a word describing the app', () => {
+    const de = fixture.debugElement.query(By.css('.reportIssue'));
+    expect(de.nativeElement.textContent).toContain('Submit');
+  });
+
 });
