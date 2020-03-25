@@ -136,7 +136,6 @@ export class IndoorPathingService {
   public determineRouteToDestinationBasedOnUserPosition(userPosition: Location, building: Building, 
     currentFloor: Floor, destination: string, option: Transitions){
     
-    debugger;
     let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, currentFloor);
     return this.determineRouteToDestination(userPos, building, currentFloor, destination, option); 
   }
@@ -154,7 +153,6 @@ export class IndoorPathingService {
   private determineRouteToDestination(startPostition: GridCoordinate, building: Building, 
     currentFloor: Floor, destination: string, option: Transitions): any{
 
-      debugger;
     let startFloor = currentFloor.getFloorLevel();
     let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
 

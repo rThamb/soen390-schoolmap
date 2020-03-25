@@ -99,7 +99,6 @@ export class Building
     // Parses through each floor and returns a list of all IndoorPOI objects of entire building.
     public getAllIndoorPOI()
     {
-        debugger;
         let currentFloorPois: IndoorPOI[];
         let allPois: IndoorPOI[];
     

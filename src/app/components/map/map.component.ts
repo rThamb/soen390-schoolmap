@@ -1600,7 +1600,6 @@ export class MapComponent implements AfterViewInit {
         imageBound);
     indoorOverlay.setMap(this.map);
 
-    debugger;
     //ONLY DO the below work if entering indoor mode for the first time
     if(!indoorModeEnable){
     //Zoom in

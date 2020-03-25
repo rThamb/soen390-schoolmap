@@ -74,17 +74,14 @@ export class HomeComponent implements OnInit {
       let d = floor.getMensWashroom();
       let e = floor.getWomensWashroom();
       */
-      debugger;
       let ninethfloor  = building.getFloorLevel("9");
       let width = ninethfloor.getWidth();
       let height = ninethfloor.getHeight();
 
       //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
-      debugger;
       //let userPosition = new Location(45.497291, -73.579071, 0);
       //let isIn = this.service2.userInBuilding(userPosition, building);
 
-      debugger;
 
       let curFloor = building.getFloorLevel("8"); 
       //let pathGoingUp = this.service3.determineRouteToDestinationBasedOnUserPosition(userPosition, building, curFloor, "HB890");
@@ -92,25 +89,14 @@ export class HomeComponent implements OnInit {
       let a = "HB922";
       let b = "HB840";
 
-      debugger;
 
       let classToClass = this.service3.determineRouteToDestinationBasedOnUserPosition(building.getBuildingLocation(), building, curFloor, b, Transitions.Escalator);
 
       let pathDraw: Location[] = classToClass["route"];
 
       this.mapHandle.drawPath(pathDraw);
-      //debugger;
       //let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
     });
   }
 
-  private async getPreferedTransition(){
-
-    debugger;
-    let useStairs = await this.storage.get('useStairs');
-    let useEle = await this.storage.get('useElevator');
-    let useEcs = await this.storage.get('useEscalator'); 
-
-    return null; 
-  }
 }

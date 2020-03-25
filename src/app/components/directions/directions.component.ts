@@ -221,10 +221,10 @@ export class DirectionsComponent{
 
     let start = this.directions['start'];
     let destination = this.directions['destination'];
+
     
-    debugger;
     if(this.useIndoorDirections(start, destination)){
-      this.preformIndoorDirectionsActivity(start, destination);
+      this.preformIndoorDirectionsActivity(start, destination, true);
     }
     else if(start == "Current" && await this.isDestinationCampusPOI(destination)){
         //indoor and outdoor will only be supported when using user position
@@ -245,7 +245,7 @@ export class DirectionsComponent{
     var travelMode = this.getTransportation();
     var travelMode = this.getTransportation();
     var directionsPanel = document.getElementById('directionsPanel')
-    var clearDirections = document.getElementById('clearDirections')
+    //var clearDirections = document.getElementById('clearDirections')
     let directionsForm = document.getElementById('form') 
 
       this.directionsService.route({
@@ -257,8 +257,9 @@ export class DirectionsComponent{
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
         directionsForm.style.display="none";
+        this.showClearDirectionControls();
         directionsPanel.style.display="block";
-        clearDirections.style.display="block";
+        //clearDirections.style.display="block";
       } else {
         window.alert('Request to directions API failed: ' + status);
       }
@@ -266,9 +267,18 @@ export class DirectionsComponent{
     
   }
 
+  showClearDirectionControls(){
+      var clearDirections = document.getElementById('clearDirections')
+      clearDirections.style.display="block";
+
+      //var dirControl = document.getElementById('clearDirBtn');
+      //dirControl.style.display="none";
+  }
+
 
   //Method for clearing the map of the line, removing text directions and enabling the to/from view
   clearDirections() {
+
     let directionsForm = document.getElementById('form')
 
     if(this.directionsRenderer != null)
@@ -279,6 +289,8 @@ export class DirectionsComponent{
       document.getElementById('directionsPanel').style.display="none"
       document.getElementById('clearDirections').style.display="none"
     }
+    this.mapHandle.quitIndoorMode();
+
   }
 
   async useCurrentLocation(){
@@ -370,13 +382,15 @@ export class DirectionsComponent{
    * @param start 
    * @param destination 
    */
-  preformIndoorDirectionsActivity(start: string, destination: string){
-    //**** remove outdoor route if enable 
+  preformIndoorDirectionsActivity(start: string, destination: string, disableOutdoor: boolean){
+    //**** remove outdoor route if enable
+    if(disableOutdoor) 
+      this.clearDirections();
 
     //focus the map onto building
-    debugger;
     this.mapHandle.showHallBuildingIndoor(true);
     this.drawIndoorPath(start, destination, null);
+    this.showClearDirectionControls();
   }
 
 
