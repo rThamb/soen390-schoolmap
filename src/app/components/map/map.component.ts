@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service';
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
@@ -62,7 +61,9 @@ export class MapComponent implements AfterViewInit {
   private indoorTransitionDirections: any; 
 
   // Injects the component class with imported services
-  constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService)
+  constructor(private geolocation: Geolocation, 
+              private mapService: MapService, 
+              private buildingFactory: BuildingFactoryService) 
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
@@ -124,6 +125,7 @@ export class MapComponent implements AfterViewInit {
   // sets an instance of the map to a service which injects it to other components
   setDirectionsMap() {
     this.mapService.setMap(this.map);
+    this.mapService.setActiveMapComponent(this);
   }
 
   // Gets the current location of user and focuses map to that point
@@ -1598,6 +1600,7 @@ export class MapComponent implements AfterViewInit {
         imageBound);
     indoorOverlay.setMap(this.map);
 
+    debugger;
     //ONLY DO the below work if entering indoor mode for the first time
     if(!indoorModeEnable){
     //Zoom in

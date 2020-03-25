@@ -8,6 +8,7 @@ import { Building } from '../../models/Building'
 import { Floor } from '../../models/Floor'
 import { MapComponent } from '../map/map.component'
 import { Transitions } from '../../models/Transitions'
+import { Storage } from '@ionic/storage';
 
 
 
@@ -32,8 +33,8 @@ export class HomeComponent implements OnInit {
   @ViewChild('map', {static: false}) mapHandle: MapComponent;
 
   constructor(private service:ReadGridService, private service2: GpsGridMappingService,
-  private service3: IndoorPathingService, private bService: BuildingFactoryService ) { 
-    //this.testBuilding();
+  private service3: IndoorPathingService, private bService: BuildingFactoryService,private storage: Storage) { 
+    //this.getPreferedTransition();
     //this.service2.getFloorTest();
     //this.setFloor();
   }
@@ -47,7 +48,7 @@ export class HomeComponent implements OnInit {
   });
   }
   
-  testIndoorPathing(){
+   testIndoorPathing(){
     this.service.createGrid("HB").then((grid) => {
       
       //let point =  this.service2.getFloorGridCoordinate(new Location(45.497082, -73.578647, 0) , grid[0]);
@@ -60,9 +61,9 @@ export class HomeComponent implements OnInit {
     //console.log(path);
   }
 
-  testBuilding(){
-     
-    //debugger;
+  async testBuilding(){
+
+    
     this.bService.loadBuilding("HB").then((building: Building) => {
       
       /*let classes = building.getAllClassroomCodes();
@@ -85,8 +86,6 @@ export class HomeComponent implements OnInit {
 
       debugger;
 
-      
-      
       let curFloor = building.getFloorLevel("8"); 
       //let pathGoingUp = this.service3.determineRouteToDestinationBasedOnUserPosition(userPosition, building, curFloor, "HB890");
       
@@ -102,8 +101,16 @@ export class HomeComponent implements OnInit {
       this.mapHandle.drawPath(pathDraw);
       //debugger;
       //let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
-
-      
     });
+  }
+
+  private async getPreferedTransition(){
+
+    debugger;
+    let useStairs = await this.storage.get('useStairs');
+    let useEle = await this.storage.get('useElevator');
+    let useEcs = await this.storage.get('useEscalator'); 
+
+    return null; 
   }
 }

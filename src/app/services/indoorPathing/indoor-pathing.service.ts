@@ -9,6 +9,7 @@ import { GridCoordinate } from '../../models/GridCoordinate'
 import { Transitions } from '../../models/Transitions'
 
 
+
 declare var require: any;
 const pf = require('pathfinding');
 
@@ -18,8 +19,14 @@ const pf = require('pathfinding');
 })
 export class IndoorPathingService {
 
-  constructor(private service: ReadGridService, private gpsmapping: GpsGridMappingService) 
-  { }
+  private stairKey: string;
+  private elevatorKey: string; 
+  private escalatorKey: string;
+
+  constructor(private service: ReadGridService, 
+              private gpsmapping: GpsGridMappingService) 
+  { 
+  }
 
 
   private getPathToClosestWashroom(userPosition: GridCoordinate, floor: Floor, gender: string){
@@ -147,6 +154,7 @@ export class IndoorPathingService {
   private determineRouteToDestination(startPostition: GridCoordinate, building: Building, 
     currentFloor: Floor, destination: string, option: Transitions): any{
 
+      debugger;
     let startFloor = currentFloor.getFloorLevel();
     let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
 
@@ -158,7 +166,7 @@ export class IndoorPathingService {
       //key (str, floor#) => Location[]
       let journey = {};
 
-      let currentGridLocation = startPostition;
+      let currentGridLocation: GridCoordinate = startPostition;
       let currentFloorNum = startFloor; 
 
       for(let i = currentFloorNum; i < destinationLevel + 1;){
@@ -180,8 +188,19 @@ export class IndoorPathingService {
             */
 
             //set grid location once you reach the top.
-            if(option = Transitions.Escalator)
-             currentGridLocation = building.getFloorLevel((i + 1) + "").getUp_EscalatorCoordinate();
+            let floor: Floor = building.getFloorLevel((i + 1) + "");
+            
+            if(option === Transitions.Escalator){
+             currentGridLocation = floor.getUp_EscalatorCoordinate();
+            }
+            else if(option === Transitions.Elavator){
+              currentGridLocation = floor.getElevatorCoordinate();
+            }
+            else if(option === Transitions.Stairs){
+              let startNextFloor =  currentFloorPath[currentFloorPath.length - 1];
+              let startNextCoord = new GridCoordinate(startNextFloor[0], startNextFloor[1]);
+              currentGridLocation = startNextCoord;
+            }
         }
         else{
           if(i == destinationLevel){
@@ -200,10 +219,13 @@ export class IndoorPathingService {
   private getTransitionPathForOption(option: Transitions, start: GridCoordinate, currentFloor: Floor, direction: string){
 
     let path = [];
+
+    //get transitions
+
     switch(option)
     {
       case Transitions.Stairs:
-        return this.getPathForStairsOnSameFloor(start, currentFloor)[0];
+        return this.getPathForStairsOnSameFloor(start, currentFloor);
       case Transitions.Escalator:
         if(direction == "Up")
           return this.getPathForEscalatorUpOnSameFloor(start, currentFloor);
@@ -249,8 +271,16 @@ export class IndoorPathingService {
             */
 
             //set grid location once you reach the top.
-            if(option = Transitions.Escalator)
-             currentGridLocation = building.getFloorLevel((i - 1) + "").getDown_EscalatorCoordinate();
+            let floor: Floor = building.getFloorLevel((i - 1) + "");
+            if(option === Transitions.Escalator)
+             currentGridLocation = floor.getDown_EscalatorCoordinate();
+            else if(option === Transitions.Elavator){
+              currentGridLocation = floor.getElevatorCoordinate();
+            }
+            else if(option === Transitions.Stairs){
+              currentGridLocation = floor.getStairsCoordinate()[0];
+            }
+
         }
         else{
           if(i == destinationLevel){

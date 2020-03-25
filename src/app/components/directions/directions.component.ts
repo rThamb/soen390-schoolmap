@@ -3,10 +3,11 @@ import {MapService} from '../../services/map/map.service';
 import { MapComponent} from '../../components/map/map.component'
 import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service' 
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service'
 import { Storage } from '@ionic/storage';
-import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
- 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+
 //models 
 import { Building } from '../../models/Building'
 import { Floor } from '../../models/Floor'
@@ -25,7 +26,8 @@ declare var google
 })
 export class DirectionsComponent{
 
-  @ViewChild('map', {static: false}) mapHandle: MapComponent;
+  //@ViewChild('map', {static: false}) 
+  mapHandle: MapComponent;
 
   directionsService = new google.maps.DirectionsService;
   directionsRenderer = new google.maps.DirectionsRenderer;
@@ -40,7 +42,9 @@ export class DirectionsComponent{
   loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke", "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"];
 
 
-  constructor(private geolocation: Geolocation, private mapSrevice : MapService, private storage: Storage,
+  constructor(private geolocation: Geolocation, 
+              private mapSrevice : MapService, 
+              private storage: Storage,
               private indoorService: IndoorPathingService,
               private buildFactoryService: BuildingFactoryService,
               private gpsMapService: GpsGridMappingService) 
@@ -62,6 +66,7 @@ export class DirectionsComponent{
     
     //retrieves an instance of the map (with the overlays) via a service
     this.map = this.mapSrevice.getMap();
+    this.mapHandle = this.mapSrevice.getActiveMapComponent();
     
     //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
     this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
@@ -369,6 +374,7 @@ export class DirectionsComponent{
     //**** remove outdoor route if enable 
 
     //focus the map onto building
+    debugger;
     this.mapHandle.showHallBuildingIndoor(true);
     this.drawIndoorPath(start, destination, null);
   }
@@ -436,16 +442,15 @@ export class DirectionsComponent{
     if(buildingObject != null){//if not null he wants to go to a valid classroom
       if(!this.gpsMapService.userInBuilding(user, buildingObject)){
         //should pass GoogleLngLat instead, hardcode start for now
-        await this.preformOutdoorDirectionsActivity("4900 Boul, Rue Jean-Talon", buildingObject.getBuildingName());
+        await this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
         let userIndoorStartLocation = buildingObject.getBuildingLocation();
         this.mapHandle.showHallBuildingIndoor(false);
 
-        //hacky solution, need to set a start location for ground floor when arrived
+        //hacky solution, need to set the start location for ground floor when arrived
         await this.drawIndoorPath(buildingObject.getBuildingKey() + "800", dest, userIndoorStartLocation);
       }
     }
   }
-
 
   private checkAllNums(val: string){
     let onlyNum = /^\d+$/.test(val);
@@ -467,12 +472,14 @@ export class DirectionsComponent{
     let currentFloor: Floor = building.getFloorLevel(floorLevel + "");
 
     let path = null;
+    
+    let transition: Transitions = await this.getPreferedTransition();
 
     debugger;
     if(userPosition == null)
-      path = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, Transitions.Escalator);
+      path = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, transition);
     else
-      path = this.indoorService.determineRouteToDestinationBasedOnUserPosition(userPosition, building, currentFloor, end, Transitions.Escalator);
+      path = this.indoorService.determineRouteToDestinationBasedOnUserPosition(userPosition, building, currentFloor, end, transition);
 
     //set transition map
     this.mapHandle.setTransitionsPaths(path);   
@@ -486,6 +493,25 @@ export class DirectionsComponent{
 
   private getBuildingCode(start: string){
     return start.substring(0,2);
+  }
+
+  private async getPreferedTransition(){
+
+    let useStairs = await this.storage.get('useStairs');
+    let useEle = await this.storage.get('useElevator');
+    let useEcs = await this.storage.get('useEscalator'); 
+
+    if(useEcs)
+      return Transitions.Escalator;
+    
+    if(useEle)
+      return Transitions.Elavator;
+
+    if(useStairs)
+      return Transitions.Stairs;
+
+    //default to escalator if nothing
+    return Transitions.Escalator;
   }
 
 
