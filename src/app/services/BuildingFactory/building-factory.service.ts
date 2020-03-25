@@ -49,13 +49,9 @@ export class BuildingFactoryService {
     return building;
   }
 
-
-<<<<<<< HEAD
-=======
   private async readFile(filename: string){
      let res = await fetch(filename);
      let json = await res.json();
      return json;
   }
->>>>>>> UC-47: Suggesting outdoor and indoor. Hardcoded values need to be replace.
 }

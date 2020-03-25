@@ -214,7 +214,6 @@ export class DirectionsComponent{
     //this is a reference to the map
     this.setMap();
 
-  
     let start = this.directions['start'];
     let destination = this.directions['destination'];
     
@@ -239,14 +238,14 @@ export class DirectionsComponent{
   preformOutdoorDirectionsActivity(start: string, destination: string){
 
     var travelMode = this.getTransportation();
-    var travelMode = this.getTransportation()
+    var travelMode = this.getTransportation();
     var directionsPanel = document.getElementById('directionsPanel')
     var clearDirections = document.getElementById('clearDirections')
     let directionsForm = document.getElementById('form') 
 
       this.directionsService.route({
-      origin: this.validateInput(this.directions['start']),
-      destination: this.validateInput(this.directions['destination']),
+      origin: this.validateInput(start),
+      destination: this.validateInput(destination),
       travelMode: travelMode,
       }, (response, status) => {
       if (status === 'OK') {
@@ -262,28 +261,6 @@ export class DirectionsComponent{
     
   }
 
-
-  //This parametrized function is going to be used primarly for the indoor to outdoor feature
-  getDirection(start:string, destination:string) {
-
-    //this is a reference to the map
-    this.setMap();
-    
-    //we Need to figure out how to dynamically get the users method of transportation
-    var travelMode = this.getTransportation()
-
-    this.directionsService.route({
-      origin: start,
-      destination: destination,
-      travelMode: travelMode
-    }, (response, status) => {
-      if (status === 'OK') {
-        this.directionsRenderer.setDirections(response);
-      } else {
-        window.alert('Request to directions API failed: ' + status);
-      }
-    });
-  }
 
   //Method for clearing the map of the line, removing text directions and enabling the to/from view
   clearDirections() {
