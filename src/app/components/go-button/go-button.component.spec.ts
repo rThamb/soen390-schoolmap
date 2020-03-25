@@ -1,11 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
-
 import { GoButtonComponent } from './go-button.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import {By} from "@angular/platform-browser";
+import {By} from '@angular/platform-browser';
 
 describe('GoButtonComponent', () => {
   let component: GoButtonComponent;
@@ -15,8 +13,7 @@ describe('GoButtonComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ GoButtonComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [RouterTestingModule ,IonicModule.forRoot()],
-      
+      imports: [RouterTestingModule , IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GoButtonComponent);
@@ -34,11 +31,12 @@ describe('GoButtonComponent', () => {
   });
 
   it('should check if on click redirects user to "New Route" page', async(() => {
-    let button = fixture.debugElement.nativeElement.querySelector('ion-fab-button');
-    button.click();
+  spyOn(component, 'LoadNewPage');
+  const button = fixture.debugElement.nativeElement.querySelector('ion-fab-button');
+  button.click();
 
-    fixture.whenStable().then(() => {
-      expect(component.LoadNewPage('/NewRoute' )).toHaveBeenCalled();
-    })
+  fixture.whenStable().then(() => {
+      expect(component.LoadNewPage).toHaveBeenCalledWith('/NewRoute');
+    });
   }));
 });

@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import { MenubarComponent } from './menubar.component';
+import { HomeComponent } from '../home/home.component';
 
 describe('MenubarComponent', () => {
   let component: MenubarComponent;
@@ -10,11 +11,12 @@ describe('MenubarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenubarComponent ],
-      imports: [RouterTestingModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-      // imports: [IonicModule.forRoot()],
-      // providers: [IonicModule],
+      declarations: [ MenubarComponent, HomeComponent ],
+      imports: [RouterTestingModule.withRoutes([{path: 'Home', component: HomeComponent}]
+      )
+        , IonicModule.forRoot()],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+       providers: [IonicModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MenubarComponent);
@@ -26,15 +28,13 @@ describe('MenubarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
-
   it('should check if on click redirects user to "home" page', async(() => {
     spyOn(component, 'LoadNewPage');
     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(1)');
     button.click();
 
     fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/Home' )).toHaveBeenCalled();
+       expect(component.LoadNewPage).toHaveBeenCalledWith('/Home');
      });
   }));
   it('should check if on click redirects user to "New Route" page', async(() => {
@@ -42,15 +42,15 @@ describe('MenubarComponent', () => {
     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(2)');
     button.click();
     fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/NewRoute' )).toHaveBeenCalled();
+      expect(component.LoadNewPage).toHaveBeenCalledWith('/NewRoute');
      });
    }));
   it('should check if on click redirects user to "favourites" page', async(() => {
      spyOn(component, 'LoadNewPage');
-    const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(3)');
+     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(3)');
      button.click();
      fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/Favourites' )).toHaveBeenCalled();
+      expect(component.LoadNewPage).toHaveBeenCalledWith('/Favorites');
      });
    }));
   it('should check if on click redirects user to "shuttle schedule" page', async(() => {
@@ -58,7 +58,7 @@ describe('MenubarComponent', () => {
      const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(4)');
      button.click();
      fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/ShuttleBusSchedule' )).toHaveBeenCalled();
+      expect(component.LoadNewPage).toHaveBeenCalledWith('/ShuttleBusSchedule');
      });
    }));
   it('should check if on click redirects user to "my schedule" page', async(() => {
@@ -67,7 +67,7 @@ describe('MenubarComponent', () => {
      button.click();
 
      fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/Schedule' )).toHaveBeenCalled();
+      expect(component.LoadNewPage).toHaveBeenCalledWith('/Schedule');
      });
    }));
   it('should check if on click redirects user to "nearby points of interest" page', async(() => {
@@ -76,7 +76,7 @@ describe('MenubarComponent', () => {
      button.click();
 
      fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/NearbyPointsOfInterest' )).toHaveBeenCalled();
+      expect(component.LoadNewPage).toHaveBeenCalledWith('/NearbyPointsOfInterest');
      });
    }));
   it('should check if on click redirects user to "settings" page', async(() => {
@@ -85,7 +85,7 @@ describe('MenubarComponent', () => {
      button.click();
 
      fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/Settings' )).toHaveBeenCalled();
+       expect(component.LoadNewPage).toHaveBeenCalledWith('/Settings');
      });
    }));
   it('should check if on click redirects user to "safety" page', async(() => {
@@ -94,7 +94,7 @@ describe('MenubarComponent', () => {
      button.click();
 
      fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/Safety' )).toHaveBeenCalled();
+       expect(component.LoadNewPage).toHaveBeenCalledWith('/Safety');
      });
    }));
   it('should check if on click redirects user to "report an issue" page', async(() => {
@@ -103,7 +103,7 @@ describe('MenubarComponent', () => {
      button.click();
 
      fixture.whenStable().then(() => {
-       expect(component.LoadNewPage('/ReportIssue' )).toHaveBeenCalled();
+       expect(component.LoadNewPage).toHaveBeenCalledWith('/ReportIssue');
      });
    }));
   it('should check if on click redirects user to "about us" page', async(() => {
@@ -112,7 +112,8 @@ describe('MenubarComponent', () => {
      button.click();
 
      fixture.whenStable().then(() => {
-    expect(component.LoadNewPage('/AboutUs' )).toHaveBeenCalled();
+    expect(component.LoadNewPage).toHaveBeenCalledWith('/AboutUs');
    });
 }));
+
 });
