@@ -23,4 +23,15 @@ describe('LocateMeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call the function callparentlocate() when user click on locate me button', async(() => {
+    spyOn(component, 'callparentlocate');
+    let button = fixture.debugElement.nativeElement.querySelector('ion-fab-button');
+    button.click();
+
+    fixture.whenStable().then(() => {
+      expect(component.callparentlocate).toHaveBeenCalled();
+    })
+  }));
+
 });
