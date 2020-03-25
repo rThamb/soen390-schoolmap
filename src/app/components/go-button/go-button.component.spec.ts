@@ -38,7 +38,7 @@ describe('GoButtonComponent', () => {
     button.click();
 
     fixture.whenStable().then(() => {
-      expect(component.LoadNewPage("/NewRoute" )).toHaveBeenCalled();
+      expect(component.LoadNewPage('/NewRoute' )).toHaveBeenCalled();
     })
   }));
 });
