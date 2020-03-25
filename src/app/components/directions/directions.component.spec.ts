@@ -5,6 +5,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DirectionsComponent } from './directions.component';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 
+declare var google;
+
 describe('DirectionsComponent', () => {
   let component: DirectionsComponent;
   let fixture: ComponentFixture<DirectionsComponent>;
@@ -13,8 +15,8 @@ describe('DirectionsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DirectionsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicModule.forRoot()],
-      providers:[Geolocation]
+      imports: [IonicModule, google, Geolocation],
+      providers:[Geolocation, google]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DirectionsComponent);

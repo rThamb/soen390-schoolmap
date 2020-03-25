@@ -32,4 +32,13 @@ describe('GoButtonComponent', () => {
     const de = fixture.debugElement.query(By.css('.locatebut'));
     expect(de.nativeElement.textContent).toContain('GO');
   });
+
+  it('should check if on click redirects user to "New Route" page', async(() => {
+    let button = fixture.debugElement.nativeElement.querySelector('ion-fab-button');
+    button.click();
+
+    fixture.whenStable().then(() => {
+      expect(component.LoadNewPage("/NewRoute" )).toHaveBeenCalled();
+    })
+  }));
 });

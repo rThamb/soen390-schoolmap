@@ -12,7 +12,6 @@ describe('AboutUsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AboutUsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AboutUsComponent);
@@ -26,7 +25,7 @@ describe('AboutUsComponent', () => {
 
   it('should contain a paragraph describing the app', () => {
     const de = fixture.debugElement.query(By.css('.infoAboutUs'));
-    expect(de.nativeElement.textContent).toContain('ConcordiaGo team');
+    expect(de.nativeElement.textContent).toContain('developed by the ConcordiaGo team');
   });
 
 });

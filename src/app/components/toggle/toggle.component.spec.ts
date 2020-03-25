@@ -5,6 +5,7 @@ import {MapComponent} from '../map/map.component';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {By} from "@angular/platform-browser";
 
+
 describe('ToggleComponent', () => {
   let component: ToggleComponent;
   let fixture: ComponentFixture<ToggleComponent>;
