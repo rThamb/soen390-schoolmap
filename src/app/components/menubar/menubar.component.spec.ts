@@ -5,6 +5,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import { MenubarComponent } from './menubar.component';
 import { HomeComponent } from '../home/home.component';
 
+
 describe('MenubarComponent', () => {
   let component: MenubarComponent;
   let fixture: ComponentFixture<MenubarComponent>;
@@ -98,11 +99,12 @@ describe('MenubarComponent', () => {
      });
    }));
   it('should check if on click redirects user to "report an issue" page', async(() => {
-     spyOn(component, 'LoadNewPage');
+     let mySpy= spyOn(component, 'LoadNewPage');
      const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(9)');
      button.click();
 
      fixture.whenStable().then(() => {
+       expect(mySpy).toHaveBeenCalledTimes(1);
        expect(component.LoadNewPage).toHaveBeenCalledWith('/ReportIssue');
      });
    }));

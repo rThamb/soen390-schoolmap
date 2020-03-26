@@ -25,13 +25,12 @@ describe('ShuttleBusScheduleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.monday'));
-    expect(de.nativeElement.textContent).toContain('Monday');
+  it('should have monday to friday schedule', () => {
+    const mon = fixture.debugElement.query(By.css('.monday'));
+    expect(mon.nativeElement.textContent).toContain('Monday');
+
+    const fri = fixture.debugElement.query(By.css('.friday'));
+    expect(fri.nativeElement.textContent).toContain('Friday');
   });
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.friday'));
-    expect(de.nativeElement.textContent).toContain('Friday');
-  });
 });

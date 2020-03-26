@@ -37,17 +37,22 @@ describe('ReportIssuesComponent', () => {
 
   it('should contain a word describing the app', () => {
     const de = fixture.debugElement.query(By.css('.reportIssue'));
-    expect(de.nativeElement.textContent).toContain('Issue');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.reportIssue'));
-    expect(de.nativeElement.textContent).toContain('describe');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.reportIssue'));
     expect(de.nativeElement.textContent).toContain('Submit');
+  });
+  it('should call the send function when submitting the form', async(() => {
+    let mySpy= spyOn(component, 'send');
+    let button = fixture.debugElement.nativeElement.querySelector('button');
+    button.click();
+
+    fixture.whenStable().then(() => {
+      expect(mySpy).toBeDefined();
+      // expect(mySpy).toHaveBeenCalledTimes(1);
+      // expect(component.send).toHaveBeenCalled();
+    })
+  }));
+  it('should contain a description of the Report an issue Form', () => {
+    const de = fixture.debugElement.query(By.css('.text-primary'));
+    expect(de.nativeElement.textContent).toContain('describe the issue');
   });
 
 });

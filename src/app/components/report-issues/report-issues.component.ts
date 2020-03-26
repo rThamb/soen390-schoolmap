@@ -26,7 +26,6 @@ export class ReportIssuesComponent {
   }
 
   send(){
-    console.log(this.issue.value);
 
     this.emailComposer.isAvailable().then((available: boolean) =>{
        if(available) {
@@ -44,6 +43,7 @@ export class ReportIssuesComponent {
       app: "Gmail"
     };
 
+    console.log(this.issue.value);
 // Send a text message using default options
     this.emailComposer.open(email);
 
