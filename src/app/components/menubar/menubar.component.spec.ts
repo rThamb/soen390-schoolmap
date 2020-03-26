@@ -3,7 +3,6 @@ import { IonicModule } from '@ionic/angular';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import { MenubarComponent } from './menubar.component';
-import { HomeComponent } from '../home/home.component';
 import {By} from '@angular/platform-browser';
 
 
@@ -13,12 +12,10 @@ describe('MenubarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenubarComponent, HomeComponent ],
-      imports: [RouterTestingModule.withRoutes([{path: 'Home', component: HomeComponent}]
-      )
-        , IonicModule.forRoot()],
+      declarations: [ MenubarComponent],
+      imports: [RouterTestingModule, IonicModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-       providers: [IonicModule],
+       providers: [IonicModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MenubarComponent);

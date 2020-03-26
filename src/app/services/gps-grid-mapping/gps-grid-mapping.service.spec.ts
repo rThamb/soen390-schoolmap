@@ -1,3 +1,4 @@
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { TestBed } from '@angular/core/testing';
 import { Location } from '../../models/Location'
 import { Floor } from '../../models/Floor';
@@ -5,7 +6,7 @@ import { GpsGridMappingService } from './gps-grid-mapping.service';
 
 describe('GpsGridMappingService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [GpsGridMappingService]
+    providers: [GpsGridMappingService,Geolocation]
   }).compileComponents());
 
   it('should be created', () => {

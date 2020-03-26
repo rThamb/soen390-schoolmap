@@ -1,3 +1,4 @@
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { TestBed } from '@angular/core/testing';
 import { IndoorPathingService } from './indoor-pathing.service';
 import { ReadGridService } from '../readGrid/read-grid.service';
@@ -7,7 +8,7 @@ import { Floor } from '../../models/Floor'
 describe('IndoorPathingService', () => {
   
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [ReadGridService, IndoorPathingService]
+    providers: [ReadGridService, IndoorPathingService,Geolocation]
   }).compileComponents());
 
   it('should be created', () => {   
