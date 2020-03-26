@@ -4,6 +4,7 @@ import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import { MenubarComponent } from './menubar.component';
 import { HomeComponent } from '../home/home.component';
+import {By} from '@angular/platform-browser';
 
 
 describe('MenubarComponent', () => {
@@ -82,5 +83,15 @@ describe('MenubarComponent', () => {
     expect(component.LoadNewPage).toHaveBeenCalledWith('/AboutUs');
    });
   }));
+
+  it('should contain the name of the application', () => {
+    const de = fixture.debugElement.query(By.css('ion-header'));
+    expect(de.nativeElement.textContent).toContain('ConcordiaGo');
+  });
+  it('should contain the menu title', () => {
+    const de = fixture.debugElement.query(By.css('ion-menu'));
+    expect(de.nativeElement.textContent).toContain('Main Menu');
+  });
+
 
 });
