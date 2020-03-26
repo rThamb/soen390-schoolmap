@@ -4,6 +4,7 @@ import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import { MenubarComponent } from './menubar.component';
 import { HomeComponent } from '../home/home.component';
+import {By} from '@angular/platform-browser';
 
 
 describe('MenubarComponent', () => {
@@ -29,93 +30,68 @@ describe('MenubarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should check if on click redirects user to "home" page', async(() => {
+  it('should check if on click redirects user to desired page', async(() => {
     spyOn(component, 'LoadNewPage');
     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(1)');
     button.click();
-
     fixture.whenStable().then(() => {
        expect(component.LoadNewPage).toHaveBeenCalledWith('/Home');
      });
-  }));
-  it('should check if on click redirects user to "New Route" page', async(() => {
-    spyOn(component, 'LoadNewPage');
-    const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(2)');
-    button.click();
+    const button2 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(2)');
+    button2.click();
     fixture.whenStable().then(() => {
       expect(component.LoadNewPage).toHaveBeenCalledWith('/NewRoute');
      });
-   }));
-  it('should check if on click redirects user to "favourites" page', async(() => {
-     spyOn(component, 'LoadNewPage');
-     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(3)');
-     button.click();
-     fixture.whenStable().then(() => {
+    const button3 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(3)');
+    button3.click();
+    fixture.whenStable().then(() => {
       expect(component.LoadNewPage).toHaveBeenCalledWith('/Favorites');
      });
-   }));
-  it('should check if on click redirects user to "shuttle schedule" page', async(() => {
-     spyOn(component, 'LoadNewPage');
-     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(4)');
-     button.click();
-     fixture.whenStable().then(() => {
+    const button4 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(4)');
+    button4.click();
+    fixture.whenStable().then(() => {
       expect(component.LoadNewPage).toHaveBeenCalledWith('/ShuttleBusSchedule');
      });
-   }));
-  it('should check if on click redirects user to "my schedule" page', async(() => {
-     spyOn(component, 'LoadNewPage');
-     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(5)');
-     button.click();
-
-     fixture.whenStable().then(() => {
+    const button5 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(5)');
+    button5.click();
+    fixture.whenStable().then(() => {
       expect(component.LoadNewPage).toHaveBeenCalledWith('/Schedule');
      });
-   }));
-  it('should check if on click redirects user to "nearby points of interest" page', async(() => {
-     spyOn(component, 'LoadNewPage');
-     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(6)');
-     button.click();
-
-     fixture.whenStable().then(() => {
+    const button6 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(6)');
+    button6.click();
+    fixture.whenStable().then(() => {
       expect(component.LoadNewPage).toHaveBeenCalledWith('/NearbyPointsOfInterest');
      });
-   }));
-  it('should check if on click redirects user to "settings" page', async(() => {
-     spyOn(component, 'LoadNewPage');
-     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(7)');
-     button.click();
-
-     fixture.whenStable().then(() => {
+    const button7 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(7)');
+    button7.click();
+    fixture.whenStable().then(() => {
        expect(component.LoadNewPage).toHaveBeenCalledWith('/Settings');
      });
-   }));
-  it('should check if on click redirects user to "safety" page', async(() => {
-     spyOn(component, 'LoadNewPage');
-     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(8)');
-     button.click();
-
-     fixture.whenStable().then(() => {
+    const button8 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(8)');
+    button8.click();
+    fixture.whenStable().then(() => {
        expect(component.LoadNewPage).toHaveBeenCalledWith('/Safety');
      });
-   }));
-  it('should check if on click redirects user to "report an issue" page', async(() => {
-     let mySpy= spyOn(component, 'LoadNewPage');
-     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(9)');
-     button.click();
-
-     fixture.whenStable().then(() => {
-       expect(mySpy).toHaveBeenCalledTimes(1);
+    const button9 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(9)');
+    button9.click();
+    fixture.whenStable().then(() => {
        expect(component.LoadNewPage).toHaveBeenCalledWith('/ReportIssue');
      });
-   }));
-  it('should check if on click redirects user to "about us" page', async(() => {
-     spyOn(component, 'LoadNewPage');
-     const button = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(10)');
-     button.click();
-
-     fixture.whenStable().then(() => {
+    const button10 = fixture.debugElement.nativeElement.querySelector('ion-item:nth-child(10)');
+    button10.click();
+    fixture.whenStable().then(() => {
     expect(component.LoadNewPage).toHaveBeenCalledWith('/AboutUs');
    });
-}));
+  }));
+
+  it('should contain the name of the application', () => {
+    const de = fixture.debugElement.query(By.css('ion-header'));
+    expect(de.nativeElement.textContent).toContain('ConcordiaGo');
+  });
+  it('should contain the menu title', () => {
+    const de = fixture.debugElement.query(By.css('ion-menu'));
+    expect(de.nativeElement.textContent).toContain('Main Menu');
+  });
+
 
 });
