@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { IonicStorageModule } from '@ionic/storage';
 import { HomeSearchComponent } from './home-search.component';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
 
@@ -12,7 +12,8 @@ describe('HomeSearchComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HomeSearchComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), IonicStorageModule.forRoot()],
+      providers: [Storage]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeSearchComponent);
