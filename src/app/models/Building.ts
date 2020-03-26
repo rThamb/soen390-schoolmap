@@ -1,5 +1,6 @@
 import { Floor } from './Floor';
 import {Location} from './Location';
+import { IndoorPOI } from './IndoorPOI';
 
 // This class represents a building object found on the map.
 // It contains an array of floors containing points of interests.
@@ -12,11 +13,21 @@ export class Building
     private buildingKey: string;
     private classrooms: string[];
 
+    private buildingInfo: any; //Dictionnary
+    private buildingName: string;
+
     constructor()
     {
-    
+        
     }
 
+    public getBuildingName(){
+        return this.buildingName;
+    }
+    public setBuildingName(name: string){
+        this.buildingName = name;
+    }
+    
     public getBuildingKey(){
         return this.buildingKey;
     }
@@ -83,5 +94,42 @@ export class Building
         }
 
         return this.classrooms;
+    }
+
+    // Parses through each floor and returns a list of all IndoorPOI objects of entire building.
+    public getAllIndoorPOI()
+    {
+        let currentFloorPois: IndoorPOI[];
+        let allPois: IndoorPOI[];
+    
+        console.log(this.floors);
+        for(var i = 0; i < Object.keys(this.floors).length; i++)
+        {
+            try{
+                currentFloorPois = this.floors['HB'+(i+1)].getPois();
+                for(var j = 0; j < currentFloorPois.length; i++)
+                {
+                    // push each poi one by one to the list.
+                    console.log(currentFloorPois[j]);
+                    allPois.push(currentFloorPois[j]);
+                }
+            }catch(error)
+            {
+                console.log(error);
+            }
+        }
+
+        return allPois;
+    }
+
+    //Dictionnary with a building information
+    public setBuildingInfo(buildingInfos: any)
+    {
+        this.buildingInfo = buildingInfos;
+    }
+
+    public getBuildingInfo()
+    {
+        return this.buildingInfo;
     }
 }

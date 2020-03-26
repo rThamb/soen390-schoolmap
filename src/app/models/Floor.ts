@@ -11,6 +11,7 @@ export class Floor
     private floorTileGrid: FloorTile[][];
     private width: number;
     private height: number;
+
     public topRightCornerGPS: Location;
     public topLeftCornerGPS: Location;
     public bottomLeftCornerGPS: Location;
@@ -66,7 +67,7 @@ export class Floor
 
     public getPois()
     {
-        return this.pois
+        return this.pois;
     }
 
     public setPois(p: IndoorPOI[])

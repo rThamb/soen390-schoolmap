@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
 import { GridCoordinate } from '../../models/GridCoordinate';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Building } from '../../models/Building'
+
 
 
 
@@ -17,7 +20,7 @@ export class GpsGridMappingService {
   /* 
     The purpose of this class is to map GPS coordinates to a Floor grid coordinate. 
   */
-  constructor() { }
+  constructor(private geolocation: Geolocation) { }
 
 
   /*
@@ -50,10 +53,16 @@ Y
   getFloorGridCoordinate(userPosition: Location, currentFloor: Floor) : GridCoordinate{
     //let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), currentFloor);
     //let y = this.mapUserLongitudeToYCoordinate(userPosition.getLng(), currentFloor);
+
     let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
     let y = this.mapUserLongitudeToYCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
-    
+
+    //check if with in the bound
+    if(!(0 <= x && x < currentFloor.getWidth() && 0 <= y && y < currentFloor.getHeight()))
+      return null; 
+
     return new GridCoordinate(x, y);
+
   }
 
 
@@ -193,8 +202,8 @@ Y
     //components (avg)
 
 
-    let xAddition = shiftVectorXComponent * (x + 1.5); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
-    let yAddition = shiftVectorYComponent * (x + 1.5);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
+    let xAddition = shiftVectorXComponent * (x + 1.25); //((shiftVectorXComponent * x + shiftVectorXComponent * (x + 1)) / 2.0);
+    let yAddition = shiftVectorYComponent * (x + 1.25);//((shiftVectorYComponent * x + shiftVectorYComponent * (x + 1)) / 2.0);
     
     let positionAfterXShiftLng = ref1Lng + xAddition;
     let positionAffterXShiftLat = ref1Lat + yAddition;
@@ -229,8 +238,24 @@ Y
     }
 
     return markers;
-    
-  
   }
 
+  /**
+   * Used to determine whether or not a user is in a building.
+   * @param userPosition 
+   * @param floor 
+   */
+  public userInBuilding(userPosition: Location, building: Building): boolean{
+    let keys = Object.keys(building.getFloors());
+    if(keys.length < 1)
+      return false;
+    let floor = building.getFloors()[keys[0]];
+    return this.getFloorGridCoordinate(userPosition, floor) != null;
+  }
+
+  public async getUserCurrentPosition(){
+    const resp = await this.geolocation.getCurrentPosition();
+    let location: Location = new Location(resp.coords.latitude, resp.coords.longitude, 0);
+    return location;
+  }
 }

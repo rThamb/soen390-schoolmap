@@ -28,7 +28,8 @@ const routes: Routes = [
    {path: 'Safety', component: SafetyComponent},
    {path: 'Schedule', component: ScheduleComponent},
    {path: 'Settings', component: SettingsComponent},
-   {path: 'ShuttleBusSchedule', component: ShuttleBusScheduleComponent},
+   {path: 'ShuttleBusSchedule', component: ShuttleBusScheduleComponent}
+  
 
 ];
 @NgModule({

@@ -1,6 +1,7 @@
+
 import { NgModule } from '@angular/core';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -8,6 +9,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,10 +27,11 @@ import { BuildingFactoryService } from './services/BuildingFactory/building-fact
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
-import { HomeComponent } from './components/home/home.component';
 import { HomeSearchComponent } from './components/home-search/home-search.component';
-import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { MapComponent } from './components/map/map.component';
+import { DirectionsComponent } from './components/directions/directions.component';
+import { LocateMeComponent } from './components/locate-me/locate-me.component';
+import { HomeComponent } from './components/home/home.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
 import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
@@ -38,7 +41,8 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {IonicStorageModule} from '@ionic/storage';
 
 
 
@@ -48,9 +52,10 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 
   declarations: [AppComponent, MapComponent, FavoritesComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
                 ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, 
-                ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent],
+                ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule, IonicStorageModule.forRoot({      name: 'appDB',
+  driverOrder: ['sqlite', 'websql', 'indexeddb']})],
   providers: [
     StatusBar,
     SplashScreen,
@@ -59,7 +64,8 @@ import { ToggleComponent } from './components/toggle/toggle.component';
     IndoorPathingService,
     ReadGridService,
     GpsGridMappingService,
-    BuildingFactoryService
+    BuildingFactoryService,
+    EmailComposer
   ],
   bootstrap: [AppComponent]
 })

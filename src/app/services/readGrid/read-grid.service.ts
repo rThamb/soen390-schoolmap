@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Floor } from '../../models/Floor' ;
 import { Location } from '../../models/Location';
 import { FloorTile } from '../../models/FloorTile'
+import { Building } from '../../models/Building';
 import { IndoorPOI } from '../../models/IndoorPOI'
 
 @Injectable({
@@ -56,7 +57,7 @@ export class ReadGridService {
 
     //json['property'] - how to access values
 
-    let curFloor = null;
+    let curFloor = null; 
     for(let i = 0; i < floorsData.length; i++){
      curFloor = floorsData[i]; 
      let floor: Floor = new Floor();
@@ -69,7 +70,13 @@ export class ReadGridService {
      floor.pointsOfInterest = curFloor.POI;
      floor.setPois(this.getPointsOfInterest(curFloor.POI));
      floors[floorKeys[i]] = floor;
+
+     //set dimensions
+     let grid = curFloor.binaryGrid;
+     floor.setWidth(grid[0].length);
+     floor.setHeight(grid.length);
     }
+    
     return floors;
   }
 
@@ -92,7 +99,8 @@ export class ReadGridService {
     }
     return tileGrid;
   }
-
+  
+    
   private getPointsOfInterest(poi: any): IndoorPOI[]
   {
       let keys = Object.keys(poi);
@@ -118,4 +126,34 @@ export class ReadGridService {
       }
       return pois;
   }
+ //Loads a Building json file, and returns a dictionary with informations about it
+ async buildingInfo(keyName: string)
+ {
+   let buildingInformation = {}; //Dictionary
+
+  try{
+    let filename = "./assets/buildings/" + this.floorFileNameMap[keyName]; //Using /buildings directory for now. 
+
+    let res = await fetch(filename);
+    let json = await res.json();
+    let buildingData = json;
+
+    //Add to buildingInformation Dictionnary
+    buildingInformation["totalFloors"] = buildingData.totalFloors;
+    buildingInformation["bound"] = buildingData.bound;
+    buildingInformation["Location"] = buildingData.Location;
+    buildingInformation["Floors"] = buildingData.Floors;
+  }
+  catch(err)
+  {
+    console.log("Error thrown in Read-Grid.Service line:(108-120)");
+    return null;
+  }
+
+  return buildingInformation;
+}
+  
+
+
+    
 }

@@ -15,12 +15,12 @@ export class IndoorPOI extends Location
         this.key = k;
     }
 
-    public getType()
+    public getKey()
     {
         return this.key;
     }
 
-    public setType(k: string)
+    public setKey(k: string)
     {
         this.key = k;
     }
@@ -34,6 +34,7 @@ export class IndoorPOI extends Location
     {
         this.coord = c;
     }
+
 
 
 
