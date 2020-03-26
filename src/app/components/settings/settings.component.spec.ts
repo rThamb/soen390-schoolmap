@@ -29,48 +29,16 @@ describe('SettingsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should contain a word describing the app', () => {
+  it('should contain 6 items', () => {
     const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Settings');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Language');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Preferences');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Accessibility');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.NestedList'));
     expect(de.nativeElement.textContent).toContain('Elevators');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Stairs');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Escalators');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Calendar');
-  });
-
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Notifications');
   });
 });

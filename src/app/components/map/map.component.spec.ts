@@ -27,4 +27,10 @@ describe('MapComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should check if the class="map" is applied to map', async(() => {
+    const mapTag = fixture.debugElement.nativeElement.querySelector('div');
+
+    // expect(mapTag.innerHTML).toContain('class="map"');
+  }));
 });

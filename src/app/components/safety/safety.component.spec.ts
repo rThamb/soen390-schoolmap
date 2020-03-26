@@ -24,65 +24,30 @@ describe('SafetyComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // this is an example of a nested test, you can contain all tests on this page in one test,
-  // giving more coverage and reducing the number of specs
-
-  // NOTE: it's not good to have too many specs with very lil coverage
-
-  // describe('should display important info in case of emergency', () => {
-  //   describe('safety paragraph', () => {
-  //     const de = fixture.debugElement.query(By.css('.title'));
-  //     expect(de.nativeElement.textContent).toContain('YOUR SAFETY');
-  //
-  //     describe('Emergency', () => {
-  //       const de = fixture.debugElement.query(By.css('.title2'));
-  //       expect(de.nativeElement.textContent).toContain('Emergency');
-  //     });
-  //     describe('Security', () => {
-  //      ...
-  //      ..
-  //      .
-  //     });
-  //   });
-  // });
-
-  it('should contain a word describing the app', () => {
+  it('should contain phone numbers for different emergencies', () => {
     const de = fixture.debugElement.query(By.css('.title'));
     expect(de.nativeElement.textContent).toContain('YOUR SAFETY');
-  });
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.p1'));
-    expect(de.nativeElement.textContent).toContain('Security');
-  });
+    const de1 = fixture.debugElement.query(By.css('.p1'));
+    expect(de1.nativeElement.textContent).toContain('Security');
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.title2'));
-    expect(de.nativeElement.textContent).toContain('Emergency');
-  });
+    const de2 = fixture.debugElement.query(By.css('.title2'));
+    expect(de2.nativeElement.textContent).toContain('Emergency');
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.info'));
-    expect(de.nativeElement.textContent).toContain('SafeWalk');
-  });
+    const de3 = fixture.debugElement.query(By.css('.info'));
+    expect(de3.nativeElement.textContent).toContain('SafeWalk');
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.info'));
-    expect(de.nativeElement.textContent).toContain('Assault');
-  });
+    const de4 = fixture.debugElement.query(By.css('.info'));
+    expect(de4.nativeElement.textContent).toContain('Assault');
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.info'));
-    expect(de.nativeElement.textContent).toContain('Injury');
-  });
+    const de5 = fixture.debugElement.query(By.css('.info'));
+    expect(de5.nativeElement.textContent).toContain('Injury');
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.info'));
-    expect(de.nativeElement.textContent).toContain('Theft');
-  });
+    const de6 = fixture.debugElement.query(By.css('.info'));
+    expect(de6.nativeElement.textContent).toContain('Hazardous');
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.info'));
-    expect(de.nativeElement.textContent).toContain('Hazardous');
+    const de7 = fixture.debugElement.query(By.css('.info'));
+    expect(de7.nativeElement.textContent).toContain('Theft');
+
   });
 });
