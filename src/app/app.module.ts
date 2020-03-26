@@ -60,7 +60,7 @@ import {IonicStorageModule} from '@ionic/storage';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Geolocation,
+    Geolocation, 
     IndoorPathingService,
     ReadGridService,
     GpsGridMappingService,

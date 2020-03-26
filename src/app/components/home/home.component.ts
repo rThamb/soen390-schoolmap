@@ -17,6 +17,7 @@ import { MapComponent } from '../map/map.component'
 })
 export class HomeComponent implements OnInit {
 
+  
   /*
     This is simply an example of how to use the service classes together with components 
     to obtain data and attach it to your view.

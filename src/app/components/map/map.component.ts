@@ -1748,6 +1748,7 @@ export class MapComponent implements AfterViewInit {
     this.map.setZoom(20);
   }
 
+
   // Clears all POI markers from the map component
   clearAllPOIMarkers()
   {
