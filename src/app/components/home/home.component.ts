@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('map', {static: false}) mapHandle: MapComponent;
 
   constructor(private service:ReadGridService, private service2: GpsGridMappingService,
-  private service3: IndoorPathingService, private bService: BuildingFactoryService,private storage: Storage) { 
+  private service3: IndoorPathingService, private bService: BuildingFactoryService) {
     //this.getPreferedTransition();
     //this.service2.getFloorTest();
     //this.setFloor();
