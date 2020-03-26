@@ -23,4 +23,12 @@ describe('HomeSearchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should check if user can search "Concordia" address', async(() => {
+    const bar = fixture.debugElement.nativeElement.querySelector('ion-searchbar');
+
+    expect(bar.innerHTML).not.toEqual('Hello');
+    expect(bar.shadowRoot).toBeNull();
+  }));
+
 });
