@@ -382,13 +382,14 @@ export class DirectionsComponent{
    * @param start 
    * @param destination 
    */
-  preformIndoorDirectionsActivity(start: string, destination: string, disableOutdoor: boolean){
+  async preformIndoorDirectionsActivity(start: string, destination: string, disableOutdoor: boolean){
     //**** remove outdoor route if enable
     if(disableOutdoor) 
       this.clearDirections();
 
     //focus the map onto building
-    this.mapHandle.showHallBuildingIndoor(true);
+    debugger;
+    await this.mapHandle.showHallBuildingIndoor(true);
     this.drawIndoorPath(start, destination, null);
     this.showClearDirectionControls();
   }
