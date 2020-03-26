@@ -7,6 +7,8 @@ import { BuildingFactoryService } from '../../services/BuildingFactory/building-
 import { Building } from '../../models/Building'
 import { Floor } from '../../models/Floor'
 import { MapComponent } from '../map/map.component'
+import { Transitions } from '../../models/Transitions'
+import { Storage } from '@ionic/storage';
 
 
 
@@ -31,10 +33,70 @@ export class HomeComponent implements OnInit {
   @ViewChild('map', {static: false}) mapHandle: MapComponent;
 
   constructor(private service:ReadGridService, private service2: GpsGridMappingService,
-  private service3: IndoorPathingService, private bService: BuildingFactoryService ) { 
-    
+  private service3: IndoorPathingService, private bService: BuildingFactoryService,private storage: Storage) { 
+    //this.getPreferedTransition();
+    //this.service2.getFloorTest();
+    //this.setFloor();
   }
 
   ngOnInit() {}
+
+
+  setFloor(){
+    this.service.createGrid("HB").then((grid) => {
+    
+  });
+  }
   
+   testIndoorPathing(){
+    this.service.createGrid("HB").then((grid) => {
+      
+      //let point =  this.service2.getFloorGridCoordinate(new Location(45.497082, -73.578647, 0) , grid[0]);
+      let expect = "8,17"; 
+      //this.service3.getPathForDestinationOnSameFloor(new Location(45.497082, -73.578647, 0) , grid[0], "H840");
+      
+    });
+    //let floors = await this.service.getBuildingFloors("HB");
+    //let path = this.service3.getPathForDestinationOnSameFloor(null, grid, "H840", "H890"); 
+    //console.log(path);
+  }
+
+  async testBuilding(){
+
+    
+    this.bService.loadBuilding("HB").then((building: Building) => {
+      
+      /*let classes = building.getAllClassroomCodes();
+      let floor : Floor = building.getFloorLevel("8");
+      let a = floor.getClassroomCoordinate("HB840");
+      let b =floor.getUp_EscalatorCoordinate();
+      let c = floor.getDown_EscalatorCoordinate();
+      let d = floor.getMensWashroom();
+      let e = floor.getWomensWashroom();
+      */
+      let ninethfloor  = building.getFloorLevel("9");
+      let width = ninethfloor.getWidth();
+      let height = ninethfloor.getHeight();
+
+      //this.service3.getPathForDestinationOnSameFloor(new Location(45.497261, -73.579023, 0) ,ninethfloor, "HB967");
+      //let userPosition = new Location(45.497291, -73.579071, 0);
+      //let isIn = this.service2.userInBuilding(userPosition, building);
+
+
+      let curFloor = building.getFloorLevel("8"); 
+      //let pathGoingUp = this.service3.determineRouteToDestinationBasedOnUserPosition(userPosition, building, curFloor, "HB890");
+      
+      let a = "HB922";
+      let b = "HB840";
+
+
+      let classToClass = this.service3.determineRouteToDestinationBasedOnUserPosition(building.getBuildingLocation(), building, curFloor, b, Transitions.Escalator);
+
+      let pathDraw: Location[] = classToClass["route"];
+
+      this.mapHandle.drawPath(pathDraw);
+      //let a = this.service2.getLngLatForPath(building.getFloorLevel("8"), null);
+    });
+  }
+
 }

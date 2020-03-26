@@ -18,6 +18,8 @@ const fs: any = require('fs');
 })
 export class BuildingFactoryService {
 
+  private baseDir: string = "assets/binary_floor_layouts/"
+
   constructor(private floorService:ReadGridService) { }
 
   /**
@@ -33,9 +35,23 @@ export class BuildingFactoryService {
     //Set dictionnary for building
     let buildingData = await this.floorService.buildingInfo(buildingKey);
     building.setBuildingInfo(buildingData);
-    
+
+    //set building location
+    let jsonContent = await this.readFile(this.baseDir + buildingKey + ".json");
+    let lng = jsonContent["buildingLatLng"]["lng"];
+    let lat = jsonContent["buildingLatLng"]["lat"];
+    let location = new Location(lat, lng, 0);
+    building.setBuildingLocation(location);
+
+    //set building name
+    building.setBuildingName(jsonContent["buildingName"]);
+
     return building;
   }
 
-
+  private async readFile(filename: string){
+     let res = await fetch(filename);
+     let json = await res.json();
+     return json;
+  }
 }

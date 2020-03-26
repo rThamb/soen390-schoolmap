@@ -4,6 +4,9 @@ import { EventEmitter } from 'events';
 import {Storage} from '@ionic/storage';
 
 
+/**
+ * Component responsible for handling user's prefrences selection.
+ */
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -19,14 +22,21 @@ export class SettingsComponent implements OnInit {
 
   constructor(private storage: Storage) { 
 
-    // storage.ready() will wait for initialization of module before starting any actions
-    storage.ready().then(() => {
+
+    
+  }
+
+  // Initialize user settings
+  ngOnInit() 
+  {
+
+    this.storage.ready().then(() => {
       
       // Set useElevator key/value
-      storage.get('useElevator').then((uE) => {
+      this.storage.get('useElevator').then((uE) => {
         if(uE == null)
         {
-          storage.set('useElevator', true);
+          this.storage.set('useElevator', true);
           this.useElevator = true;
         }
         else{
@@ -34,10 +44,10 @@ export class SettingsComponent implements OnInit {
         }
       });
     // Set the useStairs key/values
-      storage.get('useStairs').then((uS) => {
+      this.storage.get('useStairs').then((uS) => {
         if(uS == null)
         {
-          storage.set('useStairs', true);
+          this.storage.set('useStairs', true);
           this.useStairs = true;
         }
         else{
@@ -45,10 +55,10 @@ export class SettingsComponent implements OnInit {
         }
       });
     // Set the useEscalators key/value
-      storage.get('useEscalator').then((uE) => {
+      this.storage.get('useEscalator').then((uE) => {
         if(uE == null)
         {
-          storage.set('useEscalator', true);
+          this.storage.set('useEscalator', true);
           this.useEscalator = true;
         }
         else{
@@ -56,10 +66,10 @@ export class SettingsComponent implements OnInit {
         }
       });
     // Set the languagePreference key/value
-      storage.get('languagePreference').then((lP) => {
+      this.storage.get('languagePreference').then((lP) => {
         if(lP == null)
         {
-          storage.set('languagePreference', 'English');
+          this.storage.set('languagePreference', 'English');
           this.languagePreference = 'English';
         }
         else{
@@ -67,10 +77,10 @@ export class SettingsComponent implements OnInit {
         }
       });
     // Set the googleSync key/value
-      storage.get('useGoogleCalendarSync').then((gS) => {
+      this.storage.get('useGoogleCalendarSync').then((gS) => {
         if(gS == null)
         {
-          storage.set('useGoogleCalendarSync', false);
+          this.storage.set('useGoogleCalendarSync', false);
           this.useGoogleCalendarSync = false;
         }
         else{
@@ -86,6 +96,6 @@ export class SettingsComponent implements OnInit {
     this.storage.set(key, value);
   }
 
-  ngOnInit() {}
+  
 
 }
