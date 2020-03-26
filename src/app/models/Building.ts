@@ -14,12 +14,20 @@ export class Building
     private classrooms: string[];
 
     private buildingInfo: any; //Dictionnary
+    private buildingName: string;
 
     constructor()
     {
         
     }
 
+    public getBuildingName(){
+        return this.buildingName;
+    }
+    public setBuildingName(name: string){
+        this.buildingName = name;
+    }
+    
     public getBuildingKey(){
         return this.buildingKey;
     }
@@ -91,7 +99,6 @@ export class Building
     // Parses through each floor and returns a list of all IndoorPOI objects of entire building.
     public getAllIndoorPOI()
     {
-        debugger;
         let currentFloorPois: IndoorPOI[];
         let allPois: IndoorPOI[];
     

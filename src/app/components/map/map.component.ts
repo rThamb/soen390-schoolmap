@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service';
 import { ReadGridService } from '../../services/readGrid/read-grid.service';
 import { Location } from '../../models/Location';
 import { Floor } from '../../models/Floor';
@@ -18,6 +17,12 @@ import { MapService } from '../../services/map/map.service';
 
 
 declare var google;
+
+var componentContext = null;
+var indoorModeEnable; 
+var exitIndoorModeFunc;
+
+
 
 /**
  * MapComponent class. Contains the map object and attributes for all google map related services.
@@ -41,12 +46,36 @@ export class MapComponent implements AfterViewInit {
   private sgw: Campus;
   private loyola: Campus;
 
+
+  //vars for drawing
+  private onMapMarkers : any;
+  private onMapPolygons: any;
+
+  //The following variables are used for indoor mode
+
+  //variables for indoor mode 
+  private currentActiveFloorInBuilding: number;
+  public currentActiveRoute: any;
+  
+  //dictionary used to hold route for each floor need for journey
+  private indoorTransitionDirections: any; 
+
   // Injects the component class with imported services
-  constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService)
+  constructor(private geolocation: Geolocation, 
+              private mapService: MapService, 
+              private buildingFactory: BuildingFactoryService) 
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
+
     this.user = new User();
+    componentContext = this;
+    this.onMapMarkers = {};
+    this.onMapPolygons = {};
+    indoorModeEnable = false; 
+    exitIndoorModeFunc = null;
+    this.currentActiveFloorInBuilding = 0;
+    this.currentActiveRoute = {};
   }
 
   ngAfterViewInit(): void {
@@ -61,10 +90,9 @@ export class MapComponent implements AfterViewInit {
     });
 
     let centerMapCoordinate;
-
     //Check if user's current location has been retrieved
     if(resp){
-      this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
+      await this.user.setLocation(new Location(resp.coords.latitude, resp.coords.longitude, 0));
       centerMapCoordinate = this.user.getLocation().getGoogleLatLng();
     }else{
       //If user does not allow access to their current location, set their location to a default value and center map on SGW campus
@@ -96,6 +124,7 @@ export class MapComponent implements AfterViewInit {
   // sets an instance of the map to a service which injects it to other components
   setDirectionsMap() {
     this.mapService.setMap(this.map);
+    this.mapService.setActiveMapComponent(this);
   }
 
   // Gets the current location of user and focuses map to that point
@@ -182,6 +211,8 @@ export class MapComponent implements AfterViewInit {
       fillColor: fColor,
     });
     hallP.setMap(this.map);
+    this.onMapPolygons["HB"] = hallP; 
+
 
     let molsonP = new google.maps.Polygon({
       paths: molson,
@@ -347,6 +378,7 @@ export class MapComponent implements AfterViewInit {
           fontSize,
       },
     });
+    this.onMapMarkers["HB"] = hallMarker;
 
     let hallContent =
     '<ion-list> <h4 align=\'center\'>Henry F. Hall Building </h4>' +
@@ -1371,74 +1403,74 @@ export class MapComponent implements AfterViewInit {
       if (document.getElementById('hall')) {
         document.getElementById('hall').addEventListener('click', () => {
           infoWindow.close();
-          this.enterBuilding('HB', hallP, hallMarker);
+          this.enterBuilding('HB', hallP, hallMarker, false);
         });
       } else if (document.getElementById('ev')) {
         document.getElementById('ev').addEventListener('click', () => {
-           this.enterBuilding('ev', EVP, EVMarker);
+           this.enterBuilding('ev', EVP, EVMarker, false);
         });
       } else if (document.getElementById('lb')) {
         document.getElementById('lb').addEventListener('click', () => {
-           this.enterBuilding('lb', lbP, LBMarker);
+           this.enterBuilding('lb', lbP, LBMarker, false);
         });
       }
       else if (document.getElementById('fg')) {
         document.getElementById('fg').addEventListener('click', () => {
-           this.enterBuilding('fg', faubourgP, FGMarker);
+           this.enterBuilding('fg', faubourgP, FGMarker, false);
         });
       } else if (document.getElementById('mb')) {
         document.getElementById('mb').addEventListener('click', () => {
-           this.enterBuilding('mb', molsonP, MBMarker);
+           this.enterBuilding('mb', molsonP, MBMarker, false);
         });
       } else if (document.getElementById('va')) {
         document.getElementById('va').addEventListener('click', () => {
-           this.enterBuilding('va', visualArtsP, VAMarker);
+           this.enterBuilding('va', visualArtsP, VAMarker, false);
         });
       } else if (document.getElementById('gn')) {
         document.getElementById('gn').addEventListener('click', () => {
-           this.enterBuilding('gn', greyNunsP, GNMarker);
+           this.enterBuilding('gn', greyNunsP, GNMarker, false);
         });
       } else if (document.getElementById('cj')) {
         document.getElementById('cj').addEventListener('click', () => {
-           this.enterBuilding('cj', journalismP, CJMarker);
+           this.enterBuilding('cj', journalismP, CJMarker, false);
         });
       } else if (document.getElementById('sc')) {
         document.getElementById('sc').addEventListener('click', () => {
-           this.enterBuilding('sc', scienceComplexP, SCMarker);
+           this.enterBuilding('sc', scienceComplexP, SCMarker, false);
         });
       } else if (document.getElementById('lj')) {
         document.getElementById('lj').addEventListener('click', () => {
-           this.enterBuilding('lj', jesuitP, LJMarker);
+           this.enterBuilding('lj', jesuitP, LJMarker, false);
         });
       } else if (document.getElementById('cb')) {
         document.getElementById('cb').addEventListener('click', () => {
-           this.enterBuilding('cb', centralBuildingP, CBMarker);
+           this.enterBuilding('cb', centralBuildingP, CBMarker , false);
         });
       } else if (document.getElementById('ad')) {
         document.getElementById('ad').addEventListener('click', () => {
-           this.enterBuilding('ad', adminP, ADMarker);
+           this.enterBuilding('ad', adminP, ADMarker, false);
         });
       } else if (document.getElementById('py')) {
         document.getElementById('py').addEventListener('click', () => {
-           this.enterBuilding('py', psyP, PYMarker);
+           this.enterBuilding('py', psyP, PYMarker, false);
         });
       }
       else if (document.getElementById('vl')) {
         document.getElementById('vl').addEventListener('click', () => {
-           this.enterBuilding('vl', vanierLibraryP, VLMarker);
+           this.enterBuilding('vl', vanierLibraryP, VLMarker, false);
         });
       } else if (document.getElementById('ps')) {
         document.getElementById('ps').addEventListener('click', () => {
-           this.enterBuilding('ps', phyServiceP, PSMarker);
+           this.enterBuilding('ps', phyServiceP, PSMarker, false);
         });
       }
       else if (document.getElementById('ge')) {
         document.getElementById('ge').addEventListener('click', () => {
-           this.enterBuilding('ge', structuralCenterP, GEMarker);
+           this.enterBuilding('ge', structuralCenterP, GEMarker, false);
         });
       } else if (document.getElementById('fc')) {
         document.getElementById('fc').addEventListener('click', () => {
-           this.enterBuilding('fc', chapelP, FCMarker);
+           this.enterBuilding('fc', chapelP, FCMarker, false);
         });
       }
 
@@ -1454,22 +1486,23 @@ export class MapComponent implements AfterViewInit {
   }
 
   // FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
-  async enterBuilding(id: string, polygon: any, marker: any) {
+  async enterBuilding(id: string, polygon: any, marker: any, usePOI: boolean) {
+    debugger;
     switch (id)
     {
       // Hall Building
       case 'HB':
+      debugger;
           console.log('In ' + id + ' building.');
           polygon.setVisible(false);
           marker.setVisible(false);
           this.clearAllPOIMarkers();
 
           const b: Building = await this.buildingFactory.loadBuilding(id);
-
-          const buildingInfo = b.getBuildingInfo();
-          const buildingFloors = b.getFloors();
-
-          this.indoorView(buildingInfo, polygon, marker, buildingFloors, 'HALL');
+          let buildingInfo = b.getBuildingInfo();
+          var buildingFloors = b.getFloors();
+          
+          this.indoorView(buildingInfo, polygon, marker, buildingFloors, 'HALL', usePOI);
 
           break;
       // EV building
@@ -1548,23 +1581,18 @@ export class MapComponent implements AfterViewInit {
    * @param polygon is the building layer
    * @param marker is the building marker
    */
-  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string): void {
+  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string, usingPOI: boolean): void
+  {
+    let floorImage = ""; //Holds the image path
+    var indoorOverlay; //Layer on top of building
+    let self = this;
+    let empty = "";
 
-
-    if (building == 'HALL') {
-
-
-
-    let floorImage = ''; // Holds the image path
-    let indoorOverlay; // Layer on top of building
-    const self = this;
-    const empty = '';
-
-    let imageBound = {
-      north: buildingInfo['bound'].north, // Top
-      south: buildingInfo['bound'].south, // Bottom
-      east: buildingInfo['bound'].east, // Right
-      west: buildingInfo['bound'].west // Left
+    var imageBound = {
+      north: buildingInfo["bound"].north, //Top
+      south: buildingInfo["bound"].south, //Bottom
+      east: buildingInfo["bound"].east, //Right
+      west: buildingInfo["bound"].west //Left
     };
 
     indoorOverlay = new google.maps.GroundOverlay(
@@ -1572,11 +1600,13 @@ export class MapComponent implements AfterViewInit {
         imageBound);
     indoorOverlay.setMap(this.map);
 
-    // Zoom in
-    this.map.setCenter({lat: buildingInfo['Location'].lat, lng: buildingInfo['Location'].lng});
-    this.map.setZoom(19);
-    // No zoom or drag anymore
-    this.map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
+    //ONLY DO the below work if entering indoor mode for the first time
+    if(!indoorModeEnable){
+    //Zoom in
+    this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
+    this.map.setZoom(18);
+    //No zoom or drag anymore
+    this.map.setOptions({draggable: true, zoomControl: false, scrollwheel: true, disableDoubleClickZoom: true});
 
     // Dropdown content
     let selectContent = '';
@@ -1591,17 +1621,17 @@ export class MapComponent implements AfterViewInit {
     '</select>';
 
     // Create a div to hold the control for dropdown and Exit button
-    let controlFloorDiv = document.createElement('div');
-    let controlExitDiv = document.createElement('div');
+    var controlFloorDiv = document.createElement('div');
+    var controlExitDiv = document.createElement('div');
 
     // Set CSS for the control border of Floor
-    let controlFloorUI = document.createElement('div');
+    var controlFloorUI = document.createElement('div');
     controlFloorUI.style.backgroundColor = '#fff';
     controlFloorUI.style.border = '2px solid #fff';
     controlFloorUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
 
     // Set CSS for the control interior of Floor
-    let controlFloorText = document.createElement('div');
+    var controlFloorText = document.createElement('div');
     controlFloorText.style.fontSize = '16px';
     controlFloorText.style.lineHeight = '38px';
     controlFloorText.style.paddingLeft = '5px';
@@ -1609,11 +1639,11 @@ export class MapComponent implements AfterViewInit {
     controlFloorText.innerHTML = floorDropdown;
 
     // Set CSS for the control border of Exit
-    let controlExitUI = document.createElement('div');
+    var controlExitUI = document.createElement('div');
     controlExitUI.style.marginBottom = '22px';
 
     // Set CSS for the control interior of Exit
-    let controlExitText = document.createElement('div');
+    var controlExitText = document.createElement('div');
     let exitButton = '<ion-button>Exit Building</ion-button>';
     controlExitText.innerHTML = exitButton;
 
@@ -1628,23 +1658,26 @@ export class MapComponent implements AfterViewInit {
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlFloorDiv);
     this.map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlExitDiv);
 
-    // Listener for dropdown
-    google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e)
-    {
-      self.clearAllPOIMarkers();
+    //define dropdown handler here
+    var floorDropDownHander = function(e) 
+    {    
+      componentContext.clearAllPOIMarkers();
+      for(let i = 0; i <buildingInfo["totalFloors"].nFloors; i++)
+      {
+        if(buildingInfo["Floors"][i] != undefined)
+        {
+          this.currentFloor = this.value;
 
-      for (let i = 0; i < buildingInfo['totalFloors'].nFloors; i++) {
-        if (buildingInfo['Floors'][i] != undefined) {
-          if (this.value == buildingInfo['Floors'][i].level) {
-            floorImage = buildingInfo['Floors'][i].img;
-            indoorOverlay.setMap(null);
+          if(this.value == buildingInfo["Floors"][i].level)
+          {
+            floorImage = buildingInfo["Floors"][i].img;
+            indoorOverlay.setMap(null);  
             indoorOverlay = new google.maps.GroundOverlay(
                 floorImage,
                 imageBound);
             indoorOverlay.setMap(self.map);
 
-            
-
+          if(usingPOI){
             const floorLevel = buildingInfo['Floors'][i].level;
             const currentFloor: Floor = buildingFloors['HB' + floorLevel];
 
@@ -1659,45 +1692,63 @@ export class MapComponent implements AfterViewInit {
                   label: poi.getKey()
                 }));
               });
-
             }
-
-            break;
+          }
+          componentContext.showFloorMapForBuilding(this.value + "");
+          break;
           } else {
-            continue;
+              componentContext.removePreviouslyDrawnPath();
+              continue;
           }
         }
         // If no image found, then there is no layer
         indoorOverlay.setMap(null);
       }
+    }
 
+    google.maps.event.addDomListener(document.getElementById('floors'), 'change', floorDropDownHander); 
 
-
-    });
-
-    // Listener for Exit button
-    controlExitUI.addEventListener('click', function() {
-      indoorOverlay.setMap(null);
+    
+    exitIndoorModeFunc = function() 
+    {
+      indoorOverlay.setMap(null);  
       polygon.setVisible(true);
       marker.setVisible(true);
+
       controlExitText.innerHTML = empty;
       controlFloorText.innerHTML = empty;
       self.map.setOptions({draggable: true, scrollwheel: true, disableDoubleClickZoom: false});
       self.map.setZoom(18);
-      self.clearAllPOIMarkers();
-    });
-  }
 
+      //indoor mode values
+      componentContext.removePreviouslyDrawnPath();
+      componentContext.setTransitionsPaths(null);
+      indoorModeEnable = false; 
+      componentContext.currentActiveFloorInBuilding = 0;
+
+      console.log("Status of indoor mode flag (on Exit): " + indoorModeEnable);
+    }
+    
+    //Listener for Exit button
+    controlExitUI.addEventListener('click', exitIndoorModeFunc);
+
+    //flag that indoor mode is active
+    indoorModeEnable = true; 
+    }//close if line 1698 (if(!this.indoorModeEnable))
+      
   }
+    
+  
 
   /**
    * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
    * @param locationList
    */
-  drawPath(locationList: Location[]) {
-    // debugger;
-    let pathCoordinates = [];
-
+  drawPath(locationList: Location[])
+  {
+    this.removePreviouslyDrawnPath();
+    var pathCoordinates = [];
+    
     locationList.forEach((location: Location) => {
       pathCoordinates.push({lat: location.getLat(), lng: location.getLng()});
     });
@@ -1710,19 +1761,31 @@ export class MapComponent implements AfterViewInit {
       strokeWeight: 2
     });
 
+    let startLabel = "Start";
+
     const startMarker = new google.maps.Marker({
       position: locationList[0].getGoogleLatLng(),
       map: this.map,
-      title: 'Start',
-      label: 'S'
+      title: 'Here',
+      label: startLabel
     });
+
+
+    let endLabel = "End";
 
     const endMarker = new google.maps.Marker({
       position: locationList[locationList.length - 1].getGoogleLatLng(),
       map: this.map,
       title: 'End',
-      label: 'E'
+      label: endLabel
     });
+
+    //remember marker instance to disable later
+    this.currentActiveRoute = {
+      "path": path, 
+      "startMark": startMarker, 
+      "endMark": endMarker
+    };
 
     path.setMap(this.map);
   }
@@ -1747,10 +1810,23 @@ export class MapComponent implements AfterViewInit {
 
     this.map.setZoom(20);
   }
+  removePreviouslyDrawnPath(){
+    if(this.currentActiveRoute["path"] != undefined || this.currentActiveRoute["path"] != null){
+      //hide or remove the current route drawn
+      this.currentActiveRoute["path"].setMap(null);
+      this.currentActiveRoute["startMark"].setMap(null);
+      this.currentActiveRoute["endMark"].setMap(null);
+      this.currentActiveRoute = {};
+    }
+  }
+
 
   // Clears all POI markers from the map component
   clearAllPOIMarkers()
   {
+    if(this.poiMarkers === null || this.poiMarkers === undefined)
+      return;
+
     this.poiMarkers.forEach((marker) => {
       marker.setMap(null);
     });
@@ -1758,6 +1834,51 @@ export class MapComponent implements AfterViewInit {
     this.poiMarkers = [];
   }
 
+
+  /**
+   * Method used  to focus in on a give building
+   * @param level Method used to 
+   */
+  async showHallBuildingIndoor(focus: boolean){
+    //focus on overall hall
+    if(!indoorModeEnable && focus)
+      this.focusMap(new Location(45.497194, -73.578886, 0));
+    //show the floor selected
+    let buildingKey = "HB";
+    var hallP = this.onMapPolygons[buildingKey];
+    let hallMarker = this.onMapMarkers[buildingKey]
+    this.enterBuilding(buildingKey, hallP, hallMarker, false);
+  }
+
+  showFloorMapForBuilding(curFloorNum: string){
+
+    let floorNumTransition: string = curFloorNum;
+
+    if(this.currentActiveFloorInBuilding != 0)
+      floorNumTransition = this.currentActiveFloorInBuilding + "";
+
+    //get the path for
+    if(this.indoorTransitionDirections[floorNumTransition] == undefined || this.indoorTransitionDirections[floorNumTransition] == null){
+      this.removePreviouslyDrawnPath();
+    }else{
+      let path: Location[] = this.indoorTransitionDirections[floorNumTransition];
+      this.drawPath(path);
+    }
+  }
+
+  setTransitionsPaths(transitions: any){
+    this.removePreviouslyDrawnPath();
+    this.indoorTransitionDirections = transitions;
+  }
+
+  isIndoorModeActive(): boolean{
+    return indoorModeEnable;
+  }
+
+  quitIndoorMode(){
+    if(indoorModeEnable)
+      exitIndoorModeFunc();
+  }
 }
 
 

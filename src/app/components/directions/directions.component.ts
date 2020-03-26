@@ -1,7 +1,21 @@
-import { Component, OnInit, AfterViewInit} from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {MapService} from '../../services/map/map.service';
+import { MapComponent} from '../../components/map/map.component'
+import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathing.service' 
+import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
+import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service'
 import { Storage } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+
+//models 
+import { Building } from '../../models/Building'
+import { Floor } from '../../models/Floor'
+import { Location } from '../../models/Location'
+import { Transitions } from '../../models/Transitions'
+
+
+
 
 declare var google
 
@@ -12,7 +26,9 @@ declare var google
 })
 export class DirectionsComponent{
 
-  
+  //@ViewChild('map', {static: false}) 
+  mapHandle: MapComponent;
+
   directionsService = new google.maps.DirectionsService;
   directionsRenderer = new google.maps.DirectionsRenderer;
   directions = {}
@@ -26,7 +42,12 @@ export class DirectionsComponent{
   loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke", "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"];
 
 
-  constructor(private geolocation: Geolocation, private mapSrevice : MapService, private storage: Storage) 
+  constructor(private geolocation: Geolocation, 
+              private mapSrevice : MapService, 
+              private storage: Storage,
+              private indoorService: IndoorPathingService,
+              private buildFactoryService: BuildingFactoryService,
+              private gpsMapService: GpsGridMappingService) 
   {
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
@@ -45,6 +66,7 @@ export class DirectionsComponent{
     
     //retrieves an instance of the map (with the overlays) via a service
     this.map = this.mapSrevice.getMap();
+    this.mapHandle = this.mapSrevice.getActiveMapComponent();
     
     //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
     this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
@@ -191,57 +213,72 @@ export class DirectionsComponent{
       return input
   }
 
-  //Uses the google API to determin the route and draws the path on the map
-  getDirections() {
+  //Uses the google API to determine the route and draws the path on the map or 
+  //Show indoor paths.
+  async getDirections() {
     //this is a reference to the map
     this.setMap();
-    var travelMode = this.getTransportation()
+
+    let start = this.directions['start'];
+    let destination = this.directions['destination'];
+
+    
+    if(this.useIndoorDirections(start, destination)){
+      this.preformIndoorDirectionsActivity(start, destination, true);
+    }
+    else if(start == "Current" && await this.isDestinationCampusPOI(destination)){
+        //indoor and outdoor will only be supported when using user position
+        this.useBothIndoorAndOutdoor(destination);
+    }
+    else{
+      this.preformOutdoorDirectionsActivity(start, destination);
+    }
+  }
+
+  /**
+   * Used to preform ALL work when outdoor path is needed to be drawn.
+   * @param start 
+   * @param destination 
+   */
+  preformOutdoorDirectionsActivity(start: string, destination: string){
+
+    var travelMode = this.getTransportation();
+    var travelMode = this.getTransportation();
     var directionsPanel = document.getElementById('directionsPanel')
-    var clearDirections = document.getElementById('clearDirections')
+    //var clearDirections = document.getElementById('clearDirections')
     let directionsForm = document.getElementById('form') 
 
-    this.directionsService.route({
-      origin: this.validateInput(this.directions['start']),
-      destination: this.validateInput(this.directions['destination']),
+      this.directionsService.route({
+      origin: this.validateInput(start),
+      destination: this.validateInput(destination),
       travelMode: travelMode,
-    }, (response, status) => {
+      }, (response, status) => {
       if (status === 'OK') {
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
         directionsForm.style.display="none";
+        this.showClearDirectionControls();
         directionsPanel.style.display="block";
-        clearDirections.style.display="block";
+        //clearDirections.style.display="block";
       } else {
         window.alert('Request to directions API failed: ' + status);
       }
     });
-  }
-
-  
-  //This parametrized function is going to be used primarly for the indoor to outdoor feature
-  getDirection(start:string, destination:string) {
-
-    //this is a reference to the map
-    this.setMap();
     
-    //we Need to figure out how to dynamically get the users method of transportation
-    var travelMode = this.getTransportation()
-
-    this.directionsService.route({
-      origin: start,
-      destination: destination,
-      travelMode: travelMode
-    }, (response, status) => {
-      if (status === 'OK') {
-        this.directionsRenderer.setDirections(response);
-      } else {
-        window.alert('Request to directions API failed: ' + status);
-      }
-    });
   }
+
+  showClearDirectionControls(){
+      var clearDirections = document.getElementById('clearDirections')
+      clearDirections.style.display="block";
+
+      //var dirControl = document.getElementById('clearDirBtn');
+      //dirControl.style.display="none";
+  }
+
 
   //Method for clearing the map of the line, removing text directions and enabling the to/from view
   clearDirections() {
+
     let directionsForm = document.getElementById('form')
 
     if(this.directionsRenderer != null)
@@ -252,6 +289,8 @@ export class DirectionsComponent{
       document.getElementById('directionsPanel').style.display="none"
       document.getElementById('clearDirections').style.display="none"
     }
+    this.mapHandle.quitIndoorMode();
+
   }
 
   async useCurrentLocation(){
@@ -315,5 +354,181 @@ export class DirectionsComponent{
     }
     return nextShuttleTime;
   }
+
+
+
+
+  /**
+   * ---------------------------------------------------------------------------
+   *  
+   * The methods below are used for indoor pathing
+   * 
+   * 
+   * 
+   * -----------------------------------------------------------------------------------
+   */
+
+
+    /**
+     * method to get building for destination code
+     * suggest outdoor route using user position (GoogleLatLng)
+     * 
+     * 
+     */
+
+
+     /**
+   * Used to preform ALL work when indoor path is needed to be drawn. 
+   * @param start 
+   * @param destination 
+   */
+  async preformIndoorDirectionsActivity(start: string, destination: string, disableOutdoor: boolean){
+    //**** remove outdoor route if enable
+    if(disableOutdoor) 
+      this.clearDirections();
+
+    //focus the map onto building
+    debugger;
+    await this.mapHandle.showHallBuildingIndoor(true);
+    this.drawIndoorPath(start, destination, null);
+    this.showClearDirectionControls();
+  }
+
+
+
+  /**
+   * Method is used to determine if classroom(start) to classroom(dest) routing is required.
+   * @param start 
+   * @param dest 
+   */
+  useIndoorDirections(start: string, dest: string){
+    
+    //check if start and end are both 2 classrooms in the same building
+    
+    if(start.length == 5 || start.length == 6){
+      if(dest.length == 5 || dest.length == 6){
+
+        let startBuildCode = start.substring(0,2);
+        let startBuildFloor = start.substring(2, start.length - 1);
+        let endBuildCode = dest.substring(0,2); 
+        let endBuildFloor = dest.substring(2, dest.length - 1);
+
+        let cond1 = !this.checkAllNums(startBuildCode);
+        let cond2 = this.checkAllNums(startBuildFloor);
+
+        let cond3 = !this.checkAllNums(endBuildCode);
+        let cond4 = this.checkAllNums(endBuildFloor);
+
+        let cond5 = this.getBuildingCode(start) === this.getBuildingCode(dest);
+
+        return cond1 && cond2 && cond3 && cond4 && cond5;
+      }  
+    }
+    
+    return false;   
+  }
+
+
+
+  private async isDestinationCampusPOI(dest: string){
+    //get building key from des
+    let buildingCode = this.getBuildingCode(dest);
+    let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
+    return buildingObject != null;
+  }
+
+  /**
+   * This feature will only be support when using User position as "start".
+   * @param userPosition 
+   * @param dest 
+   */
+  private async useBothIndoorAndOutdoor(dest: string){
+  
+    debugger;
+
+    //get user position
+    let user: Location = await this.gpsMapService.getUserCurrentPosition(); 
+
+    //get building key from des
+    let buildingCode = this.getBuildingCode(dest);
+    let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
+
+    debugger;
+    if(buildingObject != null){//if not null he wants to go to a valid classroom
+      if(!this.gpsMapService.userInBuilding(user, buildingObject)){
+        //should pass GoogleLngLat instead, hardcode start for now
+        await this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
+        let userIndoorStartLocation = buildingObject.getBuildingLocation();
+        this.mapHandle.showHallBuildingIndoor(false);
+
+        //hacky solution, need to set the start location for ground floor when arrived
+        await this.drawIndoorPath(buildingObject.getBuildingKey() + "800", dest, userIndoorStartLocation);
+      }
+    }
+  }
+
+  private checkAllNums(val: string){
+    let onlyNum = /^\d+$/.test(val);
+    return onlyNum;
+  }
+
+  /**
+   * Method interacts with the MapComponent to draw an indoor route in Google Maps. 
+   * @param start 
+   * @param end 
+   */
+  async drawIndoorPath(start: string, end: string, userPosition: Location){
+    
+    debugger;
+    let buildingCode = this.getBuildingCode(start);
+    let floorLevel = this.getFloorNum(start, buildingCode);
+
+    let building : Building = await this.buildFactoryService.loadBuilding(buildingCode); 
+    let currentFloor: Floor = building.getFloorLevel(floorLevel + "");
+
+    let path = null;
+    
+    let transition: Transitions = await this.getPreferedTransition();
+
+    debugger;
+    if(userPosition == null)
+      path = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, transition);
+    else
+      path = this.indoorService.determineRouteToDestinationBasedOnUserPosition(userPosition, building, currentFloor, end, transition);
+
+    //set transition map
+    this.mapHandle.setTransitionsPaths(path);   
+  }
+
+
+
+  private getFloorNum(start: string, buildingCode: string){
+    return Math.trunc(parseInt(start.replace(buildingCode, "")) / 100);
+  }
+
+  private getBuildingCode(start: string){
+    return start.substring(0,2);
+  }
+
+  private async getPreferedTransition(){
+
+    let useStairs = await this.storage.get('useStairs');
+    let useEle = await this.storage.get('useElevator');
+    let useEcs = await this.storage.get('useEscalator'); 
+
+    if(useEcs)
+      return Transitions.Escalator;
+    
+    if(useEle)
+      return Transitions.Elavator;
+
+    if(useStairs)
+      return Transitions.Stairs;
+
+    //default to escalator if nothing
+    return Transitions.Escalator;
+  }
+
+
 
 }

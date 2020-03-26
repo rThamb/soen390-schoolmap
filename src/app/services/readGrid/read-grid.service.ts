@@ -70,7 +70,13 @@ export class ReadGridService {
      floor.pointsOfInterest = curFloor.POI;
      floor.setPois(this.getPointsOfInterest(curFloor.POI));
      floors[floorKeys[i]] = floor;
+
+     //set dimensions
+     let grid = curFloor.binaryGrid;
+     floor.setWidth(grid[0].length);
+     floor.setHeight(grid.length);
     }
+    
     return floors;
   }
 
