@@ -26,14 +26,13 @@ describe('ToggleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should contain a word describing the app', () => {
+  it('should contain loyola and sir george', () => {
     const de = fixture.debugElement.query(By.css('.toolbar'));
     expect(de.nativeElement.textContent).toContain('LOYOLA');
+
+    const de1 = fixture.debugElement.query(By.css('.toolbar'));
+    expect(de1.nativeElement.textContent).toContain('GEORGE');
   });
 
-  it('should contain a word describing the app', () => {
-    const de = fixture.debugElement.query(By.css('.toolbar'));
-    expect(de.nativeElement.textContent).toContain('GEORGE');
-  });
 
 });
