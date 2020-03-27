@@ -5,10 +5,10 @@ import { IndoorPathingService } from '../../services/indoorPathing/indoor-pathin
 import { Location } from '../../models/Location'
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service'
 import { Building } from '../../models/Building'
-import { Floor } from '../../models/Floor'
+// import { Floor } from '../../models/Floor'
 import { MapComponent } from '../map/map.component'
 import { Transitions } from '../../models/Transitions'
-import { Storage } from '@ionic/storage';
+// import { Storage } from '@ionic/storage';
 
 
 

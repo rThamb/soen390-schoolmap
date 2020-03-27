@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { HomeSearchComponent } from './home-search.component';
 import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {By} from "@angular/platform-browser";
 
 describe('HomeSearchComponent', () => {
   let component: HomeSearchComponent;
@@ -32,4 +33,18 @@ describe('HomeSearchComponent', () => {
     expect(bar.shadowRoot).toBeNull();
   }));
 
+
+  // it('should trigger goToSearchResult method when user searches an address, then \'Enter\' key is pressed', async(() => {
+  //   spyOn(component, 'goToSearchResult');
+  //   fixture.debugElement.nativeElement.querySelector('ion-toolbar');
+  //   fixture.detectChanges();
+  //
+  //   const event: Event = new KeyboardEvent('keypress', {'key': 'Enter'});
+  //   window.dispatchEvent(event);
+  //   fixture.detectChanges();
+  //
+  //   fixture.whenStable().then(() => {
+  //     expect(component.goToSearchResult).toHaveBeenCalled();
+  //   })
+  // }));
 });
