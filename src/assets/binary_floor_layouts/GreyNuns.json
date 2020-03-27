@@ -1,0 +1,44 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Grey Nuns Building",
+        "Address": "1190 Guy St, Montreal, Quebec H3H 2L4",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Residences",
+            "Grey Nuns Library",
+            "Daycare Centre",
+            "Summer Accommodation"
+        ],
+        "BuildingImg": "assets/BuildingImages/gn.jpg",
+        "ImgWidth": "55%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.493432,
+        "lng": -73.576705
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

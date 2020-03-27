@@ -1,0 +1,42 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Psychology Building",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 2Z3",
+        "Departments": 
+        [
+            "Psychology", 
+            "Centre for clinical research in health (CCRH)"
+        ],
+        "Services": 
+        [
+        ],
+        "BuildingImg": "assets/BuildingImages/py.jpg",
+        "ImgWidth": "45%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.458894,
+        "lng": -73.640568
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

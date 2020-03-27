@@ -1,0 +1,46 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Stinger Dome",
+        "Address": "7200 Sherbrooke St W Montreal, Quebec H4B 1R2",
+        "Departments": 
+        [
+            "Studio Arts", 
+            "Art History",
+            "Art Education",
+            "Creative Arts Therapies"
+        ],
+        "Services": 
+        [
+            "VAV Art Gallery",
+            "Art Supply Store"
+        ],
+        "BuildingImg": "assets/BuildingImages/sd.jpg",
+        "ImgWidth": "45%",
+        "EnterButton": "false"
+    },
+    "Location":
+    {
+        "lat": 45.457525,
+        "lng": -73.636085
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

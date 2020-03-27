@@ -1,0 +1,46 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Visual Arts Building",
+        "Address": "1395 René-Lévesque Blvd W, Montreal, Quebec H3G 2M5",
+        "Departments": 
+        [
+            "Studio Arts", 
+            "Art History",
+            "Art Education",
+            "Creative Arts Therapies"
+        ],
+        "Services": 
+        [
+            "VAV Art Gallery",
+            "Art Supply Store"
+        ],
+        "BuildingImg": "assets/BuildingImages/va.jpg",
+        "ImgWidth": "75%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.495530,
+        "lng": -73.573845
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

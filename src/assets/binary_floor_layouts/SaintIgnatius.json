@@ -1,0 +1,40 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Saint Ignatius of Loyola",
+        "Address": "4455 Rue West Broadway, Montréal, QC H4B 2A7",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+        ],
+        "BuildingImg": "assets/BuildingImages/si.png",
+        "ImgWidth": "55%",
+        "EnterButton": "false"
+    },
+    "Location":
+    {
+        "lat": 45.457724,
+        "lng": -73.642326
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}
