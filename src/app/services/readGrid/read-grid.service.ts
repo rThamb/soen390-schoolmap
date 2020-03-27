@@ -22,7 +22,31 @@ export class ReadGridService {
     this.directoryPath = "./assets/binary_floor_layouts/"; 
 
     let filenames = {
-      "HB": "HB.json" 
+      "HB": "HB.json",
+      "ev": "ev.json",
+      "LB": "LB.json",
+      "Faubourg": "Faubourg.json", 
+      "MB": "MB.json",
+      "VisualArts": "VisualArts.json",
+      "GreyNuns": "GreyNuns.json",
+      "JournalismBuilding": "JournalismBuilding.json",
+      "ScienceComplex": "ScienceComplex.json",
+      "JesuitHall": "JesuitHall.json",
+      "CentralBuilding": "CentralBuilding.json",
+      "AdministrationBuilding": "AdministrationBuilding.json",
+      "PsychologyBuilding": "PsychologyBuilding.json",
+      "VanierLibrary": "VanierLibrary.json",
+      "ConcordiaStadium": "ConcordiaStadium.json",
+      "StingerDome": "StingerDome.json",
+      "PerformCentre": "PerformCentre.json",
+      "ConcordiaGymnasium": "ConcordiaGymnasium.json",
+      "PhysicalService": "PhysicalService.json",
+      "TerrebonneBuilding": "TerrebonneBuilding.json",
+      "SaintIgnatius": "SaintIgnatius.json",
+      "StructuralCenter": "StructuralCenter.json",
+      "JesuitResidence": "JesuitResidence.json",
+      "Student Residence": "StudentResidence.json",
+      "SmithBuilding": "SmithBuilding.json"
     }; 
 
     this.floorFileNameMap = filenames;
@@ -44,7 +68,7 @@ export class ReadGridService {
       return this.jsonToFloor(json);
 
     }catch(err){
-      console.log("Error thrown in Read-Grid.Service line:(31-37)");
+      console.log("Error thrown in Read-Grid.Service line:(61-68)");
       return null;
     }
   }
@@ -125,35 +149,33 @@ export class ReadGridService {
         }    
       }
       return pois;
-  }
- //Loads a Building json file, and returns a dictionary with informations about it
- async buildingInfo(keyName: string)
- {
-   let buildingInformation = {}; //Dictionary
+  } 
 
-  try{
-    let filename = "./assets/buildings/" + this.floorFileNameMap[keyName]; //Using /buildings directory for now. 
-
-    let res = await fetch(filename);
-    let json = await res.json();
-    let buildingData = json;
-
-    //Add to buildingInformation Dictionnary
-    buildingInformation["totalFloors"] = buildingData.totalFloors;
-    buildingInformation["bound"] = buildingData.bound;
-    buildingInformation["Location"] = buildingData.Location;
-    buildingInformation["Floors"] = buildingData.Floors;
-  }
-  catch(err)
+  //Loads a Building json file, and returns a dictionary with informations about it
+  async buildingInfo(keyName: string)
   {
-    console.log("Error thrown in Read-Grid.Service line:(108-120)");
-    return null;
+    let buildingInformation = {}; //Dictionary
+
+    try{
+      let filename = "./assets/binary_floor_layouts/" + this.floorFileNameMap[keyName]; 
+
+      let res = await fetch(filename);
+      let json = await res.json();
+      let buildingData = json;
+
+      //Add to buildingInformation Dictionnary
+      buildingInformation["BuildingContent"] = buildingData.BuildingContent;
+      buildingInformation["floorNames"] = buildingData.floorNames;
+      buildingInformation["bound"] = buildingData.bound;
+      buildingInformation["Location"] = buildingData.Location;
+      buildingInformation["Floors"] = buildingData.floors;
+    }
+    catch(err)
+    {
+      console.log("Error thrown in Read-Grid.Service line:(153-166)");
+      return null;
+    }
+
+    return buildingInformation;
   }
-
-  return buildingInformation;
-}
-  
-
-
-    
 }

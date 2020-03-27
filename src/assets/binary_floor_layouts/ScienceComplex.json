@@ -1,0 +1,55 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Richard J. Renaud Science Complex",
+        "Address": "3475 Rue West Broadway Montreal, QC H4B 2A7",
+        "Departments": 
+        [
+            "Biology", 
+            "Chemistry and Biochemistry",
+            "Health, Kinesiology & Applied Physiology",
+            "Physics",
+            "Psychology",
+            "Centre for Biological Applications of Mass Spectrometry",
+            "Centre for NanoScience Research",
+            "Centre for Studies in Behavioral Neurobiology",
+            "Centre for Research in Molecular Modeling"
+
+        ],
+        "Services": 
+        [
+            "Science College",
+            "Science Technical Centre",
+            "Animal Care Facilities",
+            "Security Office",
+            "Café"
+        ],
+        "BuildingImg": "assets/BuildingImages/sc.jpg",
+        "ImgWidth": "60%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.457605,
+        "lng": -73.641512
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

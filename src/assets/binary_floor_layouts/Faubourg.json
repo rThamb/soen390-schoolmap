@@ -1,0 +1,50 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Faubourg Building",
+        "Address": "1250 Guy St, Montreal, Quebec H3H 2L3",
+        "Departments": 
+        [
+            "Education", 
+            "Classics, Modern Language & Linguistics",
+            "Concordia Continuing Education",
+            "Mel Hoppenheim School of Cinema",
+            "Montreal Institute for Genocide and Human Rights Studies",
+            "District 3 Innovation Center"
+        ],
+        "Services": 
+        [
+            "Human Resources",
+            "Office of the Registrar",
+            "Examinations Office",
+            "Senior non-credit program"
+        ],
+        "BuildingImg": "assets/BuildingImages/fb.jpg",
+        "ImgWidth": "60%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.494115,
+        "lng": -73.578223
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

@@ -1,0 +1,42 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Physical Services Building",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Environmental Health and Safety",
+            "Facilities Management"
+        ],
+        "BuildingImg": "",
+        "ImgWidth": "",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.459523,
+        "lng": -73.639727
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

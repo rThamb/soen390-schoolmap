@@ -1,0 +1,58 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Central Building",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 2B5",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Concordia Student Union",
+            "Loyola College for Diversity and Sustainability and Loyola"
+        ],
+        "BuildingImg": "assets/BuildingImages/cb.jpg",
+        "ImgWidth": "50%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.458236,
+        "lng": -73.640345
+    },
+
+    "floorNames": ["CB1"],
+
+    "bound":
+    {
+        "north": 45.458639999999995,
+        "south": 45.457965, 
+        "east":  -73.639705,
+        "west":  -73.640975
+    },
+
+    "floorsKeys": ["CentralBuilding1"], 
+
+    "floors":
+    [
+        {
+        "level": 1,
+        "img": "assets/FloorImages/CentralBuilding/CB-1.png",
+        "topLeftLat": 0, 
+        "topLeftLong": 0,
+        "topRightLat": 0, 
+        "topRightLong": 0,
+        "bottomLeftLat": 0, 
+        "bottomLeftLong": 0,
+        "bottomRightLat": 0, 
+        "bottomRightLong": 0,
+        "binaryGrid": [[]],
+        "POI": {}
+        }
+    ]
+}

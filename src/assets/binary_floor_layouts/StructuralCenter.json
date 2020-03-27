@@ -1,0 +1,41 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Centre for Structural and Functional Genomics",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Centre for Structural and Functional Genomics"
+        ],
+        "BuildingImg": "assets/BuildingImages/ge.jpg",
+        "ImgWidth": "45%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.456857,
+        "lng": -73.640421
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

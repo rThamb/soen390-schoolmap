@@ -1,0 +1,41 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "PERFORM Centre",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "PERFORM Centre"
+        ],
+        "BuildingImg": "assets/BuildingImages/pc.jpg",
+        "ImgWidth": "55%",
+        "EnterButton": "false"
+    },
+    "Location":
+    {
+        "lat": 45.456701,
+        "lng": -73.637558
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

@@ -1,0 +1,72 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Vanier Library",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Library"
+        ],
+        "BuildingImg": "assets/BuildingImages/vl.jpg",
+        "ImgWidth": "45%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.458932,
+        "lng": -73.638512
+    },
+
+    "floorNames": ["VL1", "VL2"],
+
+    "bound":
+    {
+        "north": 45.459294,
+        "south": 45.458628,
+        "east": -73.637960,
+        "west": -73.639022  
+    },
+
+    "floorsKeys": ["VanierLibrary1"], 
+
+    "floors":
+    [
+        {
+        "level": 1,
+        "img": "assets/FloorImages/VanierLibrary/VL-1.png",
+        "topLeftLat": 0, 
+        "topLeftLong": 0,
+        "topRightLat": 0, 
+        "topRightLong": 0,
+        "bottomLeftLat": 0, 
+        "bottomLeftLong": 0,
+        "bottomRightLat": 0, 
+        "bottomRightLong": 0,
+        "binaryGrid": [[]],
+        "POI": {}
+        },
+
+        {
+            "level": 2,
+            "img": "assets/FloorImages/VanierLibrary/VL-3.png",
+            "topLeftLat": 0, 
+            "topLeftLong": 0,
+            "topRightLat": 0, 
+            "topRightLong": 0,
+            "bottomLeftLat": 0, 
+            "bottomLeftLong": 0,
+            "bottomRightLat": 0, 
+            "bottomRightLong": 0,
+            "binaryGrid": [[]],
+            "POI": {}
+            }
+    ]
+}
