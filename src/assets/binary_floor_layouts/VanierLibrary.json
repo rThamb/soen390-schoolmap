@@ -35,38 +35,7 @@
         "west": -73.639022  
     },
 
-    "floorsKeys": ["VanierLibrary1"], 
-
     "floors":
     [
-        {
-        "level": 1,
-        "img": "assets/FloorImages/VanierLibrary/VL-1.png",
-        "topLeftLat": 0, 
-        "topLeftLong": 0,
-        "topRightLat": 0, 
-        "topRightLong": 0,
-        "bottomLeftLat": 0, 
-        "bottomLeftLong": 0,
-        "bottomRightLat": 0, 
-        "bottomRightLong": 0,
-        "binaryGrid": [[]],
-        "POI": {}
-        },
-
-        {
-            "level": 2,
-            "img": "assets/FloorImages/VanierLibrary/VL-3.png",
-            "topLeftLat": 0, 
-            "topLeftLong": 0,
-            "topRightLat": 0, 
-            "topRightLong": 0,
-            "bottomLeftLat": 0, 
-            "bottomLeftLong": 0,
-            "bottomRightLat": 0, 
-            "bottomRightLong": 0,
-            "binaryGrid": [[]],
-            "POI": {}
-            }
     ]
 }

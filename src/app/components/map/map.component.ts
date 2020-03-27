@@ -21,7 +21,6 @@ var indoorModeEnable;
 var exitIndoorModeFunc;
 
 
-
 /**
  * MapComponent class. Contains the map object and attributes for all google map related services.
  * Also contains data for both campuses and is injected with our services.
@@ -33,7 +32,7 @@ var exitIndoorModeFunc;
 })
 export class MapComponent implements AfterViewInit {
 
-  @ViewChild('googleMap', {static: false}) googleMap: ElementRef;
+@ViewChild('googleMap', {static: false}) googleMap: ElementRef;
 
   public map: any; // google.maps.Map
   private user: User;
@@ -47,20 +46,17 @@ export class MapComponent implements AfterViewInit {
   private sgw: Campus;
   private loyola: Campus;
 
- 
+  //vars for drawing
+  private onMapMarkers : any;
+  private onMapPolygons: any;
 
-//vars for drawing
-private onMapMarkers : any;
-private onMapPolygons: any;
+  //The following variables are used for indoor mode
+  //variables for indoor mode 
+  private currentActiveFloorInBuilding: number;
+  public currentActiveRoute: any;
 
-//The following variables are used for indoor mode
-
-//variables for indoor mode 
-private currentActiveFloorInBuilding: number;
-public currentActiveRoute: any;
-
-//dictionary used to hold route for each floor need for journey
-private indoorTransitionDirections: any; 
+  //dictionary used to hold route for each floor need for journey
+  private indoorTransitionDirections: any; 
 
   //Color for polygons
   private fColor = "deepskyblue";
@@ -90,7 +86,6 @@ private indoorTransitionDirections: any;
     this.currentActiveFloorInBuilding = 0;
     this.currentActiveRoute = {};
   }
-
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -270,8 +265,6 @@ private indoorTransitionDirections: any;
     let hallMarker = this.createMarker(hallCenter, "HALL")
     this.onMapMarkers["HB"] = hallMarker;
     this.createinfoWindow(hallMarker, hallID);
-
-    hallMarker.setText
 
     //EV Building Marker and info window
     let evCenter = {lat: 45.495470, lng: -73.577780};
@@ -550,8 +543,6 @@ private indoorTransitionDirections: any;
     this.indoorView(buildingInfo, polygon, marker, buildingFloors, id, usePOI);
   }
 
-
-
   /**
    * This method is called when user presses "Enter building" button, and it shows a drop down menu and exit button
    * which allows the user to view different floors in the building.
@@ -560,178 +551,9 @@ private indoorTransitionDirections: any;
   indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string, usingPOI: boolean): void 
   {
 
-    let floorImage = ''; // Holds the image path
-    // var norths = buildingInfo['bound'].north
-    // var wests = buildingInfo['bound'].west 
-    // var souths = buildingInfo['bound'].south 
-    // var easts = buildingInfo['bound'].east 
-    // // Create a div to hold the control for dropdown and Exit button
-    // let boundControlDiv = document.createElement('div');
-
-    // // Set CSS for the control interior of Exit
-    // let boundNP = document.createElement('div');
-    // let northPlus = '<ion-button >N+</ion-button>';
-    // boundNP.innerHTML = northPlus;
-
-    // let boundNM = document.createElement('div');
-    // let northMinus = '<ion-button >N-</ion-button>';
-    // boundNM.innerHTML = northMinus;
-
-    //     // Set CSS for the control interior of Exit
-    //     let boundSP = document.createElement('div');
-    //     let southPlus = '<ion-button >S+</ion-button>';
-    //     boundSP.innerHTML = southPlus;
-    
-    //     let boundSM = document.createElement('div');
-    //     let southMinus = '<ion-button >S-</ion-button>';
-    //     boundSM.innerHTML = southMinus;
-
-    //         // Set CSS for the control interior of Exit
-    // let boundWP = document.createElement('div');
-    // let westPlus = '<ion-button >W+</ion-button>';
-    // boundWP.innerHTML = westPlus;
-
-    // let boundWM = document.createElement('div');
-    // let westMinus = '<ion-button >W-</ion-button>';
-    // boundWM.innerHTML = westMinus;
-
-    //     // Set CSS for the control interior of Exit
-    //     let boundEP = document.createElement('div');
-    //     let eastPlus = '<ion-button >E+</ion-button>';
-    //     boundEP.innerHTML = eastPlus;
-    
-    //     let boundEM = document.createElement('div');
-    //     let eastMinus = '<ion-button >E-</ion-button>';
-    //     boundEM.innerHTML = eastMinus;
-
-
-    // boundControlDiv.appendChild(boundNP);
-    // boundControlDiv.appendChild(boundNM);
-    // boundControlDiv.appendChild(boundSP);
-    // boundControlDiv.appendChild(boundSM);
-    // boundControlDiv.appendChild(boundEP);
-    // boundControlDiv.appendChild(boundEM);
-    // boundControlDiv.appendChild(boundWP);
-    // boundControlDiv.appendChild(boundWM);
-
-    // Push the div into the map
-    // this.map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(boundControlDiv);
-
-    // var imageBound = {
-    //   north: norths, // Top
-    //   south: souths, // Bottom
-    //   east: easts, // Right
-    //   west: wests // Left
-    // };
-
-    // var index = 0.000005;
-    // // Listener for Exit button
-    // boundNP.addEventListener('click', function() {
-    //   norths+= index
-    //   console.log("North: " + norths + "West: " + wests + " South: " + souths + " East: " + easts)
-    //   imageBound = {
-    //     north: norths, // Top
-    //     south: souths, // Bottom
-    //     east: easts, // Right
-    //     west: wests // Left
-    //   };
-    //   self.addFloorOverlay(imageBound, floorImage);
-    // });
-
-    //     // Listener for Exit button
-    //     boundNM.addEventListener('click', function() {
-    //       norths-= index
-    //       console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
-    //       imageBound = {
-    //         north: norths, // Top
-    //         south: souths, // Bottom
-    //         east: easts, // Right
-    //         west: wests // Left
-    //       };
-    //       self.addFloorOverlay(imageBound, floorImage);
-    //     });
-
-    //         // Listener for Exit button
-    // boundSP.addEventListener('click', function() {
-    //   souths+= index
-    //   console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
-    //   imageBound = {
-    //     north: norths, // Top
-    //     south: souths, // Bottom
-    //     east: easts, // Right
-    //     west: wests // Left
-    //   };
-    //   self.addFloorOverlay(imageBound, floorImage);
-    // });
-
-    //     // Listener for Exit button
-    //     boundSM.addEventListener('click', function() {
-    //       souths-= index
-    //       console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
-    //       imageBound = {
-    //         north: norths, // Top
-    //         south: souths, // Bottom
-    //         east: easts, // Right
-    //         west: wests // Left
-    //       };
-    //       self.addFloorOverlay(imageBound, floorImage);
-    //     });
-
-    //         // Listener for Exit button
-    // boundWP.addEventListener('click', function() {
-    //   wests+= index
-    //   console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
-    //   imageBound = {
-    //     north: norths, // Top
-    //     south: souths, // Bottom
-    //     east: easts, // Right
-    //     west: wests // Left
-    //   };
-    //   self.addFloorOverlay(imageBound, floorImage);
-    // });
-
-    //     // Listener for Exit button
-    //     boundWM.addEventListener('click', function() {
-    //       wests-= index
-    //       console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
-    //       imageBound = {
-    //         north: norths, // Top
-    //         south: souths, // Bottom
-    //         east: easts, // Right
-    //         west: wests // Left
-    //       };
-    //       self.addFloorOverlay(imageBound, floorImage);
-    //     });
-
-    //         // Listener for Exit button
-    // boundEP.addEventListener('click', function() {
-    //   easts+= index
-    //   console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
-    //   imageBound = {
-    //     north: norths, // Top
-    //     south: souths, // Bottom
-    //     east: easts, // Right
-    //     west: wests // Left
-    //   };
-    //   self.addFloorOverlay(imageBound, floorImage);
-    // });
-
-    //     // Listener for Exit button
-    //     boundEM.addEventListener('click', function() {
-    //       easts-= index
-    //       console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
-    //       imageBound = {
-    //         north: norths, // Top
-    //         south: souths, // Bottom
-    //         east: easts, // Right
-    //         west: wests // Left
-    //       };
-    //       self.addFloorOverlay(imageBound, floorImage);
-    //     });
-
-
-    ///////////////////////////////////////////
+    let floorImage = ''; 
     this.firstTime = true;
+
     //Make all the markers unclickable
     this.markersClickableOption(false);
     this.userMarker.setOptions({clickable: false});
@@ -807,9 +629,11 @@ private indoorTransitionDirections: any;
       this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlFloorDiv);
       this.map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlExitDiv);
 
+      //This if statement is for when a user first enters a building, and the floor of the first level (1) is shown
       if (buildingInfo['Floors'][0] != undefined && buildingInfo['Floors'][0].level == 1) {
         floorImage = buildingInfo['Floors'][0].img;
         this.addFloorOverlay(imageBound, floorImage);
+        //TODO: Add code similar to below that displays the poi when loading the floor (just for the first floor (level 1)) -See "if(usingPOI)..."
       }
         
       //define dropdown handler here
@@ -825,7 +649,7 @@ private indoorTransitionDirections: any;
 
               if(usingPOI){
                 const floorLevel = buildingInfo['Floors'][i].level;
-                const currentFloor: Floor = buildingFloors['HB' + floorLevel];
+                const currentFloor: Floor = buildingFloors[building + floorLevel];
     
                 // Check if floor object exists for building before attempting to parse it
                 if (currentFloor != undefined) {
@@ -848,16 +672,12 @@ private indoorTransitionDirections: any;
               }
             }
             // If no image found, then there is no layer
-            this.indoorOverlay.setMap(null);
+            self.indoorOverlay.setMap(null);
           }
         }
-        
-        
-
       // Listener for dropdown
       google.maps.event.addDomListener(document.getElementById('floors'), 'change', floorDropDownHander); 
 
-      
       exitIndoorModeFunc = function() 
       {
         self.indoorOverlay.setMap(null);
@@ -891,7 +711,6 @@ private indoorTransitionDirections: any;
       indoorModeEnable = true; 
     }//close if line 1698 (if(!this.indoorModeEnable))
   }
-
 
 //Creates a polygon
 createPolygon(path: any, type: string): any
@@ -1078,30 +897,14 @@ markerLabelVisibility()
 addFloorOverlay(imageBound: any, floorImage :string)
 {
   this.indoorOverlay.setMap(null);
-  // //Only create an indoorOverlay object the first time we enter a building
-  // if(this.firstTime == true)
-  // {
-  //   this.indoorOverlay = new google.maps.GroundOverlay(
-  //       floorImage,
-  //       imageBound);
-  //   this.firstTime = false;
-  // }
-  // else
-  // {
-  //   //If not the first time, then we should just change floor plans
-  //   this.indoorOverlay.set("url", floorImage)
-  // }
   this.indoorOverlay = new google.maps.GroundOverlay(
     floorImage,
     imageBound);
-this.firstTime = false;
 
-
+  this.firstTime = false;
   this.indoorOverlay.setMap(this.map);
 }
     
-  
-
   /**
    * Takes as parameter a list of Locations and draws a path on the map using Google Maps API's Polyline object.
    * @param locationList

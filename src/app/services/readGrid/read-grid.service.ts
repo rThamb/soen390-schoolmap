@@ -45,7 +45,7 @@ export class ReadGridService {
       "SaintIgnatius": "SaintIgnatius.json",
       "StructuralCenter": "StructuralCenter.json",
       "JesuitResidence": "JesuitResidence.json",
-      "Student Residence": "StudentResidence.json",
+      "StudentResidence": "StudentResidence.json",
       "SmithBuilding": "SmithBuilding.json"
     }; 
 

@@ -26,7 +26,7 @@
         "lng": -73.640345
     },
 
-    "floorNames": ["CB1"],
+    "floorNames": ["CB1", "CB2"],
 
     "bound":
     {
@@ -36,13 +36,27 @@
         "west":  -73.640975
     },
 
-    "floorsKeys": ["CentralBuilding1"], 
+    "floorsKeys": ["CentralBuilding1", "CentralBuilding2"], 
 
     "floors":
     [
         {
         "level": 1,
         "img": "assets/FloorImages/CentralBuilding/CB-1.png",
+        "topLeftLat": 0, 
+        "topLeftLong": 0,
+        "topRightLat": 0, 
+        "topRightLong": 0,
+        "bottomLeftLat": 0, 
+        "bottomLeftLong": 0,
+        "bottomRightLat": 0, 
+        "bottomRightLong": 0,
+        "binaryGrid": [[]],
+        "POI": {}
+        },
+        {
+        "level": 2,
+        "img": "",
         "topLeftLat": 0, 
         "topLeftLong": 0,
         "topRightLat": 0, 
