@@ -35,13 +35,29 @@
 
     "bound":
     {
-        "north": 0,
-        "south": 0,
-        "east": 0,
-        "west": 0 
+        "north": 45.495626, 
+        "south": 45.494878, 
+        "east": -73.578376,
+        "west": -73.579583
     },
+
+    "floorsKeys": ["MB1"], 
 
     "floors":
     [
+        {
+        "level": 3,
+        "img": "assets/FloorImages/Molson/image (13).png",
+        "topLeftLat": 0, 
+        "topLeftLong": 0,
+        "topRightLat": 0, 
+        "topRightLong": 0,
+        "bottomLeftLat": 0, 
+        "bottomLeftLong": 0,
+        "bottomRightLat": 0, 
+        "bottomRightLong": 0,
+        "binaryGrid": [[]],
+        "POI": {}
+        }
     ]
 }

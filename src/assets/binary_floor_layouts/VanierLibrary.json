@@ -20,17 +20,48 @@
         "lng": -73.638512
     },
 
-    "floorNames": [],
+    "floorNames": ["VL1", "VL2"],
 
     "bound":
     {
-        "north": 0,
-        "south": 0,
-        "east": 0,
-        "west": 0 
+        "north": 45.459294,
+        "south": 45.458628,
+        "east": -73.637960,
+        "west": -73.639022  
     },
+
+    "floorsKeys": ["VanierLibrary1"], 
 
     "floors":
     [
+        {
+        "level": 1,
+        "img": "assets/FloorImages/VanierLibrary/VL-1.png",
+        "topLeftLat": 0, 
+        "topLeftLong": 0,
+        "topRightLat": 0, 
+        "topRightLong": 0,
+        "bottomLeftLat": 0, 
+        "bottomLeftLong": 0,
+        "bottomRightLat": 0, 
+        "bottomRightLong": 0,
+        "binaryGrid": [[]],
+        "POI": {}
+        },
+
+        {
+            "level": 2,
+            "img": "assets/FloorImages/VanierLibrary/VL-3.png",
+            "topLeftLat": 0, 
+            "topLeftLong": 0,
+            "topRightLat": 0, 
+            "topRightLong": 0,
+            "bottomLeftLat": 0, 
+            "bottomLeftLong": 0,
+            "bottomRightLat": 0, 
+            "bottomRightLong": 0,
+            "binaryGrid": [[]],
+            "POI": {}
+            }
     ]
 }

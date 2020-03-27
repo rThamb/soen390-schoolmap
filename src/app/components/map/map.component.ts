@@ -37,6 +37,7 @@ export class MapComponent implements AfterViewInit {
   private poiMarkers = []; // google.maps.Marker[]
   private infoWindow;
   private buildingMarkers = [];
+  private indoorOverlay;
 
   private sgw: Campus;
   private loyola: Campus;
@@ -49,6 +50,8 @@ export class MapComponent implements AfterViewInit {
   private fontWeight = 'bold';
   private fontSize = '21px';
   private iconEmpty = ''//'../res/img/empty.png';
+
+  private firstTime: boolean; //Checks for the first time a ground overlay (indoorOverlay) is created for a building
 
   // Injects the component class with imported services
   constructor(private geolocation: Geolocation, private mapService: MapService, private buildingFactory: BuildingFactoryService, private indoorPathingService: IndoorPathingService, private myService: ReadGridService)
@@ -98,6 +101,7 @@ export class MapComponent implements AfterViewInit {
       });
     }
     this.infoWindow = new google.maps.InfoWindow(); //Create infoWindow
+    this.indoorOverlay = new google.maps.GroundOverlay(); 
     this.initOverlays();
     this.setDirectionsMap();
   }
@@ -329,7 +333,7 @@ export class MapComponent implements AfterViewInit {
     
     let fcCenter = {lat: 45.458460, lng: -73.639219};
     let FCMarker = this.createMarker(fcCenter, "FC");
-    this.createinfoWindow(FCMarker, fcID)
+    this.createinfoWindow(FCMarker, fcID);
 
     // let hallTest = new google.maps.LatLng(45.497194, -73.578886) //variable to test containsLocation
     // For current location
@@ -515,26 +519,194 @@ export class MapComponent implements AfterViewInit {
    */
   indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string): void 
   {
+    let floorImage = ''; // Holds the image path
+    var norths = buildingInfo['bound'].north
+    var wests = buildingInfo['bound'].west 
+    var souths = buildingInfo['bound'].south 
+    var easts = buildingInfo['bound'].east 
+    // Create a div to hold the control for dropdown and Exit button
+    let boundControlDiv = document.createElement('div');
+
+    // Set CSS for the control interior of Exit
+    let boundNP = document.createElement('div');
+    let northPlus = '<ion-button >N+</ion-button>';
+    boundNP.innerHTML = northPlus;
+
+    let boundNM = document.createElement('div');
+    let northMinus = '<ion-button >N-</ion-button>';
+    boundNM.innerHTML = northMinus;
+
+        // Set CSS for the control interior of Exit
+        let boundSP = document.createElement('div');
+        let southPlus = '<ion-button >S+</ion-button>';
+        boundSP.innerHTML = southPlus;
+    
+        let boundSM = document.createElement('div');
+        let southMinus = '<ion-button >S-</ion-button>';
+        boundSM.innerHTML = southMinus;
+
+            // Set CSS for the control interior of Exit
+    let boundWP = document.createElement('div');
+    let westPlus = '<ion-button >W+</ion-button>';
+    boundWP.innerHTML = westPlus;
+
+    let boundWM = document.createElement('div');
+    let westMinus = '<ion-button >W-</ion-button>';
+    boundWM.innerHTML = westMinus;
+
+        // Set CSS for the control interior of Exit
+        let boundEP = document.createElement('div');
+        let eastPlus = '<ion-button >E+</ion-button>';
+        boundEP.innerHTML = eastPlus;
+    
+        let boundEM = document.createElement('div');
+        let eastMinus = '<ion-button >E-</ion-button>';
+        boundEM.innerHTML = eastMinus;
+
+
+    boundControlDiv.appendChild(boundNP);
+    boundControlDiv.appendChild(boundNM);
+    boundControlDiv.appendChild(boundSP);
+    boundControlDiv.appendChild(boundSM);
+    boundControlDiv.appendChild(boundEP);
+    boundControlDiv.appendChild(boundEM);
+    boundControlDiv.appendChild(boundWP);
+    boundControlDiv.appendChild(boundWM);
+
+    // Push the div into the map
+    this.map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(boundControlDiv);
+
+    var imageBound = {
+      north: norths, // Top
+      south: souths, // Bottom
+      east: easts, // Right
+      west: wests // Left
+    };
+
+    var index = 0.000005;
+    // Listener for Exit button
+    boundNP.addEventListener('click', function() {
+      norths+= index
+      console.log("North: " + norths + "West: " + wests + " South: " + souths + " East: " + easts)
+      imageBound = {
+        north: norths, // Top
+        south: souths, // Bottom
+        east: easts, // Right
+        west: wests // Left
+      };
+      self.addFloorOverlay(imageBound, floorImage);
+    });
+
+        // Listener for Exit button
+        boundNM.addEventListener('click', function() {
+          norths-= index
+          console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
+          imageBound = {
+            north: norths, // Top
+            south: souths, // Bottom
+            east: easts, // Right
+            west: wests // Left
+          };
+          self.addFloorOverlay(imageBound, floorImage);
+        });
+
+            // Listener for Exit button
+    boundSP.addEventListener('click', function() {
+      souths+= index
+      console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
+      imageBound = {
+        north: norths, // Top
+        south: souths, // Bottom
+        east: easts, // Right
+        west: wests // Left
+      };
+      self.addFloorOverlay(imageBound, floorImage);
+    });
+
+        // Listener for Exit button
+        boundSM.addEventListener('click', function() {
+          souths-= index
+          console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
+          imageBound = {
+            north: norths, // Top
+            south: souths, // Bottom
+            east: easts, // Right
+            west: wests // Left
+          };
+          self.addFloorOverlay(imageBound, floorImage);
+        });
+
+            // Listener for Exit button
+    boundWP.addEventListener('click', function() {
+      wests+= index
+      console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
+      imageBound = {
+        north: norths, // Top
+        south: souths, // Bottom
+        east: easts, // Right
+        west: wests // Left
+      };
+      self.addFloorOverlay(imageBound, floorImage);
+    });
+
+        // Listener for Exit button
+        boundWM.addEventListener('click', function() {
+          wests-= index
+          console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
+          imageBound = {
+            north: norths, // Top
+            south: souths, // Bottom
+            east: easts, // Right
+            west: wests // Left
+          };
+          self.addFloorOverlay(imageBound, floorImage);
+        });
+
+            // Listener for Exit button
+    boundEP.addEventListener('click', function() {
+      easts+= index
+      console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
+      imageBound = {
+        north: norths, // Top
+        south: souths, // Bottom
+        east: easts, // Right
+        west: wests // Left
+      };
+      self.addFloorOverlay(imageBound, floorImage);
+    });
+
+        // Listener for Exit button
+        boundEM.addEventListener('click', function() {
+          easts-= index
+          console.log("North: " + norths + " West: " + wests + " South: " + souths + " East: " + easts)
+          imageBound = {
+            north: norths, // Top
+            south: souths, // Bottom
+            east: easts, // Right
+            west: wests // Left
+          };
+          self.addFloorOverlay(imageBound, floorImage);
+        });
+
+
+    ///////////////////////////////////////////
+    this.firstTime = true;
     //Make all the markers unclickable
     this.markersClickableOption(false);
     this.userMarker.setOptions({clickable: false});
 
-    let floorImage = ''; // Holds the image path
-    let indoorOverlay; // Layer on top of building
+    // let floorImage = ''; // Holds the image path
     const self = this;
     const empty = '';
 
-    let imageBound = {
-      north: buildingInfo['bound'].north, // Top
-      south: buildingInfo['bound'].south, // Bottom
-      east: buildingInfo['bound'].east, // Right
-      west: buildingInfo['bound'].west // Left
-    };
+    // let imageBound = {
+    //   north: buildingInfo['bound'].north, // Top
+    //   south: buildingInfo['bound'].south, // Bottom
+    //   east: buildingInfo['bound'].east, // Right
+    //   west: buildingInfo['bound'].west // Left
+    // };
 
-    indoorOverlay = new google.maps.GroundOverlay(
-        floorImage,
-        imageBound);
-    indoorOverlay.setMap(this.map);
+    this.addFloorOverlay(imageBound, floorImage);
 
     //Zoom in
     this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
@@ -592,6 +764,11 @@ export class MapComponent implements AfterViewInit {
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlFloorDiv);
     this.map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlExitDiv);
 
+    if (buildingInfo['Floors'][0] != undefined && buildingInfo['Floors'][0].level == 1) {
+      floorImage = buildingInfo['Floors'][0].img;
+      this.addFloorOverlay(imageBound, floorImage);
+    }
+
     // Listener for dropdown
     google.maps.event.addDomListener(document.getElementById('floors'), 'change', function(e)
     {
@@ -600,13 +777,7 @@ export class MapComponent implements AfterViewInit {
         if (buildingInfo['Floors'][i] != undefined) {
           if (this.value == buildingInfo['Floors'][i].level) {
             floorImage = buildingInfo['Floors'][i].img;
-            indoorOverlay.setMap(null);
-            indoorOverlay = new google.maps.GroundOverlay(
-                floorImage,
-                imageBound);
-            indoorOverlay.setMap(self.map);
-
-            
+            self.addFloorOverlay(imageBound, floorImage);
 
             const floorLevel = buildingInfo['Floors'][i].level;
             const currentFloor: Floor = buildingFloors[building + floorLevel];
@@ -630,13 +801,13 @@ export class MapComponent implements AfterViewInit {
           }
         }
         // If no image found, then there is no layer
-        indoorOverlay.setMap(null);
+        self.indoorOverlay.setMap(null);
       }
     });
 
     // Listener for Exit button
     controlExitUI.addEventListener('click', function() {
-      indoorOverlay.setMap(null);
+      self.indoorOverlay.setMap(null);
       polygon.setVisible(true);
       marker.setVisible(true);
       controlExitText.innerHTML = empty;
@@ -830,6 +1001,32 @@ export class MapComponent implements AfterViewInit {
         }
       }
     });
+  }
+
+  //Adds a floor overlay on a building 
+  addFloorOverlay(imageBound: any, floorImage :string)
+  {
+    this.indoorOverlay.setMap(null);
+    // //Only create an indoorOverlay object the first time we enter a building
+    // if(this.firstTime == true)
+    // {
+    //   this.indoorOverlay = new google.maps.GroundOverlay(
+    //       floorImage,
+    //       imageBound);
+    //   this.firstTime = false;
+    // }
+    // else
+    // {
+    //   //If not the first time, then we should just change floor plans
+    //   this.indoorOverlay.set("url", floorImage)
+    // }
+    this.indoorOverlay = new google.maps.GroundOverlay(
+      floorImage,
+      imageBound);
+  this.firstTime = false;
+
+
+    this.indoorOverlay.setMap(this.map);
   }
 
   /**
