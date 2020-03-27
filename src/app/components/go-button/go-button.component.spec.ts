@@ -25,7 +25,7 @@ describe('GoButtonComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should contain "GO"', () => {
+  it('should contain a word describing the app', () => {
     const de = fixture.debugElement.query(By.css('.locatebut'));
     expect(de.nativeElement.textContent).toContain('GO');
   });
