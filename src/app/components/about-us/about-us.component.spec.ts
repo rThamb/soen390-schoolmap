@@ -9,6 +9,7 @@ describe('AboutUsComponent', () => {
   let fixture: ComponentFixture<AboutUsComponent>;
 
   beforeEach(async(() => {
+const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ AboutUsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -27,5 +28,27 @@ describe('AboutUsComponent', () => {
     const de = fixture.debugElement.query(By.css('.infoAboutUs'));
     expect(de.nativeElement.textContent).toContain('developed by the ConcordiaGo team');
   });
+it('when ngOnInit is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.ngOnInit();
+    // assert
+    // expect(c).toEqual
+});
+
 
 });
+
+function setup() {
+    const builder = {
+        default() {
+            return builder;
+        },
+        build() {
+            return new AboutUsComponent();
+        }
+    }
+    return builder;
+}
