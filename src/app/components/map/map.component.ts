@@ -577,7 +577,7 @@ export class MapComponent implements AfterViewInit {
       //Zoom in
       this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
       this.map.setZoom(19);
-      this.map.setOptions({minZoom: 18});
+      //this.map.setOptions({minZoom: 18});
 
       // Dropdown content
       let selectContent = '';

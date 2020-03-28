@@ -398,7 +398,6 @@ export class DirectionsComponent{
       this.clearDirections();
 
     //focus the map onto building
-    debugger;
     await this.mapHandle.showHallBuildingIndoor(true);
     this.drawIndoorPath(start, destination, null);
     this.showClearDirectionControls();
@@ -454,8 +453,6 @@ export class DirectionsComponent{
    */
   private async useBothIndoorAndOutdoor(dest: string){
   
-    debugger;
-
     //get user position
     let user: Location = await this.gpsMapService.getUserCurrentPosition(); 
 
@@ -463,16 +460,14 @@ export class DirectionsComponent{
     let buildingCode = this.getBuildingCode(dest);
     let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
 
-    debugger;
     if(buildingObject != null){//if not null he wants to go to a valid classroom
       if(!this.gpsMapService.userInBuilding(user, buildingObject)){
         //should pass GoogleLngLat instead, hardcode start for now
         await this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
         let userIndoorStartLocation = buildingObject.getBuildingLocation();
         this.mapHandle.showHallBuildingIndoor(false);
-
         //hacky solution, need to set the start location for ground floor when arrived
-        await this.drawIndoorPath(buildingObject.getBuildingKey() + "800", dest, userIndoorStartLocation);
+        this.drawIndoorPath(buildingObject.getBuildingKey() + "800", dest, userIndoorStartLocation);
       }
     }
   }
@@ -489,7 +484,6 @@ export class DirectionsComponent{
    */
   async drawIndoorPath(start: string, end: string, userPosition: Location){
     
-    debugger;
     let buildingCode = this.getBuildingCode(start);
     let floorLevel = this.getFloorNum(start, buildingCode);
 
@@ -500,7 +494,6 @@ export class DirectionsComponent{
     
     let transition: Transitions = await this.getPreferedTransition();
 
-    debugger;
     if(userPosition == null)
       path = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, transition);
     else
