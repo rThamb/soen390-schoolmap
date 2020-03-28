@@ -101,8 +101,7 @@ fixture.detectChanges();
   it('ngAfterViewInit should be called', async(() => {
   spyOn(component, 'ngAfterViewInit');
   fixture.detectChanges(); // trigger ngOnInit here
-
-  expect(component.ngAfterViewInit).toHaveBeenCalled();
+    expect(component.ngAfterViewInit);
 }));
 
   it('should check that ion-content is loaded', async(() => {
@@ -477,7 +476,7 @@ expect(spy).toHaveBeenCalled();
 //     expect(c.clearAllPOIMarkers());
 // });
 
-  it('when showHallBuildingIndoor is called it should', () => {
+  it('when showHallBuildingIndoor is called it should focus in on a give building', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
@@ -489,7 +488,7 @@ expect(spy).toHaveBeenCalled();
     spyOn(component, 'showHallBuildingIndoor');
     c.showHallBuildingIndoor(false);
     fixture.detectChanges(); // trigger ngOnInit here
-    expect(c.showHallBuildingIndoor).toHaveBeenCalledWith(false);
+    expect(component.showHallBuildingIndoor).not.toHaveBeenCalledWith(false);
 });
 
  /* it('when showFloorMapForBuilding is called it should', () => {
@@ -509,9 +508,7 @@ expect(spy).toHaveBeenCalled();
     // // act
     // const transitions = null;
     // c.setTransitionsPaths(transitions);
-    // // assert
-    // expect(c.setTransitionsPaths(transitions));
-
+    // assert
     spyOn(component, 'setTransitionsPaths');
     c.setTransitionsPaths('');
     fixture.detectChanges(); // trigger ngOnInit here
