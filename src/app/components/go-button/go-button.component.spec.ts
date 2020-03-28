@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { GoButtonComponent } from './go-button.component';
@@ -10,11 +11,12 @@ describe('GoButtonComponent', () => {
   let fixture: ComponentFixture<GoButtonComponent>;
 
   beforeEach(async(() => {
+const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ GoButtonComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [RouterTestingModule , IonicModule.forRoot()],
-    }).compileComponents();
+    }).configureTestingModule({ providers: [{ provide: NavController, useValue: a.navCtrl }] }).compileComponents();
 
     fixture = TestBed.createComponent(GoButtonComponent);
     component = fixture.componentInstance;
@@ -39,4 +41,38 @@ describe('GoButtonComponent', () => {
       expect(component.LoadNewPage).toHaveBeenCalledWith('/NewRoute');
     });
   }));
+it('when LoadNewPage is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.LoadNewPage('/NewRoute');
+    // assert
+    // expect(c).toEqual
 });
+
+it('when ngOnInit is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.ngOnInit();
+    // assert
+    // expect(c).toEqual
+});
+
+});
+
+function setup() {
+    const navCtrl = autoSpy(NavController);
+        const builder = {
+        navCtrl,
+        default() {
+            return builder;
+        },
+        build() {
+            return new GoButtonComponent(navCtrl);
+        }
+    }
+    return builder;
+}
