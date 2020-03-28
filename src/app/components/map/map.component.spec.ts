@@ -11,7 +11,10 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { autoSpy } from 'auto-spy';
 import { Building } from 'src/app/models/Building';
 import { By } from '@angular/platform-browser';
+import {Location} from "../../models/Location";
 declare var google;
+import {User} from '../../models/User';
+
 
 describe('MapComponent', () => {
   var component: MapComponent;
@@ -44,13 +47,6 @@ fixture.detectChanges();
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
-
-  it('should check if the class="map" is applied to map', async(() => {
-    fixture.detectChanges();
-    const mapTag = fixture.debugElement.nativeElement.querySelector('div');
-
-    // expect(mapTag.innerHTML).toContain('class="map"');
-  }));
 
   it('should create a marker and return it', async(() => 
   {
@@ -97,19 +93,19 @@ fixture.detectChanges();
     expect(obtainedPolygon).toEqual(expectedPolygon);
   }));
 
-// //   it('method should be called', async (() => {
-// //     spy = spyOn(component, "clearAllPOIMarkers").and.callThrough();
-// //     expect(component).toBeDefined();
-// //     expect(spy);
-// //     expect(component.clearAllPOIMarkers).toHaveBeenCalled(); 
-// // }));
+  it('method should be called', async (() => {
+    spy = spyOn(component, "clearAllPOIMarkers").and.callThrough();
+    expect(component).toBeDefined();
+    expect(spy);
+    expect(component.clearAllPOIMarkers).toHaveBeenCalled();
+}));
 
-// it('ngAfterViewInit should be called', async(() => {
-//   spyOn(component, 'ngAfterViewInit'); 
-//   fixture.detectChanges(); // trigger ngOnInit here
+it('ngAfterViewInit should be called', async(() => {
+  spyOn(component, 'ngAfterViewInit');
+  fixture.detectChanges(); // trigger ngOnInit here
 
-//   expect(component.ngAfterViewInit).toHaveBeenCalled(); 
-// }));
+  expect(component.ngAfterViewInit).toHaveBeenCalled();
+}));
 
 it('should check that ion-content is loaded', async(() => {
   let mapSearch= fixture.debugElement.query(By.css('ion-content'));
@@ -117,15 +113,13 @@ it('should check that ion-content is loaded', async(() => {
   expect(mapSearch).toBeTruthy();
 }));
 
-// it("should call the 'loadBuilding' method on the 'BuildingFactoryService'", async (() => {
-//   let service: BuildingFactoryService;
-//   spy = spyOn(service, 'loadBuilding');
-//   fixture.detectChanges();
-//   component.enterBuilding("", "", "", false);
-//   expect(spy).toHaveBeenCalled();
-// }));
-
-
+it("should call the 'loadBuilding' method on the 'BuildingFactoryService'", async (() => {
+  let service: BuildingFactoryService;
+  spy = spyOn(service, 'loadBuilding');
+  fixture.detectChanges();
+  component.enterBuilding("", "", "", false);
+  expect(spy).toHaveBeenCalled();
+}));
 
 
   it('when ngAfterViewInit is called it should initialize the map', () => {
@@ -141,24 +135,26 @@ it('should check that ion-content is loaded', async(() => {
     expect(c.ngAfterViewInit());
 });
 
-  it('when initMap is called it should', () => {
+  it('when initMap is called it should initialize the map', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
     c.initMap();
     // assert
-    // expect(c).toEqual
+    expect(c.initMap).toHaveBeenCalled();
 });
 
-  it('when setDirectionsMap is called it should', () => {
+  it('when setDirectionsMap is called it should set an instance of the map to a service which injects it to other components', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
+    this.mapService.setMap(this.map);
+    this.mapService.setActiveMapComponent(this);
     c.setDirectionsMap();
     // assert
-    // expect(c).toEqual
+    expect(c.setDirectionsMap).toHaveBeenCalled();
 });
 
   it('when getCurrentLocation is called it should Get the current location of user and focus map to that point', () => {
@@ -166,33 +162,37 @@ it('should check that ion-content is loaded', async(() => {
     const { build } = setup().default();
     const c = build();
     // act
+    //let currentLoc = this.getCurrentLocation();
+   const user= User;
+   c.user.getLocation().getGoogleLatLng();
     c.getCurrentLocation();
     // assert
     expect(c.getCurrentLocation()).not.toBeNull();
 });
 
-  it('when focusMap is called it should', () => {
+  it('when focusMap is called it should Re-center the map based on location parameter', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
-    const location = c.getCurrentLocation();
+    spyOn(c, 'focusMap');
+    const location = {lat: 45.494711, lng: -73.577871, alt: 0};
     c.focusMap(location);
     // assert
-    // expect(c).toEqual
+    expect(c.focusMap).toHaveBeenCalledWith(location);
 });
 
-  it('when initOverlays is called it should', () => {
+  it('when initOverlays is called it should pawn the building overlays on top of the map', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
     c.initOverlays();
-    // assert
-    // expect(c).toEqual
+    //  assert
+    expect(c).toBeDefined();
 });
 
-  it('when enterBuilding is called it should', () => {
+  it('when enterBuilding is called it should show indoor view after user clicks on the "Enter Building" button', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
@@ -202,13 +202,16 @@ it('should check that ion-content is loaded', async(() => {
     const onMapMarkers = [];
     const hallP = onMapPolygons[buildingKey];
     const hallMarker = onMapMarkers[buildingKey];
+    spyOn(c, 'enterBuilding');
     c.enterBuilding(buildingKey, hallP, hallMarker, false);
 
     // assert
-    // expect(c).toEqual
+    expect(c.enterBuilding).toHaveBeenCalledWith(buildingKey, hallP, hallMarker, false);
 });
 
-  it('when indoorView is called it should', async () => {
+  it('when indoorView is called it should hen user presses "Enter building" button, and it shows a drop down menu and exit button\n' +
+      '   * which allows the user to view different floors in the building.\n' +
+      '   * let buildingInfo is a dictionary that holds informations about the buildings', async () => {
     // arrange
     const { build } = setup().default();
     const c = build();
@@ -226,7 +229,8 @@ it('should check that ion-content is loaded', async(() => {
     let hallCenter = {lat: 45.497092, lng: -73.578974};
     const marker =c.createMarker(hallCenter, "HALL");
 
-    this.clearAllPOIMarkers();
+    // this.poiMarkers = [];
+    // this.clearAllPOIMarkers();
     const id = 'HB';
     const b: Building = await this.buildingFactory.loadBuilding(id);
     const buildingInfo= '';
@@ -266,18 +270,18 @@ it('should check that ion-content is loaded', async(() => {
     expect(c.createMarker(hallCenter, "HALL")).toBeTruthy();
 });
 
-  it('when markerListener is called it should', () => {
+  it('when listener is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
+    spyOn(c, 'markerListener');
     let hallCenter = {lat: 45.497092, lng: -73.578974};
-    c.createMarker(hallCenter, "HALL");
     const marker = c.createMarker(hallCenter, "HALL");
-    const start = '<ion-item><p><label style=\'margin-right:1.2em\'><b>Departments: </b></label><br/><br/>';
-    c.markerListener(marker, start);
+    const content = '<ion-item><p><label style=\'margin-right:1.2em\'><b>Departments: </b></label><br/><br/>';
+    c.markerListener(marker, content);
     // assert
-    expect(c.markerListener(marker, 'start')).toBeTruthy();
+    expect(c.markerListener).toHaveBeenCalledWith(marker, content);
 });
 
   it('when enterBuildingEventListener is called it should', () => {
@@ -355,40 +359,40 @@ it('should check that ion-content is loaded', async(() => {
     console.log("after expect for markerLabelVisibility")
 
 
-    // // act
-    // {
-    //   const self = this;
+    // act
+    {
+      const self = this;
 
-    //   //Array contain every label of markers
-    //   let markersLabel = [];
-    //   for(let i = 0; i < this.buildingMarkers.length; i++)
-    //   {
-    //     markersLabel.push(this.buildingMarkers[i].getLabel());
-    //   }
+      //Array contain every label of markers
+      let markersLabel = [];
+      for(let i = 0; i < this.buildingMarkers.length; i++)
+      {
+        markersLabel.push(this.buildingMarkers[i].getLabel());
+      }
 
-    //   //Check for zoom changed
-    //   google.maps.event.addListener(self.map, 'zoom_changed', function () {
-    //     //Hide markers
-    //     if (self.map.getZoom() < 14)
-    //     {
-    //       for(let i = 0; i < self.buildingMarkers.length; i++)
-    //       {
-    //         self.buildingMarkers[i].setLabel(null)
-    //       }
-    //     }
-    //     //Show markers
-    //     else
-    //     {
-    //       for(let i = 0; i < self.buildingMarkers.length; i++)
-    //       {
-    //         self.buildingMarkers[i].setLabel(markersLabel[i])
-    //       }
-    //     }
-    //   });
-    // }
-    // c.markerLabelVisibility();
-    // // assert
-    // expect(c.markerLabelVisibility());
+      //Check for zoom changed
+      google.maps.event.addListener(self.map, 'zoom_changed', function () {
+        //Hide markers
+        if (self.map.getZoom() < 14)
+        {
+          for(let i = 0; i < self.buildingMarkers.length; i++)
+          {
+            self.buildingMarkers[i].setLabel(null)
+          }
+        }
+        //Show markers
+        else
+        {
+          for(let i = 0; i < self.buildingMarkers.length; i++)
+          {
+            self.buildingMarkers[i].setLabel(markersLabel[i])
+          }
+        }
+      });
+    }
+    c.markerLabelVisibility();
+    // assert
+    expect(c.markerLabelVisibility());
 }));
 
   it('when addFloorOverlay is called it should', () => {
@@ -489,10 +493,10 @@ it('should check that ion-content is loaded', async(() => {
     // assert
     expect(c.showHallBuildingIndoor(true)).toBeTruthy();
 
-    // spyOn(component, 'showHallBuildingIndoor'); 
-    // c.showHallBuildingIndoor(false);
-    // fixture.detectChanges(); // trigger ngOnInit here
-    // expect(c.showHallBuildingIndoor).toHaveBeenCalled(); 
+    spyOn(component, 'showHallBuildingIndoor');
+    c.showHallBuildingIndoor(false);
+    fixture.detectChanges(); // trigger ngOnInit here
+    expect(c.showHallBuildingIndoor).toHaveBeenCalledWith(false);
 });
 
   it('when showFloorMapForBuilding is called it should', () => {
