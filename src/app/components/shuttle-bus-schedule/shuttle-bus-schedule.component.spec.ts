@@ -33,25 +33,26 @@ describe('ShuttleBusScheduleComponent', () => {
     const fri = fixture.debugElement.query(By.css('.friday'));
     expect(fri.nativeElement.textContent).toContain('Friday');
   });
-  it('when ngOnInit is called it should', () => {
+  it('when ngOnInit is called it should create the tablestyle with bootstrap', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
     c.ngOnInit();
     // assert
-    // expect(c).toEqual
+     expect(c.tableStyle).toEqual('bootstrap');
 });
 
-  it('when changeStyle is called it should', () => {
+  it('when changeStyle is called it should change the color to dark', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
     c.changeStyle();
     // assert
-    // expect(c).toEqual
+    expect(c.tableStyle).toEqual('dark');
 });
+
 
 
 });
