@@ -1,5 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { User } from '../../models/User'
+import { User } from '../../models/User';
 import { EventEmitter } from 'events';
 import {Storage} from '@ionic/storage';
 
@@ -20,82 +20,70 @@ export class SettingsComponent implements OnInit {
   public languagePreference: string;
   public useGoogleCalendarSync: boolean;
 
-  constructor(private storage: Storage) { 
+  constructor(private storage: Storage) {
 
 
-    
+
   }
 
   // Initialize user settings
-  ngOnInit() 
-  {
+  ngOnInit() {
 
     this.storage.ready().then(() => {
-      
+
       // Set useElevator key/value
       this.storage.get('useElevator').then((uE) => {
-        if(uE == null)
-        {
+        if (uE == null) {
           this.storage.set('useElevator', true);
           this.useElevator = true;
-        }
-        else{
+        } else {
           this.useElevator = uE;
         }
       });
     // Set the useStairs key/values
       this.storage.get('useStairs').then((uS) => {
-        if(uS == null)
-        {
+        if (uS == null) {
           this.storage.set('useStairs', true);
           this.useStairs = true;
-        }
-        else{
+        } else {
           this.useStairs = uS;
         }
       });
     // Set the useEscalators key/value
       this.storage.get('useEscalator').then((uE) => {
-        if(uE == null)
-        {
+        if (uE == null) {
           this.storage.set('useEscalator', true);
           this.useEscalator = true;
-        }
-        else{
+        } else {
           this.useEscalator = uE;
         }
       });
     // Set the languagePreference key/value
       this.storage.get('languagePreference').then((lP) => {
-        if(lP == null)
-        {
+        if (lP == null) {
           this.storage.set('languagePreference', 'English');
           this.languagePreference = 'English';
-        }
-        else{
+        } else {
           console.log(lP);
         }
       });
     // Set the googleSync key/value
       this.storage.get('useGoogleCalendarSync').then((gS) => {
-        if(gS == null)
-        {
+        if (gS == null) {
           this.storage.set('useGoogleCalendarSync', false);
           this.useGoogleCalendarSync = false;
-        }
-        else{
+        } else {
           this.useGoogleCalendarSync = gS;
         }
       });
     });
   }
 
-  // Stores the newly set value for the settting 
-  onChangeSetting(key: string, value: any)
-  {
+  // Stores the newly set value for the settting
+  onChangeSetting(key: string, value: any) {
     this.storage.set(key, value);
   }
 
-  
+
 
 }
