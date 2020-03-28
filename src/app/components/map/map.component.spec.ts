@@ -35,11 +35,6 @@ fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
-  it('should check if the class="map" is applied to map', async(() => {
-    const mapTag = fixture.debugElement.nativeElement.querySelector('div');
-
-    expect(mapTag.innerHTML).toContain('class="map"');
-  }));
   it('when ngAfterViewInit is called it should', () => {
     // arrange
     const { build } = setup().default();
@@ -107,8 +102,10 @@ fixture.detectChanges();
     const c = build();
     // act
     const buildingKey = 'HB';
-    const hallP = this.onMapPolygons[buildingKey];
-    const hallMarker = this.onMapMarkers[buildingKey];
+    const onMapPolygons= [];
+    const onMapMarkers = [];
+    const hallP = onMapPolygons[buildingKey];
+    const hallMarker = onMapMarkers[buildingKey];
     c.enterBuilding(buildingKey, hallP, hallMarker, false);
 
     // assert
