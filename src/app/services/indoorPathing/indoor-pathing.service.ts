@@ -52,6 +52,7 @@ export class IndoorPathingService {
    * Determines the path at the user's position and a destination on the current floor. 
    * (Start and End for the same floor)
    * 
+   * 
    * @param userPosition 
    * @param floor 
    * @param endClass 
@@ -241,7 +242,6 @@ export class IndoorPathingService {
 
   private determineRouteToDestinationDownwards(startPostition: GridCoordinate, building: Building, 
     currentFloor: Floor, destination: string, option: Transitions): any{
-
     
     let startFloor = currentFloor.getFloorLevel();
     let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
@@ -297,18 +297,7 @@ export class IndoorPathingService {
       return journey;
   }
 
-
-
-
-
-
-
-
-
-
   private getFloorLevelFromDestination(buildingkey: string, destKey: string){
     return Math.trunc(parseInt(destKey.replace("HB", "")) / 100);
   }
-
-
 }

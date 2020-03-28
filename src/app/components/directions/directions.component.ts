@@ -277,8 +277,10 @@ export class DirectionsComponent{
       var clearDirections = document.getElementById('clearDirections')
       clearDirections.style.display="block";
 
-      //var dirControl = document.getElementById('clearDirBtn');
-      //dirControl.style.display="none";
+      let getDirBtn = document.getElementById('getDirectionBtn');
+      getDirBtn.style.display="none";
+
+
   }
 
 
@@ -286,6 +288,7 @@ export class DirectionsComponent{
   clearDirections() {
 
     let directionsForm = document.getElementById('form')
+    let getDirBtn = document.getElementById('getDirectionBtn');
 
     if(this.directionsRenderer != null)
     {  
@@ -294,6 +297,7 @@ export class DirectionsComponent{
       document.getElementById('travelinfo').style.display="none"
       document.getElementById('directionsPanel').style.display="none"
       document.getElementById('clearDirections').style.display="none"
+      getDirBtn.style.display="block";
     }
     this.mapHandle.quitIndoorMode();
 
