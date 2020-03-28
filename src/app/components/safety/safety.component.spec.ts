@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { SafetyComponent } from './safety.component';
-import {By} from "@angular/platform-browser";
+import {By} from '@angular/platform-browser';
 
 
 describe('SafetyComponent', () => {
@@ -10,6 +10,7 @@ describe('SafetyComponent', () => {
   let fixture: ComponentFixture<SafetyComponent>;
 
   beforeEach(async(() => {
+    const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ SafetyComponent ],
       imports: [IonicModule.forRoot()]
@@ -50,4 +51,26 @@ describe('SafetyComponent', () => {
     expect(de7.nativeElement.textContent).toContain('Theft');
 
   });
+  it('when ngOnInit is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.ngOnInit();
+    // assert
+    // expect(c).toEqual
 });
+
+});
+
+function setup() {
+    const builder = {
+        default() {
+            return builder;
+        },
+        build() {
+            return new SafetyComponent();
+        }
+    };
+    return builder;
+}

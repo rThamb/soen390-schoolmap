@@ -10,6 +10,7 @@ describe('ShuttleBusScheduleComponent', () => {
   let fixture: ComponentFixture<ShuttleBusScheduleComponent>;
 
   beforeEach(async(() => {
+    const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ ShuttleBusScheduleComponent ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -32,5 +33,37 @@ describe('ShuttleBusScheduleComponent', () => {
     const fri = fixture.debugElement.query(By.css('.friday'));
     expect(fri.nativeElement.textContent).toContain('Friday');
   });
+  it('when ngOnInit is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.ngOnInit();
+    // assert
+    // expect(c).toEqual
+});
+
+  it('when changeStyle is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.changeStyle();
+    // assert
+    // expect(c).toEqual
+});
+
 
 });
+
+function setup() {
+    const builder = {
+        default() {
+            return builder;
+        },
+        build() {
+            return new ShuttleBusScheduleComponent();
+        }
+    }
+    return builder;
+}
