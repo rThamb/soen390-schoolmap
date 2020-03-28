@@ -216,7 +216,7 @@ describe('IndoorPathingService', () => {
   
 
   
-  it('should determine shortest path to Womens on 8th floor', async () => {
+  it('should determine shortest path to Womens washroom on 8th floor', async () => {
    //get handles to service
     const indoorService: IndoorPathingService = TestBed.get(IndoorPathingService);
     const buildingService: BuildingFactoryService = TestBed.get(BuildingFactoryService);
