@@ -8,27 +8,27 @@ describe('ScheduleComponent', () => {
   let fixture: ComponentFixture<ScheduleComponent>;
 
   beforeEach(async(() => {const a = setup().default();
-    TestBed.configureTestingModule({
+                          TestBed.configureTestingModule({
       declarations: [ ScheduleComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ScheduleComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+                          fixture = TestBed.createComponent(ScheduleComponent);
+                          component = fixture.componentInstance;
+                          fixture.detectChanges();
   }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-it('when ngOnInit is called it should', () => {
+  it('when ngOnInit is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
     c.ngOnInit();
     // assert
-    // expect(c).toEqual
+   // expect(c).toBeDefined();
 });
 
 });
@@ -41,6 +41,6 @@ function setup() {
         build() {
             return new ScheduleComponent();
         }
-    }
+    };
     return builder;
 }
