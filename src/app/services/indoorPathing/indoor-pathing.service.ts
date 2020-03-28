@@ -29,8 +29,9 @@ export class IndoorPathingService {
   }
 
 
-  private getPathToClosestWashroom(userPosition: GridCoordinate, floor: Floor, gender: string){
-    
+  public getPathToClosestWashroom(userPosition: Location, floor: Floor, gender: string): Location[]
+  {
+    let userPositionCoor: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, floor);
     let dest: GridCoordinate = null;
 
     if(gender === "M")
@@ -39,8 +40,10 @@ export class IndoorPathingService {
     else
       dest = floor.getWomensWashroom();
 
-    let path = this.determineOptimalPath(userPosition, dest, floor);
-    return path;
+    let path = this.determineOptimalPath(userPositionCoor, dest, floor);
+    let pathLatLng = this.gpsmapping.getLngLatForPath(floor, path);
+
+    return pathLatLng;
   }
 
 
