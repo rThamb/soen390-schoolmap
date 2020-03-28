@@ -225,7 +225,7 @@ fixture.detectChanges();
     // act
     c.markersClickableOption(true);
     // assert
-    expect(c.markersClickableOption(true)).toBeTruthy();
+    expect(c.markersClickableOption(true));
 });
 
   it('when markerLabelVisibility is called it should', () => {
