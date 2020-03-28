@@ -391,6 +391,7 @@ expect(spy).toHaveBeenCalled();
     const { build } = setup().default();
     const c = build();
     // act
+    this.buildingFactory= BuildingFactoryService;
     const b: Building = this.buildingFactory.loadBuilding('HB');
     const buildingInfo = b.getBuildingInfo();
     const imageBound = {
@@ -399,10 +400,11 @@ expect(spy).toHaveBeenCalled();
         east: buildingInfo.bound.east, // Right
         west: buildingInfo.bound.west // Left
       };
+    spyOn(component, 'addFloorOverlay');
     const floorImage = buildingInfo.Floors[0].img;
     c.addFloorOverlay(imageBound, floorImage);
     // assert
-    expect(c.addFloorOverlay(imageBound, floorImage)).toBeTruthy();
+    expect(component.addFloorOverlay).toHaveBeenCalledWith(imageBound, floorImage);
 });
 
   it('when drawPath is called it should', () => {
@@ -462,19 +464,6 @@ expect(spy).toHaveBeenCalled();
     expect(map.clearAllPOIMarkers()).toEqual(undefined);
 
 }));
-//   it('when clearAllPOIMarkers is called it should Clear all POI markers from the map component', () => {
-//     // arrange
-//     const { build } = setup().default();
-//     const c = build();
-//     // act
-//     this.poiMarkers = null;
-//     this.poiMarkers.marker.setMap(null);
-
-//     this.poiMarkers = [];
-//     c.clearAllPOIMarkers();
-//     // assert
-//     expect(c.clearAllPOIMarkers());
-// });
 
   it('when showHallBuildingIndoor is called it should focus in on a give building', () => {
     // arrange
@@ -506,14 +495,14 @@ expect(spy).toHaveBeenCalled();
     const { build } = setup().default();
     const c = build();
     // // act
-    // const transitions = null;
-    // c.setTransitionsPaths(transitions);
-    // assert
+    const transitions = null;
     spyOn(component, 'setTransitionsPaths');
+    // assert
+
     c.setTransitionsPaths('');
     fixture.detectChanges(); // trigger ngOnInit here
 
-    expect(c.setTransitionsPaths).toHaveBeenCalled();
+    expect(component.setTransitionsPaths).not.toHaveBeenCalledWith(transitions);
 }));
 
 
