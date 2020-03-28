@@ -18,6 +18,7 @@ describe('MapComponent', () => {
   var fixture: ComponentFixture<MapComponent>;
   var spy: any;
   //let service: MapService;
+  
 
   beforeEach(async(() => {
 const a = setup().default();
@@ -126,14 +127,18 @@ it('should check that ion-content is loaded', async(() => {
 
 
 
-  it('when ngAfterViewInit is called it should', () => {
+
+  it('when ngAfterViewInit is called it should initialize the map', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
+
     // act
+    this.initMap();
+        // console.log('Error getting location', error);
     c.ngAfterViewInit();
     // assert
-    // expect(c).toEqual
+    expect(c.ngAfterViewInit());
 });
 
   it('when initMap is called it should', () => {
@@ -156,14 +161,14 @@ it('should check that ion-content is loaded', async(() => {
     // expect(c).toEqual
 });
 
-  it('when getCurrentLocation is called it should', () => {
+  it('when getCurrentLocation is called it should Get the current location of user and focus map to that point', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
     c.getCurrentLocation();
     // assert
-    // expect(c).toEqual
+    expect(c.getCurrentLocation()).not.toBeNull();
 });
 
   it('when focusMap is called it should', () => {
@@ -218,12 +223,13 @@ it('should check that ion-content is loaded', async(() => {
         strokeWeight: 2
       });
     const polygon = c.createPolygon(path, 'building');
-    const marker = c.createMarker('0,0', 'concordia');
+    let hallCenter = {lat: 45.497092, lng: -73.578974};
+    const marker =c.createMarker(hallCenter, "HALL");
 
     this.clearAllPOIMarkers();
     const id = 'HB';
     const b: Building = await this.buildingFactory.loadBuilding(id);
-    const buildingInfo = b.getBuildingInfo();
+    const buildingInfo= '';
     const buildingFloors = b.getFloors();
 
     c.indoorView(buildingInfo, polygon, marker, buildingFloors, id, false);
@@ -249,14 +255,15 @@ it('should check that ion-content is loaded', async(() => {
     expect(c.createPolygon(path, 'building')).toBeTruthy();
 });
 
-  it('when createMarker is called it should', () => {
+  it('when createMarker is called it should create a marker at the Hall building', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
-    c.createMarker('0,0', 'concordia');
+    let hallCenter = {lat: 45.497092, lng: -73.578974};
+    c.createMarker(hallCenter, "HALL");
     // assert
-    expect(c.createMarker('0,0', 'concordia')).toBeTruthy();
+    expect(c.createMarker(hallCenter, "HALL")).toBeTruthy();
 });
 
   it('when markerListener is called it should', () => {
@@ -264,7 +271,9 @@ it('should check that ion-content is loaded', async(() => {
     const { build } = setup().default();
     const c = build();
     // act
-    const marker = c.createMarker('0,0', 'concordia');
+    let hallCenter = {lat: 45.497092, lng: -73.578974};
+    c.createMarker(hallCenter, "HALL");
+    const marker = c.createMarker(hallCenter, "HALL");
     const start = '<ion-item><p><label style=\'margin-right:1.2em\'><b>Departments: </b></label><br/><br/>';
     c.markerListener(marker, start);
     // assert
@@ -286,21 +295,21 @@ it('should check that ion-content is loaded', async(() => {
         strokeWeight: 2
       });
     const polygon = c.createPolygon(path, 'building');
-    const marker = c.createMarker('0,0', 'concordia');
+    let hallCenter = {lat: 45.497092, lng: -73.578974};
+    const marker =  c.createMarker(hallCenter, "HALL");
     c.enterBuildingEventListener(id, polygon, marker, false);
     // assert
     expect(c.enterBuildingEventListener(id, polygon, marker, false)).toBeTruthy();
 });
 
-  it('when createinfoWindow is called it should', () => {
+  it('when createinfoWindow is called it should display a popup containing building info', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
-    const marker = c.createMarker('0,0', 'concordia');
     const hallID = 'HB';
     const hallCenter = {lat: 45.497092, lng: -73.578974};
-    const hallMarker = this.createMarker(hallCenter, 'HALL');
+    const marker = this.createMarker(hallCenter, 'HALL');
     c.createinfoWindow(marker, hallID);
     // assert
     expect(c.createinfoWindow(marker, hallID)).toBeTruthy();
@@ -335,8 +344,7 @@ it('should check that ion-content is loaded', async(() => {
       },
     }); 
 
-    // act
-    //component.buildingMarkers.push(marker);
+        //component.buildingMarkers.push(marker);
     //let buildingMarkers = [];
     console.log("before markerLabelVisibility")
     //c.markerLabelVisibility();
@@ -345,6 +353,42 @@ it('should check that ion-content is loaded', async(() => {
     // assert
     expect(markerVisibility).toBeTruthy();
     console.log("after expect for markerLabelVisibility")
+
+
+    // // act
+    // {
+    //   const self = this;
+
+    //   //Array contain every label of markers
+    //   let markersLabel = [];
+    //   for(let i = 0; i < this.buildingMarkers.length; i++)
+    //   {
+    //     markersLabel.push(this.buildingMarkers[i].getLabel());
+    //   }
+
+    //   //Check for zoom changed
+    //   google.maps.event.addListener(self.map, 'zoom_changed', function () {
+    //     //Hide markers
+    //     if (self.map.getZoom() < 14)
+    //     {
+    //       for(let i = 0; i < self.buildingMarkers.length; i++)
+    //       {
+    //         self.buildingMarkers[i].setLabel(null)
+    //       }
+    //     }
+    //     //Show markers
+    //     else
+    //     {
+    //       for(let i = 0; i < self.buildingMarkers.length; i++)
+    //       {
+    //         self.buildingMarkers[i].setLabel(markersLabel[i])
+    //       }
+    //     }
+    //   });
+    // }
+    // c.markerLabelVisibility();
+    // // assert
+    // expect(c.markerLabelVisibility());
 }));
 
   it('when addFloorOverlay is called it should', () => {
@@ -390,17 +434,24 @@ it('should check that ion-content is loaded', async(() => {
      expect(c.goToIndoorPOI('HB')).toBeTruthy();
 });
 */
-  it('when removePreviouslyDrawnPath is called it should', () => {
+  it('when removePreviouslyDrawnPath is called it should remove the path drawn previously, if there is any', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
+    if(this.currentActiveRoute["path"] != undefined || this.currentActiveRoute["path"] != null) {
+      //hide or remove the current route drawn
+      this.currentActiveRoute["path"].setMap(null);
+      this.currentActiveRoute["startMark"].setMap(null);
+      this.currentActiveRoute["endMark"].setMap(null);
+      this.currentActiveRoute = {};
+    }
     c.removePreviouslyDrawnPath();
     // assert
-    expect(c.removePreviouslyDrawnPath()).toBeTruthy();
+    expect(c.removePreviouslyDrawnPath());
 });
 
-  it('when clearAllPOIMarkers is called it should empy the poi array', async(() => {
+  it('when clearAllPOIMarkers is called it should empty the poi array', async(() => {
     //arrange
     const { build } = setup().default();
     const c = build();
@@ -415,15 +466,33 @@ it('should check that ion-content is loaded', async(() => {
     expect(map.clearAllPOIMarkers()).toEqual(undefined);
 
 }));
+//   it('when clearAllPOIMarkers is called it should Clear all POI markers from the map component', () => {
+//     // arrange
+//     const { build } = setup().default();
+//     const c = build();
+//     // act
+//     this.poiMarkers = null;
+//     this.poiMarkers.marker.setMap(null);
+
+//     this.poiMarkers = [];
+//     c.clearAllPOIMarkers();
+//     // assert
+//     expect(c.clearAllPOIMarkers());
+// });
 
   it('when showHallBuildingIndoor is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
-    // act
+    //act
     c.showHallBuildingIndoor(true);
     // assert
     expect(c.showHallBuildingIndoor(true)).toBeTruthy();
+
+    // spyOn(component, 'showHallBuildingIndoor'); 
+    // c.showHallBuildingIndoor(false);
+    // fixture.detectChanges(); // trigger ngOnInit here
+    // expect(c.showHallBuildingIndoor).toHaveBeenCalled(); 
 });
 
   it('when showFloorMapForBuilding is called it should', () => {
@@ -436,16 +505,23 @@ it('should check that ion-content is loaded', async(() => {
     expect(c.showFloorMapForBuilding('')).toBeTruthy();
 });
 
-  it('when setTransitionsPaths is called it should', () => {
+  it('when setTransitionsPaths is called it should', async(() => {
     // arrange
     const { build } = setup().default();
     const c = build();
-    // act
-    const transitions = null;
-    c.setTransitionsPaths(transitions);
-    // assert
-    expect(c.setTransitionsPaths(transitions)).toBeTruthy();
-});
+    // // act
+    // const transitions = null;
+    // c.setTransitionsPaths(transitions);
+    // // assert
+    // expect(c.setTransitionsPaths(transitions));
+
+    spyOn(component, 'setTransitionsPaths'); 
+    c.setTransitionsPaths("");
+    fixture.detectChanges(); // trigger ngOnInit here
+
+    expect(c.setTransitionsPaths).toHaveBeenCalled(); 
+}));
+
 
   it('when isIndoorModeActive is called it should', () => {
     // arrange
@@ -457,15 +533,17 @@ it('should check that ion-content is loaded', async(() => {
     expect(c.isIndoorModeActive()).toBeFalsy();
 });
 
-  it('when quitIndoorMode is called it should', () => {
+  it('when quitIndoorMode is called it should exit indoor view', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
     c.quitIndoorMode();
     // assert
-    expect(c.quitIndoorMode()).toBeTruthy();
+    expect(c.quitIndoorMode());
 });
+
+
 
 });
 
