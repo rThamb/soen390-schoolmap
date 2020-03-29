@@ -29,10 +29,10 @@ export class ReportIssuesComponent {
 
   send() {
 
-    this.emailComposer.isAvailable().then((available: boolean) => {
-      if (available) {
-      }
-    });
+    // this.emailComposer.isAvailable().then((available: boolean) => {
+    //   if (available) {
+    //   }
+    // });
 
     let email = {
       to: 'mapsconcordia1@gmail.com',
@@ -47,7 +47,7 @@ export class ReportIssuesComponent {
 
     console.log(this.issue.value);
     // Send a text message using default options
-       this.emailComposer.open(email);
+    //   this.emailComposer.open(email);
 
     // create pop up for user to tell them we received their message
       const alert: any = this.alertCtrl.create({
