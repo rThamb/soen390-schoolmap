@@ -35,31 +35,37 @@ describe('ToggleComponent', () => {
     expect(de1.nativeElement.textContent).toContain('GEORGE');
   });
   
+  it('when ngOnInit is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.ngOnInit();
+    // assert
+    // expect(c).toEqual
+  });
 
-it('when callparentloy is called it should redirect the the map to loyola', () => {
-  // arrange
-  const { build } = setup().default();
-  const c = build();
-  // act
-  c.callparentloy();
-  // assert
+  it('when callparentloy is called it should redirect the the map to loyola', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.callparentloy();
+    // assert
+    
+    expect(c).toBeTruthy();
+  });
+
+  it('when callparentsgw is called it should redirect the the map to SGW', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.callparentsgw();
+    // assert
   
-  expect(c).toBeTruthy();
-});
-
-it('when callparentsgw is called it should redirect the the map to SGW', () => {
-  // arrange
-  const { build } = setup().default();
-  const c = build();
-  // act
-  c.callparentsgw();
-  // assert
- 
-  expect(c).toBeTruthy();
-});
-
-
-
+    expect(c).toBeTruthy();
+  });
 
 });
 
