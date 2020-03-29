@@ -93,6 +93,7 @@ export class Floor
         binaryGrid.push(arr);
         arr = [];
         }
+        
         return binaryGrid;
     }
 

@@ -44,7 +44,7 @@ fixture.detectChanges();
     expect(de.nativeElement.textContent).toContain('Calendar');
     expect(de.nativeElement.textContent).toContain('Notifications');
   });
-  it('when ngOnInit is called it should initialize user settings', () => {
+  it('when ngOnInit is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
@@ -55,17 +55,17 @@ fixture.detectChanges();
 });
 
   it('when onChangeSetting is called it should change settings based on user choice', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    let useStairs = true;
-    spyOn(component, 'onChangeSetting');
-      const button = fixture.debugElement.nativeElement.querySelector('ion-toggle:nth-child(2)');
-      button.ionChange;
-      fixture.whenStable().then(() => {
-          expect(component.onChangeSetting).toHaveBeenCalledWith(useStairs);
-      });
+  // arrange
+  const { build } = setup().default();
+  const c = build();
+  // act
+  const useStairs = true;
+  spyOn(component, 'onChangeSetting');
+  const button = fixture.debugElement.nativeElement.querySelector('ion-toggle:nth-child(1)');
+  button.click();
+  fixture.whenStable().then(() => {
+        expect(component.onChangeSetting).toHaveBeenCalledWith( useStairs);
+    });
 });
 
 });
