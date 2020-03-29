@@ -116,36 +116,64 @@ describe('Floor', () => {
     expect(c.setPois).toBeDefined;
   });
 
-  // it('when getBinaryGrid is called it should', () => {
-  //   // arrange
-  //   const { build } = setup().default();
-  //   const c = build();
-  //   // act
-  //   c.getBinaryGrid();
-  //   // assert
-  //   // expect(c).toEqual
-  // });
-  //
-  // it('when getMensWashroom is called it should', () => {
-  //   // arrange
-  //   const { build } = setup().default();
-  //   const c = build();
-  //   // act
-  //   c.getMensWashroom();
-  //   // assert
-  //   // expect(c).toEqual
-  // });
-  //
-  // it('when getWomensWashroom is called it should', () => {
-  //   // arrange
-  //   const { build } = setup().default();
-  //   const c = build();
-  //   // act
-  //   c.getWomensWashroom();
-  //   // assert
-  //   // expect(c).toEqual
-  // });
-  //
+  it('when getBinaryGrid is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    const binaryGrid: number[][] = [];
+
+    const length = this.floorTileGrid.length;
+    const width = this.floorTileGrid[0].length;
+    let arr = [];
+    arr = [];
+    const currentRow = this.floorTileGrid[1];
+    const num: FloorTile = currentRow[1];
+    const tile = num.getPathfinderCode();
+    arr.push(tile);
+    binaryGrid.push(arr);
+    
+    
+
+    return binaryGrid;
+
+    
+    
+    c.getBinaryGrid();
+    // assert
+    expect(c.getBinaryGrid()).toEqual(binaryGrid);
+  });
+
+  it('when getMensWashroom is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // @ts-ignore
+    const pointsOfInterest: any;
+    const key = 'Washroom-men';
+    const washroomCoor = pointsOfInterest[key];
+
+    const wash = new GridCoordinate(washroomCoor['x'], washroomCoor['y']);
+    c.getMensWashroom();
+
+    // assert
+    expect(c.getMensWashroom()).toEqual(wash);
+
+  });
+
+  it('when getWomensWashroom is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    const key = 'Washroom-Women';
+    const washroomCoor = this.pointsOfInterest[key];
+    const wash = new GridCoordinate(washroomCoor.x, washroomCoor.y);
+    c.getWomensWashroom();
+
+    // assert
+    expect(c.getWomensWashroom()).toEqual(wash);
+  });
+
   it('when getStairsCoordinate is called it should', () => {
     // arrange
     const { build } = setup().default();
@@ -157,7 +185,7 @@ describe('Floor', () => {
 
     const coordinates = [];
 
-    const coor = new GridCoordinate(stairs[0].x, stairs[0].y);
+    const coor = new GridCoordinate(stairs[0]['x'], stairs[0]['y']);
     coordinates.push(coor);
     // act
     c.getStairsCoordinate();
@@ -193,10 +221,10 @@ describe('Floor', () => {
     const { build } = setup().default();
     const c = build();
     // act
-    const key =  'Elevator';
+  
     c.getElevatorCoordinate();
     // assert
-    expect(c.getElevatorCoordinate()).toEqual(c.getCoordinate(key));
+    expect(c.getElevatorCoordinate()).toHaveBeenCalled();
   });
 
   // it('when getClassroomCoordinate is called it should', () => {
