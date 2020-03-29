@@ -112,7 +112,7 @@ export class Floor
         let key = "Stairs";
         
         //list is returned
-        let stairs = this.pointsOfInterest[key];
+        const stairs = this.pointsOfInterest[key];
 
         let coordinates = []; 
         for(let i = 0; i < stairs.length; i++){
