@@ -927,7 +927,7 @@ addFloorOverlay(imageBound: any, floorImage :string)
       strokeWeight: 2
     });
 
-    let startLabel = "Start";
+    let startLabel = "A";
 
     const startMarker = new google.maps.Marker({
       position: locationList[0].getGoogleLatLng(),
@@ -937,7 +937,7 @@ addFloorOverlay(imageBound: any, floorImage :string)
     });
 
 
-    let endLabel = "End";
+    let endLabel = "B";
 
     const endMarker = new google.maps.Marker({
       position: locationList[locationList.length - 1].getGoogleLatLng(),
