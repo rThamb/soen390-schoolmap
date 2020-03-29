@@ -156,7 +156,7 @@ expect(spy).toHaveBeenCalled();
     expect(c.setDirectionsMap).toHaveBeenCalled();
 });
 
-  it('when getCurrentLocation is called it should Get the current location of user and focus map to that point', () => {
+  it('when getCurrentLocation is called it should Get the current location of user and focus map to that point', async () => {
     // arrange
     const { build } = setup().default();
     const c = build();
@@ -164,9 +164,10 @@ expect(spy).toHaveBeenCalled();
     // let currentLoc = this.getCurrentLocation();
     // const user = User;
     // c.user.getLocation().getGoogleLatLng();
-    c.getCurrentLocation();
+    spyOn(component, 'getCurrentLocation');
+    let expected = component.getCurrentLocation();
     // assert
-    expect(c.getCurrentLocation()).not.toBeNull();
+    expect(expected).toEqual(undefined);
 });
 
   it('when focusMap is called it should Re-center the map based on location parameter', () => {

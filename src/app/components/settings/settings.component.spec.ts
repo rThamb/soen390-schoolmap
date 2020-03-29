@@ -1,9 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import {Storage} from '@ionic/storage';
 import { SettingsComponent } from './settings.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { IonicStorageModule } from '@ionic/storage';
-import {By} from "@angular/platform-browser";
+import {By} from '@angular/platform-browser';
+import {autoSpy} from '../../../../auto-spy';
 
 
 describe('SettingsComponent', () => {
@@ -11,18 +13,19 @@ describe('SettingsComponent', () => {
   let fixture: ComponentFixture<SettingsComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+const a = setup().default();
+TestBed.configureTestingModule({
       declarations: [ SettingsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicStorageModule.forRoot(),IonicModule.forRoot()]
-      
+      imports: [IonicStorageModule.forRoot(), IonicModule.forRoot()]
+
     }).compileComponents();
 
 
 
-    fixture = TestBed.createComponent(SettingsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+fixture = TestBed.createComponent(SettingsComponent);
+component = fixture.componentInstance;
+fixture.detectChanges();
   }));
 
   it('should create', () => {
@@ -41,4 +44,42 @@ describe('SettingsComponent', () => {
     expect(de.nativeElement.textContent).toContain('Calendar');
     expect(de.nativeElement.textContent).toContain('Notifications');
   });
+  it('when ngOnInit is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.ngOnInit();
+    // assert
+    expect(c.ngOnInit()).toBeTruthy();
 });
+
+  it('when onChangeSetting is called it should change settings based on user choice', () => {
+  // arrange
+  const { build } = setup().default();
+  const c = build();
+  // act
+  const useStairs = true;
+  spyOn(component, 'onChangeSetting');
+  const button = fixture.debugElement.nativeElement.querySelector('ion-toggle:nth-child(1)');
+  button.click();
+  fixture.whenStable().then(() => {
+        expect(component.onChangeSetting).toHaveBeenCalledWith( useStairs);
+    });
+});
+
+});
+
+function setup() {
+    const storage = autoSpy(Storage);
+    const builder = {
+        storage,
+        default() {
+            return builder;
+        },
+        build() {
+            return new SettingsComponent( storage );
+        }
+    };
+    return builder;
+}
