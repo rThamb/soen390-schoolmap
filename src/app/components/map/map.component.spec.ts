@@ -12,7 +12,7 @@ import { autoSpy } from 'auto-spy';
 import { Building } from 'src/app/models/Building';
 import { By } from '@angular/platform-browser';
 import {Location} from '../../models/Location';
-
+import { fakeAsync } from '@angular/core/testing';
 import {User} from '../../models/User';
 import { expressionType } from '@angular/compiler/src/output/output_ast';
 declare var google;
@@ -22,7 +22,9 @@ describe('MapComponent', () => {
   let fixture: ComponentFixture<MapComponent>;
   let spy: any;
   // let service: MapService;
-
+  const locationStub = {
+    getCurrentLocation: jasmine.createSpy('getCurrentLocation')
+}
 
   beforeEach(async(() => {
 const a = setup().default();
@@ -32,7 +34,7 @@ TestBed.configureTestingModule({
       providers: [Geolocation, IndoorPathingService, ReadGridService, BuildingFactoryService],
       imports: [IonicModule.forRoot()]
     }).configureTestingModule({ providers: [{ provide: MapService, useValue: a.mapService },
-            { provide: BuildingFactoryService, useValue: a.buildingFactory }] }).compileComponents();
+            { provide: BuildingFactoryService, useValue: a.buildingFactory }, {provide: Location, useValue: locationStub}] }).compileComponents();
 
 fixture = TestBed.createComponent(MapComponent);
 component = fixture.componentInstance;
@@ -193,6 +195,19 @@ expect(spy).toHaveBeenCalled();
     expect(c).toBeDefined();
   });
 
+  it('should call enterBuildingEventListener 14 times from initOverLays', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    console.log("Current location: ")
+    //const location = fixture.debugElement.injector.get(Location);
+    console.log(location)
+    component.enterBuildingEventListener = jasmine.createSpy("enterBuildingEventListener spy");
+    //component.initMap();
+    component.initOverlays();
+    expect(component.enterBuildingEventListener).toHaveBeenCalledTimes(17);
+  });
+
   it('should call markerLabelVisibility from initOverlays', async(() => {
 
     let m = new MapComponent(new Geolocation, new MapService, new BuildingFactoryService(new ReadGridService));
@@ -264,42 +279,84 @@ expect(spy).toHaveBeenCalled();
     expect(c.enterBuilding).toHaveBeenCalledWith(buildingKey, hallP, hallMarker, false);
 });
 
-  it('when indoorView is called it should hen user presses "Enter building" button, and it shows a drop down menu and exit button\n' +
-      '   * which allows the user to view different floors in the building.\n' +
-      '   * let buildingInfo is a dictionary that holds informations about the buildings', async () => {
+  it('should call indoorview ', async () => {
     // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    // Polygon for each building
-    const pathCoordinates = [];
-    const path = new google.maps.Polyline({
-        path: pathCoordinates, 
-        geodesic: true,
-        strokeColor: '#0000FF',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-    const polygon = component.createPolygon("", 'building');
-    const hallCenter = {lat: 45.497092, lng: -73.578974};
-    const marker = component.createMarker(hallCenter, 'HALL');
+    // const { build } = setup().default();
+    // const c = build();
+    // // act
+    // // Polygon for each building
+    // const pathCoordinates = [];
+    // const path = new google.maps.Polyline({
+    //     path: pathCoordinates, 
+    //     geodesic: true,
+    //     strokeColor: '#0000FF',
+    //     strokeOpacity: 1.0,
+    //     strokeWeight: 2
+    //   });
+    // const polygon = component.createPolygon("", 'building');
+    // const hallCenter = {lat: 45.497092, lng: -73.578974};
+    // const marker = component.createMarker(hallCenter, 'HALL');
 
  
-    const id = 'HB';
-    console.log("Before building Factory")
-    //const b: Building = await buildingFactory.loadBuilding(id);
-    //const buildingInfo = '';
-    console.log("Before b.getfloors")
-    //let buildingInfo = b.getBuildingInfo();
-    let buildingInfo = {};
-    //const buildingFloors = b.getFloors();
-    let buildingFloors = "";
+    // const id = 'HB';
+    // console.log("Before building Factory")
+    // //const b: Building = await buildingFactory.loadBuilding(id);
+    // //const buildingInfo = '';
+    // console.log("Before b.getfloors")
+    // //let buildingInfo = b.getBuildingInfo();
+    // let buildingInfo = {};
+    // //const buildingFloors = b.getFloors();
+    // let buildingFloors = "";
 
-    spyOn(component, 'indoorView');
-    //component.initOverlays();
-    component.enterBuilding("HB", polygon, marker, true);
-    // assert
-    expect(component.indoorView).toHaveBeenCalledWith(buildingInfo, polygon, marker, buildingFloors, id, false);
+    // spyOn(component, 'indoorView');
+    // //component.initOverlays();
+    // component.enterBuilding("HB", polygon, marker, true);
+    // // assert
+        //Polygon for each building
+    let m = new MapComponent(new Geolocation, new MapService, new BuildingFactoryService(new ReadGridService));
+
+    let path = [
+    {lat: 45.497372, lng: -73.578338},
+    {lat: 45.496826, lng: -73.578859},
+    {lat: 45.497164, lng: -73.579543},
+    {lat: 45.497710, lng: -73.579034}]
+    
+    let polygon = new google.maps.Polygon({
+          paths: path,
+          fillColor: "deepskyblue",
+        });
+    polygon.setMap(component.map);
+
+    const marker = new google.maps.Marker
+    ({
+      position: {lat: 0, lng: 0},
+      map: component.map,
+      icon: '',
+      label:
+      {
+          color: 'black',
+          fontWeight: 'bold',
+          text: 'Test',
+          fontSize: '21px'
+      },
+    });
+
+    m.indoorView = jasmine.createSpy("indoorView spy");
+    let b = new BuildingFactoryService(new ReadGridService)
+    let b2 = b.loadBuilding("HB");
+    let buildingInfo = (await b2).getBuildingInfo();
+    //let buildingInfo = b.getBuildingInfo();
+    console.log("Bound ")
+    console.log(buildingInfo['bound'].north)
+    console.log("Bound 2")
+    //const buildingFloors = b.getFloors(); 
+    const buildingFloors = (await b2).getFloors(); 
+    //m.enterBuilding("HB", polygon, marker, true);
+    m.indoorView(buildingInfo, polygon, marker, buildingFloors, "HB", false);
+    expect(m.indoorView).toHaveBeenCalled();
+
+
+    //expect(component.indoorView).toHaveBeenCalledWith(buildingInfo, polygon, marker, buildingFloors, id, false);
 });
 
   it('when createPolygon is called it should', () => {
