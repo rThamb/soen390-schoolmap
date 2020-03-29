@@ -177,4 +177,238 @@ describe('ReadGridService', () => {
     console.log(obtainedFloorDictionnary);
     expect(obtainedFloorDictionnary["HB8"]).toEqual(expectedfloorsDictionnary["HB8"]);
   });
+
+  it('buildingInfo should return a dictionary of info on that building', async () => {
+    const service: ReadGridService = TestBed.get(ReadGridService);
+
+    let expectedDictionary = {};
+    let buildingContent =
+    {
+      "Name": "Henry F. Hall Building",
+      "Address": "1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8",
+      "Departments": ["Geography, Planning and Environment", "Political Science, Sociology and Anthropology, Economics", "School of Irish Studies"],
+      "Services": ["Welcome Crew Office", "DB Clarke Theatre", "Dean of Students", "Aboriginal Student Resource Centre", "Concordia Student Union", "IT Service Desk", "Security Office", "Student Success Centre", "Mail Services", "Archives", "Career and Planning Services", "Sexual Assault Ressource Centre (SARC)"],
+      "BuildingImg": "assets/BuildingImages/HallBuilding.jpg",
+      "ImgWidth": "50%",
+      "EnterButton": "true"
+    }
+
+    let floorNames = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+
+    let bound =     
+    {
+      "north": 45.497735,
+      "south": 45.496807,
+      "east": -73.578316,
+      "west": -73.579586 
+    }
+
+    let location =
+    {
+        "lat":45.497253,
+        "lng":-73.578920
+    }
+
+    let floors =
+    [
+      {
+      "level": 8,
+      "img": "assets/FloorImages/Hall/hall-8.png",
+      "topLeftLat": 45.497165, 
+      "topLeftLong": -73.579545,
+      "topRightLat": 45.497709, 
+      "topRightLong": -73.579038,
+      "bottomLeftLat": 45.496829, 
+      "bottomLeftLong": -73.578850,
+      "bottomRightLat": 45.497373, 
+      "bottomRightLong": -73.578342,
+      "binaryGrid": [
+                      [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+                      [1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+                      [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1]
+                  ],
+      "POI": {
+          "HB840": {
+              "x": 1,
+              "y": 5,
+              "lat": 45.497386, 
+              "lng": -73.578535
+          }, 
+           "HB890": {
+              "x": 16,
+              "y": 9,
+              "lat": 45.497097,
+              "lng": -73.579132
+          },
+          "HB832":{
+              "x": 7,
+              "y": 7,
+              "lat": 45.497234,
+              "lng": -73.579078
+          },
+          "Washroom-Men": {
+              "x": 6, 
+              "y" : 15,
+              "lat": 0, 
+              "lng": 0
+          },
+          "Washroom-Women": {
+                  "x": 9, 
+                  "y": 3,
+                  "lat": 0, 
+                  "lng": 0  
+          },  
+          "Escalator-Up": {
+              "x": 9,
+              "y": 11,
+              "lat": 0, 
+              "lng": 0
+          }, 
+          "Escalator-Down": {
+              "x": 9,
+              "y": 6,
+              "lat": 0, 
+              "lng": 0
+          }, 
+          "Elevator" : {
+              "x": 12, 
+              "y": 11,
+              "lat": 0, 
+              "lng": 0
+          },       
+          "Stairs": [
+              {
+                  "x": 4,
+                  "y": 15,
+                  "lat": 0, 
+                  "lng": 0
+              },
+              {
+                  "x": 4,
+                  "y": 3,
+                  "lat": 0, 
+                  "lng": 0
+              } 
+          ]
+          }
+      },
+  
+      {
+      "level": 9,
+      "img": "assets/FloorImages/Hall/hall-9.png",
+      "topLeftLat": 45.497165, 
+      "topLeftLong": -73.579545,
+      "topRightLat": 45.497709, 
+      "topRightLong": -73.579038,
+      "bottomLeftLat": 45.496829, 
+      "bottomLeftLong": -73.578850,
+      "bottomRightLat": 45.497373, 
+      "bottomRightLong": -73.578342,
+      "binaryGrid": [
+                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1],
+                      [1,1,1,0,0,0,0,1,1,1,1,1,0,1,1,1,1,1,0,1],
+                      [1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1],
+                      [1,1,1,0,1,1,0,0,1,1,1,0,0,1,1,1,1,1,0,1],
+                      [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                      [1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1], 
+                      [1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1], 
+                      [1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1],
+                      [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+                      [1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+                  ],
+      "POI": {
+          "HB967": {
+              "x": 11,
+              "y": 5,
+              "lat": 0, 
+              "lng": 0
+          },
+          "HB922": {
+              "x": 3,
+              "y": 16,
+              "lat": 0, 
+              "lng": 0
+          },
+          "Washroom-Men": {
+              "x": 0, 
+              "y" : 0,
+              "lat": 0, 
+              "lng": 0
+          },
+          "Washroom-Women": {
+                  "x": 0, 
+                  "y": 0,
+                  "lat": 0, 
+                  "lng": 0  
+          },
+          "Escalator-Up": {
+              "x": 10,
+              "y": 7,
+              "lat": 0, 
+              "lng": 0
+          }, 
+          "Escalator-Down": {
+              "x": 10,
+              "y": 11,
+              "lat": 0, 
+              "lng": 0
+          },  
+          "Elevator" : {
+              "x": 12, 
+              "y": 11,
+              "lat": 0, 
+              "lng": 0
+          },     
+          "Stairs": [
+              {
+                  "x": 4,
+                  "y": 15,
+                  "lat": 0, 
+                  "lng": 0
+              },
+              {
+                  "x": 4,
+                  "y": 3,
+                  "lat": 0, 
+                  "lng": 0
+              }
+          ]
+          }
+      }]
+  
+
+
+    expectedDictionary["BuildingContent"] = buildingContent;
+    expectedDictionary["floorNames"] = floorNames;
+    expectedDictionary["bound"] = bound;
+    expectedDictionary["Location"] = location;
+    expectedDictionary["Floors"] = floors;
+    let obtainedDictionnary = await service.buildingInfo('HB');
+    expect(obtainedDictionnary).toEqual(expectedDictionary);
+  });
 });
