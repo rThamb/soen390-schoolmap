@@ -317,7 +317,7 @@ export class DirectionsComponent{
     
     let res = await fetch("./assets/shuttle_bus/departureTimes.json");
     let json = await res.json();
-    let currentDate = new Date('2020-03-18 10:00');
+    let currentDate = new Date();
 
     //Only consider the shuttle bus schedule after 7:15 am on that particular day.
     let timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + " " + "7:15");
