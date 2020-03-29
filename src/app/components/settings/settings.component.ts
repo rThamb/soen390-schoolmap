@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit {
   public useGoogleCalendarSync: boolean;
 
   constructor(private storage: Storage) {
-
+    
   }
 
   // Initialize user settings

@@ -31,19 +31,5 @@ describe('HomeSearchComponent', () => {
     expect(bar.shadowRoot).toBeNull();
   }));
 
-  /*it('should trigger goToSearchResult method when user searches an address, then Enter key is pressed', async(() => {
-    spyOn(component, 'goToSearchResult');
-    fixture.debugElement.nativeElement.querySelector('ion-toolbar').setValue('HALL');
-    fixture.detectChanges();
-
-    const event: Event = new KeyboardEvent('keypress', {key: 'Enter'});
-    window.dispatchEvent(event);
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      expect(component.goToSearchResult).toHaveBeenCalledWith('HALL');
-    });
-  }));
-*/
 
 });
