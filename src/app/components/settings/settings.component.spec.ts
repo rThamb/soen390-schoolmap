@@ -58,11 +58,14 @@ fixture.detectChanges();
     // arrange
     const { build } = setup().default();
     const c = build();
-    // act
-    const x = c.onChangeSetting('useStairs', useStairs);
-    // assert
-    expect(x).toBeDefined();
-});
+    const useStairs = true;
+    spyOn(component, 'onChangeSetting');
+    const button = fixture.debugElement.nativeElement.querySelector('ion-toggle:nth-child(2)');
+    button.click();
+    fixture.whenStable().then(() => {
+          expect(component.onChangeSetting).toHaveBeenCalledWith( useStairs);
+      });
+  });
 
 });
 
