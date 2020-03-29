@@ -62,7 +62,7 @@ export class DirectionsComponent{
 
     if(this.directions['start'] == "" || this.directions['start'] == null || this.directions['start'] == undefined)
     {
-      this.directions['start'] == "Current";
+      this.directions['start'] = "Current";
     }
   }
 
