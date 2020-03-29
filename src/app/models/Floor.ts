@@ -122,7 +122,7 @@ export class Floor
     }
 
     public getUp_EscalatorCoordinate(): GridCoordinate{
-        let key = "Escalator-Up";
+        let key = 'Escalator-Up';
         return this.getCoordinate(key); 
     }
 
@@ -140,7 +140,7 @@ export class Floor
         return this.getCoordinate(classCode); 
     }
 
-    private getCoordinate(key: string): GridCoordinate{
+    getCoordinate(key: string): GridCoordinate{
         let coor = new GridCoordinate(this.pointsOfInterest[key]["x"], this.pointsOfInterest[key]["y"]);
         return coor;
     }

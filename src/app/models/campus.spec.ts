@@ -36,6 +36,7 @@ describe('Campus', () => {
 
 function setup() {
   const cl = autoSpy(Location);
+
   const builder = {
     cl,
     default() {
