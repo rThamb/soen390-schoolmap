@@ -58,6 +58,7 @@ fixture.detectChanges();
     // arrange
     const { build } = setup().default();
     const c = build();
+    let useStairs = true;
     // act
     const x = c.onChangeSetting('useStairs', useStairs);
     // assert
