@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Output, ViewChild, OnInit, EventEmitter } from '@angular/core';
 import {Location} from "../../models/Location";
+import {NgModule} from '@angular/core';
 import {Geolocation} from "@ionic-native/geolocation/ngx";
 
 declare var google;

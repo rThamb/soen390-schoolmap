@@ -22,37 +22,7 @@ export class GpsGridMappingService {
   */
   constructor(private geolocation: Geolocation) { }
 
-
-  /*
-  getFloorTest(){
-
-    let coor = new Coordinate(6.4, 4);
-    let floor = new Floor();
-
-    let topLeft = new Coordinate(4.4, 0);
-    let topRight = new Coordinate(12.4, 0);
-    let bottomLeft = new Coordinate(4.2, 6);
-
-    let map = [];
-    let arr = [0,0,0,0,0]
-    map.push(arr);
-    map.push(arr);
-    map.push(arr);
-
-    floor.pathfindingFloorGrid = map;
-    floor.topLeftCornerGPS = topLeft; 
-    floor.topRightCornerGPS = topRight;
-    floor.bottomLeftCorrnerGPS = bottomLeft;
-    
-    this.getFloorGridCoordinate(coor, floor);
-Y
-
-  }
-  */
-
   getFloorGridCoordinate(userPosition: Location, currentFloor: Floor) : GridCoordinate{
-    //let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), currentFloor);
-    //let y = this.mapUserLongitudeToYCoordinate(userPosition.getLng(), currentFloor);
 
     let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
     let y = this.mapUserLongitudeToYCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
@@ -68,16 +38,6 @@ Y
 
   //determine the x index of the floor cell that resemble his actually position. (left to right)
   private mapUserLatitudeToXCoordinate(lat: number, long:number, floor: Floor){
-    /*
-    let numberCells = floor.pathfindingFloorGrid[0].length;
-    let highX = floor.topRightCornerGPS.latitude;
-    let highY = floor.topRightCornerGPS.longitude;
-    let lowX = floor.topLeftCornerGPS.latitude;
-    let lowY = floor.topLeftCornerGPS.longitude;
-    let gpsDeltaPerCell = this.getDeltaSize(lowX, lowY, highX, highY, numberCells);
-
-    return this.determineGridCoordinate(lat, lowX, highX, gpsDeltaPerCell, numberCells);
-    */
 
     let numberCells = floor.getFloorTileGrid()[0].length;//pathfindingFloorGrid[0].length;
     let highX = floor.topRightCornerGPS.longitude;
@@ -121,33 +81,6 @@ Y
     return i;
   }
 
-  /*
-  private determineGridCoordinate(targetGPS, low, high, delta, numberOfCells){
-    
-    if(high < low){
-        let temp = high;
-        high = low;
-        low = temp;
-    }
-
-    let currentLowestBound = low;
-    let currentHighestBound = currentLowestBound + delta;
-
-    let index = 0;
-
-    for(let i = 0; i < numberOfCells; i++){
-      if(targetGPS >= currentLowestBound && targetGPS < currentHighestBound){
-        index = i;
-        break;
-      }
-
-      currentLowestBound = currentHighestBound; 
-      currentHighestBound = currentLowestBound + delta; 
-    }
-
-    return index;
-  }
-*/
    private getDeltaSize(lowX, lowY, highX, highY, numCols){
     let inner = Math.pow(highX - lowX, 2) + Math.pow(highY - lowY, 2);
     let result = (Math.pow(inner, 0.5)) / numCols;
@@ -174,20 +107,6 @@ Y
 
     return distance;
   }
-
-
-
-
-
-  //method used for hall
-  public setLngLatForFloorTiles(floor: Floor){
-
-    let floorTiles = floor.getFloorTileGrid();
-
-  }
-
-
-
 
 
   //topLeft, topRight

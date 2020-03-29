@@ -35,7 +35,7 @@ export class MapComponent implements AfterViewInit {
 @ViewChild('googleMap', {static: false}) googleMap: ElementRef;
 
   public map: any; // google.maps.Map
-  private user: User;
+  public user: User;
   private mapOptions; // Object
   private userMarker; // google.maps.Marker
   private poiMarkers = []; // google.maps.Marker[]
@@ -158,6 +158,7 @@ export class MapComponent implements AfterViewInit {
   focusMap(location) {
     this.map.setCenter(location.getGoogleLatLng());
     this.map.setZoom(17);
+
     this.infoWindow.close(); //Close infoWindow
   }
  
@@ -548,7 +549,7 @@ export class MapComponent implements AfterViewInit {
    * which allows the user to view different floors in the building.
    * let buildingInfo is a dictionary that holds informations about the buildings
    */
-  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string, usingPOI: boolean): void 
+  indoorView(buildingInfo: any, polygon: any, marker: any, buildingFloors: any, building: string, usingPOI: boolean): void
   {
 
     let floorImage = ''; 
@@ -1045,5 +1046,3 @@ addFloorOverlay(imageBound: any, floorImage :string)
       exitIndoorModeFunc();
   }
 }
-
-
