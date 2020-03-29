@@ -143,7 +143,7 @@ describe('Floor', () => {
     expect(c.getBinaryGrid()).toEqual(binaryGrid);
   });
 
-  it('when getMensWashroom is called it should', () => {
+  /*it('when getMensWashroom is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
@@ -172,7 +172,7 @@ describe('Floor', () => {
 
     // assert
     expect(c.getWomensWashroom()).toEqual(wash);
-  });
+  });*/
 
   it('when getStairsCoordinate is called it should', () => {
     // arrange
