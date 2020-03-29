@@ -1,6 +1,7 @@
 import { Floor } from './Floor';
-import {FloorTile} from "./FloorTile";
-import { IndoorPOI } from './IndoorPOI'
+import {FloorTile} from './FloorTile';
+import { IndoorPOI } from './IndoorPOI';
+import {GridCoordinate} from './GridCoordinate';
 
 
 describe('Floor', () => {
@@ -9,8 +10,8 @@ describe('Floor', () => {
     const { build } = setup().default();
     const c = build();
     // act
-    c.setFloorLevel(8)
-    const floor=c.getFloorLevel();
+    c.setFloorLevel(8);
+    const floor = c.getFloorLevel();
     // assert
     expect(floor).toEqual(8);
   });
@@ -20,7 +21,7 @@ describe('Floor', () => {
     const { build } = setup().default();
     const c = build();
     // act
-    const floor= 8;
+    const floor = 8;
     c.setFloorLevel(floor);
     // assert
     expect(c.setFloorLevel).toBeDefined;
@@ -54,7 +55,7 @@ describe('Floor', () => {
     const c = build();
     // act
     c.setWidth(35);
-    const width= c.getWidth();
+    const width = c.getWidth();
     // assert
     expect(width).toEqual(35);
 
@@ -65,7 +66,7 @@ describe('Floor', () => {
     const { build } = setup().default();
     const c = build();
     // act
-    const width= 80;
+    const width = 80;
     c.setWidth(width);
     // assert
     expect(c.setWidth).toBeDefined;
@@ -77,7 +78,7 @@ describe('Floor', () => {
     const c = build();
     // act
     c.setHeight(35);
-    const height= c.getHeight();
+    const height = c.getHeight();
     // assert
     expect(height).toEqual(35);
   });
@@ -87,7 +88,7 @@ describe('Floor', () => {
     const { build } = setup().default();
     const c = build();
     // act
-    const height= 80;
+    const height = 80;
     c.setHeight(height);
     // assert
     expect(c.setHeight).toBeDefined;
@@ -99,7 +100,7 @@ describe('Floor', () => {
     const c = build();
     // act
     c.setPois (IndoorPOI['']);
-    const pois= c.getPois();
+    const pois = c.getPois();
     // assert
     expect(pois).toEqual(IndoorPOI['']);
   });
@@ -109,7 +110,7 @@ describe('Floor', () => {
     const { build } = setup().default();
     const c = build();
     // act
-    const pois= IndoorPOI[''];
+    const pois = IndoorPOI[''];
     c.setPois(pois);
     // assert
     expect(c.setPois).toBeDefined;
@@ -145,46 +146,59 @@ describe('Floor', () => {
   //   // expect(c).toEqual
   // });
   //
-  // it('when getStairsCoordinate is called it should', () => {
-  //   // arrange
-  //   const { build } = setup().default();
-  //   const c = build();
-  //   // act
-  //   c.getStairsCoordinate();
-  //   // assert
-  //   // expect(c).toEqual
-  // });
-  //
-  // it('when getUp_EscalatorCoordinate is called it should', () => {
-  //   // arrange
-  //   const { build } = setup().default();
-  //   const c = build();
-  //   // act
-  //   c.getUp_EscalatorCoordinate();
-  //   // assert
-  //   // expect(c).toEqual
-  // });
-  //
-  // it('when getDown_EscalatorCoordinate is called it should', () => {
-  //   // arrange
-  //   const { build } = setup().default();
-  //   const c = build();
-  //   // act
-  //   c.getDown_EscalatorCoordinate();
-  //   // assert
-  //   // expect(c).toEqual
-  // });
-  //
-  // it('when getElevatorCoordinate is called it should', () => {
-  //   // arrange
-  //   const { build } = setup().default();
-  //   const c = build();
-  //   // act
-  //   c.getElevatorCoordinate();
-  //   // assert
-  //   // expect(c).toEqual
-  // });
-  //
+  it('when getStairsCoordinate is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    const key = 'Stairs';
+
+
+    const stairs = this.pointsOfInterest[key];
+
+    const coordinates = [];
+
+    const coor = new GridCoordinate(stairs[0].x, stairs[0].y);
+    coordinates.push(coor);
+    // act
+    c.getStairsCoordinate();
+    // assert
+    expect(c.getStairsCoordinate()).toEqual( coordinates);
+  });
+
+
+  it('when getUp_EscalatorCoordinate is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+
+    const key =  'Escalator-Up';
+    // act
+    c.getUp_EscalatorCoordinate();
+    // assert
+    expect(c.getUp_EscalatorCoordinate()).toEqual(c.getCoordinate(key));
+  });
+
+  it('when getDown_EscalatorCoordinate is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    const key =  'Escalator-Down';
+    c.getDown_EscalatorCoordinate();
+
+    expect(c.getDown_EscalatorCoordinate()).toEqual(c.getCoordinate(key));
+   });
+
+  it('when getElevatorCoordinate is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    const key =  'Elevator';
+    c.getElevatorCoordinate();
+    // assert
+    expect(c.getElevatorCoordinate()).toEqual(c.getCoordinate(key));
+  });
+
   // it('when getClassroomCoordinate is called it should', () => {
   //   // arrange
   //   const { build } = setup().default();
@@ -195,13 +209,12 @@ describe('Floor', () => {
   //   // expect(c).toEqual
   // });
 
-  
 });
 
 function setup() {
-  
+
   const builder = {
-    
+
     default() {
       return builder;
     },
