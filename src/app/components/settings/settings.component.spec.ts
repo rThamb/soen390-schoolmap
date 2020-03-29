@@ -44,14 +44,30 @@ fixture.detectChanges();
     expect(de.nativeElement.textContent).toContain('Calendar');
     expect(de.nativeElement.textContent).toContain('Notifications');
   });
-  it('when ngOnInit is called it should', () => {
+
+  it('when component is loaded (ngOnInit) it should', async () => {
+    
+    let storage = TestBed.get(Storage);
+
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
-    c.ngOnInit();
-    // assert
-    expect(c.ngOnInit()).toBeTruthy();
+
+    let uE;
+    storage.ready().then(() => {
+      uE = storage.get('useElevator');
+    });
+
+    if(c.useElevator == true)
+    {
+      expect(uE).toBeTruthy();
+    }
+    else
+    {
+      expect(uE).toBeFalsy();
+    }
+    
 });
 
   it('when onChangeSetting is called it should change settings based on user choice', () => {
@@ -64,7 +80,7 @@ fixture.detectChanges();
   const button = fixture.debugElement.nativeElement.querySelector('ion-toggle:nth-child(1)');
   button.click();
   fixture.whenStable().then(() => {
-        expect(component.onChangeSetting).toHaveBeenCalledWith( useStairs);
+        expect(component.onChangeSetting).toHaveBeenCalledWith(useStairs);
     });
 });
 
