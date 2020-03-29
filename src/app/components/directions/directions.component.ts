@@ -55,6 +55,7 @@ export class DirectionsComponent{
         if(value != null || value != undefined || value != '')
         {
           this.directions['destination'] = value;
+          storage.set('newRouteDest', null);
         }
       })
     });

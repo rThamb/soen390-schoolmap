@@ -1046,5 +1046,3 @@ addFloorOverlay(imageBound: any, floorImage :string)
       exitIndoorModeFunc();
   }
 }
-
-
