@@ -54,15 +54,18 @@ fixture.detectChanges();
     expect(c.ngOnInit()).toBeTruthy();
 });
 
-  it('when onChangeSetting is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    let useStairs = true;
-    // act
-    const x = c.onChangeSetting('useStairs', useStairs);
-    // assert
-    expect(x).toBeDefined();
+  it('when onChangeSetting is called it should change settings based on user choice', () => {
+  // arrange
+  const { build } = setup().default();
+  const c = build();
+  // act
+  const useStairs = true;
+  spyOn(component, 'onChangeSetting');
+  const button = fixture.debugElement.nativeElement.querySelector('ion-toggle:nth-child(1)');
+  button.click();
+  fixture.whenStable().then(() => {
+        expect(component.onChangeSetting).toHaveBeenCalledWith( useStairs);
+    });
 });
 
 });
