@@ -44,7 +44,7 @@ fixture.detectChanges();
     expect(de.nativeElement.textContent).toContain('Calendar');
     expect(de.nativeElement.textContent).toContain('Notifications');
   });
-  it('when ngOnInit is called it should', () => {
+  it('when ngOnInit is called it should initialize user settings', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
