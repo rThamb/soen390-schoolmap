@@ -22,8 +22,6 @@ export class SettingsComponent implements OnInit {
 
   constructor(private storage: Storage) {
 
-
-
   }
 
   // Initialize user settings
