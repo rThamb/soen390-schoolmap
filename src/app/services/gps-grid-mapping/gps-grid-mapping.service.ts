@@ -23,8 +23,6 @@ export class GpsGridMappingService {
   constructor(private geolocation: Geolocation) { }
 
   getFloorGridCoordinate(userPosition: Location, currentFloor: Floor) : GridCoordinate{
-    //let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), currentFloor);
-    //let y = this.mapUserLongitudeToYCoordinate(userPosition.getLng(), currentFloor);
 
     let x = this.mapUserLatitudeToXCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
     let y = this.mapUserLongitudeToYCoordinate(userPosition.getLat(), userPosition.getLng(), currentFloor);
@@ -110,13 +108,6 @@ export class GpsGridMappingService {
     return distance;
   }
 
-
-  //method used for hall
-  public setLngLatForFloorTiles(floor: Floor){
-
-    let floorTiles = floor.getFloorTileGrid();
-
-  }
 
   //topLeft, topRight
   private getLngLatForCoordinate(x, y, ref1Lng, ref1Lat, ref2Lng, ref2Lat, ref3Lng, ref3Lat, sizeX, sizeY){
