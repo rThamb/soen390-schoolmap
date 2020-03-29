@@ -1,9 +1,12 @@
+import { NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import { MenubarComponent } from './menubar.component';
 import {By} from '@angular/platform-browser';
+import {autoSpy} from '../../../../auto-spy';
 
 
 describe('MenubarComponent', () => {
@@ -11,16 +14,18 @@ describe('MenubarComponent', () => {
   let fixture: ComponentFixture<MenubarComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+const a = setup().default();
+TestBed.configureTestingModule({
       declarations: [ MenubarComponent],
       imports: [RouterTestingModule, IonicModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
        providers: [IonicModule]
-    }).compileComponents();
+    }).configureTestingModule({ providers: [{ provide: NavController, useValue: a.navCtrl },
+            { provide: MenuController, useValue: a.menu }] }).compileComponents();
 
-    fixture = TestBed.createComponent(MenubarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+fixture = TestBed.createComponent(MenubarComponent);
+component = fixture.componentInstance;
+fixture.detectChanges();
   }));
 
   it('should create', () => {
@@ -89,6 +94,72 @@ describe('MenubarComponent', () => {
     const de = fixture.debugElement.query(By.css('ion-menu'));
     expect(de.nativeElement.textContent).toContain('Main Menu');
   });
+  it('when LoadNewPage is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    const x = c.LoadNewPage('/Home');
+    // assert
+    expect(x).toHaveBeenCalledWith('/Home');
+});
+
+  it('when openFirst is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.openFirst();
+    // assert
+    // expect(c).toEqual
+});
+
+  it('when openEnd is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.openEnd();
+    // assert
+    // expect(c).toEqual
+});
+
+  it('when openCustom is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.openCustom();
+    // assert
+    // expect(c).toEqual
+});
+
+  it('when ngOnInit is called it should', () => {
+    // arrange
+    const { build } = setup().default();
+    const c = build();
+    // act
+    c.ngOnInit();
+    // assert
+    // expect(c).toEqual
+});
+
 
 
 });
+
+function setup() {
+    const navCtrl = autoSpy(NavController);
+    const menu = autoSpy(MenuController);
+    const builder = {
+        navCtrl,
+        menu,
+        default() {
+            return builder;
+        },
+        build() {
+            return new MenubarComponent(navCtrl, menu);
+        }
+    };
+    return builder;
+}

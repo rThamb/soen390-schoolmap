@@ -15,28 +15,23 @@ export class Location {
         this.altitude = alt;
     }
 
-    public getLng()
-    {
+    public getLng() {
         return this.longitude;
     }
 
-    public setLng(lng: number)
-    {
+    public setLng(lng: number) {
         this.longitude = lng;
     }
 
-    public getLat()
-    {
+    public getLat() {
         return this.latitude;
     }
 
-    public setLat(lat: number)
-    {
+    public setLat(lat: number) {
         this.latitude = lat;
     }
 
-    public getGoogleLatLng()
-    {
+    public getGoogleLatLng() {
         return new google.maps.LatLng(this.latitude, this.longitude);
     }
 }

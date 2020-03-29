@@ -44,9 +44,6 @@ var resultChecker = function(obtained, expected){
   return true;
 }
 
-
-
-
 describe('IndoorPathingService', () => {
   
   beforeEach(() => TestBed.configureTestingModule({
