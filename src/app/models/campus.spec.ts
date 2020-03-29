@@ -1,5 +1,5 @@
 import { Location } from './Location';
-import { Campus } from './campus';
+import { Campus } from './Campus';
 import { Building } from './Building';
 import {autoSpy} from '../../../auto-spy';
 
