@@ -14,9 +14,6 @@ import { Floor } from '../../models/Floor'
 import { Location } from '../../models/Location'
 import { Transitions } from '../../models/Transitions'
 
-
-
-
 declare var google
 
 @Component({
@@ -55,9 +52,15 @@ export class DirectionsComponent{
         if(value != null || value != undefined || value != '')
         {
           this.directions['destination'] = value;
+          storage.set('newRouteDest', null);
         }
       })
     });
+
+    if(this.directions['start'] == "" || this.directions['start'] == null || this.directions['start'] == undefined)
+    {
+      this.directions['start'] = "Current";
+    }
   }
 
   
@@ -271,8 +274,10 @@ export class DirectionsComponent{
       var clearDirections = document.getElementById('clearDirections')
       clearDirections.style.display="block";
 
-      //var dirControl = document.getElementById('clearDirBtn');
-      //dirControl.style.display="none";
+      let getDirBtn = document.getElementById('getDirectionBtn');
+      getDirBtn.style.display="none";
+
+
   }
 
 
@@ -280,6 +285,7 @@ export class DirectionsComponent{
   clearDirections() {
 
     let directionsForm = document.getElementById('form')
+    let getDirBtn = document.getElementById('getDirectionBtn');
 
     if(this.directionsRenderer != null)
     {  
@@ -288,6 +294,7 @@ export class DirectionsComponent{
       document.getElementById('travelinfo').style.display="none"
       document.getElementById('directionsPanel').style.display="none"
       document.getElementById('clearDirections').style.display="none"
+      getDirBtn.style.display="block";
     }
     this.mapHandle.quitIndoorMode();
 
@@ -311,7 +318,7 @@ export class DirectionsComponent{
     
     let res = await fetch("./assets/shuttle_bus/departureTimes.json");
     let json = await res.json();
-    let currentDate = new Date('2020-03-18 10:00');
+    let currentDate = new Date();
 
     //Only consider the shuttle bus schedule after 7:15 am on that particular day.
     let timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + " " + "7:15");
@@ -359,25 +366,13 @@ export class DirectionsComponent{
 
 
   /**
-   * ---------------------------------------------------------------------------
-   *  
+   * ---------------------------------------------------------------------------  
    * The methods below are used for indoor pathing
-   * 
-   * 
-   * 
    * -----------------------------------------------------------------------------------
    */
 
 
-    /**
-     * method to get building for destination code
-     * suggest outdoor route using user position (GoogleLatLng)
-     * 
-     * 
-     */
-
-
-     /**
+  /**
    * Used to preform ALL work when indoor path is needed to be drawn. 
    * @param start 
    * @param destination 
@@ -388,7 +383,6 @@ export class DirectionsComponent{
       this.clearDirections();
 
     //focus the map onto building
-    debugger;
     await this.mapHandle.showHallBuildingIndoor(true);
     this.drawIndoorPath(start, destination, null);
     this.showClearDirectionControls();
@@ -429,7 +423,10 @@ export class DirectionsComponent{
   }
 
 
-
+  /**
+   * Checks destination string to determine whether is exists in a concordia campus building. 
+   * @param dest 
+   */
   private async isDestinationCampusPOI(dest: string){
     //get building key from des
     let buildingCode = this.getBuildingCode(dest);
@@ -438,14 +435,15 @@ export class DirectionsComponent{
   }
 
   /**
-   * This feature will only be support when using User position as "start".
+   * NOTE: This feature will only be supported when using User's current position as "start".
+   * 
+   * The method is draw an outdoor route and indoor route based on start and end location.
+   * 
    * @param userPosition 
    * @param dest 
    */
   private async useBothIndoorAndOutdoor(dest: string){
   
-    debugger;
-
     //get user position
     let user: Location = await this.gpsMapService.getUserCurrentPosition(); 
 
@@ -453,16 +451,14 @@ export class DirectionsComponent{
     let buildingCode = this.getBuildingCode(dest);
     let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
 
-    debugger;
     if(buildingObject != null){//if not null he wants to go to a valid classroom
       if(!this.gpsMapService.userInBuilding(user, buildingObject)){
         //should pass GoogleLngLat instead, hardcode start for now
         await this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
         let userIndoorStartLocation = buildingObject.getBuildingLocation();
         this.mapHandle.showHallBuildingIndoor(false);
-
         //hacky solution, need to set the start location for ground floor when arrived
-        await this.drawIndoorPath(buildingObject.getBuildingKey() + "800", dest, userIndoorStartLocation);
+        this.drawIndoorPath(buildingObject.getBuildingKey() + "800", dest, userIndoorStartLocation);
       }
     }
   }
@@ -479,7 +475,6 @@ export class DirectionsComponent{
    */
   async drawIndoorPath(start: string, end: string, userPosition: Location){
     
-    debugger;
     let buildingCode = this.getBuildingCode(start);
     let floorLevel = this.getFloorNum(start, buildingCode);
 
@@ -490,7 +485,6 @@ export class DirectionsComponent{
     
     let transition: Transitions = await this.getPreferedTransition();
 
-    debugger;
     if(userPosition == null)
       path = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, transition);
     else
@@ -510,6 +504,9 @@ export class DirectionsComponent{
     return start.substring(0,2);
   }
 
+  /**
+   * Checks user's setting to determine the type of transition they prefer for indoor movements.
+   */
   private async getPreferedTransition(){
 
     let useStairs = await this.storage.get('useStairs');

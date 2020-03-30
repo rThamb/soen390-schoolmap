@@ -29,8 +29,9 @@ export class IndoorPathingService {
   }
 
 
-  private getPathToClosestWashroom(userPosition: GridCoordinate, floor: Floor, gender: string){
-    
+  public getPathToClosestWashroom(userPosition: Location, floor: Floor, gender: string): Location[]
+  {
+    let userPositionCoor: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, floor);
     let dest: GridCoordinate = null;
 
     if(gender === "M")
@@ -39,8 +40,10 @@ export class IndoorPathingService {
     else
       dest = floor.getWomensWashroom();
 
-    let path = this.determineOptimalPath(userPosition, dest, floor);
-    return path;
+    let path = this.determineOptimalPath(userPositionCoor, dest, floor);
+    let pathLatLng = this.gpsmapping.getLngLatForPath(floor, path);
+
+    return pathLatLng;
   }
 
 
@@ -48,6 +51,7 @@ export class IndoorPathingService {
   /**
    * Determines the path at the user's position and a destination on the current floor. 
    * (Start and End for the same floor)
+   * 
    * 
    * @param userPosition 
    * @param floor 
@@ -118,21 +122,8 @@ export class IndoorPathingService {
 
   
   /**
-   * Invoke this each time you need to transition to another floor.(Floor to Floor)
-   * This method will be called recursively.
-   * @param userPosition 
-   * @param building 
-   * @param currentFloor 
-   * @param destination 
-   * 
-   * @return  will return different types of path, 
-   *          current to dest,
-   *          current to stairs, 
-   *          current to elevator
-   *          current to ecalator
+   * Generates a transition route for an indoor destination given the user's current position.
    */
-
-  //service method 
   public determineRouteToDestinationBasedOnUserPosition(userPosition: Location, building: Building, 
     currentFloor: Floor, destination: string, option: Transitions){
     
@@ -140,7 +131,15 @@ export class IndoorPathingService {
     return this.determineRouteToDestination(userPos, building, currentFloor, destination, option); 
   }
   
-  //service method
+  /**
+   * Generates a transition route for an indoor destination given another indoor POI as start.
+   * 
+   * @param classStart 
+   * @param classDest 
+   * @param building 
+   * @param currentFloor 
+   * @param option 
+   */
   public determineRouteClassroomToClassroom(classStart: string, classDest: string, 
     building: Building, currentFloor: Floor, option: Transitions){
 
@@ -238,7 +237,6 @@ export class IndoorPathingService {
 
   private determineRouteToDestinationDownwards(startPostition: GridCoordinate, building: Building, 
     currentFloor: Floor, destination: string, option: Transitions): any{
-
     
     let startFloor = currentFloor.getFloorLevel();
     let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
@@ -294,18 +292,7 @@ export class IndoorPathingService {
       return journey;
   }
 
-
-
-
-
-
-
-
-
-
   private getFloorLevelFromDestination(buildingkey: string, destKey: string){
     return Math.trunc(parseInt(destKey.replace("HB", "")) / 100);
   }
-
-
 }

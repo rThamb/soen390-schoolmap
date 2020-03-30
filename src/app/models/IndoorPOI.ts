@@ -19,24 +19,4 @@ export class IndoorPOI extends Location
     {
         return this.key;
     }
-
-    public setKey(k: string)
-    {
-        this.key = k;
-    }
-
-    public getGridCoordinate()
-    {
-        return this.coord;
-    }
-
-    public setGridCoordinate(c: GridCoordinate)
-    {
-        this.coord = c;
-    }
-
-
-
-
-
 }

@@ -93,6 +93,7 @@ export class Floor
         binaryGrid.push(arr);
         arr = [];
         }
+        
         return binaryGrid;
     }
 
@@ -111,7 +112,7 @@ export class Floor
         let key = "Stairs";
         
         //list is returned
-        let stairs = this.pointsOfInterest[key];
+        const stairs = this.pointsOfInterest[key];
 
         let coordinates = []; 
         for(let i = 0; i < stairs.length; i++){
@@ -122,7 +123,7 @@ export class Floor
     }
 
     public getUp_EscalatorCoordinate(): GridCoordinate{
-        let key = "Escalator-Up";
+        let key = 'Escalator-Up';
         return this.getCoordinate(key); 
     }
 
@@ -140,7 +141,7 @@ export class Floor
         return this.getCoordinate(classCode); 
     }
 
-    private getCoordinate(key: string): GridCoordinate{
+    getCoordinate(key: string): GridCoordinate{
         let coor = new GridCoordinate(this.pointsOfInterest[key]["x"], this.pointsOfInterest[key]["y"]);
         return coor;
     }
