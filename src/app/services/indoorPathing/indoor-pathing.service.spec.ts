@@ -44,12 +44,13 @@ var resultChecker = function(obtained, expected){
   return true;
 }
 
-describe('IndoorPathingService', () => {
+fdescribe('IndoorPathingService', () => {
   
   beforeEach(() => TestBed.configureTestingModule({
     providers: [ReadGridService, IndoorPathingService,Geolocation, BuildingFactoryService]
   }).compileComponents());
 
+  
   it('should be created', () => {   
     const service: IndoorPathingService = TestBed.get(IndoorPathingService);
     console.log("Checking instance");
@@ -224,16 +225,11 @@ describe('IndoorPathingService', () => {
     let startFloor: Floor = await building.getFloorLevel("8");
     let transition: Transitions = Transitions.Escalator;
 
-    let expectedSize = 2;
+    let expectedSize = 17;
     let obtained = indoorService.getPathToClosestWashroom(start, startFloor, "F");
 
     let resultCheck = expectedSize == obtained.length;
     expect(resultCheck).toBeTruthy();
-    
   });
   
-
-  
-  
-
 });

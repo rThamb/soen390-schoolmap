@@ -277,8 +277,10 @@ export class DirectionsComponent{
       var clearDirections = document.getElementById('clearDirections')
       clearDirections.style.display="block";
 
-      //var dirControl = document.getElementById('clearDirBtn');
-      //dirControl.style.display="none";
+      let getDirBtn = document.getElementById('getDirectionBtn');
+      getDirBtn.style.display="none";
+
+
   }
 
 
@@ -286,6 +288,7 @@ export class DirectionsComponent{
   clearDirections() {
 
     let directionsForm = document.getElementById('form')
+    let getDirBtn = document.getElementById('getDirectionBtn');
 
     if(this.directionsRenderer != null)
     {  
@@ -294,6 +297,7 @@ export class DirectionsComponent{
       document.getElementById('travelinfo').style.display="none"
       document.getElementById('directionsPanel').style.display="none"
       document.getElementById('clearDirections').style.display="none"
+      getDirBtn.style.display="block";
     }
     this.mapHandle.quitIndoorMode();
 
@@ -394,7 +398,6 @@ export class DirectionsComponent{
       this.clearDirections();
 
     //focus the map onto building
-    debugger;
     await this.mapHandle.showHallBuildingIndoor(true);
     this.drawIndoorPath(start, destination, null);
     this.showClearDirectionControls();
@@ -450,8 +453,6 @@ export class DirectionsComponent{
    */
   private async useBothIndoorAndOutdoor(dest: string){
   
-    debugger;
-
     //get user position
     let user: Location = await this.gpsMapService.getUserCurrentPosition(); 
 
@@ -459,16 +460,14 @@ export class DirectionsComponent{
     let buildingCode = this.getBuildingCode(dest);
     let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
 
-    debugger;
     if(buildingObject != null){//if not null he wants to go to a valid classroom
       if(!this.gpsMapService.userInBuilding(user, buildingObject)){
         //should pass GoogleLngLat instead, hardcode start for now
         await this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
         let userIndoorStartLocation = buildingObject.getBuildingLocation();
         this.mapHandle.showHallBuildingIndoor(false);
-
         //hacky solution, need to set the start location for ground floor when arrived
-        await this.drawIndoorPath(buildingObject.getBuildingKey() + "800", dest, userIndoorStartLocation);
+        this.drawIndoorPath(buildingObject.getBuildingKey() + "800", dest, userIndoorStartLocation);
       }
     }
   }
@@ -485,7 +484,6 @@ export class DirectionsComponent{
    */
   async drawIndoorPath(start: string, end: string, userPosition: Location){
     
-    debugger;
     let buildingCode = this.getBuildingCode(start);
     let floorLevel = this.getFloorNum(start, buildingCode);
 
@@ -496,7 +494,6 @@ export class DirectionsComponent{
     
     let transition: Transitions = await this.getPreferedTransition();
 
-    debugger;
     if(userPosition == null)
       path = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, transition);
     else
