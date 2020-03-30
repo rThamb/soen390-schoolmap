@@ -448,7 +448,6 @@ expect(spy).toHaveBeenCalled();
     c.markersClickableOption(true);
     // assert
     expect(c.markersClickableOption(true));
-    
 });
 
   /*it('when markerLabelVisibility is called it should change the visibility the markers', async (() => {
