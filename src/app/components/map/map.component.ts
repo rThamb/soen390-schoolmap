@@ -779,6 +779,8 @@ enterBuildingEventListener(id: string, polygon: any, marker: any, usePOI: boolea
     self.infoWindow.close();
     this.enterBuilding(id, polygon, marker, usePOI);
   });
+
+  
 }
 
 //Method to set the content of info window for each building
@@ -975,6 +977,8 @@ addFloorOverlay(imageBound: any, floorImage :string)
     }
 
     this.map.setZoom(20);
+
+    
   }
   removePreviouslyDrawnPath(){
     if(this.currentActiveRoute["path"] != undefined || this.currentActiveRoute["path"] != null){

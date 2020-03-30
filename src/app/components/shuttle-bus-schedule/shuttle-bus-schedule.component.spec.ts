@@ -2,8 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ShuttleBusScheduleComponent } from './shuttle-bus-schedule.component';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {By} from "@angular/platform-browser";
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {By} from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ShuttleBusScheduleComponent', () => {
   let component: ShuttleBusScheduleComponent;
@@ -14,7 +15,7 @@ describe('ShuttleBusScheduleComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ShuttleBusScheduleComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicModule.forRoot()]
+      imports: [RouterTestingModule, IonicModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ShuttleBusScheduleComponent);
@@ -33,6 +34,7 @@ describe('ShuttleBusScheduleComponent', () => {
     const fri = fixture.debugElement.query(By.css('.friday'));
     expect(fri.nativeElement.textContent).toContain('Friday');
   });
+
   it('when ngOnInit is called it should create the tablestyle with bootstrap', () => {
     // arrange
     const { build } = setup().default();
@@ -40,7 +42,7 @@ describe('ShuttleBusScheduleComponent', () => {
     // act
     c.ngOnInit();
     // assert
-     expect(c.tableStyle).toEqual('bootstrap');
+    expect(c.tableStyle).toEqual('bootstrap');
 });
 
   it('when changeStyle is called it should change the color to dark', () => {
@@ -52,8 +54,14 @@ describe('ShuttleBusScheduleComponent', () => {
     // assert
     expect(c.tableStyle).toEqual('dark');
 });
-
-
+  it('should check if on click change color of the page', async(() => {
+  spyOn(component, 'changeStyle');
+  const button = fixture.debugElement.nativeElement.querySelector('ion-button');
+  button.click();
+  fixture.whenStable().then(() => {
+     expect(component.changeStyle).toBeTruthy();
+ });
+}));
 
 });
 
@@ -65,6 +73,6 @@ function setup() {
         build() {
             return new ShuttleBusScheduleComponent();
         }
-    }
+    };
     return builder;
 }

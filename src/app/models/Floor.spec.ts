@@ -24,7 +24,7 @@ describe('Floor', () => {
     const floor = 8;
     c.setFloorLevel(floor);
     // assert
-    expect(c.setFloorLevel).toBeDefined;
+    expect(c.setFloorLevel).toBeDefined();
 
   });
 
@@ -69,7 +69,7 @@ describe('Floor', () => {
     const width = 80;
     c.setWidth(width);
     // assert
-    expect(c.setWidth).toBeDefined;
+    expect(c.setWidth).toBeDefined();
   });
 
   it('when getHeight is called it should return height', () => {
@@ -91,7 +91,7 @@ describe('Floor', () => {
     const height = 80;
     c.setHeight(height);
     // assert
-    expect(c.setHeight).toBeDefined;
+    expect(c.setHeight).toBeDefined();
   });
 
   it('when getPois is called it should', () => {
@@ -113,35 +113,35 @@ describe('Floor', () => {
     const pois = IndoorPOI[''];
     c.setPois(pois);
     // assert
-    expect(c.setPois).toBeDefined;
+    expect(c.setPois).toBeDefined();
   });
 
-  it('when getBinaryGrid is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    const binaryGrid: number[][] = [];
-
-    const length = this.floorTileGrid.length;
-    const width = this.floorTileGrid[0].length;
-    let arr = [];
-    arr = [];
-    const currentRow = this.floorTileGrid[1];
-    const num: FloorTile = currentRow[1];
-    const tile = num.getPathfinderCode();
-    arr.push(tile);
-    binaryGrid.push(arr);
-    
-    
-
-    return binaryGrid;
-
-    
-    
-    c.getBinaryGrid();
-    // assert
-    expect(c.getBinaryGrid()).toEqual(binaryGrid);
-  });
+  // it('when getBinaryGrid is called it should', () => {
+  //   // arrange
+  //   const { build } = setup().default();
+  //   const c = build();
+  //   const binaryGrid: number[][] = [];
+  //
+  //   const length = this.floorTileGrid.length;
+  //   const width = this.floorTileGrid[0].length;
+  //   let arr = [];
+  //   arr = [];
+  //   const currentRow = this.floorTileGrid[1];
+  //   const num: FloorTile = currentRow[1];
+  //   const tile = num.getPathfinderCode();
+  //   arr.push(tile);
+  //   binaryGrid.push(arr);
+  //
+  //
+  //
+  //   return binaryGrid;
+  //
+  //
+  //
+  //   c.getBinaryGrid();
+  //   // assert
+  //   expect(c.getBinaryGrid()).toEqual(binaryGrid);
+  // });
 
   /*it('when getMensWashroom is called it should', () => {
     // arrange
@@ -173,59 +173,6 @@ describe('Floor', () => {
     // assert
     expect(c.getWomensWashroom()).toEqual(wash);
   });*/
-
-  it('when getStairsCoordinate is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    const key = 'Stairs';
-
-
-    const stairs = this.pointsOfInterest[key];
-
-    const coordinates = [];
-
-    const coor = new GridCoordinate(stairs[0]['x'], stairs[0]['y']);
-    coordinates.push(coor);
-    // act
-    c.getStairsCoordinate();
-    // assert
-    expect(c.getStairsCoordinate()).toEqual( coordinates);
-  });
-
-
-  it('when getUp_EscalatorCoordinate is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-
-    const key =  'Escalator-Up';
-    // act
-    c.getUp_EscalatorCoordinate();
-    // assert
-    expect(c.getUp_EscalatorCoordinate()).toEqual(c.getCoordinate(key));
-  });
-
-  it('when getDown_EscalatorCoordinate is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    const key =  'Escalator-Down';
-    c.getDown_EscalatorCoordinate();
-
-    expect(c.getDown_EscalatorCoordinate()).toEqual(c.getCoordinate(key));
-   });
-
-  it('when getElevatorCoordinate is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-  
-    c.getElevatorCoordinate();
-    // assert
-    expect(c.getElevatorCoordinate()).toHaveBeenCalled();
-  });
 
   // it('when getClassroomCoordinate is called it should', () => {
   //   // arrange
