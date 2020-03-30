@@ -35,26 +35,47 @@ describe('ToggleComponent', () => {
     expect(de1.nativeElement.textContent).toContain('GEORGE');
   });
 
+  it('when callparentloy is called it should redirect the the map to loyola', () => {
+  // arrange
+  const { build } = setup().default();
+  const c = build();
+  // act
+  c.callparentloy();
+  // assert
+
+  expect(c).toBeTruthy();
+});
 
   it('when callparentloy is called it should redirect the the map to loyola', () => {
-    spyOn(component, 'callparentloy');
-    const button = fixture.debugElement.nativeElement.querySelector('ion-button');
-    button.ionSelect();
-    fixture.whenStable().then(() => {
-       expect(component.callparentloy).toBeTruthy();
-   });
+  // arrange
+  const { build } = setup().default();
+  const c = build();
+  // act
+  c.callparentsgw();
+  // assert
 
+  expect(c).toBeTruthy();
 });
 
-  it('when callparentsgw is called it should redirect the the map to SGW', () => {
-    spyOn(component, 'callparentsgw');
-    const button2 = fixture.debugElement.nativeElement.querySelector('ion-button');
-    button2.ionSelect();
-    fixture.whenStable().then(() => {
-       expect(component.callparentsgw).toBeTruthy();
-   });
+  it('should call the function callparentlocate() when user click on locate me button', async(() => {
+  spyOn(component, 'callparentloy');
+  const button = fixture.debugElement.nativeElement.querySelector('ion-segment-button:nth-child(1)');
+  button.click();
 
-});
+  fixture.whenStable().then(() => {
+    expect(component.callparentloy).toHaveBeenCalled();
+  });
+}));
+
+  it('should call the function callparentsgw() when user click on locate me button', async(() => {
+  spyOn(component, 'callparentsgw');
+  const button = fixture.debugElement.nativeElement.querySelector('ion-segment-button:nth-child(2)');
+  button.click();
+
+  fixture.whenStable().then(() => {
+    expect(component.callparentsgw).toHaveBeenCalled();
+  });
+}));
 
   function setup() {
     const builder = {
