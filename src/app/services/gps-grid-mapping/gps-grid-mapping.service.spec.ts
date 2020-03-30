@@ -1,11 +1,15 @@
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { TestBed } from '@angular/core/testing';
 import { Location } from '../../models/Location'
 import { Floor } from '../../models/Floor';
 import { GpsGridMappingService } from './gps-grid-mapping.service';
+import { GridCoordinate } from '../../models/GridCoordinate';
+import { BuildingFactoryService } from '../BuildingFactory/building-factory.service';
+import { Building } from '../../models/Building';
 
 describe('GpsGridMappingService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [GpsGridMappingService]
+    providers: [GpsGridMappingService, BuildingFactoryService, Geolocation]
   }).compileComponents());
 
   it('should be created', () => {
@@ -15,33 +19,31 @@ describe('GpsGridMappingService', () => {
   });
 
   
-  it('should determine GPS and Coordinate',  () => {
+  it('should return correct grid coordinate in hall building based on user location', async () => {
+    const service: GpsGridMappingService = TestBed.get(GpsGridMappingService);
+    const bFact: BuildingFactoryService = TestBed.get(BuildingFactoryService);
+
+    let userLocation: Location = new Location(45.497095, -73.579206, 0);
+    let floor8: Floor;
+    
+    let building: Building = await bFact.loadBuilding("HB");
+    floor8 = building.getFloors()['HB8'];
+    
+    expect(service.getFloorGridCoordinate(userLocation, floor8)).toEqual(new GridCoordinate(2,7));
+  });
+
+  it('should return a Location object', () => {
     const service: GpsGridMappingService = TestBed.get(GpsGridMappingService);
 
-    let coor = new Location(6.4, 4, 0);
-    let floor = new Floor();
-    let topLeft = new Location(4.4, 0, 0);
-    let topRight = new Location(12.4, 0, 0);
-    let bottomLeft = new Location(4.2, 6, 0);
+    const location = service.getUserCurrentPosition();
 
-    let map = [];
-    let arr = [0,0,0,0,0]
-    map.push(arr);
-    map.push(arr);
-    map.push(arr);
-
-    // floor.pathfindingFloorGrid = map; 
-    // floor.topLeftCornerGPS = topLeft; 
-    // floor.topRightCornerGPS = topRight;
-    // floor.bottomLeftCorrnerGPS = bottomLeft;
-    
-    let obtained = service.getFloorGridCoordinate(coor, floor);
-    console.log(obtained);
-    let expected = 1 + "," + 2;
-    //console.log(result)
-    
-    expect(obtained + "").toContain(expected + "");
+    expect(location).toBeDefined();
   });
+
+
+
+
+  
 
 
 });

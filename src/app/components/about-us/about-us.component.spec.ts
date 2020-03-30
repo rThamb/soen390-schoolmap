@@ -1,24 +1,46 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { AboutUsComponent } from './about-us.component';
+import { NO_ERRORS_SCHEMA} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
 describe('AboutUsComponent', () => {
   let component: AboutUsComponent;
   let fixture: ComponentFixture<AboutUsComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+const a = setup().default();
+TestBed.configureTestingModule({
       declarations: [ AboutUsComponent ],
-      imports: [IonicModule.forRoot()]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AboutUsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+fixture = TestBed.createComponent(AboutUsComponent);
+component = fixture.componentInstance;
+fixture.detectChanges();
   }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // covering both lines
+  it('should contain a paragraph describing the app', () => {
+    const de = fixture.debugElement.query(By.css('.infoAboutUs'));
+    expect(de.nativeElement.textContent).toContain('developed by the ConcordiaGo team');
+    const de1 = fixture.debugElement.query(By.css('.infoAboutUs'));
+    expect(de1.nativeElement.textContent).toContain('their points of interest');
+  });
 });
+
+function setup() {
+    const builder = {
+        default() {
+            return builder;
+        },
+        build() {
+            return new AboutUsComponent();
+        }
+    };
+    return builder;
+}

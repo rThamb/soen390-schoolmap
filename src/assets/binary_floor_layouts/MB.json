@@ -1,0 +1,53 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "John Molson Building",
+        "Address": "1600 Boulevard de Maisonneuve O, Montréal, QC H3H 1J5",
+        "Departments": 
+        [
+            "Accoutancy", 
+            "Supply Chain & Business Technology Management",
+            "Finance",
+            "Management",
+            "Executive MBA Program",
+            "Music",
+            "Theatre",
+            "Contemporary Dance"
+        ],
+        "Services": 
+        [
+            "Career Management Servicess",
+            "John Molson Executive Centre",
+            "Office of the Registrar",
+            "Performing Arts Facilities"
+        ],
+        "BuildingImg": "assets/BuildingImages/JMSB.jpg",
+        "ImgWidth": "50%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.495297,
+        "lng": -73.578973
+    },
+
+    "floorNames": ["MBS2", "MBS1", "MB1", "MB2", "MB3", "MB4", "MB5", "MB6", "MB7", "MB8", "MB9", "MB10", "MB11", "MB12", "MB13", "MB14", "MB15"],
+
+    "bound":
+    {
+        "north": 45.495626, 
+        "south": 45.494878, 
+        "east": -73.578376,
+        "west": -73.579583
+    },
+
+    "floors":
+    [
+
+    ]
+}

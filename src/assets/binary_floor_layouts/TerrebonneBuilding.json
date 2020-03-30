@@ -1,0 +1,40 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Terrebonne Building",
+        "Address": "7079 Rue de Terrebonne, Montréal, QC H4B 2B4",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+        ],
+        "BuildingImg": "",
+        "ImgWidth": "",
+        "EnterButton": "false"
+    },
+    "Location":
+    {
+        "lat": 45.495530,
+        "lng": -73.573845
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

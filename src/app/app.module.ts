@@ -25,7 +25,7 @@ import { BuildingFactoryService } from './services/BuildingFactory/building-fact
 
 //Component imports
 import { AboutUsComponent } from './components/about-us/about-us.component';
-import { FavoritesComponent } from './components/favorites/favorites.component';
+// import { FavoritesComponent } from './components/favorites/favorites.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
 import { HomeSearchComponent } from './components/home-search/home-search.component';
 import { MapComponent } from './components/map/map.component';
@@ -33,11 +33,11 @@ import { DirectionsComponent } from './components/directions/directions.componen
 import { LocateMeComponent } from './components/locate-me/locate-me.component';
 import { HomeComponent } from './components/home/home.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
-import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
+// import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
 import { ReportIssuesComponent } from './components/report-issues/report-issues.component';
 import { SafetyComponent } from './components/safety/safety.component';
-import { ScheduleComponent } from './components/schedule/schedule.component';
+// import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
@@ -50,10 +50,11 @@ import {IonicStorageModule} from '@ionic/storage';
 
 @NgModule({
 
-  declarations: [AppComponent, MapComponent, FavoritesComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, 
-                ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
+  declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
+                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, 
+                ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
+  // tslint:disable-next-line:max-line-length
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule, IonicStorageModule.forRoot({      name: 'appDB',
   driverOrder: ['sqlite', 'websql', 'indexeddb']})],
   providers: [

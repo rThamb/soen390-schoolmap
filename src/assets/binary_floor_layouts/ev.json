@@ -1,0 +1,49 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Engineering, Computer Science and Visual Arts Integrated Complex",
+        "Address": "1515 Saint-Catherine St W, Montreal, Quebec H3G 2W1",
+        "Departments": 
+        [
+        "Gina Cody School of Engineering and Computer Science", 
+        "Electrical and Computer Engineering", 
+        "Building, Civil and Environmental Engineering", 
+        "Computer Science and Software Engineering",
+        "Mechanical, Industrial and Aerospace Engineering",
+        "Design and Computation Arts",
+        "Faculty of Fine Arts",
+        "Recreation and Athletics",
+        "Zero Energy Building Studies",
+        "Centre for Pattern Recognition and Machine Intelligence",
+        "Center for Composites"
+        ],
+        "Services": ["LeGym", "FOFA Gallery"],
+        "BuildingImg": "assets/BuildingImages/ev.jpg",
+        "ImgWidth": "45%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat":45.495572,
+        "lng":-73.578025
+    },
+
+    "floorNames": ["EV1", "EV2", "EV3", "EV4", "EV5", "EV6", "EV7", "EV8", "EV9", "EV10", "EV11", "EV12", "EV13", "EV14", "EV15", "EV15", "EV16", "EV17"],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

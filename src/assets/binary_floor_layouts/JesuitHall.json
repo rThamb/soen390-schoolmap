@@ -1,0 +1,42 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    "BuildingContent":
+    {
+        "Name": "Loyola Jesuit Hall and Conference Centre",
+        "Address": "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6",
+        "Departments": 
+        [
+        ],
+        "Services": 
+        [
+            "Loyola Jesuit Hall and Conference Centre",
+            "Conference services"
+        ],
+        "BuildingImg": "assets/BuildingImages/lj.jpg",
+        "ImgWidth": "50%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.458514,
+        "lng": -73.641082
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}

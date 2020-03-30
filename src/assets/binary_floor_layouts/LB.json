@@ -1,0 +1,56 @@
+{
+    "buildingName": "Concordia University Hall Building",
+    "buildingLatLng": {
+        "lat":  45.497101, 
+        "lng": -73.578652
+    },
+    
+    "BuildingContent":
+    {
+        "Name": "J.W. McConnel Building",
+        "Address": "1400 Maisonneuve Blvd W Montreal, QC H3G 1M8",
+        "Departments": 
+        [
+            "English", 
+            "History",
+            "Études françaises",
+            "Mathematics and Statistics",
+            "Education",
+            "Centre for Interdisciplinary Studies in Society and Culture",
+            "Centre for the Study of Learning and Performance"
+        ],
+        "Services": 
+        [
+            "R. Howard Webster Library",
+            "Welcome Centre",
+            "Leonard and Bina Ellen Art Gallery",
+            "J.A. De Sève Cinema",
+            "Birks Student Service Centre",
+            "Campus Stores",
+            "Instructional & Information Technology Services (IITS)",
+            "4TH SPACE"
+        ],
+        "BuildingImg": "assets/BuildingImages/LB.jpg",
+        "ImgWidth": "70%",
+        "EnterButton": "true"
+    },
+    "Location":
+    {
+        "lat": 45.496708,
+        "lng": -73.577912
+    },
+
+    "floorNames": [],
+
+    "bound":
+    {
+        "north": 0,
+        "south": 0,
+        "east": 0,
+        "west": 0 
+    },
+
+    "floors":
+    [
+    ]
+}
