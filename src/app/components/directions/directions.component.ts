@@ -366,25 +366,13 @@ export class DirectionsComponent{
 
 
   /**
-   * ---------------------------------------------------------------------------
-   *  
+   * ---------------------------------------------------------------------------  
    * The methods below are used for indoor pathing
-   * 
-   * 
-   * 
    * -----------------------------------------------------------------------------------
    */
 
 
-    /**
-     * method to get building for destination code
-     * suggest outdoor route using user position (GoogleLatLng)
-     * 
-     * 
-     */
-
-
-     /**
+  /**
    * Used to preform ALL work when indoor path is needed to be drawn. 
    * @param start 
    * @param destination 
@@ -435,7 +423,10 @@ export class DirectionsComponent{
   }
 
 
-
+  /**
+   * Checks destination string to determine whether is exists in a concordia campus building. 
+   * @param dest 
+   */
   private async isDestinationCampusPOI(dest: string){
     //get building key from des
     let buildingCode = this.getBuildingCode(dest);
@@ -444,7 +435,10 @@ export class DirectionsComponent{
   }
 
   /**
-   * This feature will only be support when using User position as "start".
+   * NOTE: This feature will only be supported when using User's current position as "start".
+   * 
+   * The method is draw an outdoor route and indoor route based on start and end location.
+   * 
    * @param userPosition 
    * @param dest 
    */
@@ -510,6 +504,9 @@ export class DirectionsComponent{
     return start.substring(0,2);
   }
 
+  /**
+   * Checks user's setting to determine the type of transition they prefer for indoor movements.
+   */
   private async getPreferedTransition(){
 
     let useStairs = await this.storage.get('useStairs');

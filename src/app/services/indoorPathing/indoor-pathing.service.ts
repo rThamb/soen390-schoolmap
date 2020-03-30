@@ -122,21 +122,8 @@ export class IndoorPathingService {
 
   
   /**
-   * Invoke this each time you need to transition to another floor.(Floor to Floor)
-   * This method will be called recursively.
-   * @param userPosition 
-   * @param building 
-   * @param currentFloor 
-   * @param destination 
-   * 
-   * @return  will return different types of path, 
-   *          current to dest,
-   *          current to stairs, 
-   *          current to elevator
-   *          current to ecalator
+   * Generates a transition route for an indoor destination given the user's current position.
    */
-
-  //service method 
   public determineRouteToDestinationBasedOnUserPosition(userPosition: Location, building: Building, 
     currentFloor: Floor, destination: string, option: Transitions){
     
@@ -144,7 +131,15 @@ export class IndoorPathingService {
     return this.determineRouteToDestination(userPos, building, currentFloor, destination, option); 
   }
   
-  //service method
+  /**
+   * Generates a transition route for an indoor destination given another indoor POI as start.
+   * 
+   * @param classStart 
+   * @param classDest 
+   * @param building 
+   * @param currentFloor 
+   * @param option 
+   */
   public determineRouteClassroomToClassroom(classStart: string, classDest: string, 
     building: Building, currentFloor: Floor, option: Transitions){
 
