@@ -14,9 +14,6 @@ import { Floor } from '../../models/Floor'
 import { Location } from '../../models/Location'
 import { Transitions } from '../../models/Transitions'
 
-
-
-
 declare var google
 
 @Component({
