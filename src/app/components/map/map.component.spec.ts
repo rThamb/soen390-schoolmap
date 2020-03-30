@@ -10,6 +10,7 @@ import { MapComponent } from './map.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { autoSpy } from 'auto-spy';
 import { Building } from 'src/app/models/Building';
+import { overlays } from './BuildingOverlayPoints';
 import { By } from '@angular/platform-browser';
 import {Location} from '../../models/Location';
 
@@ -39,10 +40,36 @@ component = fixture.componentInstance;
 fixture.detectChanges();
   }));
 
-  // afterEach(() => {
-  //   // service = null;
-  //   // component = null;
-  // });
+  it('should load all overlays', () => {
+    expect(overlays.visualArts.overlayPoints).toBeTruthy();
+    expect(overlays.sjwCampus.overlayPoints).toBeTruthy();
+    expect(overlays.loyolaCampus.overlayPoints).toBeTruthy();
+    expect(overlays.hall.overlayPoints).toBeTruthy();
+    expect(overlays.molson.overlayPoints).toBeTruthy();
+    expect(overlays.faubourg.overlayPoints).toBeTruthy();
+    expect(overlays.EV.overlayPoints).toBeTruthy();
+    expect(overlays.LB.overlayPoints).toBeTruthy();
+    expect(overlays.greyNuns.overlayPoints).toBeTruthy();
+    expect(overlays.scienceComplex.overlayPoints).toBeTruthy();
+    expect(overlays.journalismBuilding.overlayPoints).toBeTruthy();
+    expect(overlays.chapel.overlayPoints).toBeTruthy();
+    expect(overlays.psyBuilding.overlayPoints).toBeTruthy();
+    expect(overlays.stingerDome.overlayPoints).toBeTruthy();
+    expect(overlays.stingerStadium.overlayPoints).toBeTruthy();
+    expect(overlays.centralBuilding.overlayPoints).toBeTruthy();
+    expect(overlays.vanierLibrary.overlayPoints).toBeTruthy();
+    expect(overlays.adminBuilding.overlayPoints).toBeTruthy();
+    expect(overlays.jesuitHall.overlayPoints).toBeTruthy();
+    expect(overlays.athleticCamp.overlayPoints).toBeTruthy();
+    expect(overlays.loyolaGym.overlayPoints).toBeTruthy();
+    expect(overlays.phyServiceBuilding.overlayPoints).toBeTruthy();
+    expect(overlays.centerArts.overlayPoints).toBeTruthy();
+    expect(overlays.saintIgnatius.overlayPoints).toBeTruthy();
+    expect(overlays.structuralCenter.overlayPoints).toBeTruthy();
+    expect(overlays.jesuitResidence.overlayPoints).toBeTruthy();
+    expect(overlays.studentResidences.overlayPoints).toBeTruthy();
+  });
+
 
   it('should create', () => {
     fixture.detectChanges();
