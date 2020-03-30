@@ -577,7 +577,7 @@ export class MapComponent implements AfterViewInit {
       //Zoom in
       this.map.setCenter({lat: buildingInfo["Location"].lat, lng: buildingInfo["Location"].lng});
       this.map.setZoom(19);
-      this.map.setOptions({minZoom: 18});
+      //this.map.setOptions({minZoom: 18});
 
       // Dropdown content
       let selectContent = '';
@@ -927,7 +927,7 @@ addFloorOverlay(imageBound: any, floorImage :string)
       strokeWeight: 2
     });
 
-    let startLabel = "Start";
+    let startLabel = "A";
 
     const startMarker = new google.maps.Marker({
       position: locationList[0].getGoogleLatLng(),
@@ -937,7 +937,7 @@ addFloorOverlay(imageBound: any, floorImage :string)
     });
 
 
-    let endLabel = "End";
+    let endLabel = "B";
 
     const endMarker = new google.maps.Marker({
       position: locationList[locationList.length - 1].getGoogleLatLng(),
