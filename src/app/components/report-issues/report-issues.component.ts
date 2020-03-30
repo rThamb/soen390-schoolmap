@@ -51,7 +51,7 @@ export class ReportIssuesComponent {
 
     // create pop up for user to tell them we received their message
       const alert: any = this.alertCtrl.create({
-        header: 'Thank you for you feedback',
+        header: 'Thank you for your feedback',
         message: 'Our team will look into the issue you have reported asap!',
         buttons: [
           {
