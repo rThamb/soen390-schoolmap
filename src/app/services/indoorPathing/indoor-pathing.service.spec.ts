@@ -44,7 +44,7 @@ var resultChecker = function(obtained, expected){
   return true;
 }
 
-fdescribe('IndoorPathingService', () => {
+describe('IndoorPathingService', () => {
   
   beforeEach(() => TestBed.configureTestingModule({
     providers: [ReadGridService, IndoorPathingService,Geolocation, BuildingFactoryService]

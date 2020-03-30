@@ -4,7 +4,7 @@ import { ToggleComponent } from './toggle.component';
 import {MapComponent} from '../map/map.component';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {By} from '@angular/platform-browser';
-
+import {Location} from '../../models/Location';
 
 describe('ToggleComponent', () => {
   let component: ToggleComponent;
@@ -39,19 +39,21 @@ describe('ToggleComponent', () => {
   it('when callparentloy is called it should redirect the the map to loyola', () => {
     spyOn(component, 'callparentloy');
     const button = fixture.debugElement.nativeElement.querySelector('ion-button');
-    button.ionSelect();
     fixture.whenStable().then(() => {
-       expect(component.callparentloy).toBeTruthy();
+      component.callparentloy();
+      expect(component.toggleevent.emit).toHaveBeenCalledWith(new Location(45.458234, -73.640493, 0));
+      expect(button).toBeTruthy();
    });
 
 });
 
   it('when callparentsgw is called it should redirect the the map to SGW', () => {
     spyOn(component, 'callparentsgw');
-    const button2 = fixture.debugElement.nativeElement.querySelector('ion-button');
-    button2.ionSelect();
+    const button = fixture.debugElement.nativeElement.querySelector('ion-button');
     fixture.whenStable().then(() => {
-       expect(component.callparentsgw).toBeTruthy();
+      component.callparentsgw();
+      expect(component.toggleevent.emit).toHaveBeenCalledWith(new Location(45.494711, -73.577871, 0));
+      expect(button).toBeTruthy();
    });
 
 });

@@ -18,7 +18,7 @@ import {User} from '../../models/User';
 import { expressionType } from '@angular/compiler/src/output/output_ast';
 declare var google;
 
-describe('MapComponent', () => {
+fdescribe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
   let spy: any;
@@ -30,7 +30,7 @@ const a = setup().default();
 TestBed.configureTestingModule({
       declarations: [ MapComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [Geolocation, IndoorPathingService, ReadGridService, BuildingFactoryService],
+      providers: [Geolocation, IndoorPathingService, ReadGridService, BuildingFactoryService, MapComponent],
       imports: [IonicModule.forRoot()]
     }).configureTestingModule({ providers: [{ provide: MapService, useValue: a.mapService },
             { provide: BuildingFactoryService, useValue: a.buildingFactory }] }).compileComponents();
@@ -642,13 +642,13 @@ expect(spy).toHaveBeenCalled();
     // arrange
     const { build } = setup().default();
     const c = build();
+    spyOn(c, 'quitIndoorMode');
     // act
     c.quitIndoorMode();
+
     // assert
-    expect(c.quitIndoorMode());
+    expect(c.quitIndoorMode).toHaveBeenCalled();
 });
-
-
 
 });
 
