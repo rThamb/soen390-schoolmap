@@ -25,7 +25,7 @@ import { BuildingFactoryService } from './services/BuildingFactory/building-fact
 
 //Component imports
 import { AboutUsComponent } from './components/about-us/about-us.component';
-// import { FavoritesComponent } from './components/favorites/favorites.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
 import { HomeSearchComponent } from './components/home-search/home-search.component';
 import { MapComponent } from './components/map/map.component';
@@ -51,7 +51,7 @@ import {IonicStorageModule} from '@ionic/storage';
 @NgModule({
 
   declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, 
+                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, FavoritesComponent,
                 ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
