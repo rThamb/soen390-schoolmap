@@ -251,7 +251,7 @@ export class DirectionsComponent{
     var directionsPanel = document.getElementById('directionsPanel')
     //var clearDirections = document.getElementById('clearDirections')
     let directionsForm = document.getElementById('form') 
-
+    let directions = {"Start":start,"Destinations":destination}
       this.directionsService.route({
       origin: this.validateInput(start),
       destination: this.validateInput(destination),
@@ -264,8 +264,10 @@ export class DirectionsComponent{
         this.showClearDirectionControls();
         directionsPanel.style.display="block";
         //clearDirections.style.display="block";
-        //this.getHistory()
-        this.addToHistory()
+
+        //comment out addToHistory if history was cleared
+        this.getHistory()
+        this.addToHistory(JSON.stringify(directions))
       } else {
         window.alert('Request to directions API failed: ' + status);
       }
@@ -292,13 +294,6 @@ export class DirectionsComponent{
       });
   }
 
-  returnHistory(history: JSON): JSON {
-    console.log(history)
-    return history
-  }
-
-
-
   setCurrentDateInHistory(history:JSON):any{
     let length = history["dates"].length
     let date = this.getDate()
@@ -319,14 +314,32 @@ export class DirectionsComponent{
     }  
   }
 
-  async addToHistory(){
+  async addToHistory(directions: string){
     let history = await this.storage.get('history').catch((error) => {
       console.log('Error getting history', error);
     });
 
+    //this.storage.clear()
+
+    let direction = JSON.parse(directions)
     history = JSON.parse(history)
+    
+    let date = this.getDate()
     let length = history['dates'].length
-    console.log(history['dates'][length-1])
+    let index = history['dates'][length-1][date].length
+    
+    if(JSON.stringify(history['dates'][length-1][date][0]) === "{}"){
+      history['dates'][length-1][date][0] = direction
+      this.storage.set('history', JSON.stringify(history));
+    }
+    else{
+      history['dates'][length-1][date][index] = direction
+      this.storage.set('history', JSON.stringify(history));
+    }
+
+    console.log(index)
+    console.log(history['dates'][length-1][date].length)
+    console.log(history)
   }
 
   showClearDirectionControls(){
