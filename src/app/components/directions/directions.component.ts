@@ -264,9 +264,6 @@ export class DirectionsComponent{
         this.showClearDirectionControls();
         directionsPanel.style.display="block";
         //clearDirections.style.display="block";
-
-        //comment out addToHistory if history was cleared
-        this.getHistory()
         this.addToHistory(JSON.stringify(directions))
       } else {
         window.alert('Request to directions API failed: ' + status);
@@ -283,17 +280,7 @@ export class DirectionsComponent{
     return currentDate
   }
 
-  getHistory(){
-      this.storage.get('history').then((hist) => {
-        if (hist) {
-          let history = JSON.parse(hist)
-          this.setCurrentDateInHistory(history)
-        } else {
-          console.log("No History Stored")
-        }
-      });
-  }
-
+  //If the current date is not already stored in the history, store it
   setCurrentDateInHistory(history:JSON):any{
     let length = history["dates"].length
     let date = this.getDate()
@@ -314,32 +301,53 @@ export class DirectionsComponent{
     }  
   }
 
+  //Given the directions, start and destination, append it to the list in the storage, by dates
   async addToHistory(directions: string){
     let history = await this.storage.get('history').catch((error) => {
       console.log('Error getting history', error);
     });
 
-    //this.storage.clear()
-
-    let direction = JSON.parse(directions)
+    let parsedDirections = JSON.parse(directions)
     history = JSON.parse(history)
     
-    let date = this.getDate()
+    let currentDate = this.getDate()
     let length = history['dates'].length
-    let index = history['dates'][length-1][date].length
+    let loggedDate = Object.keys(history["dates"][length - 1])[0];
     
-    if(JSON.stringify(history['dates'][length-1][date][0]) === "{}"){
-      history['dates'][length-1][date][0] = direction
-      this.storage.set('history', JSON.stringify(history));
-    }
-    else{
-      history['dates'][length-1][date][index] = direction
-      this.storage.set('history', JSON.stringify(history));
+    if(this.isCurrentDateLogged(loggedDate)){
+    
+      console.log(history)
+      length = history['dates'].length
+      
+      if(JSON.stringify(history['dates'][length-1][currentDate][0]) === "{}"){
+        history['dates'][length-1][currentDate][0] = parsedDirections
+        this.storage.set('history', JSON.stringify(history));
+      }
+      else{
+        let index = history['dates'][length-1][currentDate].length
+        history['dates'][length-1][currentDate][index] = parsedDirections
+        this.storage.set('history', JSON.stringify(history));
+      }
+    } else {
+      this.setCurrentDateInHistory(history)
+      this.addToHistory(directions)
     }
 
-    console.log(index)
-    console.log(history['dates'][length-1][date].length)
-    console.log(history)
+    //console.log(history)
+  }
+
+  //Helper method to verify the last date stored vs the current date
+  isCurrentDateLogged(loggedDate: string): boolean{
+    let currentDate = this.getDate()
+
+    if(currentDate === loggedDate){
+      console.log("Current Date is logged")
+      return true
+    }
+    else{
+      console.log("Current date is not logged")
+      return false
+    }
   }
 
   showClearDirectionControls(){
