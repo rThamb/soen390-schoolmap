@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'app-history',
@@ -7,8 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private storage: Storage) { }
 
-  ngOnInit() {}
-
+  ngOnInit() {
+      this.storage.get('history').then((hist) => {
+        if (hist == null || hist == undefined) {
+          this.storage.set('history', JSON.stringify({"dates":[]}));
+          console.log(hist)
+        } else {
+          
+          console.log(hist)
+        }
+      });
+  }
 }
