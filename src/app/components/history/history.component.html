@@ -1,2 +1,16 @@
-<ion-button id="clearHistoryBtn" size="small" color="danger" (click)="clearHistory()">Clear History</ion-button>
+<!-- <ion-button id="clearHistoryBtn" size="small" color="danger" (click)="createHistory()">Clear History</ion-button> -->
 
+<ion-list id="history">
+  <ng-container *ngFor="let item of historyDates">
+    <ion-item>
+      <ion-label class="dates" [innerHTML] = "item">
+      </ion-label>
+    </ion-item> 
+    <ng-container *ngFor="let value of historyDisplay[item]">
+      <ion-item>
+        <ion-label class="locations" [innerHTML] = "value">
+        </ion-label>
+      </ion-item> 
+    </ng-container>
+  </ng-container>
+</ion-list>

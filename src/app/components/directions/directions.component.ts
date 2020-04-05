@@ -317,7 +317,6 @@ export class DirectionsComponent{
     
     if(this.isCurrentDateLogged(loggedDate)){
     
-      console.log(history)
       length = history['dates'].length
       
       if(JSON.stringify(history['dates'][length-1][currentDate][0]) === "{}"){
@@ -342,11 +341,9 @@ export class DirectionsComponent{
     let currentDate = this.getDate()
 
     if(currentDate === loggedDate){
-      console.log("Current Date is logged")
       return true
     }
     else{
-      console.log("Current date is not logged")
       return false
     }
   }

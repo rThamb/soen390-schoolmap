@@ -8,6 +8,9 @@ import {Storage} from '@ionic/storage';
 })
 export class HistoryComponent implements OnInit {
 
+  historyDates = []
+  historyLocations = []
+  historyDisplay: any = {}
   constructor(private storage: Storage) { }
 
   ngOnInit() {
@@ -15,10 +18,15 @@ export class HistoryComponent implements OnInit {
         if (hist == null || hist == undefined) {
           this.storage.set('history', JSON.stringify({"dates":[]}));
           this.getHistory();
-          console.log(hist)
-        } else {
-          
-          console.log(hist)
+        } 
+        else {
+          let history = JSON.parse(hist)
+          let numDates = (history["dates"].length) - 1
+
+          while(numDates != -1) {
+            this.createHistory(numDates)
+            numDates--
+          }
         }
       });
   }
@@ -63,6 +71,53 @@ export class HistoryComponent implements OnInit {
       }
     }  
   }
+
+  async createHistory(index:number){
+    let history = await this.storage.get('history').catch((error) => {
+      console.log('Error getting history', error);
+    });
+
+    history = JSON.parse(history)
+    let numDates = history["dates"].length
+    this.historyLocations = []
+  
+    let date = Object.keys(history["dates"][index])[0]
+    let locationsIndex = history["dates"][index][date].length
+    this.historyDates.push(date)
+    
+    for(var j = locationsIndex - 1; j >= 0; j--){
+      let start = history["dates"][index][date][j].Start
+      let dest = history["dates"][index][date][j].Destinations
+      let location = "Start: <strong>" + start + "</strong><br />Destination: <strong>" + dest +"</strong>"
+      this.historyLocations.push(location)
+    }
+    this.historyDisplay[date] = this.historyLocations
+  }
+
+  // async createHistory(){
+  //   let history = await this.storage.get('history').catch((error) => {
+  //     console.log('Error getting history', error);
+  //   });
+
+  //   history = JSON.parse(history)
+  //   let numDates = history["dates"].length
+    
+  //   for(var i = numDates -1; i >= 0; i--){
+  //     let date = Object.keys(history["dates"][i])[0]
+  //     let locationsIndex = history["dates"][i][date].length
+  //     this.historyDates.push(date)
+      
+  //     for(var j = locationsIndex - 1; j >= 0; j--){
+  //       let start = history["dates"][i][date][j].Start
+  //       let dest = history["dates"][i][date][j].Destinations
+  //       let location = "Start: " + start + "<br />Destination: "+dest
+        
+  //       this.historyLocations.push(location)
+  //     }
+  //     //this.historyLocations = []
+  //     console.log(this.historyDisplay)
+  //   }
+  // }
 
   //Clear the current search history
   clearHistory() {

@@ -1,5 +1,17 @@
 #clearHistoryBtn{
     position: absolute;
-    left: 100px;
-    top: 150px;
+    left: 250px;
+    top: 75px;
+    z-index: 1;
+}
+
+#history{
+    position: absolute;
+    top: 50px;
+}
+
+.dates{
+    font-size: large;
+    font-weight: bold;
+    color: #3880ff;
 }
