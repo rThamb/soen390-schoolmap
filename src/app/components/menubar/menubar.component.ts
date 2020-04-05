@@ -14,7 +14,7 @@ export class MenubarComponent implements OnInit {
     public navCtrl: NavController,
     private menu: MenuController) { }
 
-  //Method allows user to navigate between pages using menu component
+  // Method allows user to navigate between pages using menu component
   LoadNewPage(page:string): void {
     this.navCtrl.navigateRoot(page);
     this.menu.toggle();
