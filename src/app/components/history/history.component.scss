@@ -1,13 +1,14 @@
 #clearHistoryBtn{
     position: absolute;
-    left: 250px;
-    top: 75px;
+    bottom: 0px;
     z-index: 1;
+    width: 100%;
 }
 
 #history{
     position: absolute;
     top: 50px;
+    overflow:scroll ;
 }
 
 .dates{

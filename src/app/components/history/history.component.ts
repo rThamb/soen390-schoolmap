@@ -122,8 +122,8 @@ export class HistoryComponent implements OnInit {
   //Clear the current search history
   clearHistory() {
     if (confirm("Are you sure you would like to clear your search history?") == true) {
-      this.storage.remove('history')
-      this.ngOnInit()
+      // this.storage.remove('history')
+      // this.ngOnInit()
 		}
   }
 }

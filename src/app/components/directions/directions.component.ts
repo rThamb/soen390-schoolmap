@@ -325,8 +325,13 @@ export class DirectionsComponent{
       }
       else{
         let index = history['dates'][length-1][currentDate].length
-        history['dates'][length-1][currentDate][index] = parsedDirections
-        this.storage.set('history', JSON.stringify(history));
+        let previousDirections = JSON.stringify(history['dates'][length-1][currentDate][index - 1]).toLowerCase()
+        let minDirections = directions.toLowerCase()
+        
+        if(previousDirections != minDirections){
+          history['dates'][length-1][currentDate][index] = parsedDirections
+          this.storage.set('history', JSON.stringify(history));
+        }
       }
     } else {
       this.setCurrentDateInHistory(history)
