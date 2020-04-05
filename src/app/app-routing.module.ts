@@ -7,7 +7,7 @@ import { NewRouteComponent } from './components/new-route/new-route.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ReportIssuesComponent } from './components/report-issues/report-issues.component';
 import { SafetyComponent } from './components/safety/safety.component';
-// import { ScheduleComponent } from './components/schedule/schedule.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 
@@ -26,7 +26,7 @@ const routes: Routes = [
    {path: 'AboutUs', component: AboutUsComponent},
    {path: 'ReportIssue', component: ReportIssuesComponent},
    {path: 'Safety', component: SafetyComponent},
-  // {path: 'Schedule', component: ScheduleComponent},
+   {path: 'Schedule', component: ScheduleComponent},
    {path: 'Settings', component: SettingsComponent},
    {path: 'ShuttleBusSchedule', component: ShuttleBusScheduleComponent}
 

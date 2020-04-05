@@ -37,7 +37,7 @@ import { MenubarComponent } from './components/menubar/menubar.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
 import { ReportIssuesComponent } from './components/report-issues/report-issues.component';
 import { SafetyComponent } from './components/safety/safety.component';
-// import { ScheduleComponent } from './components/schedule/schedule.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
@@ -51,7 +51,7 @@ import {IonicStorageModule} from '@ionic/storage';
 @NgModule({
 
   declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, 
+                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, ScheduleComponent,
                 ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
