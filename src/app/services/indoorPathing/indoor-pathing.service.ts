@@ -148,9 +148,6 @@ export class IndoorPathingService {
   public determineRouteClassroomToClassroom(classStart: string, classDest: string, 
     building: Building, currentFloor: Floor, option: Transitions){
 
-      debugger;
-
-
       let startingFloor = this.getFloorLevelFromDestination(building.getBuildingKey(), classStart);
       let poi = building.getIndoorPOIInBuilding(classDest);
       let classStartCoordinate: GridCoordinate = building.getFloorLevel(startingFloor + "").getClassroomCoordinate(classStart);
@@ -248,15 +245,17 @@ export class IndoorPathingService {
   }
 
   private determineRouteToDestinationDownwards(startPostition: GridCoordinate, building: Building, 
-    currentFloor: Floor, destination: string, option: Transitions): any{
+    currentFloor: Floor, destinationPOI: IndoorPOI, option: Transitions): any{
     
     let startFloor = currentFloor.getFloorLevel();
-    let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
+    let destinationLevel = destinationPOI.getFloorNum();
+    //let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
 
 
       //key (str, floor#) => Location[]
       let journey = {};
 
+      let destination = destinationPOI.getKey();
       let currentGridLocation = startPostition;
       let currentFloorNum = startFloor; 
 
