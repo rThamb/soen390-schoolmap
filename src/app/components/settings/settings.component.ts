@@ -1,7 +1,6 @@
-import { Component, OnInit, Output } from '@angular/core';
-import { User } from '../../models/User'
-import { EventEmitter } from 'events';
+import { Component, OnInit, Output, NgModule } from '@angular/core';
 import {Storage} from '@ionic/storage';
+import {  NavController } from '@ionic/angular';
 
 
 /**
@@ -20,10 +19,12 @@ export class SettingsComponent implements OnInit {
   public languagePreference: string;
   public useGoogleCalendarSync: boolean;
 
-  constructor(private storage: Storage) { 
+  constructor(private storage: Storage, 
+              public navCtrl: NavController) {}
 
-
-    
+  //Method allows user to navigate to Notifications page
+  LoadNewPage(page:string): void {
+    this.navCtrl.navigateRoot(page);
   }
 
   // Initialize user settings

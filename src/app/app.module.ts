@@ -35,6 +35,7 @@ import { HomeComponent } from './components/home/home.component';
 import { MenubarComponent } from './components/menubar/menubar.component';
 import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssuesComponent } from './components/report-issues/report-issues.component';
 import { SafetyComponent } from './components/safety/safety.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
@@ -51,7 +52,7 @@ import {IonicStorageModule} from '@ionic/storage';
 @NgModule({
 
   declarations: [AppComponent, MapComponent, FavoritesComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, AboutUsComponent, 
+                ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, NotificationsComponent, AboutUsComponent, 
                 ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule, IonicStorageModule.forRoot({      name: 'appDB',
