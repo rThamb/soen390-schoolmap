@@ -43,24 +43,32 @@ export class HistoryComponent implements OnInit {
     });
 }
 
-//If the current date is not already stored in the history, store it
-setCurrentDateInHistory(history:JSON):any{
-  let length = history["dates"].length
-  let date = this.getDate()
-  
-  if(length === 0){
-    history["dates"][0] = {[date]:[{}]}
-    this.storage.set('history', JSON.stringify(history));
-  }
-  else{
-    for (var key in history["dates"][length-1]) {
-      if(key != date){
-        history["dates"][length] = {[date]:[{}]}
-        this.storage.set('history', JSON.stringify(history));
-      }
-      else
-        console.log("date already stored at last index: " + (length-1))
+  //If the current date is not already stored in the history, store it
+  setCurrentDateInHistory(history:JSON):any{
+    let length = history["dates"].length
+    let date = this.getDate()
+    
+    if(length === 0){
+      history["dates"][0] = {[date]:[{}]}
+      this.storage.set('history', JSON.stringify(history));
     }
-  }  
-}
+    else{
+      for (var key in history["dates"][length-1]) {
+        if(key != date){
+          history["dates"][length] = {[date]:[{}]}
+          this.storage.set('history', JSON.stringify(history));
+        }
+        else
+          console.log("date already stored at last index: " + (length-1))
+      }
+    }  
+  }
+
+  //Clear the current search history
+  clearHistory() {
+    if (confirm("Are you sure you would like to clear your search history?") == true) {
+      this.storage.remove('history')
+      this.ngOnInit()
+		}
+  }
 }

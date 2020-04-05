@@ -301,6 +301,7 @@ export class DirectionsComponent{
     }  
   }
 
+
   //Given the directions, start and destination, append it to the list in the storage, by dates
   async addToHistory(directions: string){
     let history = await this.storage.get('history').catch((error) => {
