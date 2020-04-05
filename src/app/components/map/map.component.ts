@@ -91,6 +91,11 @@ export class MapComponent implements AfterViewInit {
     this.initMap();
   }
 
+  test(s: any)
+  {
+    console.log("test")
+  }
+
   // Initializes the map object with default values
   async initMap() {
     // Gets current position of user
@@ -161,7 +166,17 @@ export class MapComponent implements AfterViewInit {
 
     this.infoWindow.close(); //Close infoWindow
   }
- 
+  // callback(results, status) {
+  //   console.log("callback")
+  //   if (status == google.maps.places.PlacesServiceStatus.OK) {
+  //     console.log("callback2")
+  //     console.log(results.length);
+  //     for (var i = 0; i < results.length; i++) {
+  //       this.createMarke(results[i]);
+  //     }
+  //   }
+  //   console.log("callback3")
+  // }
   // Spawns the building overlays on top of the map
   initOverlays()
   {
@@ -528,7 +543,112 @@ export class MapComponent implements AfterViewInit {
 
   //Show/Hide label of markers depending on zoom level
   this.markerLabelVisibility();
-  }
+
+  // var myPlace = {lat: 45.513657, lng: -73.565044};
+  // var service = new google.maps.places.PlacesService(this.map);
+  //           service.nearbySearch({
+  //               location : myPlace,
+  //               radius : 5500,
+  //               type : [ 'restaurant' ]
+  //           }, this.callback);
+
+//   var request = {
+//     location: {lat: 45.497584, lng:-73.578433},
+//     radius: 5000,
+//     //  query: 'atm'
+//     types: ['atm']
+//   };
+//   this.infoWindow = new google.maps.InfoWindow();
+//   var service = new google.maps.places.PlacesService(this.map);
+//   service.nearbySearch(request, this.callback);
+//   }
+
+//    callback(results, status) {
+//     // if (status === google.maps.places.PlacesServiceStatus.OK) {
+//     //     for (var i = 0; i < results.length; i++) {
+//     //         this.createMarke(results[i]);
+//     //     }
+//     // }
+//     console.log("s")
+//     //if (status == google.maps.places.PlacesServiceStatus.OK) {
+//       for (var i = 0; i < results.length; i++) {
+//         this.createMarke(results[i]);
+//       }
+//     // }
+//     // else
+//     //   alert("Status not OK");
+
+// var request = {
+//   location: this.map.getCenter(),
+//   radius: 10000,
+//   types: ['atm']
+// }
+
+// var callback = function(results, status)
+// {
+//   console.log("callback")
+//   if (status == google.maps.places.PlacesServiceStatus.OK) {
+//     console.log("callback2")
+//     console.log(results.length);
+//     for (var i = 0; i < results.length; i++) {
+//       this.createMarke(results[i]);
+//     }
+//   }
+//   console.log("callback3")
+// }
+
+// var service = new google.maps.places.PlacesService(this.map);
+
+// service.nearbySearch(request, callback);
+}
+
+// callback(results, status) {
+//   console.log("callback")
+//   if (status == google.maps.places.PlacesServiceStatus.OK) {
+//     console.log("callback2")
+//     console.log(results.length);
+//     for (var i = 0; i < results.length; i++) {
+//       this.createMarke(results[i]);
+//     }
+//   }
+//   console.log("callback3")
+// }
+
+// createMarke(place) {
+//   console.log("create")
+//   var placeLoc = place.geometry.location;
+//   var marker = new google.maps.Marker({
+//     map: this.map,
+//     position: place.geometry.location,
+//     title: place.name
+//   })
+  
+//   console.log(place.name + " " + place.geometry.location)
+// }
+
+//  createMarke(place) {
+//     // var placeLoc = place.geometry.location;
+//     // var marker = new google.maps.Marker({
+//     //     map : this.map,
+//     //     position : place.geometry.location
+//     // });
+
+//     // google.maps.event.addListener(marker, 'click', function() {
+//     //     this.infowindow.setContent(place.name);
+//     //     this.infowindow.open(this.map, this);
+//     // });
+
+//     var placeLoc = place.geometry.location;
+//     var marker = new google.maps.Marker({
+//       map: this.map,
+//       position:  {lat: 45.497584, lng:-73.578433}
+//     });
+  
+//     google.maps.event.addListener(marker, 'click', function() {
+//       this.infowindow.setContent(place.name);
+//       this.infowindow.open(this.map, this);
+//     });
+// }
 
   // Function called after pressing "Enter Building". Executes actions related to entering the indoor exploration view
   async enterBuilding(id: string, polygon: any, marker: any, usePOI: boolean)

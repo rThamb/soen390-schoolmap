@@ -10,6 +10,7 @@ import { MapComponent } from '../map/map.component'
 import { Transitions } from '../../models/Transitions'
 import { Storage } from '@ionic/storage';
 import { GridCoordinate } from '../../models/GridCoordinate';
+import { NearbyPointsOfInterestComponent} from '../../components/nearby-points-of-interest/nearby-points-of-interest.component'
 
 
 

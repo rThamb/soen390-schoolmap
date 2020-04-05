@@ -6,6 +6,8 @@ import { BuildingFactoryService } from '../../services/BuildingFactory/building-
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service'
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NearbyPointsOfInterestComponent} from '../../components/nearby-points-of-interest/nearby-points-of-interest.component'
+
 
 
 //models 
@@ -33,6 +35,7 @@ export class DirectionsComponent{
   travelDistance = "";
   travelDuration = "";
   map:any;
+  private testStorage;
 
   //Possible key words that would be searched to get either of the campuses
   sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building", "hall","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o","1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"];
@@ -46,21 +49,38 @@ export class DirectionsComponent{
               private buildFactoryService: BuildingFactoryService,
               private gpsMapService: GpsGridMappingService) 
   {
+    this.testStorage = storage;
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
-        console.log(value);
+        console.log('Value:' + value);
         if(value != null || value != undefined || value != '')
         {
           this.directions['destination'] = value;
-          storage.set('newRouteDest', null);
+          storage.set('newRouteDest', null); //Inside "direction"
         }
       })
     });
-
+    //this.setDestination();
     if(this.directions['start'] == "" || this.directions['start'] == null || this.directions['start'] == undefined)
     {
       this.directions['start'] = "Current";
     }
+    
+  }
+
+  //setDestination(dest: String)
+  async setDestination()
+  {
+    //Need latlng as start location
+    if(this.directions['start'] == "Current")
+    {
+      let userLocation = await this.geolocation.getCurrentPosition().catch((error) => {
+        console.log('Error getting location', error);
+      });
+      this.directions['start'] = userLocation;
+    }
+    this.testStorage.set('newRouteDest', "204 ontario est");
+    console.log("address")
   }
 
   
@@ -295,6 +315,7 @@ export class DirectionsComponent{
       document.getElementById('directionsPanel').style.display="none"
       document.getElementById('clearDirections').style.display="none"
       getDirBtn.style.display="block";
+      this.directions['destination'] = "";
     }
     this.mapHandle.quitIndoorMode();
 
@@ -302,15 +323,22 @@ export class DirectionsComponent{
 
   async useCurrentLocation(){
 
-    let userLocation = await this.geolocation.getCurrentPosition().catch((error) => {
-      console.log('Error getting location', error);
-    });
+    if(this.directions['start'] != "Current")
+    {
+      this.directions['start'] = "Current";
+    }
 
-    if(userLocation)
-      this.directions['start'] = userLocation.coords.latitude + "," + userLocation.coords.longitude;
     else
-      window.alert("Location services must be enabled in order to access your current location.");
+    {
+      let userLocation = await this.geolocation.getCurrentPosition().catch((error) => {
+        console.log('Error getting location', error);
+      });
 
+      if(userLocation)
+        this.directions['start'] = userLocation.coords.latitude + "," + userLocation.coords.longitude;
+      else
+        window.alert("Location services must be enabled in order to access your current location."); 
+    }
   }
 
   //Given the departure campus, retrieves the time of next shuttle bus leaving that campus (if any)
