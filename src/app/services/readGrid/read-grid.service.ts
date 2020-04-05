@@ -136,14 +136,14 @@ export class ReadGridService {
 
         if(key != "Stairs"){
           let curPoint = poi[key];
-          let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
+          let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key, "",  curPoint["floorNum"]);
           pois.push(obj);
         }
         else{//handle stair POIS differently
           let stairsPois = poi[key]; //an array
           for(let i =0; i < stairsPois.length; i++){
             let curPoint = stairsPois[i];
-            let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
+            let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key, "",  curPoint["floorNum"]);
             pois.push(obj);
           }    
         }    
