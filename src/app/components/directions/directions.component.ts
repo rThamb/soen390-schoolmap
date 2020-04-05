@@ -33,6 +33,7 @@ export class DirectionsComponent{
   shuttleTimeValue = "";
   travelDistance = "";
   travelDuration = "";
+  tripCost = "";
   map:any;
 
   //Possible key words that would be searched to get either of the campuses
@@ -198,15 +199,35 @@ export class DirectionsComponent{
 
   displayTravelInfo(response: any) {
     let infoPanel = document.getElementById('travelinfo');
-    this.travelDistance = "Distance: \n" + response.routes[0].legs[0].distance.text;
+    this.travelDistance = "Distance:\n" + response.routes[0].legs[0].distance.text;
     
+    // Set default travel time fir shuttle bus
     if (this.isShuttle() === "SHUTTLE")
-      this.travelDuration = "ETA: \n30 mins";
-    else
-      this.travelDuration = "ETA: \n" + response.routes[0].legs[0].duration.text;
-    
+      this.travelDuration = "ETA:\n30 mins";
+    else {
+      this.travelDuration = "ETA:\n" + response.routes[0].legs[0].duration.text;
+      document.getElementById('shuttletime').style.display = 'none'
+    }
+
+    //To display the cost of the trip
+    if(this.isTransit() === "TRANSIT"){
+      this.getTripCost(response) 
+      document.getElementById('tripCost').style.display = 'block'
+    }
+    else  {
+      this.tripCost = ""
+      document.getElementById('tripCost').style.display = 'none'
+    }
       infoPanel.style.display = "block";
     }
+
+  //Verifies if the returned google response has a fare cost available and call a method to display it
+  getTripCost(directionsResponse: JSON){
+    if(directionsResponse['routes'][0].fare)
+      this.tripCost = "Trip Cost:\n" + directionsResponse['routes'][0].fare['text']
+    else
+      this.tripCost = "Trip Cost:\nIs Unavailable"
+  }
 
   validateInput(input: string): string {
     if(this.isSGW(input))
@@ -264,7 +285,7 @@ export class DirectionsComponent{
         this.showClearDirectionControls();
         directionsPanel.style.display="block";
         //clearDirections.style.display="block";
-        this.addToHistory(JSON.stringify(directions))
+        //this.addToHistory(JSON.stringify(directions))
       } else {
         window.alert('Request to directions API failed: ' + status);
       }
@@ -280,6 +301,7 @@ export class DirectionsComponent{
     return currentDate
   }
 
+  
   //If the current date is not already stored in the history, store it
   setCurrentDateInHistory(history:JSON):any{
     let length = history["dates"].length
