@@ -164,9 +164,8 @@ export class IndoorPathingService {
     let destinationLevel = destinationPOI.getFloorNum();
     //let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
 
-
     if(startFloor > destinationLevel){
-      return this.determineRouteToDestinationDownwards(startPostition, building, currentFloor, destination, option);
+      return this.determineRouteToDestinationDownwards(startPostition, building, currentFloor, destinationPOI, option);
     }  
 
       //key (str, floor#) => Location[]
