@@ -44,6 +44,7 @@ import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/s
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {IonicStorageModule} from '@ionic/storage';
+import { EventComponent } from './components/event/event.component';
 
 
 
@@ -52,7 +53,7 @@ import {IonicStorageModule} from '@ionic/storage';
 @NgModule({
 
   declarations: [AppComponent, MapComponent, FavoritesComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, NotificationsComponent, AboutUsComponent, 
+                ToggleComponent, EventComponent, LocateMeComponent, NearbyPointsOfInterestComponent, NewRouteComponent, NotificationsComponent, AboutUsComponent, 
                 ReportIssuesComponent, SafetyComponent, ScheduleComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule, IonicStorageModule.forRoot({      name: 'appDB',

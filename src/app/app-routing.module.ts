@@ -13,6 +13,7 @@ import { SafetyComponent } from './components/safety/safety.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
+import { EventComponent } from './components/event/event.component';
 
 const routes: Routes = [
  /*
@@ -32,8 +33,8 @@ const routes: Routes = [
    {path: 'Safety', component: SafetyComponent},
    {path: 'Schedule', component: ScheduleComponent},
    {path: 'Settings', component: SettingsComponent},
-   {path: 'ShuttleBusSchedule', component: ShuttleBusScheduleComponent}
-  
+   {path: 'ShuttleBusSchedule', component: ShuttleBusScheduleComponent},
+   {path: 'EventOnCampus', component: EventComponent}
 
 ];
 @NgModule({
