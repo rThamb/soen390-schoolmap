@@ -1,15 +1,34 @@
 <!--Notification Header-->
-<ion-item lines="full" class="Linescolor">
-    <ion-icon name="settings" size="large"></ion-icon>
-    <h2>Notification</h2>
-</ion-item>
+<div class="notification">
+    <!--Settings Header-->
+    <ion-item lines="full" class="Linescolor">
 
-<p>
-    Notification works!
-<p>
-    <p>
-        Notification works!
-    <p>
-        <p>
-            Notification works!
-        <p>
+    </ion-item>
+
+    <ion-list>
+        <ion-item class="NestedList">
+            Turn notification to
+            <ion-label>
+                <ion-toggle class="alignleft"></ion-toggle>
+                <!-- add the function to disable notification-->
+            </ion-label>
+        </ion-item>
+
+        <!-- if ON, display the following, else dont display anything.-->
+        Set the time that you would like to be notified before your next scheduled class
+        <ion-item class="NestedList">
+            Notify me before
+            <ion-select placeholder="Select One">
+                <ion-select-option value="5">5 minutes </ion-select-option>
+                <ion-select-option value="10">10 minutes</ion-select-option>
+                <ion-select-option value="15">15 minutes </ion-select-option>
+                <ion-select-option value="20">20 minutes</ion-select-option>
+                <ion-select-option value="25">25 minutes </ion-select-option>
+                <ion-select-option value="30">30 minutes</ion-select-option>
+            </ion-select>
+
+        </ion-item>
+
+
+    </ion-list>
+</div>
