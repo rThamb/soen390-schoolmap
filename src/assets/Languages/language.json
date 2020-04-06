@@ -1,0 +1,33 @@
+{
+  "english": {
+      "menubar": {
+          "title": ["Main Menu"],
+          "home": ["Home"],
+          "newRoute": ["New Route"],
+          "favorites": ["Favorites"],
+          "shuttleBusSchedule":["Shuttle Bus Schedule"],
+          "mySchedule": ["My Schedule"],
+          "nearbyPOI": ["Nearby Points Of Interest"],
+          "settings": ["Settings"],
+          "safety": ["Saftey"],
+          "reportAnIssue": ["Report An Issue"],
+          "aboutUs": ["About Us"]
+      } 
+  },
+
+  "french": {
+    "menubar": {
+        "title": ["Menu Principal"],
+        "home": ["Accueil"],
+        "newRoute": ["Nouvelle Route"],
+        "favorites": ["Favoris"],
+        "shuttleBusSchedule":["Horaire Des Navettes"],
+        "mySchedule": ["Mon Horaire"],
+        "nearbyPOI": ["Points d'Intérêt à Proximité"],
+        "settings": ["Paramètres"],
+        "safety": ["Sécurité"],
+        "reportAnIssue": ["Signalez un Problème"],
+        "aboutUs": ["À Propos de Nous"]
+    }
+  }
+}

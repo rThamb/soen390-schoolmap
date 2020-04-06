@@ -58,11 +58,13 @@ export class SettingsComponent implements OnInit {
       });
     // Set the languagePreference key/value
       this.storage.get('languagePreference').then((lP) => {
-        if (lP == null) {
+        if (lP == "English") {
           this.storage.set('languagePreference', 'English');
           this.languagePreference = 'English';
-        } else {
-          console.log(lP);
+        } 
+        else if (lP == "French") {
+          this.storage.set('languagePreference', 'French');
+          this.languagePreference = 'French';
         }
       });
     // Set the googleSync key/value
