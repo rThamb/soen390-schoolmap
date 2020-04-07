@@ -32,18 +32,15 @@ export class MenubarComponent implements OnInit {
     
     this.menu.enable(true, 'first');
     this.menu.open('first');
-    this.languageSet();
   }
 
   openEnd() {
     this.menu.open('end');
-    this.languageSet();
   }
 
   openCustom() {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
-    this.languageSet();
   }
 
   async languageSet()
