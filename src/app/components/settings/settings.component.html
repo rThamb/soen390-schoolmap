@@ -10,9 +10,9 @@
   <ion-list>
     <ion-item button class="Linescolor" lines="inset">     
       <ion-label>Language</ion-label>
-      <ion-select (ionChange)="onChangeSetting('languagePreference', languagePreference)" [(ngModel)]="languagePreference" >
-        <ion-select-option value="English">English</ion-select-option>
-        <ion-select-option value="French">French</ion-select-option>
+      <ion-select (ionChange)="onChangeSetting('languagePreference', languagePreference); languageSet();" [(ngModel)]="languagePreference" >
+        <ion-select-option id="englishOption" value="English">English</ion-select-option>
+        <ion-select-option id="frenchOption" value="French">French</ion-select-option>
       </ion-select>
     </ion-item>
 

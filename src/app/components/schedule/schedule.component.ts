@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { authorizeAndGetEvents } from '../../../assets/calendar';
+
+declare var require: any;
+const {spawn} = require('child_process');
 
 @Component({
   selector: 'app-schedule',
@@ -7,8 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScheduleComponent implements OnInit {
 
-  constructor() { }
+  constructor() 
+  {
 
-  ngOnInit() {}
+  }
+
+  ngOnInit() 
+  {
+    
+  }
 
 }

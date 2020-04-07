@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
+            <ion-menu-button (click)="languageSet()"></ion-menu-button>
         </ion-buttons>
         <ion-title>ConcordiaGo</ion-title>
 
@@ -17,7 +17,7 @@
     <ion-content>
         <ion-list>
             <ion-item button (click)="LoadNewPage('/Home')">
-                <ion-icon name="home" class="item-spacing"></ion-icon> <span id="home" value="home" [(ngModel)]="home" name="home" ngDefaultControl></span> </ion-item>
+                <ion-icon name="home" class="item-spacing"></ion-icon> <span id="home"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/NewRoute')">
                 <ion-icon name="map" class="item-spacing"></ion-icon> <span id="newroute"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/Favorites')">

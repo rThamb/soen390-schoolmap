@@ -84,6 +84,11 @@ export class SettingsComponent implements OnInit {
     this.storage.set(key, value);
   }
 
+  languageSet()
+  {
+    
+  }
+
 
 
 }
