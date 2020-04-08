@@ -526,6 +526,39 @@ export class DirectionsComponent{
     return Transitions.Escalator;
   }
 
+  async translatePage()
+  {
+    const res = await fetch('/assets/Languages/language.json');
+    const json = await res.json();
+
+    this.storage.ready().then(() => {
+      this.storage.get('languagePreference').then((lP) => {
+
+        if(lP == null)
+        {
+          lP = 'English';
+          this.storage.set('languagePreference', 'English');
+        }
+        if( lP === 'English')
+        {
+          document.getElementsByName('start')[0].setAttribute('placeholder', json.english.placeholders.start);
+          document.getElementsByName('destination')[0].setAttribute('placeholder', json.english.placeholders.destination);
+          document.getElementById('getDirectionsBtn').innerHTML = json.english.directions.getDirBtn;
+          document.getElementById('clearDirBtn').innerHTML = json.english.directions.clearBtn;
+        }
+        else if( lP === 'French')
+        {
+          document.getElementsByName('start')[0].setAttribute('placeholder', json.french.placeholders.start);
+          document.getElementsByName('destination')[0].setAttribute('placeholder', json.french.placeholders.destination);
+          document.getElementById('getDirectionsBtn').innerHTML = json.french.directions.getDirBtn;
+          document.getElementById('clearDirBtn').innerHTML = json.french.directions.clearBtn;
+        }
+
+
+      });
+    });
+  }
+
 
 
 }
