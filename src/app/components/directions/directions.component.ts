@@ -285,7 +285,7 @@ export class DirectionsComponent{
         this.showClearDirectionControls();
         directionsPanel.style.display="block";
         //clearDirections.style.display="block";
-        //this.addToHistory(JSON.stringify(directions))
+        this.addToHistory(JSON.stringify(directions))
       } else {
         window.alert('Request to directions API failed: ' + status);
       }

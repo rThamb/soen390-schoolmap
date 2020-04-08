@@ -8,8 +8,13 @@
 #history{
     position: absolute;
     top: 50px;
-    overflow:scroll ;
+    overflow:scroll;
+    height: 90%;
 }
+#history::-webkit-scrollbar {
+    display: none;
+}
+
 
 .dates{
     font-size: large;
