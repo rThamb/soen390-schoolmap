@@ -1,8 +1,8 @@
 <div class="container reportIssue">
 
-  <h1>Report an Issue</h1>
+  <h1 id="reportTitle">Report an Issue</h1>
   <hr>
-  <p class="text-primary">
+  <p id="reportParagraph" class="text-primary">
     Please, describe the issue you’ve encountered in detail,
     so our technical team could have all the relevant information to solve your problem.
   </p>
@@ -10,18 +10,18 @@
   <form [formGroup]="issue">
 
     <ion-item>
-      <ion-input [(ngModel)]="sender" placeholder="E-mail" type="email" formControlName="email"></ion-input>
+      <ion-input id="email" [(ngModel)]="sender" placeholder="E-mail" type="email" formControlName="email"></ion-input>
     </ion-item>
 
   <ion-item>
-      <ion-input [(ngModel)]="subject" placeholder="Subject" type="text" formControlName="subject"></ion-input>
+      <ion-input id="subject" [(ngModel)]="subject" placeholder="Subject" type="text" formControlName="subject"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-textarea [(ngModel)]="body" placeholder="Message" formControlName="message"></ion-textarea>
+      <ion-textarea id="body" [(ngModel)]="body" placeholder="Message" formControlName="message"></ion-textarea>
     </ion-item><br>
 
-    <button type="submit" [disabled]="!issue.valid" (click)="send()">Submit</button>
+    <button id="submit" type="submit" [disabled]="!issue.valid" (click)="send()">Submit</button>
   </form>
 
 </div>

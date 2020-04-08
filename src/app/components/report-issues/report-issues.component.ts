@@ -4,6 +4,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import {AlertController} from "@ionic/angular";
 
 
+import {Storage} from '@ionic/storage';
 @Component({
   selector: 'app-report-issues',
   templateUrl: './report-issues.component.html',
@@ -19,7 +20,7 @@ export class ReportIssuesComponent {
   private issue : FormGroup;
 
 
-  constructor( private formBuilder: FormBuilder, private emailComposer: EmailComposer, private alertCtrl: AlertController) {
+  constructor( private formBuilder: FormBuilder, private emailComposer: EmailComposer, private alertCtrl: AlertController, private storage:Storage) {
     this.issue = this.formBuilder.group({
       email: ['', Validators.required],
       subject: ['', Validators.required],
@@ -66,6 +67,42 @@ export class ReportIssuesComponent {
         _alert.present();
       })
 
+  }
+
+  async translatePage()
+  {
+    const res = await fetch('/assets/Languages/language.json');
+    const json = await res.json();
+
+    this.storage.ready().then(() => {
+      this.storage.get('languagePreference').then((lP) => {
+
+        if(lP == null)
+        {
+          lP = 'English';
+          this.storage.set('languagePreference', 'English');
+        }
+
+        if(lP === 'English')
+        {
+          document.getElementById('reportTitle').innerHTML = json.english.report.title;
+          document.getElementById('reportParagraph').innerHTML = json.english .report.description;
+          document.getElementById('email').setAttribute('placeholder', json.english.placeholders.email);
+          document.getElementById('subject').setAttribute('placeholder', json.english.placeholders.Subject);
+          document.getElementById('body').setAttribute('placeholder', json.english.placeholders.Message);
+
+
+        }
+        else if(lP === 'French')
+        {
+          document.getElementById('reportTitle').innerHTML = json.french.report.title;
+          document.getElementById('reportParagraph').innerHTML = json.french.report.description;
+          document.getElementById('email').setAttribute('placeholder', json.french.placeholders.email);
+          document.getElementById('subject').setAttribute('placeholder', json.french.placeholders.Subject);
+          document.getElementById('body').setAttribute('placeholder', json.french.placeholders.Message);
+        }
+      });
+    });
   }
 
 }

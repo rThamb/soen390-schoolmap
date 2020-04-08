@@ -57,10 +57,10 @@ export class MenubarComponent implements OnInit {
       // If no setting has been set, default is english
       if(lP == null)
       {
-        lP = "English";
+        lP = 'English';
         this.storage.set('languagePreference', 'English');
       }
-      if( lP == 'English')
+      if( lP === 'English')
       {
         document.getElementById("title").innerHTML = json.english.menubar.title;
         document.getElementById("home").innerHTML = json.english.menubar.home;
@@ -97,7 +97,7 @@ export class MenubarComponent implements OnInit {
 
 
   ngOnInit() {
-  
+    
   }
 
 }
