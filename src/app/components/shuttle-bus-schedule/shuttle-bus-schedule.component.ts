@@ -51,7 +51,7 @@ tableStyle='bootstrap';
 
       if(lP === 'English')
       {
-        document.getElementById('textMonToThur').innerHTML = json.english.shuttle.MonToThur;
+        document.getElementById('textMonToThur').innerHTML = json.english.shuttle.monToThur;
         document.getElementsByClassName('datatable-header-cell-label')[0].innerHTML = json.english.shuttle.depLoy;
         document.getElementsByClassName('datatable-header-cell-label')[1].innerHTML = json.english.shuttle.depSGW;
         document.getElementsByClassName('datatable-header-cell-label')[2].innerHTML = json.english.shuttle.depLoy;
@@ -60,7 +60,7 @@ tableStyle='bootstrap';
       }
       else if(lP === 'French')
       {
-        document.getElementById('textMonToThur').innerHTML = json.french.shuttle.MonToThur;
+        document.getElementById('textMonToThur').innerHTML = json.french.shuttle.monToThur;
         document.getElementsByClassName('datatable-header-cell-label')[0].innerHTML = json.french.shuttle.depLoy;
         document.getElementsByClassName('datatable-header-cell-label')[1].innerHTML = json.french.shuttle.depSGW;
         document.getElementsByClassName('datatable-header-cell-label')[2].innerHTML = json.french.shuttle.depLoy;

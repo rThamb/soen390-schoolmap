@@ -33,7 +33,7 @@ export class SafetyComponent implements OnInit {
         document.getElementById('safetyText1').innerHTML = json.english.safety.text1;
         document.getElementById('safetyText2').innerHTML = json.english.safety.text2;
         document.getElementById('safetyText3').innerHTML = json.english.safety.text3;
-        document.getElementById('safetyTitle2').innerHTML = json.english.safety.EmergencyNum;
+        document.getElementById('safetyTitle2').innerHTML = json.english.safety.emergencyNum;
         document.getElementById('option1').innerHTML = json.english.safety.option1;
         document.getElementById('option2').innerHTML = json.english.safety.option2;
         document.getElementById('option3').innerHTML = json.english.safety.option3;
@@ -46,7 +46,7 @@ export class SafetyComponent implements OnInit {
         document.getElementById('safetyText1').innerHTML = json.french.safety.text1;
         document.getElementById('safetyText2').innerHTML = json.french.safety.text2;
         document.getElementById('safetyText3').innerHTML = json.french.safety.text3;
-        document.getElementById('safetyTitle2').innerHTML = json.french.safety.EmergencyNum;
+        document.getElementById('safetyTitle2').innerHTML = json.french.safety.emergencyNum;
         document.getElementById('option1').innerHTML = json.french.safety.option1;
         document.getElementById('option2').innerHTML = json.french.safety.option2;
         document.getElementById('option3').innerHTML = json.french.safety.option3;
