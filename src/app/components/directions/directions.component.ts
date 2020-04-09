@@ -248,14 +248,16 @@ export class DirectionsComponent{
 
     let start = this.directions['start'];
     let destination = this.directions['destination'];
-
+    let directions = {"Start":start,"Destinations":destination}
     
     if(this.useIndoorDirections(start, destination)){
-      this.preformIndoorDirectionsActivity(start, destination, true);
+      this.preformIndoorDirectionsActivity(start, destination, true)
+      this.addToHistory(JSON.stringify(directions))
     }
     else if(start == "Current" && await this.isDestinationCampusPOI(destination)){
         //indoor and outdoor will only be supported when using user position
-        this.useBothIndoorAndOutdoor(destination);
+        this.useBothIndoorAndOutdoor(destination)
+        this.addToHistory(JSON.stringify(directions))
     }
     else{
       this.preformOutdoorDirectionsActivity(start, destination);
