@@ -48,6 +48,7 @@
     "core-js": "^2.5.4",
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
+    "gapi": "0.0.3",
     "googleapis": "^48.0.0",
     "navbar": "^2.1.0",
     "net": "^1.0.2",

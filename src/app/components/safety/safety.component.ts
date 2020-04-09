@@ -8,7 +8,7 @@ import {Storage} from '@ionic/storage';
 })
 export class SafetyComponent implements OnInit {
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) { this.translatePage(); }
 
   ngOnInit() {}
 
@@ -19,7 +19,7 @@ export class SafetyComponent implements OnInit {
 
     this.storage.ready().then(() => {
 
-      this.storage.get('languagePreference').then((lP)=> {
+      this.storage.get('languagePreference').then((lP) => {
 
       // If no setting has been set, default is english
       if(lP == null)
@@ -27,7 +27,6 @@ export class SafetyComponent implements OnInit {
         lP = 'English';
         this.storage.set('languagePreference', 'English');
       }
-
       if(lP === 'English')
       {
         document.getElementById('safetyTitle').innerHTML = json.english.safety.title;

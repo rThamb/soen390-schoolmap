@@ -48,6 +48,7 @@ import {IonicStorageModule} from '@ionic/storage';
 
 
 
+
 @NgModule({
 
   declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 

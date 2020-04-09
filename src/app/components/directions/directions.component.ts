@@ -57,9 +57,25 @@ export class DirectionsComponent{
       })
     });
 
+    this.translatePage();
+
     if(this.directions['start'] == "" || this.directions['start'] == null || this.directions['start'] == undefined)
     {
-      this.directions['start'] = "Current";
+      this.storage.ready().then(() => {
+        this.storage.get('languagePreference').then((lP) => {
+          if(lP === 'English')
+          {
+            this.directions['start'] = "My Location";
+          }
+          else if (lP === 'French')
+          {
+            this.directions['start'] = "Ma Position";
+          }
+          
+        });
+        
+      });
+      
     }
   }
 
@@ -229,7 +245,7 @@ export class DirectionsComponent{
     if(this.useIndoorDirections(start, destination)){
       this.preformIndoorDirectionsActivity(start, destination, true);
     }
-    else if(start == "Current" && await this.isDestinationCampusPOI(destination)){
+    else if((start == "My Location" || start == "Ma Position") && await this.isDestinationCampusPOI(destination)){
         //indoor and outdoor will only be supported when using user position
         this.useBothIndoorAndOutdoor(destination);
     }

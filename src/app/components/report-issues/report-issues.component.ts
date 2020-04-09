@@ -26,6 +26,7 @@ export class ReportIssuesComponent {
       subject: ['', Validators.required],
       message: ['', Validators.required]
     });
+    this.translatePage();
   }
 
   send() {

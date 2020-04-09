@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit {
   public useGoogleCalendarSync: boolean;
 
   constructor(private storage: Storage) {
-    
+    this.translatePage();
   }
 
   // Initialize user settings
@@ -103,21 +103,26 @@ export class SettingsComponent implements OnInit {
       if(lP === 'English')
       {
         document.getElementById('settingsTitle').innerHTML = json.english.settings.title;
-        document.getElementById('settingsLanguage').innerHTML = json.english.settings.;
-        document.getElementById('optionL1').setAttribute('value', json.english.settings.optionL1);
-        document.getElementById('optionL2').setAttribute('value', json.english.settings.optionL2);
-        document.getElementById('settingsPreferences').innerHTML = json.english.settings.preferences;
-        document.getElementById('settingsElevators').innerHTML = json.english.settings.preferences;
-        document.getElementById('settingsStairs').innerHTML = json.english.settings.preferences;
-        document.getElementById('settingsEscalators').innerHTML = json.english.settings.preferences;
-        document.getElementById('settingsPreferences').innerHTML = json.english.settings.preferences;
-        document.getElementById('settingsPreferences').innerHTML = json.english.settings.preferences;
-        document.getElementById('settingsPreferences').innerHTML = json.english.settings.preferences;
-
+        document.getElementById('settingsLanguage').innerHTML = json.english.settings.language;
+        document.getElementById('optionL1').innerHTML = json.english.settings.optionL1;
+        document.getElementById('optionL2').innerHTML = json.english.settings.optionL2;
+        document.getElementById('settingsAccessibility').innerHTML = json.english.settings.accessibility;
+        document.getElementById('settingsElevators').innerHTML = json.english.settings.elevators;
+        document.getElementById('settingsStairs').innerHTML = json.english.settings.stairs;
+        document.getElementById('settingsEscalators').innerHTML = json.english.settings.escalators;
+        document.getElementById('settingsNotifications').innerHTML = json.english.settings.notif;
       }
       else if(lP === 'French')
       {
-        
+        document.getElementById('settingsTitle').innerHTML = json.french.settings.title;
+        document.getElementById('settingsLanguage').innerHTML = json.french.settings.language;
+        document.getElementById('optionL1').innerHTML = json.french.settings.optionL1;
+        document.getElementById('optionL2').innerHTML = json.french.settings.optionL2;
+        document.getElementById('settingsAccessibility').innerHTML = json.french.settings.accessibility;
+        document.getElementById('settingsElevators').innerHTML = json.french.settings.elevators;
+        document.getElementById('settingsStairs').innerHTML = json.french.settings.stairs;
+        document.getElementById('settingsEscalators').innerHTML = json.french.settings.escalators;
+        document.getElementById('settingsNotifications').innerHTML = json.french.settings.notif;
       }
 
 
