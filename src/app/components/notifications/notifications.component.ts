@@ -7,14 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationsComponent implements OnInit {
 toggleval:boolean=false;
+timesel:number=15;
 
   constructor() {
+    
     
    }
    Clicked(){
      this.toggleval=!this.toggleval;
    }
-   
+   onChange(value){
+    this.timesel=value;
+    console.log(this.timesel);
+  }
   ngOnInit() {}
   
 }
