@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { authorizeAndGetEvents } from '../../../assets/calendar';
 import { HttpClient } from '@angular/common/http';
+import { Event } from './Event';
+
+
 
 
 @Component({
@@ -10,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ScheduleComponent implements OnInit {
 
+  public events;
 
   constructor(private http: HttpClient) 
   {
@@ -23,9 +27,12 @@ export class ScheduleComponent implements OnInit {
 
   getEvents()
   {
-    // this.http.get('https://www.googleapis.com/calendar/v3/calendars/[CALENDARID]/events?key=[YOUR_API_KEY]').subscribe(data => {
-      
-    // })
+    this.http.get('http://localhost:3000').subscribe(data => {
+
+      this.events = data;
+      console.log(data);
+
+    })
   }
 
 }
