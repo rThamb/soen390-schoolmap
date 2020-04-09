@@ -202,8 +202,10 @@ export class DirectionsComponent{
     this.travelDistance = "Distance:\n" + response.routes[0].legs[0].distance.text;
     
     // Set default travel time fir shuttle bus
-    if (this.isShuttle() === "SHUTTLE")
-      this.travelDuration = "ETA:\n30 mins";
+    if (this.isShuttle() === "SHUTTLE"){
+      this.travelDuration = "ETA:\n30 mins"
+      this.displayShuttle()
+    }
     else {
       this.travelDuration = "ETA:\n" + response.routes[0].legs[0].duration.text;
       document.getElementById('shuttletime').style.display = 'none'
@@ -265,7 +267,7 @@ export class DirectionsComponent{
    * @param start 
    * @param destination 
    */
-  preformOutdoorDirectionsActivity(start: string, destination: string){
+  async preformOutdoorDirectionsActivity(start: string, destination: string){
 
     var travelMode = this.getTransportation();
     var travelMode = this.getTransportation();
@@ -279,6 +281,7 @@ export class DirectionsComponent{
       travelMode: travelMode,
       }, (response, status) => {
       if (status === 'OK') {
+        console.log(response)
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
         directionsForm.style.display="none";
@@ -416,12 +419,14 @@ export class DirectionsComponent{
 
   }
 
+  
+
   //Given the departure campus, retrieves the time of next shuttle bus leaving that campus (if any)
   async getNextShuttleTime(departureCampus){
     
     let res = await fetch("./assets/shuttle_bus/departureTimes.json");
     let json = await res.json();
-    let currentDate = new Date();
+    let currentDate = new Date('2020-04-08 10:00');
 
     //Only consider the shuttle bus schedule after 7:15 am on that particular day.
     let timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + " " + "7:15");
