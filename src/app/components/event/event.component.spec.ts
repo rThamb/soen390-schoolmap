@@ -2,8 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { EventComponent } from './event.component';
+import { By } from '@angular/platform-browser';
 
-describe('EventComponent', () => {
+fdescribe('EventComponent', () => {
   let component: EventComponent;
   let fixture: ComponentFixture<EventComponent>;
 
@@ -23,18 +24,29 @@ describe('EventComponent', () => {
   });
 
   it('should show the title of the page', () => {
-    expect(component).toBeTruthy();
-  });
+    const de = fixture.debugElement.query(By.css('.title'));
+    expect(de.nativeElement.textContent).toContain('ALL EVENTS ARE CANCELLED !');
+      });
 
   it('should show the alert button', () => {
-    expect(component).toBeTruthy();
-  });
+    const de = fixture.debugElement.query(By.css('.alert'));
+    expect(de.nativeElement.textContent).toContain('any access to the University will be forbidden');
+      });
 
   it('should show information of the page', () => {
-    expect(component).toBeTruthy();
-  });
+    const de = fixture.debugElement.query(By.css('.info'));
+    expect(de.nativeElement.textContent).toContain('COVID - 19 alert!');
+      });
 
-  it('should have a clickable button to concordias COVID19 website', () => {
-    expect(component).toBeTruthy();
-  });
+  /*it('should have a clickable button to concordias COVID19 website', async(() => {
+      spyOn(component, 'LoadNewPage');
+      const button = fixture.debugElement.nativeElement.querySelector('ion-fab-button');
+      button.click();
+
+      fixture.whenStable().then(() => {
+          expect(component.LoadNewPage).toHaveBeenCalledWith('/NewRoute');
+        });
+      }));*/
+
+
 });
