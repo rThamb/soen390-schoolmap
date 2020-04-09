@@ -26,6 +26,8 @@ export class BuildingFactoryService {
    * returns the building object. 
    */
   public async loadBuilding(buildingKey: string){
+
+    try{
     let building = new Building();
     building.setBuildingKey(buildingKey);
     let floorsDictionary = await this.floorService.createGrid(buildingKey);
@@ -46,6 +48,10 @@ export class BuildingFactoryService {
     building.setBuildingName(jsonContent["buildingName"]);
 
     return building;
+    }
+    catch(err){
+      return null;
+    }
   }
 
   private async readFile(filename: string){
