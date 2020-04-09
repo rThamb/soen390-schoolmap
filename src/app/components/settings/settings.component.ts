@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-import { Component, OnInit, Output } from '@angular/core';
 import { User } from '../../models/User';
 import { EventEmitter } from 'events';
-=======
 import { Component, OnInit, Output, NgModule } from '@angular/core';
->>>>>>> origin/notificationComponent
 import {Storage} from '@ionic/storage';
 import {  NavController } from '@ionic/angular';
 
