@@ -41,12 +41,10 @@ export class ScheduleComponent implements OnInit {
         this.email = this.events[0].creator.email;
 
         for(var i = 0; i < this.events.length; i++){
-          if(this.events[i].start.dateTime && this.events[i].end.dateTime)
+          if(this.events[i].start.dateTime || this.events[i].end.dateTime)
           {
-            this.events[i].start.dateTime = this.events[i].start.dateTime.substr(11,5);
-            this.events[i].end.dateTime = this.events[i].end.dateTime.substr(11,5);
+            // Convert the dateTime string into more readable format
           }
-
         }
 
       }
