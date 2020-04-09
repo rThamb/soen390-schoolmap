@@ -33,6 +33,7 @@ export class DirectionsComponent{
   travelDistance = "";
   travelDuration = "";
   map:any;
+  favorited: boolean = false;
 
   //Possible key words that would be searched to get either of the campuses
   sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building", "hall","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o","1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"];
@@ -63,7 +64,9 @@ export class DirectionsComponent{
     }
   }
 
-  
+  toggleFavorite(){
+    this.favorited = !this.favorited;
+  }  
 
   setMap(){
     

@@ -4,14 +4,17 @@
 
       <ion-item class="inputItem">
           <ion-input [(ngModel)]="directions.start" (ionChange) = "displayShuttle()" name='start' placeholder="Start"></ion-input>
-          <button type="button" item-right (click)="useCurrentLocation()">
+          <ion-button fill="clear" type="button" item-right (click)="useCurrentLocation()">
             <ion-icon name="locate">
             </ion-icon>
-          </button>
+          </ion-button>
       </ion-item>
 
       <ion-item  class="inputItem">
           <ion-input [(ngModel)]="directions.destination" (ionChange) = "displayShuttle()" name='destination' placeholder="Destination"></ion-input>
+          <ion-button fill="clear" (click)="toggleFavorite()">
+            <ion-icon [name]="favorited ? 'star' : 'star-outline'"></ion-icon>
+          </ion-button>
       </ion-item>
     </ion-toolbar> 
 
