@@ -267,7 +267,7 @@ export class DirectionsComponent{
    * @param start 
    * @param destination 
    */
-  async preformOutdoorDirectionsActivity(start: string, destination: string){
+  preformOutdoorDirectionsActivity(start: string, destination: string){
 
     var travelMode = this.getTransportation();
     var travelMode = this.getTransportation();
