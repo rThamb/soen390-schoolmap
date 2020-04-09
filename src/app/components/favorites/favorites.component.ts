@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Storage} from '@ionic/storage';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-favorites',
@@ -11,7 +12,7 @@ export class FavoritesComponent implements OnInit {
   favorite;
   favorites;
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage, private router: Router) { }
 
   ngOnInit() {
     this.getFavorites();
@@ -53,6 +54,16 @@ export class FavoritesComponent implements OnInit {
         this.ngOnInit()
       });
     }
+  }
+
+  openNewRouteWithDestination(location: string) {
+    let directions = {destination: location}
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(directions)
+      }
+    };
+  this.router.navigate(['NewRoute'], navigationExtras);
   }
 
 }

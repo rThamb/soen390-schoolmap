@@ -1,14 +1,13 @@
-<form id="form" (ngSubmit)="addFavorite()">
-  <ion-header>
-  <ion-toolbar class="toolbar">
-
+<form id="favoriteForm" (ngSubmit)="addFavorite()">
+  <ion-header>  
+    <ion-toolbar class="toolbar">
       <ion-item  class="inputItem">
           <ion-input [(ngModel)]="favorite"  name='favoriteLocation' placeholder="Location"></ion-input>
       </ion-item>
     </ion-toolbar> 
 
-      <ion-button id="addFavoriteBtn" collapse="true"  type="submit" expand="full" (click)="addFavorite()">Add Favorite</ion-button>
-    </ion-header>
+    <ion-button id="addFavoriteBtn" collapse="true"  type="submit" expand="full" (click)="addFavorite()">Add Favorite</ion-button>
+  </ion-header>
 </form>
 <ion-content id="favoritesList" *ngIf="favorites && favorites.length"> 
   <h1>My Favorites</h1>
@@ -17,8 +16,12 @@
       <ion-label>
         {{favorite}}
       </ion-label>
+      <button type="button" (click)="openNewRouteWithDestination(favorite)">
+        <ion-icon name="md-compass">
+        </ion-icon>
+      </button>
       <button type="button" item-right (click)="deleteFavorite(favorite)">
-        <ion-icon name="md-close">
+        <ion-icon name="md-trash" id="trash">
         </ion-icon>
       </button>
     </ion-item> 
