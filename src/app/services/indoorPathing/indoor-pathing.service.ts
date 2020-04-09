@@ -148,9 +148,10 @@ export class IndoorPathingService {
   public determineRouteClassroomToClassroom(classStart: string, classDest: string, 
     building: Building, currentFloor: Floor, option: Transitions){
 
+      debugger;
       let startingFloor = this.getFloorLevelFromDestination(building.getBuildingKey(), classStart);
       let poi = building.getIndoorPOIInBuilding(classDest);
-      let classStartCoordinate: GridCoordinate = building.getFloorLevel(startingFloor + "").getClassroomCoordinate(classStart);
+      let classStartCoordinate: GridCoordinate = building.getIndoorPOIInBuilding(classStart).getGridCoordinate();
       return this.determineRouteToDestination(classStartCoordinate, building, currentFloor, poi, option); 
   }
 
