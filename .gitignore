@@ -26,6 +26,7 @@ npm-debug.log*
 /coverage
 /dist
 /node_modules
+/CalendarAPIServer/node_modules
 /platforms
 /plugins
 /www
