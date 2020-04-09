@@ -3,7 +3,9 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 //Component imports for routing
 import { AboutUsComponent } from './components/about-us/about-us.component';
-import { FavoritesComponent } from './components/favorites/favorites.component';
+//import { FavoritesComponent } from './components/favorites/favorites.component';
+// import { FavoritesComponent } from './components/favorites/favorites.component';
+import { HistoryComponent } from './components/history/history.component';
 import { HomeComponent } from './components/home/home.component';
 // import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
@@ -24,6 +26,7 @@ const routes: Routes = [
   */
    {path: '', component: HomeComponent},
   // {path: 'Favorites', component: FavoritesComponent},
+   {path: 'History', component: HistoryComponent},
    {path: 'Home', component: HomeComponent},
    // {path: 'NearbyPointsOfInterest', component: NearbyPointsOfInterestComponent},
    {path: 'NewRoute', component: NewRouteComponent},

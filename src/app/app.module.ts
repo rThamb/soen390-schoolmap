@@ -20,12 +20,14 @@ import { IndoorPathingService } from './services/indoorPathing/indoor-pathing.se
 import { ReadGridService } from './services/readGrid/read-grid.service' 
 import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapping.service' 
 import { BuildingFactoryService } from './services/BuildingFactory/building-factory.service'
+import { HistoryService } from './services/history/history.service';
 
 
 
 //Component imports
 import { AboutUsComponent } from './components/about-us/about-us.component';
 // import { FavoritesComponent } from './components/favorites/favorites.component';
+import { HistoryComponent } from './components/history/history.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
 import { HomeSearchComponent } from './components/home-search/home-search.component';
 import { MapComponent } from './components/map/map.component';
@@ -53,7 +55,7 @@ import { EventComponent } from './components/event/event.component';
 @NgModule({
 
   declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, 
+                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, HistoryComponent,
                 ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
@@ -65,6 +67,7 @@ import { EventComponent } from './components/event/event.component';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
     IndoorPathingService,
+    HistoryService,
     ReadGridService,
     GpsGridMappingService,
     BuildingFactoryService,
