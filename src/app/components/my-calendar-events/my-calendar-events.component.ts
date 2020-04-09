@@ -7,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyCalendarEventsComponent implements OnInit {
 
-  public today;
+  
+  
   constructor() { }
 
   ngOnInit() {
-    this.today = Date.now();
+    
   }
 
 }

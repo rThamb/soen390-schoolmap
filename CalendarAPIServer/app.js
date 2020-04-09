@@ -109,9 +109,9 @@ const cors = require('cors');
 
 const CORS = {
     origin: '*'
-  }
+}
 
-app.get('/', cors(CORS), async (req, res) => {
+app.get('/getNextEvents', cors(CORS), async (req, res) => {
 
     await processRequest(req, res)
 
