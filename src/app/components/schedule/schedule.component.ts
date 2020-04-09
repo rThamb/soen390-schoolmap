@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { authorizeAndGetEvents } from '../../../assets/calendar';
 import { HttpClient } from '@angular/common/http';
-import { Event } from './Event';
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'app-schedule',
@@ -14,7 +14,7 @@ export class ScheduleComponent implements OnInit {
   public email: string;
   public today;
 
-  constructor(private http: HttpClient) 
+  constructor(private http: HttpClient, private storage: Storage) 
   {
     this.today = Date.now();
     this.getNextEvents();
@@ -25,6 +25,9 @@ export class ScheduleComponent implements OnInit {
 
   }
 
+  /**
+   * Sends a request to the websever for retrieving upcoming calendar events from the gmail account
+   */
   getNextEvents()
   {
     this.http.get('http://localhost:3000/getNextEvents').subscribe(data => {
@@ -50,13 +53,21 @@ export class ScheduleComponent implements OnInit {
         console.log('No events available');
       }
       
-
     })
   }
 
-  goToEventLocation()
+  /**
+   * When user clicks on an event, redirects them to the New Route page with the event's location set as the destination. 
+   * @param location
+   */
+  goToEventLocation(location)
   {
-    
+    this.storage.ready().then(() => {
+      this.storage.set('newRouteDest', location);
+    });
+
+    console.log(location);
+
   }
 
 }

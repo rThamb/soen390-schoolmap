@@ -28,14 +28,14 @@
   
   <!--TODO: replace hard coded class info with variables -->
   <!--Class info-->
-  <div *ngFor="let event of events;">
+  <div class="event" *ngFor="let event of events;" (click)="goToEventLocation(event.location)">
     <ion-card>
         <ion-card-header>
             <ion-label>{{ event.summary }}</ion-label>
             <ion-label class="alignright">Start: {{ event.start.dateTime }} {{ event.start.date }}</ion-label>
         </ion-card-header>
     
-        <ion-card-content (click)="goToEventLocation()" class="adjust">
+        <ion-card-content class="adjust">
           <ion-label>{{ event.location }}</ion-label>
           <ion-label class="alignright">End: {{ event.end.dateTime }} {{event.end.date }} </ion-label>
         </ion-card-content>
