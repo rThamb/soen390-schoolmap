@@ -23,10 +23,9 @@ export class ScheduleComponent implements OnInit {
 
   getEvents()
   {
-    debugger;
-    this.http.get('http://localhost:3000').subscribe(data => {
-      console.log(data);
-    })
+    // this.http.get('https://www.googleapis.com/calendar/v3/calendars/[CALENDARID]/events?key=[YOUR_API_KEY]').subscribe(data => {
+      
+    // })
   }
 
 }
