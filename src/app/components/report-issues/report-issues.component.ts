@@ -87,10 +87,11 @@ export class ReportIssuesComponent {
         if(lP === 'English')
         {
           document.getElementById('reportTitle').innerHTML = json.english.report.title;
-          document.getElementById('reportParagraph').innerHTML = json.english .report.description;
+          document.getElementById('reportParagraph').innerHTML = json.english.report.description;
           document.getElementById('email').setAttribute('placeholder', json.english.placeholders.email);
-          document.getElementById('subject').setAttribute('placeholder', json.english.placeholders.Subject);
-          document.getElementById('body').setAttribute('placeholder', json.english.placeholders.Message);
+          document.getElementById('subject').setAttribute('placeholder', json.english.placeholders.subject);
+          document.getElementById('body').setAttribute('placeholder', json.english.placeholders.message);
+          document.getElementById('submit').innerHTML = json.english.report.submit;
 
 
         }
@@ -99,8 +100,9 @@ export class ReportIssuesComponent {
           document.getElementById('reportTitle').innerHTML = json.french.report.title;
           document.getElementById('reportParagraph').innerHTML = json.french.report.description;
           document.getElementById('email').setAttribute('placeholder', json.french.placeholders.email);
-          document.getElementById('subject').setAttribute('placeholder', json.french.placeholders.Subject);
-          document.getElementById('body').setAttribute('placeholder', json.french.placeholders.Message);
+          document.getElementById('subject').setAttribute('placeholder', json.french.placeholders.subject);
+          document.getElementById('body').setAttribute('placeholder', json.french.placeholders.message);
+          document.getElementById('submit').innerHTML= json.french.report.submit;
         }
       });
     });

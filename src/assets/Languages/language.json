@@ -25,16 +25,17 @@
         "start": "Start",
         "destination": "Destination",
         "email": "E-mail",
-        "Subject": "Subjet",
-        "Message": "Message"
+        "subject": "Subjet",
+        "message": "Message"
     },
     "report": {
         "title": "Report an Issue",
-        "description": "Please, describe the issue you’ve encountered in detail, so our technical team could have all the relevant information to solve your problem."
+        "description": "Please, describe the issue you’ve encountered in detail, so our technical team could have all the relevant information to solve your problem.",
+        "submit": "Submit"
     },
     "safety": {
         "title": "WE CARE ABOUT YOUR SAFETY",
-        "EmergencyNum": "Emergency numbers:",
+        "emergencyNum": "Emergency numbers:",
         "text1": "Please call Security at ",
         "text2": " or ",
         "text3": ", ext. 3717 before calling 911 ; These agents are trained to rapidly respond to your needs and provide critical services. They will connect you with 911, if needed, saving valuable time.",
@@ -58,7 +59,7 @@
         "notif": "Notifications"
     },
     "shuttle": {
-        "MonToThur":"Monday to Thursday bus schedule",
+        "monToThur":"Monday to Thursday bus schedule",
         "depLoy": "Departure from Loyola",
         "depSGW": "Departure from SGW",
         "friday": "Friday bus schedule"
@@ -91,16 +92,17 @@
         "start": "Début",
         "destination": "Destination",
         "email": "Courriel",
-        "Subject": "Sujet",
-        "Message": "Message"
+        "subject": "Sujet",
+        "message": "Message"
     },
     "report": {
         "title": "Signalez un Problème",
-        "description": "Veuillez décrire en détail le problème que vous avez rencontré, afin que notre équipe technique puisse disposer de toutes les informations utiles pour résoudre votre problème."
+        "description": "Veuillez décrire en détail le problème que vous avez rencontré, afin que notre équipe technique puisse disposer de toutes les informations utiles pour résoudre votre problème.",
+        "submit": "Envoyer"
     },
     "safety": {
         "title": "NOUS PENSONS À VOTRE SÉCURITÉ",
-        "EmergencyNum": "Numéros d'Urgence:",
+        "emergencyNum": "Numéros d'Urgence:",
         "text1": "Veuillez appeler la sécurité au ",
         "text2": " ou ",
         "text3": ", ext. 3717 avant d'appeler le 911; Ces agents sont formés pour répondre rapidement à vos besoins et fournir des services essentiels. Ils vous connecteront au 911, si nécessaire, vous faisant gagner du temps précieux.",
@@ -125,7 +127,7 @@
         "notif": "Notifications"
     },
     "shuttle": {
-        "MonToThur":"Horaires du Lundi au Jeudi",
+        "monToThur":"Horaires du Lundi au Jeudi",
         "depLoy": "Départ de Loyola",
         "depSGW": "Départ de SGW",
         "friday": "Horaire du Vendredi"

@@ -3,3 +3,49 @@ ion-button{
   position:relative;
   left:18%;
 }
+
+.email {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.493);
+  text-align: center;
+  border-radius: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: inherit;
+}
+
+.tool {
+  margin-top: 1.5%;
+}
+
+.date {
+  height: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: inherit;
+  border-radius: 5px;  
+}
+.text {
+  font-size: 17px;
+  float: left;
+  margin-bottom: 5%;
+}
+
+.upcoming {
+  height: 30px;
+  margin-top: 1.5%;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: inherit;
+  bottom: 70%;
+  box-shadow: 100px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.493);
+  border-radius: 5px;
+}
+
+div {
+  margin-top: 15%;
+}
