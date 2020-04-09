@@ -530,7 +530,7 @@ export class MapComponent implements AfterViewInit {
   this.markerLabelVisibility();
   }
 
-  //FUNCTION USED AFTER USER CLICKS THE "Enter Building" button
+  // Function called after pressing "Enter Building". Executes actions related to entering the indoor exploration view
   async enterBuilding(id: string, polygon: any, marker: any, usePOI: boolean)
   {             
     polygon.setVisible(false);
@@ -1020,6 +1020,10 @@ addFloorOverlay(imageBound: any, floorImage :string)
     this.enterBuilding(buildingKey, hallP, hallMarker, false);
   }
 
+  /**
+   * Shows the current path for the given floor [google.maps.Polyline]
+   * @param curFloorNum 
+   */
   showFloorMapForBuilding(curFloorNum: string){
 
     let floorNumTransition: string = curFloorNum;
@@ -1036,15 +1040,18 @@ addFloorOverlay(imageBound: any, floorImage :string)
     }
   }
 
+  // Sets all paths/transitions for the current route
   setTransitionsPaths(transitions: any){
     this.removePreviouslyDrawnPath();
     this.indoorTransitionDirections = transitions;
   }
 
+  // Method used within other components for getting status of indoorMode.
   isIndoorModeActive(): boolean{
     return indoorModeEnable;
   }
 
+  // This method checks if the indoor view should be exited
   quitIndoorMode(){
     if(indoorModeEnable)
       exitIndoorModeFunc();
