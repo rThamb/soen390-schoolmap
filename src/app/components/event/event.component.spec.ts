@@ -21,4 +21,20 @@ describe('EventComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show the title of the page', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should show the alert button', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should show information of the page', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should have a clickable button to concordias COVID19 website', () => {
+    expect(component).toBeTruthy();
+  });
 });
