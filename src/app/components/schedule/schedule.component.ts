@@ -19,6 +19,7 @@ export class ScheduleComponent implements OnInit {
   {
     this.today = Date.now();
     this.getNextEvents();
+    this.languageSet();
   }
 
   ngOnInit() 
@@ -70,5 +71,42 @@ export class ScheduleComponent implements OnInit {
     console.log(location);
 
   }
+
+  async languageSet()
+  {
+    console.log("languageSet called");
+    let res = await fetch("./assets/Languages/language.json");
+    let json = await res.json();
+
+    //check if language is english with storage
+    this.storage.ready().then(() => {
+
+      this.storage.get('languagePreference').then((lP)=> {
+
+      // If no setting has been set, default is english
+      if(lP == null)
+      {
+        lP = 'English';
+        this.storage.set('languagePreference', 'English');
+      }
+      if( lP === 'English')
+      {
+        document.getElementById("email").innerHTML = json.english.schedule.email;
+        document.getElementById("event").innerHTML = json.english.schedule.event;
+      }
+      //check if language is french with storage
+      else if (lP == 'French')
+      {
+        document.getElementById("email").innerHTML = json.french.schedule.email;
+        document.getElementById("event").innerHTML = json.french.schedule.event;
+      }
+
+    });
+
+    })
+  }
+
+
+
 
 }

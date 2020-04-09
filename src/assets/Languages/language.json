@@ -45,6 +45,10 @@
         "option4": "Theft",
         "option5": "Hazardous material spill/accident"
     },
+    "schedule": {
+        "email": "E-mail: ",
+        "event": "Upcoming classes / Events:"
+    },
     "settings": {
         "title": "Settings",
         "language": "Language",
@@ -112,6 +116,10 @@
         "option4": "Vol",
         "option5": "Déversement / accident de matières dangereuses"
 
+    },
+    "schedule": {
+        "email": "Courriel: ",
+        "event": "Classes / événements à venir:"
     },
     "settings": {
         "title": "Paramètres",

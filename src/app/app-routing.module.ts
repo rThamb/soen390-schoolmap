@@ -10,7 +10,7 @@ import { SafetyComponent } from './components/safety/safety.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
-import {MyCalendarEventsComponent} from "./components/my-calendar-events/my-calendar-events.component";
+
 
 const routes: Routes = [
  /*
@@ -30,7 +30,6 @@ const routes: Routes = [
    {path: 'Schedule', component: ScheduleComponent},
    {path: 'Settings', component: SettingsComponent},
    {path: 'ShuttleBusSchedule', component: ShuttleBusScheduleComponent},
-    {path: 'MySchedule', component: MyCalendarEventsComponent}
 
 
 ];

@@ -41,7 +41,6 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
-import {MyCalendarEventsComponent} from "./components/my-calendar-events/my-calendar-events.component";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {IonicStorageModule} from '@ionic/storage';
 
@@ -53,7 +52,7 @@ import {IonicStorageModule} from '@ionic/storage';
 @NgModule({
 
   declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, ScheduleComponent, MyCalendarEventsComponent,
+                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, ScheduleComponent,
                 ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
