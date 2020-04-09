@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { authorizeAndGetEvents } from '../../../assets/calendar';
 import { HttpClient } from '@angular/common/http';
 import {Storage} from '@ionic/storage';
+import { NavController } from '@ionic/angular'; 
 
 @Component({
   selector: 'app-schedule',
@@ -14,7 +15,7 @@ export class ScheduleComponent implements OnInit {
   public email: string;
   public today;
 
-  constructor(private http: HttpClient, private storage: Storage) 
+  constructor(private http: HttpClient, private storage: Storage, public navCtrl: NavController) 
   {
     this.today = Date.now();
     this.getNextEvents();
@@ -65,6 +66,8 @@ export class ScheduleComponent implements OnInit {
     this.storage.ready().then(() => {
       this.storage.set('newRouteDest', location);
     });
+
+    this.navCtrl.navigateRoot('/NewRoute');
 
     console.log(location);
 
