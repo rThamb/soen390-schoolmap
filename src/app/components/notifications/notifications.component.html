@@ -6,28 +6,28 @@
     </ion-item>
 
     <ion-list>
-        <ion-item class="NestedList">
-            Turn notification to
+        <ion-item class="lines" lines="inset">
+            Allow notifications
             <ion-label>
-                <ion-toggle class="alignleft"></ion-toggle>
+                <ion-toggle class="alignleft" [checked]="toggleval" (ionChange)="Clicked()"> </ion-toggle>
                 <!-- add the function to disable notification-->
             </ion-label>
         </ion-item>
-
+        <ion-item  class="lines" *ngIf="toggleval" lines="inset">
         <!-- if ON, display the following, else dont display anything.-->
-        Set the time that you would like to be notified before your next scheduled class
-        <ion-item class="NestedList">
-            Notify me before
-            <ion-select placeholder="Select One">
-                <ion-select-option value="5">5 minutes </ion-select-option>
+           <ion-label> Notify me before</ion-label>
+           
+            <ion-select>
+                <ion-select-option value="5">5 minutes</ion-select-option>
                 <ion-select-option value="10">10 minutes</ion-select-option>
-                <ion-select-option value="15">15 minutes </ion-select-option>
+                <ion-select-option value="15" selected>15 minutes</ion-select-option>
                 <ion-select-option value="20">20 minutes</ion-select-option>
-                <ion-select-option value="25">25 minutes </ion-select-option>
+                <ion-select-option value="25">25 minutes</ion-select-option>
                 <ion-select-option value="30">30 minutes</ion-select-option>
             </ion-select>
-
+            
         </ion-item>
+        
 
 
     </ion-list>

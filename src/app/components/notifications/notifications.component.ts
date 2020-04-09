@@ -6,9 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
+toggleval:boolean=false;
 
-  constructor() { }
-
+  constructor() {
+    
+   }
+   Clicked(){
+     this.toggleval=!this.toggleval;
+   }
+   
   ngOnInit() {}
-
+  
 }
