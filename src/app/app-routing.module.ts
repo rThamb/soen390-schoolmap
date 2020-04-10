@@ -38,9 +38,9 @@ const routes: Routes = [
    {path: 'Schedule', component: ScheduleComponent},
    {path: 'Settings', component: SettingsComponent},
    {path: 'ShuttleBusSchedule', component: ShuttleBusScheduleComponent},
-   {path: 'EventOnCampus', component: EventComponent}
-
-
+   {path: 'EventOnCampus', component: EventComponent},
+   {path: 'Notifications', component: NotificationsComponent}
+  
 ];
 @NgModule({
   imports: [

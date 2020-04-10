@@ -22,7 +22,7 @@ import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapp
 import { BuildingFactoryService } from './services/BuildingFactory/building-factory.service'
 import { SharedService } from './services/shared/shared.service' 
 import { HistoryService } from './services/history/history.service';
-
+import {LocalNotifications} from '@ionic-native/local-notifications/ngx'
 
 
 //Component imports
@@ -57,11 +57,11 @@ import { EventComponent } from './components/event/event.component';
 @NgModule({
 
   declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, HistoryComponent, ScheduleComponent,
-                ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent,NotificationsComponent,EventComponent, NearbyPointsOfInterestComponent],
+                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, HistoryComponent,
+                ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent,NotificationsComponent,EventComponent,ScheduleComponent, NearbyPointsOfInterestComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule, IonicStorageModule.forRoot({      name: 'appDB',
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule ,IonicStorageModule.forRoot({      name: 'appDB',
   driverOrder: ['sqlite', 'websql', 'indexeddb']})],
   providers: [
     StatusBar,
@@ -74,7 +74,8 @@ import { EventComponent } from './components/event/event.component';
     GpsGridMappingService,
     BuildingFactoryService,
     EmailComposer,
-    SharedService
+    SharedService,
+    LocalNotifications
   ],
   bootstrap: [AppComponent]
 })
