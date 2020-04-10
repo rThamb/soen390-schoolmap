@@ -59,9 +59,25 @@ export class DirectionsComponent{
       })
     });
 
+    this.translatePage();
+
     if(this.directions['start'] == "" || this.directions['start'] == null || this.directions['start'] == undefined)
     {
-      this.directions['start'] = "Current";
+      this.storage.ready().then(() => {
+        this.storage.get('languagePreference').then((lP) => {
+          if(lP === 'English')
+          {
+            this.directions['start'] = "My Location";
+          }
+          else if (lP === 'French')
+          {
+            this.directions['start'] = "Ma Position";
+          }
+          
+        });
+        
+      });
+      
     }
   }
 
@@ -254,7 +270,7 @@ export class DirectionsComponent{
       this.preformIndoorDirectionsActivity(start, destination, true)
       this.addToHistory(JSON.stringify(directions))
     }
-    else if(start == "Current" && await this.isDestinationCampusPOI(destination)){
+    else if((start == "My Location" || start == "Ma Position") && await this.isDestinationCampusPOI(destination)){
         //indoor and outdoor will only be supported when using user position
         this.useBothIndoorAndOutdoor(destination)
         this.addToHistory(JSON.stringify(directions))
@@ -634,6 +650,39 @@ export class DirectionsComponent{
 
     //default to escalator if nothing
     return Transitions.Escalator;
+  }
+
+  async translatePage()
+  {
+    const res = await fetch('/assets/Languages/language.json');
+    const json = await res.json();
+
+    this.storage.ready().then(() => {
+      this.storage.get('languagePreference').then((lP) => {
+
+        if(lP == null)
+        {
+          lP = 'English';
+          this.storage.set('languagePreference', 'English');
+        }
+        if( lP === 'English')
+        {
+          document.getElementsByName('start')[0].setAttribute('placeholder', json.english.placeholders.start);
+          document.getElementsByName('destination')[0].setAttribute('placeholder', json.english.placeholders.destination);
+          document.getElementById('getDirectionsBtn').innerHTML = json.english.directions.getDirBtn;
+          document.getElementById('clearDirBtn').innerHTML = json.english.directions.clearBtn;
+        }
+        else if( lP === 'French')
+        {
+          document.getElementsByName('start')[0].setAttribute('placeholder', json.french.placeholders.start);
+          document.getElementsByName('destination')[0].setAttribute('placeholder', json.french.placeholders.destination);
+          document.getElementById('getDirectionsBtn').innerHTML = json.french.directions.getDirBtn;
+          document.getElementById('clearDirBtn').innerHTML = json.french.directions.clearBtn;
+        }
+
+
+      });
+    });
   }
 
 
