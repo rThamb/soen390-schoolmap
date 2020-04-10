@@ -21,12 +21,17 @@ export class SettingsComponent implements OnInit {
   public languagePreference: string;
   public useGoogleCalendarSync: boolean;
 
+<<<<<<< HEAD
   constructor(private storage: Storage, 
               public navCtrl: NavController) {}
 
   //Method allows user to navigate to Notifications page
   LoadNewPage(page:string): void {
     this.navCtrl.navigateRoot(page);
+=======
+  constructor(private storage: Storage) {
+    this.translatePage();
+>>>>>>> googleCalendar
   }
 
   // Initialize user settings
@@ -63,11 +68,13 @@ export class SettingsComponent implements OnInit {
       });
     // Set the languagePreference key/value
       this.storage.get('languagePreference').then((lP) => {
-        if (lP == null) {
+        if (lP == "English") {
           this.storage.set('languagePreference', 'English');
           this.languagePreference = 'English';
-        } else {
-          console.log(lP);
+        } 
+        else if (lP == "French") {
+          this.storage.set('languagePreference', 'French');
+          this.languagePreference = 'French';
         }
       });
     // Set the googleSync key/value
@@ -85,6 +92,52 @@ export class SettingsComponent implements OnInit {
   // Stores the newly set value for the settting
   onChangeSetting(key: string, value: any) {
     this.storage.set(key, value);
+  }
+
+  async translatePage()
+  {
+    const res = await fetch('/assets/Languages/language.json');
+    const json = await res.json();
+
+    this.storage.ready().then(() => {
+
+      this.storage.get('languagePreference').then((lP)=> {
+
+      // If no setting has been set, default is english
+      if(lP == null)
+      {
+        lP = 'English';
+        this.storage.set('languagePreference', 'English');
+      }
+
+      if(lP === 'English')
+      {
+        document.getElementById('settingsTitle').innerHTML = json.english.settings.title;
+        document.getElementById('settingsLanguage').innerHTML = json.english.settings.language;
+        document.getElementById('optionL1').innerHTML = json.english.settings.optionL1;
+        document.getElementById('optionL2').innerHTML = json.english.settings.optionL2;
+        document.getElementById('settingsAccessibility').innerHTML = json.english.settings.accessibility;
+        document.getElementById('settingsElevators').innerHTML = json.english.settings.elevators;
+        document.getElementById('settingsStairs').innerHTML = json.english.settings.stairs;
+        document.getElementById('settingsEscalators').innerHTML = json.english.settings.escalators;
+        document.getElementById('settingsNotifications').innerHTML = json.english.settings.notif;
+      }
+      else if(lP === 'French')
+      {
+        document.getElementById('settingsTitle').innerHTML = json.french.settings.title;
+        document.getElementById('settingsLanguage').innerHTML = json.french.settings.language;
+        document.getElementById('optionL1').innerHTML = json.french.settings.optionL1;
+        document.getElementById('optionL2').innerHTML = json.french.settings.optionL2;
+        document.getElementById('settingsAccessibility').innerHTML = json.french.settings.accessibility;
+        document.getElementById('settingsElevators').innerHTML = json.french.settings.elevators;
+        document.getElementById('settingsStairs').innerHTML = json.french.settings.stairs;
+        document.getElementById('settingsEscalators').innerHTML = json.french.settings.escalators;
+        document.getElementById('settingsNotifications').innerHTML = json.french.settings.notif;
+      }
+
+
+      });
+    });
   }
 
 

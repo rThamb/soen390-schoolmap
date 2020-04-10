@@ -40,13 +40,14 @@ import { NewRouteComponent } from './components/new-route/new-route.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssuesComponent } from './components/report-issues/report-issues.component';
 import { SafetyComponent } from './components/safety/safety.component';
-// import { ScheduleComponent } from './components/schedule/schedule.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShuttleBusScheduleComponent } from './components/shuttle-bus-schedule/shuttle-bus-schedule.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {IonicStorageModule} from '@ionic/storage';
 import { EventComponent } from './components/event/event.component';
+
 
 
 
