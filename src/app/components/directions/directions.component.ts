@@ -652,11 +652,10 @@ export class DirectionsComponent {
 
     const transition: Transitions = await this.getPreferedTransition();
 
-    if (userPosition == null) {
-      path = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, transition);
-    } else {
+    if(userPosition == null)
+      path = this.indoorService.determineRoutePOIToPOI(start, end, building, currentFloor, transition);
+    else
       path = this.indoorService.determineRouteToDestinationBasedOnUserPosition(userPosition, building, currentFloor, end, transition);
-    }
 
     // set transition map
     this.mapHandle.setTransitionsPaths(path);

@@ -44,7 +44,7 @@ var resultChecker = function(obtained, expected){
   return true;
 }
 
-describe('IndoorPathingService', () => {
+fdescribe('IndoorPathingService', () => {
   
   beforeEach(() => TestBed.configureTestingModule({
     providers: [ReadGridService, IndoorPathingService,Geolocation, BuildingFactoryService]
@@ -56,6 +56,7 @@ describe('IndoorPathingService', () => {
     console.log("Checking instance");
     expect(service).toBeTruthy();
   });
+  
   
   it('should determine shortest path to HB840 to HB890', async () => {
 
@@ -86,7 +87,7 @@ describe('IndoorPathingService', () => {
     "45.497479463157894,-73.57878764671052","45.49746177894737,-73.57875106776315"
   ];
 
-    let obtained = indoorService.determineRouteClassroomToClassroom(start, end, building, startFloor, transition);
+    let obtained = indoorService.determineRoutePOIToPOI(start, end, building, startFloor, transition);
     let objectKey = Object.keys(obtained); 
     let resultCheck = resultChecker(obtained[objectKey[0]], expected)
 
@@ -118,17 +119,9 @@ describe('IndoorPathingService', () => {
     '45.497261863157895,-73.57899044671053','45.49724417894737,-73.57895386776316','45.49722649473684,-73.57891728881579',
     '45.49720881052632,-73.57888070986843','45.497236010526315,-73.57885535986843'];
     
-    let expectedFloor9 = ['45.497333947368425,-73.57897632565789','45.4973162631579,-73.57893974671053',
-    '45.49729857894737,-73.57890316776316','45.497280894736846,-73.57886658881579',
-    '45.49726321052632,-73.57883000986843','45.497245526315794,-73.57879343092105',
-    '45.49721832631579,-73.57881878092105','45.49720064210526,-73.5787822019737',
-    '45.49718295789473,-73.57874562302632','45.4971652736842,-73.57870904407895',
-    '45.497138073684205,-73.57873439407895','45.49711087368421,-73.57875974407895',
-    '45.49708367368421,-73.57878509407894','45.497056473684204,-73.57881044407894',
-    '45.497029273684205,-73.57883579407894','45.49700207368421,-73.57886114407894',
-    '45.49698438947368,-73.57882456513158'];
+    let expectedFloor9 = ['45.4973408,-73.5789905','45.4973136,-73.57901585','45.4972864,-73.5790412','45.4972592,-73.57906655000001','45.497232000000004,-73.5790919','45.4972048,-73.57911725','45.4971776,-73.5791426','45.4971608,-73.57910785','45.4971336,-73.5791332','45.4971168,-73.57909845','45.4971,-73.57906369999999','45.4970832,-73.57902895','45.4970664,-73.5789942','45.4970496,-73.57895945','45.4970328,-73.5789247','45.497016,-73.57888995',];
 
-    let obtained = indoorService.determineRouteClassroomToClassroom(start, end, building, startFloor, transition);
+    let obtained = indoorService.determineRoutePOIToPOI(start, end, building, startFloor, transition);
     let objectKey = Object.keys(obtained); 
 
     let check1 = resultChecker(obtained[objectKey[0]], expectedFloor8);
@@ -154,19 +147,20 @@ describe('IndoorPathingService', () => {
     let transition: Transitions = Transitions.Escalator;
 
     
-    let expectedFloor9 = ['45.497324431578946,-73.57903825460527','45.49729723157895,-73.57906360460527','45.497314915789474,-73.57910018355264','45.497287715789476,-73.57912553355264','45.4973054,-73.5791621125','45.49732308421053,-73.57919869144737','45.49729588421053,-73.57922404144736','45.497268684210525,-73.57924939144736','45.49724148421053,-73.57927474144736','45.49721428421053,-73.57930009144737','45.4971966,-73.57926351249999','45.497178915789476,-73.57922693355263','45.49715171578948,-73.57925228355263','45.49712451578947,-73.57927763355264'];
-    let expectedFloor8 = ['45.49698438947368,-73.57882456513158','45.49700207368421,-73.57886114407894','45.497029273684205,-73.57883579407894','45.497056473684204,-73.57881044407894','45.49708367368421,-73.57878509407894','45.49711087368421,-73.57875974407895','45.497138073684205,-73.57873439407895','45.4971652736842,-73.57870904407895','45.49718295789473,-73.57874562302632','45.49720064210526,-73.5787822019737','45.49721832631579,-73.57881878092105','45.497236010526315,-73.57885535986843','45.49726321052632,-73.57883000986843'];
+    let expectedFloor9 = ['45.497324431578946,-73.57903825460527','45.49729723157895,-73.57906360460527','45.497314915789474,-73.57910018355264','45.497287715789476,-73.57912553355264','45.4973054,-73.5791621125','45.49732308421053,-73.57919869144737','45.49729588421053,-73.57922404144736','45.497268684210525,-73.57924939144736','45.49724148421053,-73.57927474144736','45.49721428421053,-73.57930009144737','45.4971966,-73.57926351249999','45.497178915789476,-73.57922693355263','45.49715171578948,-73.57925228355263','45.49712451578947,-73.57927763355264',];
+    let expectedFloor8 = ['45.497016,-73.57888995','45.4970432,-73.5788646','45.4970704,-73.57883925','45.497097600000004,-73.5788139','45.4971248,-73.57878855000001','45.497152,-73.57876320000001','45.4971792,-73.57873785000001','45.497195999999995,-73.57877260000001','45.4972128,-73.57880735','45.4972296,-73.5788421','45.497246399999995,-73.57887685','45.4972736,-73.5788515',];
 
-    let obtained = indoorService.determineRouteClassroomToClassroom(start, end, building, startFloor, transition);
+    let obtained = indoorService.determineRoutePOIToPOI(start, end, building, startFloor, transition);
     let objectKey = Object.keys(obtained); 
 
     let check1 = resultChecker(obtained[objectKey[0]], expectedFloor9);
     let check2 = resultChecker(obtained[objectKey[1]], expectedFloor8);
-
+    
     let resultCheck = check1 && check2;
 
     expect(resultCheck).toBeTruthy();
   });
+  
 
 
   
@@ -231,5 +225,27 @@ describe('IndoorPathingService', () => {
     let resultCheck = expectedSize == obtained.length;
     expect(resultCheck).toBeTruthy();
   });
+
+
+
+it('should determine shortest path from classroom to point of interest (HB832 => ECA Office)', async () => {
+   //get handles to service
+    const indoorService: IndoorPathingService = TestBed.get(IndoorPathingService);
+    const buildingService: BuildingFactoryService = TestBed.get(BuildingFactoryService);
+    const buildKey = "HB";
+    let building: Building = await buildingService.loadBuilding(buildKey);
+    let startFloor: Floor = await building.getFloorLevel("8");
+    let transition: Transitions = Transitions.Escalator;
+
+    let start: string = "HB832";
+    let dest: string = "ECA Office"
+
+    let expectedSize = 5;
+    let obtained = indoorService.determineRoutePOIToPOI(start, dest, building, startFloor, transition);
+
+    let resultCheck = expectedSize == obtained["8"].length;
+    expect(resultCheck).toBeTruthy();
+  });
+
   
 });
