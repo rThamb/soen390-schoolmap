@@ -19,7 +19,7 @@ export class ScheduleComponent implements OnInit {
   {
     this.today = Date.now();
     this.getNextEvents();
-    this.languageSet();
+    this.translatePage();
   }
 
   ngOnInit() 
@@ -72,7 +72,7 @@ export class ScheduleComponent implements OnInit {
 
   }
 
-  async languageSet()
+  async translatePage()
   {
     console.log("languageSet called");
     let res = await fetch("./assets/Languages/language.json");
