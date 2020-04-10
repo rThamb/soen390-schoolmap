@@ -57,7 +57,7 @@ import { EventComponent } from './components/event/event.component';
 
   declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
                 ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, HistoryComponent,
-                ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent,NotificationsComponent,EventComponent],
+                ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent,NotificationsComponent,EventComponent,ScheduleComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule ,IonicStorageModule.forRoot({      name: 'appDB',
