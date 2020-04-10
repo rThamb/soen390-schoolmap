@@ -1,6 +1,6 @@
 <ion-content>
   <div class="outdoorPOI"> <br><br><br>
-    <p class="title">Nearby Points of Interest</p>
+    <p class="title" id ="poiTitle">Nearby Points of Interest</p>
    
     <!-- Segment for type of POI -->
     <ion-segment [(ngModel)]="poiType" scrollable>
@@ -24,8 +24,8 @@
       <ion-list *ngSwitchCase="'restaurant'" checked>
           <ion-card class ="card" *ngFor="let item of restaurants">
             <ion-card-title class ="card">{{item.name}}</ion-card-title>
-            <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} meters</ion-card-content>
-            <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Open</ion-button><br><br>
+            <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} m</ion-card-content>
+            <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Destination</ion-button><br><br>
           </ion-card> 
       </ion-list>
 
@@ -33,8 +33,8 @@
       <ion-list *ngSwitchCase="'clothing'" > 
         <ion-card class ="card" *ngFor="let item of clothingStores">
           <ion-card-title class ="card">{{item.name}}</ion-card-title>
-          <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} meters</ion-card-content>
-          <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Open</ion-button><br><br>
+          <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} m</ion-card-content>
+          <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Destination</ion-button><br><br>
         </ion-card>             
       </ion-list>
 
@@ -42,8 +42,8 @@
       <ion-list *ngSwitchCase="'bank'" > 
           <ion-card class ="card" *ngFor="let item of banks">
             <ion-card-title class ="card">{{item.name}}</ion-card-title>
-            <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} meters</ion-card-content>
-            <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Open</ion-button><br><br>
+            <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} m</ion-card-content>
+            <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Destination</ion-button><br><br>
           </ion-card>             
       </ion-list>
 
@@ -51,8 +51,8 @@
       <ion-list *ngSwitchCase="'hospital'" > 
         <ion-card class ="card" *ngFor="let item of hospitals">
           <ion-card-title class ="card">{{item.name}}</ion-card-title>
-          <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} meters</ion-card-content>
-          <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Open</ion-button><br><br>
+          <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} m</ion-card-content>
+          <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Destination</ion-button><br><br>
         </ion-card>             
     </ion-list>
 

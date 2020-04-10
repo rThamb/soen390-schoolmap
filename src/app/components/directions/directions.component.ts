@@ -32,9 +32,11 @@ export class DirectionsComponent{
   directionsService = new google.maps.DirectionsService;
   directionsRenderer = new google.maps.DirectionsRenderer;
   directions = {}
+
   shuttleTimeValue = "";
   travelDistance = "";
   travelDuration = "";
+  tripCost = "";
   map:any;
   private testStorage;
   private address :string;
@@ -64,10 +66,26 @@ export class DirectionsComponent{
         }
       })
     });
-  
+
+    this.translatePage();
+
     if(this.directions['start'] == "" || this.directions['start'] == null || this.directions['start'] == undefined)
     {
-      this.directions['start'] = "Current";
+      this.storage.ready().then(() => {
+        this.storage.get('languagePreference').then((lP) => {
+          if(lP === 'English')
+          {
+            this.directions['start'] = "My Location";
+          }
+          else if (lP === 'French')
+          {
+            this.directions['start'] = "Ma Position";
+          }
+          
+        });
+        
+      });
+      
     }
 
     //Set the destination as the address of the poi
@@ -215,15 +233,37 @@ export class DirectionsComponent{
 
   displayTravelInfo(response: any) {
     let infoPanel = document.getElementById('travelinfo');
-    this.travelDistance = "Distance: \n" + response.routes[0].legs[0].distance.text;
+    this.travelDistance = "Distance:\n" + response.routes[0].legs[0].distance.text;
     
-    if (this.isShuttle() === "SHUTTLE")
-      this.travelDuration = "ETA: \n30 mins";
-    else
-      this.travelDuration = "ETA: \n" + response.routes[0].legs[0].duration.text;
-    
+    // Set default travel time fir shuttle bus
+    if (this.isShuttle() === "SHUTTLE"){
+      this.travelDuration = "ETA:\n30 mins"
+      this.displayShuttle()
+    }
+    else {
+      this.travelDuration = "ETA:\n" + response.routes[0].legs[0].duration.text;
+      document.getElementById('shuttletime').style.display = 'none'
+    }
+
+    //To display the cost of the trip
+    if(this.isTransit() === "TRANSIT"){
+      this.getTripCost(response) 
+      document.getElementById('tripCost').style.display = 'block'
+    }
+    else  {
+      this.tripCost = ""
+      document.getElementById('tripCost').style.display = 'none'
+    }
       infoPanel.style.display = "block";
     }
+
+  //Verifies if the returned google response has a fare cost available and call a method to display it
+  getTripCost(directionsResponse: JSON){
+    if(directionsResponse['routes'][0].fare)
+      this.tripCost = "Trip Cost:\n" + directionsResponse['routes'][0].fare['text']
+    else
+      this.tripCost = "Trip Cost:\nIs Unavailable"
+  }
 
   validateInput(input: string): string {
     if(this.isSGW(input))
@@ -242,14 +282,16 @@ export class DirectionsComponent{
 
     let start = this.directions['start'];
     let destination = this.directions['destination'];
-
+    let directions = {"Start":start,"Destinations":destination}
+    
     if(this.useIndoorDirections(start, destination)){
-      this.preformIndoorDirectionsActivity(start, destination, true);
+      this.preformIndoorDirectionsActivity(start, destination, true)
+      this.addToHistory(JSON.stringify(directions))
     }
-
-    else if(start == "Current"&& await this.isDestinationCampusPOI(destination)){ 
+    else if((start == "My Location" || start == "Ma Position") && await this.isDestinationCampusPOI(destination)){
         //indoor and outdoor will only be supported when using user position
-        this.useBothIndoorAndOutdoor(destination);
+        this.useBothIndoorAndOutdoor(destination)
+        this.addToHistory(JSON.stringify(directions))
     }
     else{
       this.preformOutdoorDirectionsActivity(start, destination);
@@ -268,24 +310,108 @@ export class DirectionsComponent{
     var directionsPanel = document.getElementById('directionsPanel')
     //var clearDirections = document.getElementById('clearDirections')
     let directionsForm = document.getElementById('form') 
-
+    let directions = {"Start":start,"Destinations":destination}
       this.directionsService.route({
       origin: this.validateInput(start),
       destination: this.validateInput(destination),
       travelMode: travelMode,
       }, (response, status) => {
       if (status === 'OK') {
+        console.log(response)
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
         directionsForm.style.display="none";
         this.showClearDirectionControls();
         directionsPanel.style.display="block";
         //clearDirections.style.display="block";
+        this.addToHistory(JSON.stringify(directions))
       } else {
         window.alert('Request to directions API failed: ' + status);
       }
     });
     
+  }
+
+  //Returns the current date in the following format: Day, Month Date, Year
+  getDate(): string {
+    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    let currentDate  = new Date().toLocaleDateString("en-US", options);
+    
+    return currentDate
+  }
+
+  
+  //If the current date is not already stored in the history, store it
+  setCurrentDateInHistory(history:JSON):any{
+    let length = history["dates"].length
+    let date = this.getDate()
+    
+    if(length === 0){
+      history["dates"][0] = {[date]:[{}]}
+      this.storage.set('history', JSON.stringify(history));
+    }
+    else{
+      for (var key in history["dates"][length-1]) {
+        if(key != date){
+          history["dates"][length] = {[date]:[{}]}
+          this.storage.set('history', JSON.stringify(history));
+        }
+        else
+          console.log("date already stored at last index: " + (length-1))
+      }
+    }  
+  }
+
+
+  //Given the directions, start and destination, append it to the list in the storage, by dates
+  async addToHistory(directions: string){
+    let history = await this.storage.get('history').catch((error) => {
+      console.log('Error getting history', error);
+    });
+
+    let parsedDirections = JSON.parse(directions)
+    history = JSON.parse(history)
+    
+    let currentDate = this.getDate()
+    let length = history['dates'].length
+    let loggedDate = Object.keys(history["dates"][length - 1])[0];
+    
+    if(this.isCurrentDateLogged(loggedDate)){
+    
+      length = history['dates'].length
+      
+      if(JSON.stringify(history['dates'][length-1][currentDate][0]) === "{}"){
+        history['dates'][length-1][currentDate][0] = parsedDirections
+        this.storage.set('history', JSON.stringify(history));
+      }
+      else{
+        let index = history['dates'][length-1][currentDate].length
+        let previousDirections = JSON.stringify(history['dates'][length-1][currentDate][index - 1]).toLowerCase()
+        let minDirections = directions.toLowerCase()
+        
+        if(previousDirections != minDirections){
+          history['dates'][length-1][currentDate][index] = parsedDirections
+          this.storage.set('history', JSON.stringify(history));
+        }
+      }
+    } else {
+      this.setCurrentDateInHistory(history)
+      this.addToHistory(directions)
+    }
+
+    //console.log(history)
+  }
+
+  //Helper method to verify the last date stored vs the current date
+  isCurrentDateLogged(loggedDate: string): boolean{
+    let currentDate = this.getDate()
+
+    if(currentDate === loggedDate){
+      return true
+    }
+    else{
+      return false
+    }
   }
 
   showClearDirectionControls(){
@@ -294,8 +420,6 @@ export class DirectionsComponent{
 
       let getDirBtn = document.getElementById('getDirectionBtn');
       getDirBtn.style.display="none";
-
-
   }
 
 
@@ -322,12 +446,13 @@ export class DirectionsComponent{
   //This method is called by the button next to the "start" destination.
   async useCurrentLocation(){
 
-    if(this.directions['start'] != "Current")
-    {
-      this.directions['start'] = "Current";
-    }
+    //This if statement is to switch between "My Location" and the latlng for "start" destination
+    // if(this.directions['start'] != "My Location")
+    // {
+    //   this.directions['start'] = "My Location";
+    // }
 
-    else
+    // else
     {
       let userLocation = await this.geolocation.getCurrentPosition().catch((error) => {
         console.log('Error getting location', error);
@@ -342,12 +467,14 @@ export class DirectionsComponent{
     }
   }
 
+  
+
   //Given the departure campus, retrieves the time of next shuttle bus leaving that campus (if any)
   async getNextShuttleTime(departureCampus){
     
     let res = await fetch("./assets/shuttle_bus/departureTimes.json");
     let json = await res.json();
-    let currentDate = new Date();
+    let currentDate = new Date('2020-04-08 10:00');
 
     //Only consider the shuttle bus schedule after 7:15 am on that particular day.
     let timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + " " + "7:15");
@@ -553,6 +680,39 @@ export class DirectionsComponent{
 
     //default to escalator if nothing
     return Transitions.Escalator;
+  }
+
+  async translatePage()
+  {
+    const res = await fetch('/assets/Languages/language.json');
+    const json = await res.json();
+
+    this.storage.ready().then(() => {
+      this.storage.get('languagePreference').then((lP) => {
+
+        if(lP == null)
+        {
+          lP = 'English';
+          this.storage.set('languagePreference', 'English');
+        }
+        if( lP === 'English')
+        {
+          document.getElementsByName('start')[0].setAttribute('placeholder', json.english.placeholders.start);
+          document.getElementsByName('destination')[0].setAttribute('placeholder', json.english.placeholders.destination);
+          document.getElementById('getDirectionsBtn').innerHTML = json.english.directions.getDirBtn;
+          document.getElementById('clearDirBtn').innerHTML = json.english.directions.clearBtn;
+        }
+        else if( lP === 'French')
+        {
+          document.getElementsByName('start')[0].setAttribute('placeholder', json.french.placeholders.start);
+          document.getElementsByName('destination')[0].setAttribute('placeholder', json.french.placeholders.destination);
+          document.getElementById('getDirectionsBtn').innerHTML = json.french.directions.getDirBtn;
+          document.getElementById('clearDirBtn').innerHTML = json.french.directions.clearBtn;
+        }
+
+
+      });
+    });
   }
 
 

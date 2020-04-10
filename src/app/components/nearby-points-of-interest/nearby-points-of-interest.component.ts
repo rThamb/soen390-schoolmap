@@ -1,10 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import {Location} from "../../models/Location";
 import { SharedService } from '../../services/shared/shared.service' 
 import { MapComponent} from '../../components/map/map.component'
 import {MapService} from '../../services/map/map.service';
-import { callbackify } from 'util';
+import {Storage} from '@ionic/storage';
 
 declare var google
 
@@ -29,8 +28,9 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   private hospitalType = "hospital";
   private message: string;
 
-  constructor(public navCtrl: NavController, private sharedService: SharedService, private mapSrevice : MapService, ) 
+  constructor(private storage: Storage, public navCtrl: NavController, private sharedService: SharedService, private mapSrevice : MapService, ) 
   {
+    this.translatePage();
     this.map = this.mapSrevice.getMap();
     this.mapHandle = this.mapSrevice.getActiveMapComponent();
     this.page = "NewRoute";
@@ -108,6 +108,36 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   {
     var distance = google.maps.geometry.spherical.computeDistanceBetween(this.mapHandle.getCurrentLocation(), dest);
     return distance;
+  }
+
+  async translatePage()
+  {
+    const res = await fetch('/assets/Languages/language.json');
+    const json = await res.json();
+
+    this.storage.ready().then(() => {
+
+      this.storage.get('languagePreference').then((lP) => {
+
+      // If no setting has been set, default is english
+      if(lP == null)
+      {
+        lP = 'English';
+        this.storage.set('languagePreference', 'English');
+      }
+      if(lP === 'English')
+      {
+        document.getElementById('poiTitle').innerHTML = json.english.nearbyPOI.title;
+
+      }
+      else if(lP === 'French')
+      {
+        document.getElementById('poiTitle').innerHTML = json.french.nearbyPOI.title;
+      }
+
+
+      });
+    });
   }
 
 }
