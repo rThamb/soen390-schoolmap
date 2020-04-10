@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { EventComponent } from './event.component';
 import { By } from '@angular/platform-browser';
 
-fdescribe('EventComponent', () => {
+describe('EventComponent', () => {
   let component: EventComponent;
   let fixture: ComponentFixture<EventComponent>;
 
