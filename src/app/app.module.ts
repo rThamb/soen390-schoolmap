@@ -20,6 +20,7 @@ import { IndoorPathingService } from './services/indoorPathing/indoor-pathing.se
 import { ReadGridService } from './services/readGrid/read-grid.service' 
 import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapping.service' 
 import { BuildingFactoryService } from './services/BuildingFactory/building-factory.service'
+import { SharedService } from './services/shared/shared.service' 
 
 
 
@@ -66,7 +67,8 @@ import {IonicStorageModule} from '@ionic/storage';
     ReadGridService,
     GpsGridMappingService,
     BuildingFactoryService,
-    EmailComposer
+    EmailComposer,
+    SharedService
   ],
   bootstrap: [AppComponent]
 })

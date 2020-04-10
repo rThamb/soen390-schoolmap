@@ -11,21 +11,22 @@
       font-size: larger;
     }
   
-  .p1 {
-      text-align:justify;
-      color:#195CB3;
-      padding-left:5%;
-      font-weight: bold;
-    }
-  
-  .title2 {
-      padding:3%;
-      color:#074AA2;
-      font-weight: bold;
-      font-size: larger;
-    }
-  
-  .info {
-      color:#195CB3;
-      padding-left:5%;
+  .card
+  {
+    color:#195CB3;
+    font-weight: bold;
+    text-align: center;    
+    overflow:scroll;
+    overflow-x:hidden;
+    overflow-y:scroll;
+  }
+
+  .openButton
+  {
+    text-align: center;
+  }
+
+  .card_content
+  {
+    color: black;
   }

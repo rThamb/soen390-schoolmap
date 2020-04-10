@@ -1,15 +1,61 @@
-<div class="outdoorPOI"> <br><br><br>
-  <p class="title">Nearby Points of Interest</p>
-  <h3 class="title2">Sir George Williams Campus</h3>
-  <p class="info">
-      <span style="font-weight: bold;">Ramen Misoya</span><br>
-      <ion-text>2065A Bishop St, Montreal, QC H3G 2E8</ion-text><br><br>
-      <ion-text>Compact outpost of a Japanese noodle chain serving a range of ramen served in a miso-based broth.</ion-text><br><br>
-      <ion-button  (click)="LoadNewPage('/NewRoute', '204 ontario est')">Open</ion-button><br><br>
-      
-      <span style="font-weight: bold;">Hero Certified Burgers</span><br>
-      <ion-text>2019 Rue Bishop, Montréal, QC H3G 2E8</ion-text><br><br>
-      <ion-text>Hamburger restaurant</ion-text><br><br>
-      <ion-button>Open</ion-button><br><br>
-</p>
-</div>
+<ion-content>
+  <div class="outdoorPOI"> <br><br><br>
+    <p class="title">Nearby Points of Interest</p>
+   
+    <!-- Segment for type of POI -->
+    <ion-segment [(ngModel)]="poiType" scrollable>
+      <ion-segment-button value="restaurant">
+        <ion-icon name="restaurant"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="bank">
+        <ion-icon name="cash"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="clothing">
+        <ion-icon name="shirt"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="hospital">
+        <ion-icon name="medkit"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="poiType">
+
+      <!-- List of Restaurants -->
+      <ion-list *ngSwitchCase="'restaurant'" checked>
+          <ion-card class ="card" *ngFor="let item of restaurants">
+            <ion-card-title class ="card">{{item.name}}</ion-card-title>
+            <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} meters</ion-card-content>
+            <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Open</ion-button><br><br>
+          </ion-card> 
+      </ion-list>
+
+      <!-- List of Clothing stores -->
+      <ion-list *ngSwitchCase="'clothing'" > 
+        <ion-card class ="card" *ngFor="let item of clothingStores">
+          <ion-card-title class ="card">{{item.name}}</ion-card-title>
+          <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} meters</ion-card-content>
+          <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Open</ion-button><br><br>
+        </ion-card>             
+      </ion-list>
+
+      <!-- List of Atms -->
+      <ion-list *ngSwitchCase="'bank'" > 
+          <ion-card class ="card" *ngFor="let item of banks">
+            <ion-card-title class ="card">{{item.name}}</ion-card-title>
+            <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} meters</ion-card-content>
+            <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Open</ion-button><br><br>
+          </ion-card>             
+      </ion-list>
+
+      <!-- List of Hospitals -->
+      <ion-list *ngSwitchCase="'hospital'" > 
+        <ion-card class ="card" *ngFor="let item of hospitals">
+          <ion-card-title class ="card">{{item.name}}</ion-card-title>
+          <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} meters</ion-card-content>
+          <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Open</ion-button><br><br>
+        </ion-card>             
+    </ion-list>
+
+    </div>
+  </div> 
+</ion-content>
