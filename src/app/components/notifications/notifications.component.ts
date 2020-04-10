@@ -32,7 +32,7 @@ timesel:number;
        id:1,
        title: 'Attention ',
        text: 'Notifications are enabled',
-       trigger: { in:3, unit: ELocalNotificationTriggerUnit.SECOND  }
+       trigger: { in: this.timesel, unit: ELocalNotificationTriggerUnit.SECOND  }
 
      })};
    }
@@ -46,10 +46,12 @@ timesel:number;
    }
    Clicked(){
      this.toggleval=!this.toggleval;
-     this.scheduleNotif();
+     if(this.toggleval)
+     {this.onChange(15);}
    }
    onChange(value){
     this.timesel=value;
+    this.scheduleNotif();
     console.log(this.timesel);
   }
   ngOnInit() {}

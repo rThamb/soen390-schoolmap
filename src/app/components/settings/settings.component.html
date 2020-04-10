@@ -27,14 +27,6 @@
 
     <!--List of all options in settings menu-->
     <ion-list>
-        <ion-item button class="Linescolor" lines="inset">
-            <ion-label>Language</ion-label>
-            <ion-select value="English">
-                <ion-select-option value="English">English</ion-select-option>
-                <ion-select-option value="French">French</ion-select-option>
-            </ion-select>
-        </ion-item>
-
       <ion-item class="NestedList">
         <span id="settingsElevators">Elevators</span>
         <ion-label>
@@ -56,14 +48,7 @@
         </ion-label>
       </ion-item>
 
-            <ion-item class="NestedList">
-                Elevators
-                <ion-label>
-                    <ion-toggle class="alignright" (ionChange)="onChangeSetting('useElevator', useElevator)" [(ngModel)]="useElevator"></ion-toggle>
-                </ion-label>
-            </ion-item>
-
-    <ion-item button class="Linescolor">
+    <ion-item button class="Linescolor" (click)="LoadNewPage('/Notifications')">
       <span id="settingsNotifications">Notifications</span>
     </ion-item>
 
