@@ -21,7 +21,7 @@ import { ReadGridService } from './services/readGrid/read-grid.service'
 import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapping.service' 
 import { BuildingFactoryService } from './services/BuildingFactory/building-factory.service'
 import { HistoryService } from './services/history/history.service';
-
+import {LocalNotifications} from '@ionic-native/local-notifications/ngx'
 
 
 //Component imports
@@ -59,7 +59,7 @@ import { EventComponent } from './components/event/event.component';
                 ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent,NotificationsComponent,EventComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule, IonicStorageModule.forRoot({      name: 'appDB',
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule ,IonicStorageModule.forRoot({      name: 'appDB',
   driverOrder: ['sqlite', 'websql', 'indexeddb']})],
   providers: [
     StatusBar,
@@ -71,7 +71,8 @@ import { EventComponent } from './components/event/event.component';
     ReadGridService,
     GpsGridMappingService,
     BuildingFactoryService,
-    EmailComposer
+    EmailComposer,
+    LocalNotifications
   ],
   bootstrap: [AppComponent]
 })
