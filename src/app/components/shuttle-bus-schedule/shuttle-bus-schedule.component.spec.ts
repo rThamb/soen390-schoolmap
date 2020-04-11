@@ -6,6 +6,7 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import {Storage} from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 
 describe('ShuttleBusScheduleComponent', () => {
   let component: ShuttleBusScheduleComponent;
@@ -16,7 +17,7 @@ describe('ShuttleBusScheduleComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ShuttleBusScheduleComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [RouterTestingModule, IonicModule.forRoot()]
+      imports: [RouterTestingModule, IonicModule.forRoot(), IonicStorageModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ShuttleBusScheduleComponent);
@@ -68,7 +69,7 @@ describe('ShuttleBusScheduleComponent', () => {
 
 function setup() {
   const storage = autoSpy(Storage);
-    const builder = {
+  const builder = {
         default() {
             return builder;
         },
@@ -76,5 +77,5 @@ function setup() {
             return new ShuttleBusScheduleComponent(storage);
         }
     };
-    return builder;
+  return builder;
 }

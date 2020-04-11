@@ -5,6 +5,7 @@ import { NO_ERRORS_SCHEMA} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import {autoSpy} from '../../../../auto-spy';
 import {Storage} from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 
 
 describe('AboutUsComponent', () => {
@@ -16,6 +17,7 @@ const a = setup().default();
 TestBed.configureTestingModule({
       declarations: [ AboutUsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
+      imports: [IonicStorageModule.forRoot()],
     }).compileComponents();
 
 fixture = TestBed.createComponent(AboutUsComponent);
