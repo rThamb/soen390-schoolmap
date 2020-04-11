@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import {autoSpy} from '../../../../auto-spy';
 import { ShuttleBusScheduleComponent } from './shuttle-bus-schedule.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import {Storage} from '@ionic/storage';
 
 describe('ShuttleBusScheduleComponent', () => {
   let component: ShuttleBusScheduleComponent;
@@ -66,12 +67,13 @@ describe('ShuttleBusScheduleComponent', () => {
 });
 
 function setup() {
+  const storage = autoSpy(Storage);
     const builder = {
         default() {
             return builder;
         },
         build() {
-            return new ShuttleBusScheduleComponent();
+            return new ShuttleBusScheduleComponent(storage);
         }
     };
     return builder;

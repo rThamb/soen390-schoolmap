@@ -3,6 +3,9 @@ import { IonicModule } from '@ionic/angular';
 import { AboutUsComponent } from './about-us.component';
 import { NO_ERRORS_SCHEMA} from '@angular/core';
 import {By} from '@angular/platform-browser';
+import {autoSpy} from '../../../../auto-spy';
+import {Storage} from '@ionic/storage';
+
 
 describe('AboutUsComponent', () => {
   let component: AboutUsComponent;
@@ -34,12 +37,13 @@ fixture.detectChanges();
 });
 
 function setup() {
+    const storage = autoSpy(Storage);
     const builder = {
         default() {
             return builder;
         },
         build() {
-            return new AboutUsComponent();
+            return new AboutUsComponent(storage);
         }
     };
     return builder;
