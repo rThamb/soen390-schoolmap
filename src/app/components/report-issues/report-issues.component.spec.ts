@@ -7,7 +7,7 @@ import {EmailComposer} from '@ionic-native/email-composer/ngx';
 import {By} from '@angular/platform-browser';
 import {IonicStorageModule} from '@ionic/storage';
 
-fdescribe('ReportIssuesComponent', () => {
+describe('ReportIssuesComponent', () => {
   let component: ReportIssuesComponent;
   let fixture: ComponentFixture<ReportIssuesComponent>;
 
