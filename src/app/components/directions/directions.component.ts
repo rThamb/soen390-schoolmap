@@ -62,8 +62,8 @@ export class DirectionsComponent{
     this.testStorage = storage;
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
-        console.log('Value:' + value);
-        if(value != null && value != undefined || value != '')
+        //console.log(value);
+        if(value != null && value != undefined && value != '')
         {
           this.directions['destination'] = value;
           storage.set('newRouteDest', null); //Inside "direction"
@@ -92,6 +92,7 @@ export class DirectionsComponent{
       
     }
 
+    //If user has been routed to new route page from favorites page, value for destination is set.
     this.route.queryParams.subscribe(params => {
       if (params && params.special) {
         this.directions['destination'] = JSON.parse(params.special)["destination"];
@@ -303,6 +304,7 @@ export class DirectionsComponent{
       this.preformOutdoorDirectionsActivity(start, destination);
     }
 
+    //If user has toggled the favorite star, the destination will be added to their favorites.
     if(this.favorited)
       this.addDestinationToFavorites(this.directions['destination']);
     
@@ -528,6 +530,7 @@ export class DirectionsComponent{
     return nextShuttleTime;
   }
 
+  //Adds a new location to the user's favorites.
   addDestinationToFavorites(location: string){
     this.storage.get('favorites').then((val) => {
       if(val){
