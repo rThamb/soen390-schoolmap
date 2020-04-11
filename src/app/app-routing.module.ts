@@ -6,6 +6,7 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { HistoryComponent } from './components/history/history.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { HomeComponent } from './components/home/home.component';
+import { NearbyPointsOfInterestComponent } from './components/nearby-points-of-interest/nearby-points-of-interest.component';
 import { NewRouteComponent } from './components/new-route/new-route.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ReportIssuesComponent } from './components/report-issues/report-issues.component';
@@ -28,7 +29,7 @@ const routes: Routes = [
    {path: 'History', component: HistoryComponent},
    {path: 'Favorites', component: FavoritesComponent},
    {path: 'Home', component: HomeComponent},
-   // {path: 'NearbyPointsOfInterest', component: NearbyPointsOfInterestComponent},
+   {path: 'NearbyPointsOfInterest', component: NearbyPointsOfInterestComponent},
    {path: 'NewRoute', component: NewRouteComponent},
    {path: 'Notifications', component: NotificationsComponent},
    {path: 'AboutUs', component: AboutUsComponent},
@@ -37,9 +38,9 @@ const routes: Routes = [
    {path: 'Schedule', component: ScheduleComponent},
    {path: 'Settings', component: SettingsComponent},
    {path: 'ShuttleBusSchedule', component: ShuttleBusScheduleComponent},
-   {path: 'EventOnCampus', component: EventComponent}
-
-
+   {path: 'EventOnCampus', component: EventComponent},
+   {path: 'Notifications', component: NotificationsComponent}
+  
 ];
 @NgModule({
   imports: [

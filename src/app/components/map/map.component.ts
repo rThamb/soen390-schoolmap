@@ -634,7 +634,25 @@ export class MapComponent implements AfterViewInit {
       if (buildingInfo['Floors'][0] != undefined && buildingInfo['Floors'][0].level == 1) {
         floorImage = buildingInfo['Floors'][0].img;
         this.addFloorOverlay(imageBound, floorImage);
-        //TODO: Add code similar to below that displays the poi when loading the floor (just for the first floor (level 1)) -See "if(usingPOI)..."
+
+        //Displays the poi when loading the floor (just for the first floor that is loaded (level 1))
+        if(usingPOI){
+          const floorLevel = buildingInfo['Floors'][0].level;
+          const currentFloor: Floor = buildingFloors[building + floorLevel];
+
+          // Check if floor object 1 exists for building before attempting to parse it
+          if (currentFloor != undefined) {
+            currentFloor.getPois().forEach((poi) => {
+              self.poiMarkers.push(new google.maps.Marker({
+                position: poi.getGoogleLatLng(),
+                map: self.map,
+                title: poi.getKey(),
+                label: poi.getKey()
+              }));
+            });
+          }
+        }
+
       }
         
       //define dropdown handler here

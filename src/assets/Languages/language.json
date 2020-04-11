@@ -16,7 +16,7 @@
           "mySchedule": "My Schedule",
           "nearbyPOI": "Nearby Points Of Interest",
           "settings": "Settings",
-          "safety": "Saftey",
+          "safety": "Safety",
           "reportAnIssue": "Report An Issue",
           "aboutUs": "About Us"
     },
@@ -67,6 +67,9 @@
         "depLoy": "Departure from Loyola",
         "depSGW": "Departure from SGW",
         "friday": "Friday bus schedule"
+    },
+    "nearbyPOI": {
+        "title": "Nearby Points of Interest"
     } 
   },
 
@@ -139,6 +142,9 @@
         "depLoy": "Départ de Loyola",
         "depSGW": "Départ de SGW",
         "friday": "Horaire du Vendredi"
-    }
+    },
+    "nearbyPOI": {
+        "title": "Points d'Intérêt à Proximité"
+    } 
   }
 }

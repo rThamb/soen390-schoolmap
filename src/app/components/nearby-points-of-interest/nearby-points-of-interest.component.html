@@ -1,0 +1,61 @@
+<ion-content>
+  <div class="outdoorPOI"> <br><br><br>
+    <p class="title" id ="poiTitle">Nearby Points of Interest</p>
+   
+    <!-- Segment for type of POI -->
+    <ion-segment [(ngModel)]="poiType" scrollable>
+      <ion-segment-button value="restaurant">
+        <ion-icon name="restaurant"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="bank">
+        <ion-icon name="cash"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="clothing">
+        <ion-icon name="shirt"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="hospital">
+        <ion-icon name="medkit"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="poiType">
+
+      <!-- List of Restaurants -->
+      <ion-list *ngSwitchCase="'restaurant'" checked>
+          <ion-card class ="card" *ngFor="let item of restaurants">
+            <ion-card-title class ="card">{{item.name}}</ion-card-title>
+            <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} m</ion-card-content>
+            <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Destination</ion-button><br><br>
+          </ion-card> 
+      </ion-list>
+
+      <!-- List of Clothing stores -->
+      <ion-list *ngSwitchCase="'clothing'" > 
+        <ion-card class ="card" *ngFor="let item of clothingStores">
+          <ion-card-title class ="card">{{item.name}}</ion-card-title>
+          <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} m</ion-card-content>
+          <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Destination</ion-button><br><br>
+        </ion-card>             
+      </ion-list>
+
+      <!-- List of Atms -->
+      <ion-list *ngSwitchCase="'bank'" > 
+          <ion-card class ="card" *ngFor="let item of banks">
+            <ion-card-title class ="card">{{item.name}}</ion-card-title>
+            <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} m</ion-card-content>
+            <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Destination</ion-button><br><br>
+          </ion-card>             
+      </ion-list>
+
+      <!-- List of Hospitals -->
+      <ion-list *ngSwitchCase="'hospital'" > 
+        <ion-card class ="card" *ngFor="let item of hospitals">
+          <ion-card-title class ="card">{{item.name}}</ion-card-title>
+          <ion-card-content class = "card_content">{{item.vicinity}}<br>Distance: {{item.distance}} m</ion-card-content>
+          <ion-button class = "openButton" (click)="LoadNewRoute(page, item.vicinity)">Destination</ion-button><br><br>
+        </ion-card>             
+    </ion-list>
+
+    </div>
+  </div> 
+</ion-content>
