@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { RouterModule } from '@angular/router';
 import { NearbyPointsOfInterestComponent } from './nearby-points-of-interest.component';
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
-import {IonicStorageModule} from "@ionic/storage";
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {IonicStorageModule} from '@ionic/storage';
 
 describe('NearbyPointsOfInterestComponent', () => {
   let component: NearbyPointsOfInterestComponent;
@@ -13,7 +13,7 @@ describe('NearbyPointsOfInterestComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NearbyPointsOfInterestComponent ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
-      imports: [IonicModule.forRoot(),  IonicStorageModule.forRoot()]
+      imports: [IonicModule.forRoot(),  IonicStorageModule.forRoot(), RouterModule.forRoot([])]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NearbyPointsOfInterestComponent);
