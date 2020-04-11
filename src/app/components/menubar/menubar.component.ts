@@ -68,6 +68,7 @@ export class MenubarComponent implements OnInit {
         document.getElementById("shuttlebus").innerHTML = json.english.menubar.shuttleBusSchedule;
         document.getElementById("schedule").innerHTML = json.english.menubar.mySchedule;
         document.getElementById("nearbyPOI").innerHTML = json.english.menubar.nearbyPOI;
+        document.getElementById("events").innerHTML = json.english.menubar.events;
         document.getElementById("settings").innerHTML = json.english.menubar.settings;
         document.getElementById("safety").innerHTML = json.english.menubar.safety;
         document.getElementById("report").innerHTML = json.english.menubar.reportAnIssue;
@@ -84,6 +85,7 @@ export class MenubarComponent implements OnInit {
         document.getElementById("shuttlebus").innerHTML = json.french.menubar.shuttleBusSchedule;
         document.getElementById("schedule").innerHTML = json.french.menubar.mySchedule;
         document.getElementById("nearbyPOI").innerHTML = json.french.menubar.nearbyPOI;
+        document.getElementById("events").innerHTML = json.french.menubar.events;
         document.getElementById("settings").innerHTML = json.french.menubar.settings;
         document.getElementById("safety").innerHTML = json.french.menubar.safety;
         document.getElementById("report").innerHTML = json.french.menubar.reportAnIssue;
