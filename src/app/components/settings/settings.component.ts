@@ -22,7 +22,10 @@ export class SettingsComponent implements OnInit {
   public useGoogleCalendarSync: boolean;
 
   constructor(private storage: Storage, 
-              public navCtrl: NavController) {}
+              public navCtrl: NavController) 
+              {
+                this.translatePage();
+              }
 
   //Method allows user to navigate to Notifications page
   LoadNewPage(page:string): void {

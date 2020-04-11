@@ -6,13 +6,16 @@ import { BuildingFactoryService } from '../../services/BuildingFactory/building-
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service'
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-
+import { NearbyPointsOfInterestComponent} from '../../components/nearby-points-of-interest/nearby-points-of-interest.component'
+import { SharedService } from '../../services/shared/shared.service' 
 
 //models 
 import { Building } from '../../models/Building'
 import { Floor } from '../../models/Floor'
 import { Location } from '../../models/Location'
 import { Transitions } from '../../models/Transitions'
+import { NewRouteComponent } from '../new-route/new-route.component';
+
 
 declare var google
 
@@ -35,26 +38,31 @@ export class DirectionsComponent{
   travelDuration = "";
   tripCost = "";
   map:any;
+  private testStorage;
+  private address :string;
 
   //Possible key words that would be searched to get either of the campuses
   sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building", "hall","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o","1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"];
   loyolaCampus=["concordia loyola", "loyola concordia", "campus loyola", "loyola campus", "loyola", "layola", "H4B 1R6", "7141 sherbrooke", "7141 Sherbrooke St W, Montreal, Quebec H4B 1R6"];
-
 
   constructor(private geolocation: Geolocation, 
               private mapSrevice : MapService, 
               private storage: Storage,
               private indoorService: IndoorPathingService,
               private buildFactoryService: BuildingFactoryService,
-              private gpsMapService: GpsGridMappingService) 
+              private gpsMapService: GpsGridMappingService,
+              private sharedService: SharedService) 
   {
+    this.sharedService.sharedMessage.subscribe(message => this.address = message)
+
+    this.testStorage = storage;
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
-        //console.log(value);
+        console.log('Value:' + value);
         if(value != null || value != undefined || value != '')
         {
           this.directions['destination'] = value;
-          storage.set('newRouteDest', null);
+          storage.set('newRouteDest', null); //Inside "direction"
         }
       })
     });
@@ -79,9 +87,20 @@ export class DirectionsComponent{
       });
       
     }
+
+    //Set the destination as the address of the poi
+    this.setDestination(this.address)
   }
 
-  
+  ngOnInit() 
+  {    
+  }  
+
+  //Sets the destination address
+  setDestination(dest: String)
+  {
+    this.testStorage.set('newRouteDest', dest);
+  }
 
   setMap(){
     
@@ -89,7 +108,6 @@ export class DirectionsComponent{
     this.map = this.mapSrevice.getMap();
     this.mapHandle = this.mapSrevice.getActiveMapComponent();
     
-    //creates a div to display the directions in text for the user, very ugly and needs to be reworked in terms of look
     this.directionsRenderer.setPanel(document.getElementById('directionsPanel'));
 
     this.directionsRenderer.setMap(this.map);
@@ -419,22 +437,34 @@ export class DirectionsComponent{
       document.getElementById('directionsPanel').style.display="none"
       document.getElementById('clearDirections').style.display="none"
       getDirBtn.style.display="block";
+      this.directions['destination'] = "";
     }
     this.mapHandle.quitIndoorMode();
 
   }
 
+  //This method is called by the button next to the "start" destination.
   async useCurrentLocation(){
 
-    let userLocation = await this.geolocation.getCurrentPosition().catch((error) => {
-      console.log('Error getting location', error);
-    });
+    //This if statement is to switch between "My Location" and the latlng for "start" destination
+    // if(this.directions['start'] != "My Location")
+    // {
+    //   this.directions['start'] = "My Location";
+    // }
 
-    if(userLocation)
-      this.directions['start'] = userLocation.coords.latitude + "," + userLocation.coords.longitude;
-    else
-      window.alert("Location services must be enabled in order to access your current location.");
+    // else
+    {
+      let userLocation = await this.geolocation.getCurrentPosition().catch((error) => {
+        console.log('Error getting location', error);
+      });
 
+      if(userLocation)
+      {
+        this.directions['start'] = userLocation.coords.latitude + "," + userLocation.coords.longitude;
+      }
+      else
+        window.alert("Location services must be enabled in order to access your current location."); 
+    }
   }
 
   
@@ -600,7 +630,7 @@ export class DirectionsComponent{
    * @param end 
    */
   async drawIndoorPath(start: string, end: string, userPosition: Location){
-    
+
     let buildingCode = this.getBuildingCode(start);
     let floorLevel = this.getFloorNum(start, buildingCode);
 
