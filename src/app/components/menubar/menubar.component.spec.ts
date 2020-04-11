@@ -91,10 +91,4 @@ describe('MenubarComponent', () => {
     const de = fixture.debugElement.query(By.css('ion-header'));
     expect(de.nativeElement.textContent).toContain('ConcordiaGo');
   });
-  it('should contain the menu title', () => {
-    const de = fixture.debugElement.query(By.css('ion-title'));
-    expect(de.nativeElement.textContent).toContain('Main Menu');
-  });
-
-
 });

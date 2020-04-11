@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EmailComposer} from '@ionic-native/email-composer/ngx';
 import {By} from '@angular/platform-browser';
 import {IonicStorageModule} from '@ionic/storage';
+import {IonicModule} from "@ionic/angular";
 
 describe('ReportIssuesComponent', () => {
   let component: ReportIssuesComponent;
@@ -15,7 +16,7 @@ describe('ReportIssuesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ReportIssuesComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicStorageModule.forRoot(),  BrowserModule,
+      imports: [IonicStorageModule.forRoot(), IonicModule.forRoot(), BrowserModule,
         FormsModule, ReactiveFormsModule],
         providers: [EmailComposer]
 
