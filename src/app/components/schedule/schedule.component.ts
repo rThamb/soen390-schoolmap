@@ -32,7 +32,7 @@ export class ScheduleComponent implements OnInit {
    */
   getNextEvents()
   {
-    this.http.get('http://localhost:3000/getNextEvents').subscribe(data => {
+    this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
 
       console.log(data);
       if(data[0])
