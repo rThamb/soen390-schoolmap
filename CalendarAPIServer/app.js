@@ -104,17 +104,22 @@ async function processRequest(req, res)
 }
 
 const app = express()
-const port = 3000
+const port = 24390
 const cors = require('cors');
 
 const CORS = {
     origin: '*'
 }
 
+app.get('/', (req, res) =>{
+  res.send('Connection Successful!');
+});
+
 app.get('/getNextEvents', cors(CORS), async (req, res) => {
 
-    await processRequest(req, res)
+  await processRequest(req, res)
 
 })
 
-app.listen(port, () => {console.log('listening on port ' + port)})
+app.listen(process.env.PORT || 3000, 
+	() => console.log("Server is running..."));
