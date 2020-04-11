@@ -21,7 +21,7 @@
       <ion-textarea id="body" [(ngModel)]="body" placeholder="Message" formControlName="message"></ion-textarea>
     </ion-item><br>
 
-    <button id="submit" type="submit" [disabled]="!issue.valid" (click)="send()">Submit</button>
+    <button class="reportIssue" id="submit" type="submit" [disabled]="!issue.valid" (click)="send()">Submit</button>
   </form>
 
 </div>
