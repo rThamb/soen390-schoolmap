@@ -7,15 +7,18 @@
             "getDirBtn": "Get Directions",
             "clearBtn": "Clear Directions"
         },
+        "history": {
+            "": ""
+        },
         "menubar": {
             "title": "Main Menu",
             "home": "Home",
             "newRoute": "New Route",
+            "history": "History",
             "favorites": "Favorites",
             "shuttleBusSchedule": "Shuttle Bus Schedule",
             "mySchedule": "My Schedule",
             "nearbyPOI": "Nearby Points Of Interest",
-            "events": "Events On Campuses",
             "settings": "Settings",
             "safety": "Safety",
             "reportAnIssue": "Report An Issue",
@@ -82,15 +85,18 @@
             "getDirBtn": "Obtien l'Itinéraire",
             "clearBtn": "Retirer les Directions"
         },
+        "history": {
+            "": ""
+        },
         "menubar": {
             "title": "Menu Principal",
             "home": "Accueil",
             "newRoute": "Nouvelle Route",
+            "history": "Historique",
             "favorites": "Favoris",
             "shuttleBusSchedule": "Horaire Des Navettes",
             "mySchedule": "Mon Horaire",
             "nearbyPOI": "Points d'Intérêt à Proximité",
-            "events": "Evenements",
             "settings": "Paramètres",
             "safety": "Sécurité",
             "reportAnIssue": "Signalez un Problème",
@@ -120,7 +126,6 @@
             "option3": "Blessure",
             "option4": "Vol",
             "option5": "Déversement / accident de matières dangereuses"
-
         },
         "schedule": {
             "email": "Courriel: ",
