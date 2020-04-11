@@ -7,10 +7,14 @@
         "getDirBtn": "Get Directions",
         "clearBtn": "Clear Directions"
     },
+    "history": {
+        "":""
+    },
     "menubar": {
           "title": "Main Menu",
           "home": "Home",
           "newRoute": "New Route",
+          "history": "History",
           "favorites": "Favorites",
           "shuttleBusSchedule":"Shuttle Bus Schedule",
           "mySchedule": "My Schedule",
@@ -85,6 +89,7 @@
         "title": "Menu Principal",
         "home": "Accueil",
         "newRoute": "Nouvelle Route",
+        "history": "Historique",
         "favorites": "Favoris",
         "shuttleBusSchedule": "Horaire Des Navettes",
         "mySchedule": "Mon Horaire",
