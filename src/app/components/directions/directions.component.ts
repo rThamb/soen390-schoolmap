@@ -261,8 +261,8 @@ export class DirectionsComponent {
 
   // Verifies if the returned google response has a fare cost available and call a method to display it
   getTripCost(directionsResponse: JSON) {
-    if (directionsResponse.routes[0].fare) {
-      this.tripCost = 'Trip Cost:\n' + directionsResponse.routes[0].fare.text;
+    if (directionsResponse['routes'][0].fare) {
+      this.tripCost = 'Trip Cost:\n' + directionsResponse['routes'][0].fare.text;
     } else {
       this.tripCost = 'Trip Cost:\nIs Unavailable';
     }
@@ -350,16 +350,16 @@ export class DirectionsComponent {
 
   // If the current date is not already stored in the history, store it
   setCurrentDateInHistory(history: JSON): any {
-    const length = history.dates.length;
+    const length = history['dates'].length;
     const date = this.getDate();
 
     if (length === 0) {
-      history.dates[0] = {[date]: [{}]};
+      history['dates'][0] = {[date]: [{}]};
       this.storage.set('history', JSON.stringify(history));
     } else {
-      for (const key in history.dates[length - 1]) {
+      for (const key in history['dates'][length - 1]) {
         if (key !== date) {
-          history.dates[length] = {[date]: [{}]};
+          history['dates'][length] = {[date]: [{}]};
           this.storage.set('history', JSON.stringify(history));
         } else {
           console.log('date already stored at last index: ' + (length - 1));
