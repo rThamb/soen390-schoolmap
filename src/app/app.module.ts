@@ -27,7 +27,6 @@ import {LocalNotifications} from '@ionic-native/local-notifications/ngx'
 
 //Component imports
 import { AboutUsComponent } from './components/about-us/about-us.component';
-// import { FavoritesComponent } from './components/favorites/favorites.component';
 import { HistoryComponent } from './components/history/history.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
@@ -57,7 +56,7 @@ import { EventComponent } from './components/event/event.component';
 
 @NgModule({
 
-  declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
+  declarations: [FavoritesComponent, AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
                 ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, HistoryComponent,
                 ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent,NotificationsComponent,EventComponent,ScheduleComponent, NearbyPointsOfInterestComponent],
   entryComponents: [],

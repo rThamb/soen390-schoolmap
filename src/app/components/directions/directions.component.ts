@@ -6,12 +6,9 @@ import { BuildingFactoryService } from '../../services/BuildingFactory/building-
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service'
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-<<<<<<< HEAD
 import { ActivatedRoute, Router } from '@angular/router';
-=======
 import { NearbyPointsOfInterestComponent} from '../../components/nearby-points-of-interest/nearby-points-of-interest.component'
 import { SharedService } from '../../services/shared/shared.service' 
->>>>>>> 8959bbf6525e2a889064fa8cbee426b6a9e9cf04
 
 //models 
 import { Building } from '../../models/Building'
@@ -42,12 +39,9 @@ export class DirectionsComponent{
   travelDuration = "";
   tripCost = "";
   map:any;
-<<<<<<< HEAD
   favorited: boolean = false;
-=======
   private testStorage;
   private address :string;
->>>>>>> 8959bbf6525e2a889064fa8cbee426b6a9e9cf04
 
   //Possible key words that would be searched to get either of the campuses
   sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building", "hall","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o","1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"];
@@ -59,25 +53,17 @@ export class DirectionsComponent{
               private indoorService: IndoorPathingService,
               private buildFactoryService: BuildingFactoryService,
               private gpsMapService: GpsGridMappingService,
-<<<<<<< HEAD
               private route: ActivatedRoute,
-              private router: Router) 
-=======
+              private router: Router, 
               private sharedService: SharedService) 
->>>>>>> 8959bbf6525e2a889064fa8cbee426b6a9e9cf04
   {
     this.sharedService.sharedMessage.subscribe(message => this.address = message)
 
     this.testStorage = storage;
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
-<<<<<<< HEAD
-        console.log(value);
-        if(value != null && value != undefined && value != '')
-=======
         console.log('Value:' + value);
         if(value != null || value != undefined || value != '')
->>>>>>> 8959bbf6525e2a889064fa8cbee426b6a9e9cf04
         {
           this.directions['destination'] = value;
           storage.set('newRouteDest', null); //Inside "direction"
@@ -106,20 +92,18 @@ export class DirectionsComponent{
       
     }
 
-<<<<<<< HEAD
     this.route.queryParams.subscribe(params => {
       if (params && params.special) {
         this.directions['destination'] = JSON.parse(params.special)["destination"];
       }
     });
+
+    //Set the destination as the address of the poi
+    this.setDestination(this.address)
   }
 
   toggleFavorite(){
     this.favorited = !this.favorited;
-  }  
-=======
-    //Set the destination as the address of the poi
-    this.setDestination(this.address)
   }
 
   ngOnInit() 
@@ -131,7 +115,6 @@ export class DirectionsComponent{
   {
     this.testStorage.set('newRouteDest', dest);
   }
->>>>>>> 8959bbf6525e2a889064fa8cbee426b6a9e9cf04
 
   setMap(){
     
