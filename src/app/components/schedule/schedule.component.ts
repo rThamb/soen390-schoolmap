@@ -37,7 +37,6 @@ export class ScheduleComponent implements OnInit {
       console.log(data);
       if(data[0])
       {
-        //debugger;
         this.events = data;
         this.email = this.events[0].creator.email;
 
@@ -105,8 +104,5 @@ export class ScheduleComponent implements OnInit {
 
     })
   }
-
-
-
 
 }

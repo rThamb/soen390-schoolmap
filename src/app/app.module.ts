@@ -28,6 +28,7 @@ import { HistoryService } from './services/history/history.service';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 // import { FavoritesComponent } from './components/favorites/favorites.component';
 import { HistoryComponent } from './components/history/history.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
 import { HomeSearchComponent } from './components/home-search/home-search.component';
 import { MapComponent } from './components/map/map.component';

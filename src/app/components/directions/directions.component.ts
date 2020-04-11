@@ -6,7 +6,7 @@ import { BuildingFactoryService } from '../../services/BuildingFactory/building-
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service'
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 //models 
 import { Building } from '../../models/Building'
@@ -35,6 +35,7 @@ export class DirectionsComponent{
   travelDuration = "";
   tripCost = "";
   map:any;
+  favorited: boolean = false;
 
   //Possible key words that would be searched to get either of the campuses
   sgwCampus = ["concordia","concordia university", "concordia downtown","downtown concordia","sir george william","sir george williams","hall building", "hall","concordia montreal","montreal concordia","H3G 1M8","1455 boulevard de maisonneuve o","1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8"];
@@ -46,12 +47,14 @@ export class DirectionsComponent{
               private storage: Storage,
               private indoorService: IndoorPathingService,
               private buildFactoryService: BuildingFactoryService,
-              private gpsMapService: GpsGridMappingService) 
+              private gpsMapService: GpsGridMappingService,
+              private route: ActivatedRoute,
+              private router: Router) 
   {
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
-        //console.log(value);
-        if(value != null || value != undefined || value != '')
+        console.log(value);
+        if(value != null && value != undefined && value != '')
         {
           this.directions['destination'] = value;
           storage.set('newRouteDest', null);
@@ -79,9 +82,17 @@ export class DirectionsComponent{
       });
       
     }
+
+    this.route.queryParams.subscribe(params => {
+      if (params && params.special) {
+        this.directions['destination'] = JSON.parse(params.special)["destination"];
+      }
+    });
   }
 
-  
+  toggleFavorite(){
+    this.favorited = !this.favorited;
+  }  
 
   setMap(){
     
@@ -278,6 +289,10 @@ export class DirectionsComponent{
     else{
       this.preformOutdoorDirectionsActivity(start, destination);
     }
+
+    if(this.favorited)
+      this.addDestinationToFavorites(this.directions['destination']);
+    
   }
 
   /**
@@ -488,7 +503,20 @@ export class DirectionsComponent{
     return nextShuttleTime;
   }
 
-
+  addDestinationToFavorites(location: string){
+    this.storage.get('favorites').then((val) => {
+      if(val){
+        let value = JSON.parse(val);
+        if(value.indexOf(location) == -1){
+          value.push(location);
+          this.storage.set('favorites', JSON.stringify(value));
+        }
+      }else{
+        let value = [location];
+        this.storage.set('favorites', JSON.stringify(value));
+      }
+    });
+  }
 
 
   /**
