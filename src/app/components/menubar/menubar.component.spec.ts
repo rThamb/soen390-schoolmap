@@ -6,7 +6,7 @@ import { MenubarComponent } from './menubar.component';
 import {By} from '@angular/platform-browser';
 import { IonicStorageModule } from '@ionic/storage';
 
-describe('MenubarComponent', () => {
+fdescribe('MenubarComponent', () => {
   let component: MenubarComponent;
   let fixture: ComponentFixture<MenubarComponent>;
 
@@ -88,11 +88,11 @@ describe('MenubarComponent', () => {
   }));
 
   it('should contain the name of the application', () => {
-    const de = fixture.debugElement.query(By.css('ion-header'));
+    const de = fixture.debugElement.query(By.css('ion-title'));
     expect(de.nativeElement.textContent).toContain('ConcordiaGo');
   });
   it('should contain the menu title', () => {
-    const de = fixture.debugElement.query(By.css('ion-title'));
+    const de = fixture.debugElement.query(By.css('ion-title:nth-child(1)'));
     expect(de.nativeElement.textContent).toContain('Main Menu');
   });
 
