@@ -63,7 +63,7 @@ export class DirectionsComponent {
       storage.get('newRouteDest').then((value) => {
         // console.log(value);
         if (value != null && value != undefined && value != '') {
-          this.directions.destination = value;
+          this.directions['destination'] = value;
           storage.set('newRouteDest', null); // Inside "direction"
         }
       });
@@ -71,13 +71,13 @@ export class DirectionsComponent {
 
     this.translatePage();
 
-    if (this.directions.start == '' || this.directions.start == null || this.directions.start == undefined) {
+    if (this.directions['start'] == '' || this.directions['start'] == null || this.directions['start'] == undefined) {
       this.storage.ready().then(() => {
         this.storage.get('languagePreference').then((lP) => {
           if (lP === 'English') {
-            this.directions.start = 'My Location';
+            this.directions['start'] = 'My Location';
           } else if (lP === 'French') {
-            this.directions.start = 'Ma Position';
+            this.directions['start'] = 'Ma Position';
           }
 
         });
@@ -89,7 +89,7 @@ export class DirectionsComponent {
     // If user has been routed to new route page from favorites page, value for destination is set.
     this.route.queryParams.subscribe(params => {
       if (params && params.special) {
-        this.directions.destination = JSON.parse(params.special).destination;
+        this.directions['destination'] = JSON.parse(params.special).destination;
       }
     });
 
@@ -161,8 +161,8 @@ export class DirectionsComponent {
 
   // determines if the user is travelling between campuses, if so suggest the shuttle bus
   displayShuttle() {
-    let start = this.directions.start;
-    let destination = this.directions.destination;
+    let start = this.directions['start'];
+    let destination = this.directions['destination'];
     const shuttleDisplay = document.getElementById('shuttle');
 
     if (start && destination) {
@@ -284,8 +284,8 @@ export class DirectionsComponent {
     // this is a reference to the map
     this.setMap();
 
-    const start = this.directions.start;
-    const destination = this.directions.destination;
+    const start = this.directions['start'];
+    const destination = this.directions['destination'];
     const directions = {Start: start, Destinations: destination};
 
     if (this.useIndoorDirections(start, destination)) {
@@ -301,7 +301,7 @@ export class DirectionsComponent {
 
     // If user has toggled the favorite star, the destination will be added to their favorites.
     if (this.favorited) {
-      this.addDestinationToFavorites(this.directions.destination);
+      this.addDestinationToFavorites(this.directions['destination']);
     }
 
   }
@@ -440,7 +440,7 @@ export class DirectionsComponent {
       document.getElementById('directionsPanel').style.display = 'none';
       document.getElementById('clearDirections').style.display = 'none';
       getDirBtn.style.display = 'block';
-      this.directions.destination = '';
+      this.directions['destination'] = '';
     }
     this.mapHandle.quitIndoorMode();
 
@@ -462,7 +462,7 @@ export class DirectionsComponent {
       });
 
       if (userLocation) {
-        this.directions.start = userLocation.coords.latitude + ',' + userLocation.coords.longitude;
+        this.directions['start'] = userLocation.coords.latitude + ',' + userLocation.coords.longitude;
       } else {
         window.alert('Location services must be enabled in order to access your current location.');
       }
