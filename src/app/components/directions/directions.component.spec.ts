@@ -12,6 +12,8 @@ import { autoSpy } from '../../../../auto-spy';
 
 import { DirectionsComponent } from './directions.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import { RouterModule } from '@angular/router';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('DirectionsComponent', () => {
   let component: DirectionsComponent;
@@ -21,8 +23,8 @@ describe('DirectionsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DirectionsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicModule.forRoot(),  IonicStorageModule.forRoot()],
-      providers: [Geolocation]
+      imports: [IonicModule.forRoot(),  IonicStorageModule.forRoot(), RouterModule.forRoot([])],
+      providers: [Geolocation, { provide: APP_BASE_HREF, useValue : '/' } ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(DirectionsComponent);

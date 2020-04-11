@@ -51,6 +51,9 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   //Loads the new route page, and sends the destination address to the direction component
   LoadNewRoute(page:string, address: string) 
   {
+    this.storage.ready().then(() => {
+      this.storage.set('newRouteDest', address);
+    });
     this.sharedService.changeMessage(address)
     this.navCtrl.navigateRoot(page); //Loads new route page
   }

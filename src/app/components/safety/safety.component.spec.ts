@@ -1,8 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import {Storage} from '@ionic/storage';
 import { SafetyComponent } from './safety.component';
 import {By} from '@angular/platform-browser';
+import {autoSpy} from '../../../../auto-spy';
+import { IonicStorageModule } from '@ionic/storage';
 
 
 describe('SafetyComponent', () => {
@@ -13,7 +15,7 @@ describe('SafetyComponent', () => {
     const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ SafetyComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), IonicStorageModule.forRoot()  ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SafetyComponent);
@@ -66,12 +68,13 @@ describe('SafetyComponent', () => {
 });
 
 function setup() {
+  const storage = autoSpy(Storage);
     const builder = {
         default() {
             return builder;
         },
         build() {
-            return new SafetyComponent();
+            return new SafetyComponent(storage);
         }
     };
     return builder;

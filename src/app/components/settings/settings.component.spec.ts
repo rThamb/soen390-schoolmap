@@ -7,7 +7,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import {By} from '@angular/platform-browser';
 import {autoSpy} from '../../../../auto-spy';
 import {NavController} from '@ionic/angular';
-
+import {Location} from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -18,7 +19,7 @@ const a = setup().default();
 TestBed.configureTestingModule({
       declarations: [ SettingsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicStorageModule.forRoot(), IonicModule.forRoot()]
+      imports: [IonicStorageModule.forRoot(), IonicModule.forRoot(), RouterModule.forRoot([])]
 
     }).compileComponents();
 

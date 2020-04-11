@@ -30,23 +30,21 @@ describe('EventComponent', () => {
 
   it('should show the alert button', () => {
     const de = fixture.debugElement.query(By.css('.alert'));
-    expect(de.nativeElement.textContent).toContain('any access to the University will be forbidden');
+    expect(de.nativeElement.textContent).toContain('COVID-19 alert!');
       });
 
   it('should show information of the page', () => {
     const de = fixture.debugElement.query(By.css('.info'));
-    expect(de.nativeElement.textContent).toContain('COVID - 19 alert!');
+    expect(de.nativeElement.textContent).toContain('Please note that any access to the University');
       });
 
-  /*it('should have a clickable button to concordias COVID19 website', async(() => {
-      spyOn(component, 'LoadNewPage');
-      const button = fixture.debugElement.nativeElement.querySelector('ion-fab-button');
+  it('should have a clickable button to concordias COVID19 website', async(() => {
+      const button = fixture.debugElement.nativeElement.querySelector('link');
       button.click();
-
       fixture.whenStable().then(() => {
-          expect(component.LoadNewPage).toHaveBeenCalledWith('/NewRoute');
-        });
-      }));*/
+        expect(location.href).toBe('http://www.concordia.ca/covid19info.html?utm_source=vanity&utm_campaign=covid19');
+       });
+      }));
 
 
 });

@@ -27,8 +27,8 @@ import {LocalNotifications} from '@ionic-native/local-notifications/ngx'
 
 //Component imports
 import { AboutUsComponent } from './components/about-us/about-us.component';
-import { HistoryComponent } from './components/history/history.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
+import { HistoryComponent } from './components/history/history.component';
 import { GoButtonComponent } from './components/go-button/go-button.component';
 import { HomeSearchComponent } from './components/home-search/home-search.component';
 import { MapComponent } from './components/map/map.component';
@@ -56,9 +56,10 @@ import { EventComponent } from './components/event/event.component';
 
 @NgModule({
 
-  declarations: [FavoritesComponent, AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
-                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, HistoryComponent,
-                ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent,NotificationsComponent,EventComponent,ScheduleComponent, NearbyPointsOfInterestComponent],
+  declarations: [AppComponent, MapComponent, GoButtonComponent, HomeComponent, HomeSearchComponent, MenubarComponent, 
+                ToggleComponent, LocateMeComponent, NewRouteComponent, AboutUsComponent, HistoryComponent, FavoritesComponent,
+                ReportIssuesComponent, SafetyComponent, SettingsComponent, ShuttleBusScheduleComponent, DirectionsComponent,
+                NotificationsComponent,EventComponent,ScheduleComponent, NearbyPointsOfInterestComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
   imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule ,IonicStorageModule.forRoot({      name: 'appDB',

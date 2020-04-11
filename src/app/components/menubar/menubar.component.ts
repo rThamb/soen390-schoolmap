@@ -29,7 +29,7 @@ export class MenubarComponent implements OnInit {
 
   // MenuBar Methods
   openFirst() {
-    
+
     this.menu.enable(true, 'first');
     this.menu.open('first');
   }
@@ -43,20 +43,18 @@ export class MenubarComponent implements OnInit {
     this.menu.open('custom');
   }
 
-  async languageSet()
-  {
-    console.log("languageSet called");
-    let res = await fetch("./assets/Languages/language.json");
-    let json = await res.json();
+  async languageSet() {
+    console.log('languageSet called');
+    const res = await fetch('./assets/Languages/language.json');
+    const json = await res.json();
 
-    //check if language is english with storage
+    // check if language is english with storage
     this.storage.ready().then(() => {
 
-      this.storage.get('languagePreference').then((lP)=> {
+      this.storage.get('languagePreference').then((lP) => {
 
       // If no setting has been set, default is english
-      if(lP == null)
-      {
+      if (lP == null) {
         lP = 'English';
         this.storage.set('languagePreference', 'English');
       }
@@ -94,12 +92,12 @@ export class MenubarComponent implements OnInit {
 
     });
 
-    })
+    });
   }
 
 
   ngOnInit() {
-    
+
   }
 
 }
