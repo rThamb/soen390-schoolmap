@@ -6,7 +6,7 @@ import { MenubarComponent } from './menubar.component';
 import {By} from '@angular/platform-browser';
 import { IonicStorageModule } from '@ionic/storage';
 
-fdescribe('MenubarComponent', () => {
+describe('MenubarComponent', () => {
   let component: MenubarComponent;
   let fixture: ComponentFixture<MenubarComponent>;
 
