@@ -6,6 +6,7 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { IonicStorageModule } from '@ionic/storage';
 import {By} from '@angular/platform-browser';
 import {autoSpy} from '../../../../auto-spy';
+import {NavController} from '@ionic/angular';
 
 
 describe('SettingsComponent', () => {
@@ -88,13 +89,14 @@ fixture.detectChanges();
 
 function setup() {
     const storage = autoSpy(Storage);
+    const navCtrl = autoSpy(NavController);
     const builder = {
         storage,
         default() {
             return builder;
         },
         build() {
-            return new SettingsComponent( storage );
+            return new SettingsComponent( storage, navCtrl );
         }
     };
     return builder;

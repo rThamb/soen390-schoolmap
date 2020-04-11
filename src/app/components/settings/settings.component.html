@@ -3,71 +3,57 @@
 <!--Settings Header-->
   <ion-item lines="full" class="Linescolor">
     <ion-icon name="settings" size="large"></ion-icon>
-    <h2>Settings</h2>
+    <h2 id="settingsTitle">Settings</h2>
   </ion-item>
 
 <!--List of all options in settings menu-->
   <ion-list>
     <ion-item button class="Linescolor" lines="inset">     
-      <ion-label>Language</ion-label>
-      <ion-select value="English">
-        <ion-select-option value="English">English</ion-select-option>
-        <ion-select-option value="French">French</ion-select-option>
+      <ion-label><span id="settingsLanguage">Language</span></ion-label>
+      <ion-select (ionChange)="onChangeSetting('languagePreference', languagePreference); translatePage()" [(ngModel)]="languagePreference" >
+        <ion-select-option value="English"><span id="optionL1">English</span></ion-select-option>
+        <ion-select-option value="French"><span id="optionL2">French</span></ion-select-option>
       </ion-select>
-    </ion-item>
-
-    <ion-item button class="Linescolor">
-      Preferences
     </ion-item>
 
 <!--Accessibility should toggle other options when toggled-->
     <ion-item  class="Linescolor">
       <ion-icon name="body"></ion-icon> 
-        Accessibility
+        <span id="settingsAccessibility">Accessibility</span> 
       <ion-label>
         <!-- <ion-toggle class="alignright"></ion-toggle> -->
       </ion-label>
     </ion-item>
 
-<!--Accessibility Options-->
+    <!--List of all options in settings menu-->
     <ion-list>
-
       <ion-item class="NestedList">
-        Elevators
+        <span id="settingsElevators">Elevators</span>
         <ion-label>
           <ion-toggle class="alignright" (ionChange)="onChangeSetting('useElevator', useElevator)" [(ngModel)]="useElevator"></ion-toggle>
           </ion-label>
       </ion-item>
 
       <ion-item class="NestedList">
-        Stairs
+        <span id="settingsStairs">Stairs</span>
         <ion-label>
           <ion-toggle class="alignright" (ionChange)="onChangeSetting('useStairs', useStairs)" [(ngModel)]="useStairs"></ion-toggle>
           </ion-label>
       </ion-item>
 
       <ion-item class="NestedList">
-        Escalators
+        <span id="settingsEscalators">Escalators</span>
         <ion-label>
           <ion-toggle class="alignright" (ionChange)="onChangeSetting('useEscalator', useEscalator)" [(ngModel)]="useEscalator"></ion-toggle>
         </ion-label>
       </ion-item>
 
+    <ion-item button class="Linescolor" (click)="LoadNewPage('/Notifications')">
+      <span id="settingsNotifications">Notifications</span>
+    </ion-item>
+
+        </ion-list>
+
     </ion-list>
 
-    <ion-item class="Linescolor">
-      Google Calendar Sync
-      <ion-label>
-        <ion-toggle class="alignright" (ionChange)="onChangeSetting('useGoogleCalendarSync', useGoogleCalendarSync)" [(ngModel)]="useGoogleCalendarSync"></ion-toggle>
-      </ion-label>
-    </ion-item>
-
-    <ion-item button class="Linescolor">
-      Notifications
-    </ion-item>
-
-  </ion-list>
-
 </div>
-
-

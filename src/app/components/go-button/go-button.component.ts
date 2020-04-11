@@ -12,8 +12,8 @@ export class GoButtonComponent implements OnInit {
     public navCtrl: NavController
   ) {}
 
-  //Method allows user to navigate to New Route
-  LoadNewPage(page:string): void {
+  // Method allows user to navigate to New Route
+  LoadNewPage(page: string): void {
     this.navCtrl.navigateRoot(page);
   }
 

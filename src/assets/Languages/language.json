@@ -1,0 +1,144 @@
+{
+  "english": {
+    "aboutUs": {
+        "info": "This app is developed by the ConcordiaGo team with the goal of helping new Concordia students to navigate through the campus as well as providing them with the location of their points of interest."
+    },
+    "directions": {
+        "getDirBtn": "Get Directions",
+        "clearBtn": "Clear Directions"
+    },
+    "menubar": {
+          "title": "Main Menu",
+          "home": "Home",
+          "newRoute": "New Route",
+          "favorites": "Favorites",
+          "shuttleBusSchedule":"Shuttle Bus Schedule",
+          "mySchedule": "My Schedule",
+          "nearbyPOI": "Nearby Points Of Interest",
+          "settings": "Settings",
+          "safety": "Saftey",
+          "reportAnIssue": "Report An Issue",
+          "aboutUs": "About Us"
+    },
+    "placeholders": {
+        "homeSearch": "Search",
+        "start": "Start",
+        "destination": "Destination",
+        "email": "E-mail",
+        "subject": "Subjet",
+        "message": "Message"
+    },
+    "report": {
+        "title": "Report an Issue",
+        "description": "Please, describe the issue you’ve encountered in detail, so our technical team could have all the relevant information to solve your problem.",
+        "submit": "Submit"
+    },
+    "safety": {
+        "title": "WE CARE ABOUT YOUR SAFETY",
+        "emergencyNum": "Emergency numbers:",
+        "text1": "Please call Security at ",
+        "text2": " or ",
+        "text3": ", ext. 3717 before calling 911 ; These agents are trained to rapidly respond to your needs and provide critical services. They will connect you with 911, if needed, saving valuable time.",
+        "option1": "SafeWalk Program",
+        "option2": "Assault, Sexual Violence & Harassment",
+        "option3": "Injury",
+        "option4": "Theft",
+        "option5": "Hazardous material spill/accident"
+    },
+    "schedule": {
+        "email": "E-mail: ",
+        "event": "Upcoming classes / Events:"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": "Language",
+        "optionL1": "English",
+        "optionL2": "French",
+        "preferences": "Preferences",
+        "accessibility": "Accessibility",
+        "elevators": "Elevators",
+        "stairs": "Stairs",
+        "escalators": "Escalators",
+        "google": "Google Calendar Sync",
+        "notif": "Notifications"
+    },
+    "shuttle": {
+        "monToThur":"Monday to Thursday bus schedule",
+        "depLoy": "Departure from Loyola",
+        "depSGW": "Departure from SGW",
+        "friday": "Friday bus schedule"
+    } 
+  },
+
+  "french": {
+    "aboutUs": {
+        "info": "Cette application est développée par l'équipe ConcordiaGo dans le but d'aider les nouveaux étudiants de Concordia à naviguer sur le campus ainsi que de leur fournir l'emplacement de leurs points d'intérêt."
+    },
+    "directions": {
+        "getDirBtn": "Obtien l'Itinéraire",
+        "clearBtn": "Retirer les Directions"
+    },
+    "menubar": {
+        "title": "Menu Principal",
+        "home": "Accueil",
+        "newRoute": "Nouvelle Route",
+        "favorites": "Favoris",
+        "shuttleBusSchedule": "Horaire Des Navettes",
+        "mySchedule": "Mon Horaire",
+        "nearbyPOI": "Points d'Intérêt à Proximité",
+        "settings": "Paramètres",
+        "safety": "Sécurité",
+        "reportAnIssue": "Signalez un Problème",
+        "aboutUs": "À Propos de Nous"
+    },
+    "placeholders": {
+        "homeSearch": "Rechercher",
+        "start": "Début",
+        "destination": "Destination",
+        "email": "Courriel",
+        "subject": "Sujet",
+        "message": "Message"
+    },
+    "report": {
+        "title": "Signalez un Problème",
+        "description": "Veuillez décrire en détail le problème que vous avez rencontré, afin que notre équipe technique puisse disposer de toutes les informations utiles pour résoudre votre problème.",
+        "submit": "Envoyer"
+    },
+    "safety": {
+        "title": "NOUS PENSONS À VOTRE SÉCURITÉ",
+        "emergencyNum": "Numéros d'Urgence:",
+        "text1": "Veuillez appeler la sécurité au ",
+        "text2": " ou ",
+        "text3": ", ext. 3717 avant d'appeler le 911; Ces agents sont formés pour répondre rapidement à vos besoins et fournir des services essentiels. Ils vous connecteront au 911, si nécessaire, vous faisant gagner du temps précieux.",
+        "option1": "Programme 'SafeWalk'",
+        "option2": "Agression, violence sexuelle et harcèlement",
+        "option3": "Blessure",
+        "option4": "Vol",
+        "option5": "Déversement / accident de matières dangereuses"
+
+    },
+    "schedule": {
+        "email": "Courriel: ",
+        "event": "Classes / événements à venir:"
+    },
+    "settings": {
+        "title": "Paramètres",
+        "language": "Langue",
+        "optionL1": "Anglais",
+        "optionL2": "Français",
+        "preferences": "Préférences",
+        "accessibility": "Accessibilité",
+        "elevators": "Ascenseurs",
+        "stairs": "Escaliers",
+        "escalators": "Escaliers mécaniques",
+        "google": "Google Agenda Sync",
+        "notif": "Notifications"
+    },
+    "shuttle": {
+        "monToThur":"Horaires du Lundi au Jeudi",
+        "depLoy": "Départ de Loyola",
+        "depSGW": "Départ de SGW",
+        "friday": "Horaire du Vendredi"
+    }
+  }
+}

@@ -9,7 +9,7 @@
   </ion-buttons>
   
   </ion-toolbar>
-  <h3 class="monday">Monday to Thursday bus schedule</h3>
+  <h3 id="textMonToThur" class="monday">Monday to Thursday bus schedule</h3>
   
   
     
@@ -20,24 +20,24 @@
   [rowHeight]="'auto'"
   [headerHeight]="50"
   [columnMode]="'force'">
-  <ngx-datatable-column name="Departure from Loyola"
+  <ngx-datatable-column id="textDepLoy1" name="Departure from Loyola"
                         prop="loym"
                         [sortable]="false"></ngx-datatable-column>
-  <ngx-datatable-column name="Departure from SGW"
+  <ngx-datatable-column id="textDepSGW1" name="Departure from SGW"
                         prop="sgwm"
                         [sortable]="false"></ngx-datatable-column>
     </ngx-datatable>
-  <h3 class="friday">Friday bus schedule</h3>
+  <h3 id="textFriday" class="friday">Friday bus schedule</h3>
   <ngx-datatable
   [rows]="arr1"
   [ngClass]="tableStyle"
   [rowHeight]="'auto'"
   [headerHeight]="50"
   [columnMode]="'force'">
-  <ngx-datatable-column name="Departure from Loyola"
+  <ngx-datatable-column id="textDepLoy2" name="Departure from Loyola"
                         prop="loyf"
                         [sortable]="false"></ngx-datatable-column>
-  <ngx-datatable-column name="Departure from SGW"
+  <ngx-datatable-column id="textDepSGW2" name="Departure from SGW"
                         prop="sgwf"
                         [sortable]="false"></ngx-datatable-column>
   
