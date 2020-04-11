@@ -38,12 +38,10 @@ fixture.detectChanges();
     const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Settings');
     expect(de.nativeElement.textContent).toContain('Language');
-    expect(de.nativeElement.textContent).toContain('Preferences');
     expect(de.nativeElement.textContent).toContain('Accessibility');
     expect(de.nativeElement.textContent).toContain('Elevators');
     expect(de.nativeElement.textContent).toContain('Stairs');
     expect(de.nativeElement.textContent).toContain('Escalators');
-    expect(de.nativeElement.textContent).toContain('Calendar');
     expect(de.nativeElement.textContent).toContain('Notifications');
   });
 
