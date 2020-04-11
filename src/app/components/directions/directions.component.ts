@@ -63,7 +63,7 @@ export class DirectionsComponent{
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
         console.log('Value:' + value);
-        if(value != null || value != undefined || value != '')
+        if(value != null && value != undefined || value != '')
         {
           this.directions['destination'] = value;
           storage.set('newRouteDest', null); //Inside "direction"
@@ -98,8 +98,6 @@ export class DirectionsComponent{
       }
     });
 
-    //Set the destination as the address of the poi
-    this.setDestination(this.address)
   }
 
   toggleFavorite(){
@@ -109,12 +107,6 @@ export class DirectionsComponent{
   ngOnInit() 
   {    
   }  
-
-  //Sets the destination address
-  setDestination(dest: String)
-  {
-    this.testStorage.set('newRouteDest', dest);
-  }
 
   setMap(){
     
