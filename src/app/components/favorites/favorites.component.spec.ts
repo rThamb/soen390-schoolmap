@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { FavoritesComponent } from './favorites.component';
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {IonicStorageModule} from "@ionic/storage";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('FavoritesComponent', () => {
   let component: FavoritesComponent;
@@ -10,7 +13,8 @@ describe('FavoritesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FavoritesComponent ],
-      imports: [IonicModule.forRoot()]
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+      imports: [RouterTestingModule, IonicStorageModule.forRoot(), IonicModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FavoritesComponent);
