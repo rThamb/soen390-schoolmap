@@ -76,6 +76,10 @@ events:any;
     this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
         
       this.events = data;
+<<<<<<< HEAD
+=======
+
+>>>>>>> ef835c021d7411a931149b3267271207bcd5f461
       for(let i = 0; i < this.events.length; i++)
       {
 

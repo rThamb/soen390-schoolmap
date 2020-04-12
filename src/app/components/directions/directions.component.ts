@@ -7,8 +7,6 @@ import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NearbyPointsOfInterestComponent} from '../../components/nearby-points-of-interest/nearby-points-of-interest.component';
-import { SharedService } from '../../services/shared/shared.service';
 
 // models
 import { Building } from '../../models/Building';
@@ -40,8 +38,6 @@ export class DirectionsComponent {
   tripCost = '';
   map: any;
   favorited: boolean = false;
-  private testStorage;
-  private address : string;
 
   // Possible key words that would be searched to get either of the campuses
   sgwCampus = ['concordia', 'concordia university', 'concordia downtown', 'downtown concordia', 'sir george william', 'sir george williams', 'hall building', 'hall', 'concordia montreal', 'montreal concordia', 'H3G 1M8', '1455 boulevard de maisonneuve o', '1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8'];
@@ -54,11 +50,8 @@ export class DirectionsComponent {
               private buildFactoryService: BuildingFactoryService,
               private gpsMapService: GpsGridMappingService,
               private route: ActivatedRoute,
-              private router: Router,
-              private sharedService: SharedService) {
-    this.sharedService.sharedMessage.subscribe(message => this.address = message);
+              private router: Router) {
 
-    this.testStorage = storage;
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
         // console.log(value);
@@ -97,9 +90,6 @@ export class DirectionsComponent {
 
   toggleFavorite() {
     this.favorited = !this.favorited;
-  }
-
-  ngOnInit() {
   }
 
   setMap() {
@@ -233,6 +223,8 @@ export class DirectionsComponent {
     } else {
       return('DRIVING');
     }
+
+    debugger;
   }
 
   displayTravelInfo(response: any) {
@@ -422,7 +414,7 @@ export class DirectionsComponent {
       const clearDirections = document.getElementById('clearDirections');
       clearDirections.style.display = 'block';
 
-      const getDirBtn = document.getElementById('getDirectionBtn');
+      const getDirBtn = document.getElementById('getDirectionsBtn');
       getDirBtn.style.display = 'none';
   }
 
@@ -431,7 +423,7 @@ export class DirectionsComponent {
   clearDirections() {
 
     const directionsForm = document.getElementById('form');
-    const getDirBtn = document.getElementById('getDirectionBtn');
+    const getDirBtn = document.getElementById('getDirectionsBtn');
 
     if (this.directionsRenderer != null) {
       this.directionsRenderer.setMap(null);
@@ -476,7 +468,7 @@ export class DirectionsComponent {
 
     const res = await fetch('./assets/shuttle_bus/departureTimes.json');
     const json = await res.json();
-    const currentDate = new Date('2020-04-08 10:00');
+    const currentDate = new Date();
 
     // Only consider the shuttle bus schedule after 7:15 am on that particular day.
     const timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + ' ' + '7:15');
@@ -718,13 +710,13 @@ export class DirectionsComponent {
         if ( lP === 'English') {
           document.getElementsByName('start')[0].setAttribute('placeholder', json.english.placeholders.start);
           document.getElementsByName('destination')[0].setAttribute('placeholder', json.english.placeholders.destination);
-          document.getElementById('getDirectionsBtn').innerHTML = json.english.directions.getDirBtn;
-          document.getElementById('clearDirBtn').innerHTML = json.english.directions.clearBtn;
+          document.getElementById('getBtnText').innerHTML = json.english.directions.getDirBtn;
+          document.getElementById('getClrText').innerHTML = json.english.directions.clearBtn;
         } else if ( lP === 'French') {
           document.getElementsByName('start')[0].setAttribute('placeholder', json.french.placeholders.start);
           document.getElementsByName('destination')[0].setAttribute('placeholder', json.french.placeholders.destination);
-          document.getElementById('getDirectionsBtn').innerHTML = json.french.directions.getDirBtn;
-          document.getElementById('clearDirBtn').innerHTML = json.french.directions.clearBtn;
+          document.getElementById('getBtnText').innerHTML = json.french.directions.getDirBtn;
+          document.getElementById('getClrText').innerHTML = json.french.directions.clearBtn;
         }
 
 
