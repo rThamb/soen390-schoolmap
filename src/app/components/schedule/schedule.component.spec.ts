@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ScheduleComponent } from './schedule.component';
 import {autoSpy} from "../../../../auto-spy";
+import { HTTP } from '@ionic-native/http/ngx';
 
 describe('ScheduleComponent', () => {
   let component: ScheduleComponent;
@@ -16,7 +17,7 @@ const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ ScheduleComponent ],
       imports: [IonicModule.forRoot()]
-    }).configureTestingModule({ providers: [{ provide: HttpClient, useValue: a.http },
+    }).configureTestingModule({ providers: [{ provide: HTTP, useValue: a.http },
             { provide: Storage, useValue: a.storage },
             { provide: NavController, useValue: a.navCtrl }] }).compileComponents();
 
@@ -32,7 +33,7 @@ const a = setup().default();
 });
 
 function setup() {
-    const http = autoSpy(HttpClient);
+    const http = autoSpy(HTTP);
         const storage = autoSpy(Storage);
         const navCtrl = autoSpy(NavController);
         const builder = {

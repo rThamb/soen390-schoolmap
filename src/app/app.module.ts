@@ -48,7 +48,7 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {IonicStorageModule} from '@ionic/storage';
 import { EventComponent } from './components/event/event.component';
-
+import { HTTP } from '@ionic-native/http/ngx';
 
 
 
@@ -76,7 +76,8 @@ import { EventComponent } from './components/event/event.component';
     BuildingFactoryService,
     EmailComposer,
     SharedService,
-    LocalNotifications
+    LocalNotifications,
+    HTTP
   ],
   bootstrap: [AppComponent]
 })
