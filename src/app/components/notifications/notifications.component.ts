@@ -93,6 +93,7 @@ notifs = [];
         }
 
         let notif = {
+          id: i,
           title: this.events[i].summary,
           text: 'You have an upcoming event in ' + this.timesel +' minutes',
           trigger: { in: (5*(i+1)), unit: ELocalNotificationTriggerUnit.SECOND },
