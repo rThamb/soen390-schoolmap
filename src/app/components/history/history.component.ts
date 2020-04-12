@@ -12,7 +12,7 @@ export class HistoryComponent implements OnInit {
   historyDates = []
   historyLocations = []
   historyDisplay: any = {}
-  clearBtn = "";
+  clearBtn = "Clear History";
   constructor(private storage: Storage, private historyService: HistoryService) { }
 
   ngOnInit() {
@@ -111,20 +111,22 @@ export class HistoryComponent implements OnInit {
   }
 
   //Clear the current search history
-  async clearHistory() {
-    let lang = await this.storage.get('languagePreference').catch((error) => {
+  clearHistory() {
+    /*let lang = await this.storage.get('languagePreference').catch((error) => {
       console.log('Error getting history', error);
     });
-
-    if(lang == 'French')
+    */
+    let lang = 'English';
+    if(lang == 'French'){
       if (confirm("Voulez-vous effacer votre historique de recherche?") == true) {
         // this.storage.remove('history')
         // this.ngOnInit()
       }
-    else
+    }else{
       if (confirm("Are you sure you would like to clear your search history?") == true) {
         // this.storage.remove('history')
         // this.ngOnInit()
       }
+    }
   }
 }
