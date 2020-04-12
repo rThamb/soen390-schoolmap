@@ -12,6 +12,7 @@ export class HistoryComponent implements OnInit {
   historyDates = []
   historyLocations = []
   historyDisplay: any = {}
+  clearBtn = "";
   constructor(private storage: Storage, private historyService: HistoryService) { }
 
   ngOnInit() {
@@ -22,6 +23,7 @@ export class HistoryComponent implements OnInit {
       else {
         let history = JSON.parse(hist)
         let numDates = (history["dates"].length) - 1
+        this.setClearBtn()
 
         while(numDates != -1) {
           this.createHistory(numDates)
@@ -35,8 +37,17 @@ export class HistoryComponent implements OnInit {
   getDate(): string {
     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     let currentDate  = new Date().toLocaleDateString("en-US", options);
+
+    console.log(new Date().toLocaleDateString("fr-CA", options))
     
     return currentDate
+  }
+
+  getFrenchDate(engDate: string): string {
+    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    let tempDate = new Date(engDate)
+    
+    return tempDate.toLocaleDateString("fr-CA", options)
   }
 
   /*
@@ -47,8 +58,23 @@ export class HistoryComponent implements OnInit {
   *
   */
 
+  async setClearBtn(){
+    let lang = await this.storage.get('languagePreference').catch((error) => {
+      console.log('Error getting history', error);
+    });
+
+    if(lang == 'French')
+      this.clearBtn = "Effacer Historique"
+    else
+      this.clearBtn = "Clear History"
+  }
+
   async createHistory(index:number){
     let history = await this.storage.get('history').catch((error) => {
+      console.log('Error getting history', error);
+    });
+
+    let lang = await this.storage.get('languagePreference').catch((error) => {
       console.log('Error getting history', error);
     });
 
@@ -58,22 +84,47 @@ export class HistoryComponent implements OnInit {
   
     let date = Object.keys(history["dates"][index])[0]
     let locationsIndex = history["dates"][index][date].length
-    this.historyDates.push(date)
-    
+
+    if(lang == 'French')
+      this.historyDates.push(this.getFrenchDate(date))
+    else
+      this.historyDates.push(date)
+
     for(var j = locationsIndex - 1; j >= 0; j--){
       let start = history["dates"][index][date][j].Start
       let dest = history["dates"][index][date][j].Destinations
-      let location = "Start: <strong>" + start + "</strong><br />Destination: <strong>" + dest +"</strong>"
+      let location;
+
+      if(lang == 'French')
+        location = "Départ: <strong>" + start + "</strong><br />Destination: <strong>" + dest +"</strong>"
+      else
+        location = "Start: <strong>" + start + "</strong><br />Destination: <strong>" + dest +"</strong>"
+
       this.historyLocations.push(location)
     }
-    this.historyDisplay[date] = this.historyLocations
+
+    if(lang == 'French')
+      this.historyDisplay[this.getFrenchDate(date)] = this.historyLocations
+    else
+      this.historyDisplay[date] = this.historyLocations
+    
   }
 
   //Clear the current search history
-  clearHistory() {
-    if (confirm("Are you sure you would like to clear your search history?") == true) {
-      // this.storage.remove('history')
-      // this.ngOnInit()
-		}
+  async clearHistory() {
+    let lang = await this.storage.get('languagePreference').catch((error) => {
+      console.log('Error getting history', error);
+    });
+
+    if(lang == 'French')
+      if (confirm("Voulez-vous effacer votre historique de recherche?") == true) {
+        // this.storage.remove('history')
+        // this.ngOnInit()
+      }
+    else
+      if (confirm("Are you sure you would like to clear your search history?") == true) {
+        // this.storage.remove('history')
+        // this.ngOnInit()
+      }
   }
 }

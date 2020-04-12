@@ -91,13 +91,34 @@ export class ScheduleComponent implements OnInit {
       if( lP === 'English')
       {
         document.getElementById("email").innerHTML = json.english.schedule.email;
-        document.getElementById("event").innerHTML = json.english.schedule.event;
+        document.getElementById("date").innerHTML = json.english.schedule.date;
+        document.getElementById("upcoming").innerHTML = json.english.schedule.event;
+        for (var i=0; i < document.getElementsByClassName("eventStart").length; i++)
+        {
+          document.getElementsByClassName("eventStart")[i].innerHTML = json.english.schedule.start;
+        }
+        for (var i=0; i < document.getElementsByClassName("eventEnd").length; i++)
+        {
+          document.getElementsByClassName("eventEnd")[i].innerHTML = json.english.schedule.end;
+        }
       }
       //check if language is french with storage
       else if (lP == 'French')
       {
         document.getElementById("email").innerHTML = json.french.schedule.email;
-        document.getElementById("event").innerHTML = json.french.schedule.event;
+        document.getElementById("date").innerHTML = json.french.schedule.date;
+        document.getElementById("upcoming").innerHTML = json.french.schedule.event;
+        console.log(document.getElementsByClassName("eventStart").length);
+        var len = document.getElementsByClassName("eventStart");
+        console.log(len.length);
+        for (var i=0; i < document.getElementsByClassName("eventStart").length; i++)
+        {
+          document.getElementsByClassName("eventStart")[i].innerHTML = json.french.schedule.start;
+        }
+        for (var i=0; i < document.getElementsByClassName("eventEnd").length; i++)
+        {
+          document.getElementsByClassName("eventEnd")[i].innerHTML = json.french.schedule.end;
+        }
       }
 
     });

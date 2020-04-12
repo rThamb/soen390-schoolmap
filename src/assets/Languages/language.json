@@ -52,7 +52,10 @@
         },
         "schedule": {
             "email": "E-mail: ",
-            "event": "Upcoming classes / Events:"
+            "date": "Today: ",
+            "event": "Upcoming classes / Events:",
+            "start":"Start: ",
+            "end":"End: "
         },
         "settings": {
             "title": "Settings",
@@ -131,7 +134,10 @@
         },
         "schedule": {
             "email": "Courriel: ",
-            "event": "Classes / événements à venir:"
+            "date": "Aujourd'hui: ",
+            "event": "Cours / événements à venir:",
+            "start":"Debut: ",
+            "end":"Fin: "
         },
         "settings": {
             "title": "Paramètres",
