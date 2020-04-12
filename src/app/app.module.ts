@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -61,7 +60,7 @@ import { HTTP } from '@ionic-native/http/ngx';
                 NotificationsComponent,EventComponent,ScheduleComponent, NearbyPointsOfInterestComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule ,IonicStorageModule.forRoot({      name: 'appDB',
+  imports: [ BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule ,IonicStorageModule.forRoot({      name: 'appDB',
   driverOrder: ['sqlite', 'websql', 'indexeddb']})],
   providers: [
     StatusBar,
@@ -76,7 +75,6 @@ import { HTTP } from '@ionic-native/http/ngx';
     EmailComposer,
     LocalNotifications,
     HTTP
-  
   ],
   bootstrap: [AppComponent]
 })
