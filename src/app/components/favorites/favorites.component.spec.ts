@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { IonicModule } from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import { FavoritesComponent } from './favorites.component';
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
-import {IonicStorageModule} from "@ionic/storage";
-import {RouterTestingModule} from "@angular/router/testing";
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {IonicStorageModule} from '@ionic/storage';
+import {RouterTestingModule} from '@angular/router/testing';
 import { Router, NavigationExtras } from '@angular/router';
 import { By } from '@angular/platform-browser';
 
@@ -34,32 +34,33 @@ describe('FavoritesComponent', () => {
   });
 
   it('when addFavorite is called it should add a new item to storage', () => {
-    component.favorite = "concordia loyola";
+    component.favorite = 'concordia loyola';
     component.addFavorite();
     component.getFavorites();
-    let storage = TestBed.get(Storage);
+    const storage = TestBed.get(Storage);
     let result;
     storage.ready().then(() => {
       result = storage.get('favorites');
-      console.log(result)
+      console.log(result);
     });
-    if(result) 
-      expect(result).toContain("concordia loyola");
-    else
+    if (result) {
+      expect(result).toContain('concordia loyola');
+    } else {
       expect(result).toBeFalsy();
+    }
   });
 
   it('when deleteFavorite is called it should prompt a confimation message', () => {
     spyOn(window, 'confirm');
-    component.deleteFavorite("concordia loyola");
-    expect(window.confirm).toHaveBeenCalled() 
+    component.deleteFavorite('concordia loyola');
+    expect(window.confirm).toHaveBeenCalled();
   });
 
   it('when openNewRouteWithDestination is called it should redirect to NewRoute with argument', async(inject([Router], (router) => {
     spyOn(router, 'navigate');
-    component.openNewRouteWithDestination("concordia university")
-    let directions = {destination: "concordia university"}
-    let navigationExtras: NavigationExtras = {
+    component.openNewRouteWithDestination('concordia university');
+    const directions = {destination: 'concordia university'};
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         special: JSON.stringify(directions)
       }

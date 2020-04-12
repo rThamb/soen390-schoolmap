@@ -1,49 +1,41 @@
-import { UserSettings } from './UserSettings'
-import { UserSchedule } from './UserSchedule'
-import {Location} from './Location'
+import { UserSettings } from './UserSettings';
+import { UserSchedule } from './UserSchedule';
+import {Location} from './Location';
 
 /**
- * Class responsible for holding information regarding the User that needs to be accessed during runtime 
+ * Class responsible for holding information regarding the User that needs to be accessed during runtime
  */
-export class User
-{
-    private location: Location
+export class User {
+    private location: Location;
     private settings: UserSettings;
     private schedule: UserSchedule;
 
-    constructor()
-    {
+    constructor() {
         this.settings = new UserSettings();
         this.schedule = new UserSchedule();
     }
 
-    public getSettings()
-    {
+    public getSettings() {
         return this.settings;
     }
 
-    public setSettings(s: UserSettings)
-    {
+    public setSettings(s: UserSettings) {
         this.settings = s;
     }
 
-    public getSchedule()
-    {
+    public getSchedule() {
         return this.schedule;
     }
 
-    public setSchedule(s: UserSchedule)
-    {
+    public setSchedule(s: UserSchedule) {
         this.schedule = s;
     }
 
-    public getLocation()
-    {
+    public getLocation() {
         return this.location;
     }
 
-    public setLocation(l: Location)
-    {
+    public setLocation(l: Location) {
         this.location = l;
     }
 }
