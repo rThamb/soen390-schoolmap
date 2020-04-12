@@ -76,7 +76,7 @@ events:any;
         
       this.events = data;
 
-      for(let i = 0; i < this.events.length; i++)
+      for(let i = (this.events.length-1); i >=0; i--)
       {
 
         let eventDate = Date.parse(this.events[i].start.dateTime);
@@ -85,13 +85,17 @@ events:any;
         console.log(eventDate);
         console.log(todayDate);
         console.log(eventDate/1000 - todayDate/1000 - this.timesel*60)
-
+        var eventTrigger = eventDate/1000 - todayDate/1000 - this.timesel*60;
+        if(eventTrigger <= 0)
+        {
+          eventTrigger = 1;
+        }
 
         this.localNotification.schedule({
           
           title: this.events[i].summary,
-          text: 'You have this event after ' + this.timesel +' minutes',
-          trigger: { in: (eventDate/1000 - todayDate/1000 - this.timesel*60), unit: ELocalNotificationTriggerUnit.SECOND },
+          text: 'You have an upcoming event in ' + this.timesel +' minutes',
+          trigger: { in: (5*(i+1)), unit: ELocalNotificationTriggerUnit.SECOND },
           vibrate:true,
           foreground:true
         });
