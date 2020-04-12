@@ -15,14 +15,14 @@
   <!--Today's Date-->
     <ion-card>
       <ion-card-header>
-        <ion-label>Date: {{today | date: 'dd/MM/yyyy' }}</ion-label>
+        <ion-label><span id="date">Date: </span> {{today | date: 'dd/MM/yyyy' }}</ion-label>
       </ion-card-header>
     </ion-card>
   
   <!--Title for the list of events-->
       <ion-card>
         <ion-item>
-          <ion-label><span id="event">Upcoming classes/ Events:</span></ion-label>
+          <ion-label><span id="upcoming">Upcoming classes/ Events:</span></ion-label>
         </ion-item>
       </ion-card>
   
@@ -31,12 +31,12 @@
     <ion-card>
         <ion-card-header>
             <ion-label>{{ event.summary }}</ion-label>
-            <ion-label class="alignright">Start: {{ event.start.dateTime }} {{ event.start.date }}</ion-label>
+            <ion-label class="alignright"><span class="eventStart"></span>{{ event.start.dateTime }} {{ event.start.date }}</ion-label>
         </ion-card-header>
     
         <ion-card-content class="adjust">
           <ion-label>{{ event.location }}</ion-label>
-          <ion-label class="alignright">End: {{ event.end.dateTime }} {{ event.end.date }}</ion-label>
+          <ion-label class="alignright"><span class="eventEnd">End: </span>{{ event.end.dateTime }} {{ event.end.date }}</ion-label>
         </ion-card-content>
       </ion-card>
     </div>
