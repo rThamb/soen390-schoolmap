@@ -31,7 +31,7 @@ TestBed.configureTestingModule({
       declarations: [ MapComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [Geolocation, IndoorPathingService, ReadGridService, BuildingFactoryService, MapComponent],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule]
     }).configureTestingModule({ providers: [{ provide: MapService, useValue: a.mapService },
             { provide: BuildingFactoryService, useValue: a.buildingFactory }] }).compileComponents();
 
@@ -402,6 +402,11 @@ fixture.detectChanges();
     // assert
     expect(c.quitIndoorMode).toHaveBeenCalled();
 });
+
+
+    // it('IndoorView should work', () => {
+    //   expect(component.indoorView("", "", "", "", "HB", true)).toBeTruthy();
+    // });
 
 });
 

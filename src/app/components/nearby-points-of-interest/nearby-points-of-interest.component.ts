@@ -3,6 +3,8 @@ import { NavController } from '@ionic/angular';
 import { MapComponent} from '../../components/map/map.component'
 import {MapService} from '../../services/map/map.service';
 import {Storage} from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 declare var google
 
@@ -25,9 +27,8 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   private bankType = "bank";
   private clothesType = "clothing_store";
   private hospitalType = "hospital";
-  private message: string;
 
-  constructor(private storage: Storage, public navCtrl: NavController, private mapSrevice : MapService, ) 
+  constructor(private geolocation: Geolocation, private storage: Storage, public navCtrl: NavController, private mapSrevice : MapService) 
   {
     this.translatePage();
     this.map = this.mapSrevice.getMap();
@@ -58,15 +59,15 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   //Sends a request for a poi type
   nearbyPOI(type: String)
   {
+    let self = this;
+
+    var service = new google.maps.places.PlacesService(this.map);
+
     var request = {
       location: this.mapHandle.getCurrentLocation(),
       types: [type],
       rankBy: google.maps.places.RankBy.DISTANCE
     }
-   
-    var service = new google.maps.places.PlacesService(this.map);
-    
-    let self = this;
     service.nearbySearch(request, function(results, status)
     {
       self.listPOI(results, status, type);

@@ -31,25 +31,22 @@ describe('NearbyPointsOfInterestComponent', () => {
   }));
 
   it('should create', async () => {
-    //component.currentLocation = {lat: 45.497372, lng: -73.578338};
-    //spyOn(mapComponent, 'getCurrentLocation');
-    //let expected = mapComponent.getCurrentLocation();
-    //await mapComponent.getCurrentLocation().then( () => {
       expect(component).toBeTruthy();
-  //});
-
-    
   });
 
-  // it('nearbyPOI should work', () => {
-  //   expect(component.nearbyPOI("test")).toBeTruthy();
-  // });
+  it('nearbyPOI should be called', () => {
+
+    component.nearbyPOI = jasmine.createSpy("nearbyPOI spy");
+    component.ngOnInit();
+    //expect(component.nearbyPOI).toHaveBeenCalled();
+    expect(component.nearbyPOI).toHaveBeenCalledTimes(4);
+  });
 
   it('LoadNewRoute should work', () => {
-    expect(component.LoadNewRoute("NewRoute", "204 Ontario Est")).toBeTruthy();
+    expect(component.LoadNewRoute("NewRoute", "150 Rue Sainte-Catherine Ouest, Montréal")).toBeTruthy();
   });
 
-  it('listPOI should work', () => {
+  it('listPOI ', () => {
     expect(component.listPOI("", "", "restaurant")).toBeFalsy();
   });
 
@@ -57,16 +54,11 @@ describe('NearbyPointsOfInterestComponent', () => {
   //   expect(component.translatePage).toBeTruthy();
   // });
 
+  
+
   it('should return a distance', () => {
     expect(component.calculateDistance("(45.4977417, -73.58028329999999)")).toBeTruthy();
   });
-  
-  // it('ngOnInit should be defined', () => {
-
-  //   component.ngOnInit
-  //    assert
-  //   expect(component).toBeDefined();
-  // });
 
   // it('should contain "Nearby Points of Interest"', () => {
   //   const bannerElement: HTMLElement = fixture.nativeElement;
@@ -79,5 +71,10 @@ describe('NearbyPointsOfInterestComponent', () => {
   //   const paragraphDe = bannerDe.query(By.css('p'));
   //   const p: HTMLElement = paragraphDe.nativeElement;
   //   expect(p.textContent).toEqual('Nearby Points of Interest');
+  // });
+
+  // it('should have Destination in "openButton"', () => {
+  //   const btn = fixture.debugElement.nativeElement.query(By.css('.openButton')).nativeElement;
+  //   expect(btn.innerHTML).toBe('Destination');
   // });
 });

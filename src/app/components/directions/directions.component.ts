@@ -412,7 +412,7 @@ export class DirectionsComponent {
       const clearDirections = document.getElementById('clearDirections');
       clearDirections.style.display = 'block';
 
-      const getDirBtn = document.getElementById('getDirectionBtn');
+      const getDirBtn = document.getElementById('getDirectionsBtn');
       getDirBtn.style.display = 'none';
   }
 
@@ -421,7 +421,7 @@ export class DirectionsComponent {
   clearDirections() {
 
     const directionsForm = document.getElementById('form');
-    const getDirBtn = document.getElementById('getDirectionBtn');
+    const getDirBtn = document.getElementById('getDirectionsBtn');
 
     if (this.directionsRenderer != null) {
       this.directionsRenderer.setMap(null);
