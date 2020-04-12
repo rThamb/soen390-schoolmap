@@ -66,7 +66,6 @@ export class ReadGridService {
       let json = await res.json();
 
       return this.jsonToFloor(json);
-
     }catch(err){
       console.log("Error thrown in Read-Grid.Service line:(61-68)");
       return null;
@@ -104,6 +103,7 @@ export class ReadGridService {
     return floors;
   }
 
+  
   private createTileGrid(grid: number[][]): any{
     let tileGrid: FloorTile[][] = [];
 
@@ -136,14 +136,14 @@ export class ReadGridService {
 
         if(key != "Stairs"){
           let curPoint = poi[key];
-          let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
+          let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key, "",  curPoint["floorNum"]);
           pois.push(obj);
         }
         else{//handle stair POIS differently
           let stairsPois = poi[key]; //an array
           for(let i =0; i < stairsPois.length; i++){
             let curPoint = stairsPois[i];
-            let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key);
+            let obj = new IndoorPOI(curPoint["lat"], curPoint["lng"], curPoint["x"], curPoint["y"], key, "",  curPoint["floorNum"]);
             pois.push(obj);
           }    
         }    
@@ -152,8 +152,8 @@ export class ReadGridService {
   } 
 
   //Loads a Building json file, and returns a dictionary with informations about it
-  async buildingInfo(keyName: string)
-  {
+  async buildingInfo(keyName: string){
+
     let buildingInformation = {}; //Dictionary
 
     try{

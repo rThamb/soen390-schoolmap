@@ -4,7 +4,7 @@ import {User} from './User';
 import {UserSettings} from './UserSettings';
 import {UserSchedule} from './UserSchedule';
 
-fdescribe('User', () => {
+describe('User', () => {
 it('when getSettings is called it should return the user setting that been assigned by setSetting()', (l) => {
 
     // arrange

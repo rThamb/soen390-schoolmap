@@ -223,8 +223,6 @@ export class DirectionsComponent {
     } else {
       return('DRIVING');
     }
-
-    debugger;
   }
 
   displayTravelInfo(response: any) {
@@ -276,18 +274,23 @@ export class DirectionsComponent {
     // this is a reference to the map
     this.setMap();
 
-    const start = this.directions['start'];
+    let start = this.directions['start'];
     const destination = this.directions['destination'];
     const directions = {Start: start, Destinations: destination};
 
-    if (this.useIndoorDirections(start, destination)) {
+    if (await this.useIndoorDirections(start, destination)) {
       this.preformIndoorDirectionsActivity(start, destination, true);
       this.addToHistory(JSON.stringify(directions));
-    } else if ((start === 'My Location' || start === 'Ma Position') && await this.isDestinationCampusPOI(destination)) {
+    } else if ((start === 'My Location' || start === 'Ma Position') && await this.isCampusIndoorPOI(destination)) {
         // indoor and outdoor will only be supported when using user position
         this.useBothIndoorAndOutdoor(destination);
         this.addToHistory(JSON.stringify(directions));
     } else {
+
+      if((start === 'My Location' || start === 'Ma Position')){
+        let loc: Location = await this.gpsMapService.getUserCurrentPosition();
+        start = loc.getLat() + "," + loc.getLng();
+      }
       this.preformOutdoorDirectionsActivity(start, destination);
     }
 
@@ -561,31 +564,14 @@ export class DirectionsComponent {
    * @param start
    * @param dest
    */
-  useIndoorDirections(start: string, dest: string) {
+  async useIndoorDirections(start: string, dest: string){
+    
+    if((start === 'My Location' || start === 'Ma Position'))
+      return false;
 
-    // check if start and end are both 2 classrooms in the same building
-
-    if (start.length === 5 || start.length === 6) {
-      if (dest.length === 5 || dest.length === 6) {
-
-        const startBuildCode = start.substring(0, 2);
-        const startBuildFloor = start.substring(2, start.length - 1);
-        const endBuildCode = dest.substring(0, 2);
-        const endBuildFloor = dest.substring(2, dest.length - 1);
-
-        const cond1 = !this.checkAllNums(startBuildCode);
-        const cond2 = this.checkAllNums(startBuildFloor);
-
-        const cond3 = !this.checkAllNums(endBuildCode);
-        const cond4 = this.checkAllNums(endBuildFloor);
-
-        const cond5 = this.getBuildingCode(start) === this.getBuildingCode(dest);
-
-        return cond1 && cond2 && cond3 && cond4 && cond5;
-      }
-    }
-
-    return false;
+    //check if start and end are both 2 classrooms in the same building
+    let result = await this.isCampusIndoorPOI(start) && await this.isCampusIndoorPOI(dest);
+    return result;
   }
 
 
@@ -593,11 +579,18 @@ export class DirectionsComponent {
    * Checks destination string to determine whether is exists in a concordia campus building.
    * @param dest
    */
-  private async isDestinationCampusPOI(dest: string) {
-    // get building key from des
-    const buildingCode = this.getBuildingCode(dest);
-    const buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
-    return buildingObject != null;
+  private async isCampusIndoorPOI(dest: string){
+    //get building key from des
+    let buildingCode = this.getBuildingCode(dest);
+    let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
+
+    if(buildingObject == null){
+      let building: Building = await this.buildFactoryService.loadBuilding("HB");
+      let poi = building.getIndoorPOIInBuilding(dest);
+      return poi != null;
+    }
+    else
+      return true;
   }
 
   /**
@@ -608,20 +601,28 @@ export class DirectionsComponent {
    * @param userPosition
    * @param dest
    */
-  private async useBothIndoorAndOutdoor(dest: string) {
+  private async useBothIndoorAndOutdoor(dest: string){
+  
+    //get user position
+    let user: Location = await this.gpsMapService.getUserCurrentPosition(); 
 
-    // get user position
-    const user: Location = await this.gpsMapService.getUserCurrentPosition();
+    debugger;
+    //get building key from des
+    let buildingCode = this.getBuildingCode(dest);
+    let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
+    let result = buildingObject != null;
 
-    // get building key from des
-    const buildingCode = this.getBuildingCode(dest);
-    const buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
+    if(!result){
+        buildingObject = await this.buildFactoryService.loadBuilding("HB");
+        result = await buildingObject.getIndoorPOIInBuilding(dest) != null;
+    }
 
-    if (buildingObject != null) {// if not null he wants to go to a valid classroom
-      if (!this.gpsMapService.userInBuilding(user, buildingObject)) {
-        // should pass GoogleLngLat instead, hardcode start for now
-        await this.preformOutdoorDirectionsActivity(user.getLat() + ',' + user.getLng(), buildingObject.getBuildingName());
-        const userIndoorStartLocation = buildingObject.getBuildingLocation();
+    if(result){//if not null he wants to go to a valid classroom
+
+      if(!this.gpsMapService.userInBuilding(user, buildingObject)){
+        //should pass GoogleLngLat instead, hardcode start for now
+        await this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
+        let userIndoorStartLocation = buildingObject.getBuildingLocation();
         this.mapHandle.showHallBuildingIndoor(false);
         // hacky solution, need to set the start location for ground floor when arrived
         this.drawIndoorPath(buildingObject.getBuildingKey() + '800', dest, userIndoorStartLocation);
@@ -639,23 +640,27 @@ export class DirectionsComponent {
    * @param start
    * @param end
    */
-  async drawIndoorPath(start: string, end: string, userPosition: Location) {
+  async drawIndoorPath(start: string, end: string, userPosition: Location){
+    
+    let buildingCode = this.getBuildingCode(start);
+    let floorLevel = this.getFloorNum(start, buildingCode);
 
-    const buildingCode = this.getBuildingCode(start);
-    const floorLevel = this.getFloorNum(start, buildingCode);
-
-    const building: Building = await this.buildFactoryService.loadBuilding(buildingCode);
-    const currentFloor: Floor = building.getFloorLevel(floorLevel + '');
-
+    let building : Building = await this.buildFactoryService.loadBuilding(buildingCode);
+    
+    if(building == null){
+      building = await this.buildFactoryService.loadBuilding("HB");
+      floorLevel = building.getIndoorPOIInBuilding(start).getFloorNum();
+    }
+    
+    let currentFloor: Floor = building.getFloorLevel(floorLevel + "");
     let path = null;
 
     const transition: Transitions = await this.getPreferedTransition();
 
-    if (userPosition == null) {
-      path = this.indoorService.determineRouteClassroomToClassroom(start, end, building, currentFloor, transition);
-    } else {
+    if(userPosition == null)
+      path = this.indoorService.determineRoutePOIToPOI(start, end, building, currentFloor, transition);
+    else
       path = this.indoorService.determineRouteToDestinationBasedOnUserPosition(userPosition, building, currentFloor, end, transition);
-    }
 
     // set transition map
     this.mapHandle.setTransitionsPaths(path);
@@ -724,6 +729,9 @@ export class DirectionsComponent {
     });
   }
 
-
+  private async isIndoorPOI(building: Building,  poiKey: string){
+      let poi = building.getIndoorPOIInBuilding(poiKey);
+      return poi != null;
+  }
 
 }

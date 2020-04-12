@@ -123,4 +123,20 @@ export class Building {
     public getBuildingInfo() {
         return this.buildingInfo;
     }
+
+    public getIndoorPOIInBuilding(key: string): IndoorPOI{
+
+        let floorsKey = Object.keys(this.floors);
+
+        for(let i = 0; i < floorsKey.length; i++){
+
+            let curFloor: Floor = this.floors[floorsKey[i]];
+            let poi: IndoorPOI = curFloor.getPOI(key);
+
+            if(poi != null)
+                return poi;
+        }
+
+        return null;
+    }
 }
