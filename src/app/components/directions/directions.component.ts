@@ -274,7 +274,7 @@ export class DirectionsComponent {
     // this is a reference to the map
     this.setMap();
 
-    const start = this.directions['start'];
+    let start = this.directions['start'];
     const destination = this.directions['destination'];
     const directions = {Start: start, Destinations: destination};
 
@@ -286,6 +286,11 @@ export class DirectionsComponent {
         this.useBothIndoorAndOutdoor(destination);
         this.addToHistory(JSON.stringify(directions));
     } else {
+
+      if((start === 'My Location' || start === 'Ma Position')){
+        let loc: Location = await this.gpsMapService.getUserCurrentPosition();
+        start = loc.getLat() + "," + loc.getLng();
+      }
       this.preformOutdoorDirectionsActivity(start, destination);
     }
 
