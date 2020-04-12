@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { SharedService } from '../../services/shared/shared.service' 
 import { MapComponent} from '../../components/map/map.component'
 import {MapService} from '../../services/map/map.service';
 import {Storage} from '@ionic/storage';
@@ -28,7 +27,7 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   private hospitalType = "hospital";
   private message: string;
 
-  constructor(private storage: Storage, public navCtrl: NavController, private sharedService: SharedService, private mapSrevice : MapService, ) 
+  constructor(private storage: Storage, public navCtrl: NavController, private mapSrevice : MapService, ) 
   {
     this.translatePage();
     this.map = this.mapSrevice.getMap();
@@ -39,7 +38,7 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   
   ngOnInit() 
   {
-    this.sharedService.sharedMessage.subscribe(message => this.message = message)
+    //this.sharedService.sharedMessage.subscribe(message => this.message = message)
 
     //Search for nearby poi
     this.nearbyPOI(this.restaurantType)
@@ -54,7 +53,7 @@ export class NearbyPointsOfInterestComponent implements OnInit {
     this.storage.ready().then(() => {
       this.storage.set('newRouteDest', address);
     });
-    this.sharedService.changeMessage(address)
+
     this.navCtrl.navigateRoot(page); //Loads new route page
   }
 
