@@ -424,7 +424,7 @@ export class DirectionsComponent {
       const clearDirections = document.getElementById('clearDirections');
       clearDirections.style.display = 'block';
 
-      const getDirBtn = document.getElementById('getDirectionBtn');
+      const getDirBtn = document.getElementById('getDirectionsBtn');
       getDirBtn.style.display = 'none';
   }
 
@@ -433,7 +433,7 @@ export class DirectionsComponent {
   clearDirections() {
 
     const directionsForm = document.getElementById('form');
-    const getDirBtn = document.getElementById('getDirectionBtn');
+    const getDirBtn = document.getElementById('getDirectionsBtn');
 
     if (this.directionsRenderer != null) {
       this.directionsRenderer.setMap(null);
@@ -478,7 +478,7 @@ export class DirectionsComponent {
 
     const res = await fetch('./assets/shuttle_bus/departureTimes.json');
     const json = await res.json();
-    const currentDate = new Date('2020-04-08 10:00');
+    const currentDate = new Date();
 
     // Only consider the shuttle bus schedule after 7:15 am on that particular day.
     const timeBeforeShuttleStarts = new Date(currentDate.toLocaleDateString('en-US') + ' ' + '7:15');
