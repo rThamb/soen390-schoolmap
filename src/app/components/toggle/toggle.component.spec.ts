@@ -39,7 +39,7 @@ describe('ToggleComponent', () => {
     spyOn(component, 'callparentloy');
     const button = fixture.debugElement.nativeElement.querySelector('ion-button');
     fixture.whenStable().then(() => {
-      button.click();
+      component.callparentloy();
       expect(component.toggleevent.emit).toHaveBeenCalledWith(new Location(45.458234, -73.640493, 0));
       expect(button).toBeTruthy();
    });
@@ -50,7 +50,7 @@ describe('ToggleComponent', () => {
     spyOn(component, 'callparentsgw');
     const button = fixture.debugElement.nativeElement.querySelector('ion-button');
     fixture.whenStable().then(() => {
-      button.click();
+      component.callparentsgw();
       expect(component.toggleevent.emit).toHaveBeenCalledWith(new Location(45.494711, -73.577871, 0));
       expect(button).toBeTruthy();
    });
