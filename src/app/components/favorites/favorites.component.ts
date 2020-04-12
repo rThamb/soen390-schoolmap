@@ -18,56 +18,56 @@ export class FavoritesComponent implements OnInit {
     this.getFavorites();
   }
 
-  //When the form is submitted the new favorite location is added to local storage.
-  addFavorite(){
-    if(this.favorite){
+  // When the form is submitted the new favorite location is added to local storage.
+  addFavorite() {
+    if (this.favorite) {
       this.storage.get('favorites').then((val) => {
-        if(val){
-          let value = JSON.parse(val);
-          //If the new favorite location already exists in local storage it will not be added again.
-          if(value.indexOf(this.favorite) == -1){
+        if (val) {
+          const value = JSON.parse(val);
+          // If the new favorite location already exists in local storage it will not be added again.
+          if (value.indexOf(this.favorite) === -1) {
             value.push(this.favorite);
             this.storage.set('favorites', JSON.stringify(value));
           }
-        }else{
-          let value = [this.favorite];
+        } else {
+          const value = [this.favorite];
           this.storage.set('favorites', JSON.stringify(value));
         }
-        //Reload page
-        this.ngOnInit()
+        // Reload page
+        this.ngOnInit();
       });
     }
   }
 
-  //Retrieves favorites from local storage.
-  getFavorites(){
+  // Retrieves favorites from local storage.
+  getFavorites() {
     this.storage.get('favorites').then((val) => {
       this.favorites = JSON.parse(val);
     });
   }
 
-  //Prompts the user with a confirmation message before removing an item from their favorites.
-  deleteFavorite(favoriteName: string){
-    if (confirm("Are you sure you would like remove this item from your favorites?") == true) {
+  // Prompts the user with a confirmation message before removing an item from their favorites.
+  deleteFavorite(favoriteName: string) {
+    if (confirm('Are you sure you would like remove this item from your favorites?') === true) {
       this.storage.get('favorites').then((val) => {
-        if(val){
-          let value = JSON.parse(val);
-          let index = value.indexOf(favoriteName, 0);
+        if (val) {
+          const value = JSON.parse(val);
+          const index = value.indexOf(favoriteName, 0);
           if (index > -1) {
             value.splice(index, 1);
             this.storage.set('favorites', JSON.stringify(value));
           }
         }
-        //Reload page
-        this.ngOnInit()
+        // Reload page
+        this.ngOnInit();
       });
     }
   }
 
-  //Launches the new route page with a specific location set as the destination.
+  // Launches the new route page with a specific location set as the destination.
   openNewRouteWithDestination(location: string) {
-    let directions = {destination: location}
-    let navigationExtras: NavigationExtras = {
+    const directions = {destination: location};
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         special: JSON.stringify(directions)
       }

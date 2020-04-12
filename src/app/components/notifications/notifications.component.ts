@@ -1,4 +1,4 @@
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native/local-notifications/ngx';
@@ -17,15 +17,27 @@ timesel:number;
 events:any;
 
 
-  constructor(private plt:Platform,private localNotification:LocalNotifications,
-    private alertCtrl: AlertController, private http:HttpClient) {
+  constructor(public navCtrl: NavController,private plt:Platform,private localNotification:LocalNotifications,
+    private alertCtrl: AlertController, private http:HttpClient, private storage:Storage) {
+      console.log(this.timesel)
+      storage.ready().then(() => {
+        // get a key/value pair
+         storage.get('toggleval').then((val) => {
+         this.toggleval=val;
+         console.log('Status = ', val)
+         })
+         storage.get('timesel').then((v) => {     
+          this.storage.set('timesel',15);
+            this.timesel=v;
+          console.log('timeselected = ',v)});
+        });  
 
         this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
         
           this.events = data;
         
         });
-      console.log(this.events);
+     
 
       this.plt.ready().then(()=> {
         this.localNotification.on('trigger').subscribe(res => {
@@ -37,18 +49,10 @@ events:any;
         });
       });
 
+     
 
    }
-   scheduleNotif(){
-
-     if(this.toggleval){
-     this.localNotification.schedule({
-       id:1,
-       title: 'Attention ',
-       text: 'Notifications are enabled',
-       trigger: { in: this.timesel, unit: ELocalNotificationTriggerUnit.SECOND  }
-     })};
-   }
+   
    showAlert(header,sub,msg){
      this.alertCtrl.create({
        header:header,
@@ -79,7 +83,7 @@ events:any;
 
         let eventDate = Date.parse(this.events[i].start.dateTime);
         let todayDate = new Date().getTime();
-
+        console.log('You have this event after ' + this.timesel +' minutes')
         console.log(eventDate);
         console.log(todayDate);
         var eventTrigger = (eventDate/1000 - todayDate/1000 - this.timesel*60);
@@ -89,7 +93,7 @@ events:any;
         }
         console.log(eventTrigger);
         this.localNotification.schedule({
-          id:1,
+          
           title: this.events[i].summary,
           text: this.events[i].description,
           trigger: { in: (eventTrigger), unit: ELocalNotificationTriggerUnit.SECOND }

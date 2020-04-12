@@ -1,9 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { SharedService } from '../../services/shared/shared.service' 
 import { MapComponent} from '../../components/map/map.component'
 import {MapService} from '../../services/map/map.service';
 import {Storage} from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 declare var google
 
@@ -26,9 +27,8 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   private bankType = "bank";
   private clothesType = "clothing_store";
   private hospitalType = "hospital";
-  private message: string;
 
-  constructor(private storage: Storage, public navCtrl: NavController, private sharedService: SharedService, private mapSrevice : MapService, ) 
+  constructor(private geolocation: Geolocation, private storage: Storage, public navCtrl: NavController, private mapSrevice : MapService) 
   {
     this.translatePage();
     this.map = this.mapSrevice.getMap();
@@ -39,8 +39,6 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   
   ngOnInit() 
   {
-    this.sharedService.sharedMessage.subscribe(message => this.message = message)
-
     //Search for nearby poi
     this.nearbyPOI(this.restaurantType)
     this.nearbyPOI(this.bankType);
@@ -54,22 +52,22 @@ export class NearbyPointsOfInterestComponent implements OnInit {
     this.storage.ready().then(() => {
       this.storage.set('newRouteDest', address);
     });
-    this.sharedService.changeMessage(address)
+
     this.navCtrl.navigateRoot(page); //Loads new route page
   }
 
   //Sends a request for a poi type
   nearbyPOI(type: String)
   {
+    let self = this;
+
+    var service = new google.maps.places.PlacesService(this.map);
+
     var request = {
       location: this.mapHandle.getCurrentLocation(),
       types: [type],
       rankBy: google.maps.places.RankBy.DISTANCE
     }
-   
-    var service = new google.maps.places.PlacesService(this.map);
-    
-    let self = this;
     service.nearbySearch(request, function(results, status)
     {
       self.listPOI(results, status, type);

@@ -9,7 +9,7 @@
         <ion-item class="lines" lines="inset">
             Allow notifications
             <ion-label>
-                <ion-toggle class="alignleft" [checked]="toggleval" (ionChange)="Clicked()"> </ion-toggle>
+                <ion-toggle class="alignleft" [(ngModel)]="toggleval" (ionChange)="Clicked()"> </ion-toggle>
                 <!-- add the function to disable notification-->
             </ion-label>
         </ion-item>
@@ -22,7 +22,7 @@
                 <ion-select-option value="10">10 minutes</ion-select-option>
                 <ion-select-option value="15" selected>15 minutes</ion-select-option>
                 <ion-select-option value="20">20 minutes</ion-select-option>
-                <ion-select-option value="25">25 minutes</ion-select-option>
+                <ion-select-option value="25" >25 minutes</ion-select-option>
                 <ion-select-option value="30">30 minutes</ion-select-option>
             </ion-select>
             
