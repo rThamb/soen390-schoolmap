@@ -233,6 +233,8 @@ export class DirectionsComponent {
     } else {
       return('DRIVING');
     }
+
+    debugger;
   }
 
   displayTravelInfo(response: any) {
@@ -718,13 +720,13 @@ export class DirectionsComponent {
         if ( lP === 'English') {
           document.getElementsByName('start')[0].setAttribute('placeholder', json.english.placeholders.start);
           document.getElementsByName('destination')[0].setAttribute('placeholder', json.english.placeholders.destination);
-          document.getElementById('getDirectionsBtn').innerHTML = json.english.directions.getDirBtn;
-          document.getElementById('clearDirBtn').innerHTML = json.english.directions.clearBtn;
+          document.getElementById('getBtnText').innerHTML = json.english.directions.getDirBtn;
+          document.getElementById('getClrText').innerHTML = json.english.directions.clearBtn;
         } else if ( lP === 'French') {
           document.getElementsByName('start')[0].setAttribute('placeholder', json.french.placeholders.start);
           document.getElementsByName('destination')[0].setAttribute('placeholder', json.french.placeholders.destination);
-          document.getElementById('getDirectionsBtn').innerHTML = json.french.directions.getDirBtn;
-          document.getElementById('clearDirBtn').innerHTML = json.french.directions.clearBtn;
+          document.getElementById('getBtnText').innerHTML = json.french.directions.getDirBtn;
+          document.getElementById('getClrText').innerHTML = json.french.directions.clearBtn;
         }
 
 

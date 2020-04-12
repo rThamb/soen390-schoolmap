@@ -75,7 +75,6 @@ events:any;
         
       this.events = data;
 
-
       for(let i = 0; i < this.events.length; i++)
       {
 
