@@ -65,13 +65,13 @@ describe('DirectionsComponent', () => {
 });
 
   it('when displayTravelInfo is called it should display travel time and distance', () => {
-    let response =  { 'routes': [ {
-        'legs': [ {
-            'duration': {
-                'text': '10 min'
+    const response =  { routes: [ {
+        legs: [ {
+            duration: {
+                text: '10 min'
             },
-            'distance': {
-                'text': '2 km'
+            distance: {
+                text: '2 km'
             }
         }]
     }]};
@@ -113,12 +113,15 @@ it('when clearDirections is called it should', () => {
     // expect(c).toEqual
 });
 */
+
+/*
   it('when useCurrentLocation is called it should fill start with users location', async () => {
     await component.useCurrentLocation().then( () => {
         expect(component.directions['start']).toContain(',');
     });
 
 });
+*/
 
   it('when getNextShuttleTime is called it should get the next shuttle time', async () => {
     const mockDate = new Date('2020-03-18 10:00');

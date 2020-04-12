@@ -60,36 +60,36 @@ export class MenubarComponent implements OnInit {
       }
       if( lP === 'English')
       {
-        document.getElementById("title").innerHTML = json.english.menubar.title;
-        document.getElementById("home").innerHTML = json.english.menubar.home;
-        document.getElementById("newroute").innerHTML = json.english.menubar.newRoute;
-        document.getElementById("history").innerHTML = json.english.menubar.history;
-        document.getElementById("favorites").innerHTML = json.english.menubar.favorites;
-        document.getElementById("shuttlebus").innerHTML = json.english.menubar.shuttleBusSchedule;
-        document.getElementById("schedule").innerHTML = json.english.menubar.mySchedule;
-        document.getElementById("nearbyPOI").innerHTML = json.english.menubar.nearbyPOI;
-        document.getElementById("events").innerHTML = json.english.menubar.events;
-        document.getElementById("settings").innerHTML = json.english.menubar.settings;
-        document.getElementById("safety").innerHTML = json.english.menubar.safety;
-        document.getElementById("report").innerHTML = json.english.menubar.reportAnIssue;
-        document.getElementById("aboutus").innerHTML = json.english.menubar.aboutUs;
+        document.getElementById('title').innerHTML = json.english.menubar.title;
+        document.getElementById('home').innerHTML = json.english.menubar.home;
+        document.getElementById('newroute').innerHTML = json.english.menubar.newRoute;
+        document.getElementById('history').innerHTML = json.english.menubar.history;
+        document.getElementById('favorites').innerHTML = json.english.menubar.favorites;
+        document.getElementById('shuttlebus').innerHTML = json.english.menubar.shuttleBusSchedule;
+        document.getElementById('schedule').innerHTML = json.english.menubar.mySchedule;
+        document.getElementById('nearbyPOI').innerHTML = json.english.menubar.nearbyPOI;
+        document.getElementById('events').innerHTML = json.english.menubar.events;
+        document.getElementById('settings').innerHTML = json.english.menubar.settings;
+        document.getElementById('safety').innerHTML = json.english.menubar.safety;
+        document.getElementById('report').innerHTML = json.english.menubar.reportAnIssue;
+        document.getElementById('aboutus').innerHTML = json.english.menubar.aboutUs;
       }
       //check if language is french with storage
       else if (lP == 'French')
       {
-        document.getElementById("title").innerHTML = json.french.menubar.title;
-        document.getElementById("home").innerHTML = json.french.menubar.home;
-        document.getElementById("newroute").innerHTML = json.french.menubar.newRoute;
-        document.getElementById("history").innerHTML = json.french.menubar.history;
-        document.getElementById("favorites").innerHTML = json.french.menubar.favorites;
-        document.getElementById("shuttlebus").innerHTML = json.french.menubar.shuttleBusSchedule;
-        document.getElementById("schedule").innerHTML = json.french.menubar.mySchedule;
-        document.getElementById("nearbyPOI").innerHTML = json.french.menubar.nearbyPOI;
-        document.getElementById("events").innerHTML = json.french.menubar.events;
-        document.getElementById("settings").innerHTML = json.french.menubar.settings;
-        document.getElementById("safety").innerHTML = json.french.menubar.safety;
-        document.getElementById("report").innerHTML = json.french.menubar.reportAnIssue;
-        document.getElementById("aboutus").innerHTML = json.french.menubar.aboutUs;
+        document.getElementById('title').innerHTML = json.french.menubar.title;
+        document.getElementById('home').innerHTML = json.french.menubar.home;
+        document.getElementById('newroute').innerHTML = json.french.menubar.newRoute;
+        document.getElementById('history').innerHTML = json.french.menubar.history;
+        document.getElementById('favorites').innerHTML = json.french.menubar.favorites;
+        document.getElementById('shuttlebus').innerHTML = json.french.menubar.shuttleBusSchedule;
+        document.getElementById('schedule').innerHTML = json.french.menubar.mySchedule;
+        document.getElementById('nearbyPOI').innerHTML = json.french.menubar.nearbyPOI;
+        document.getElementById('events').innerHTML = json.french.menubar.events;
+        document.getElementById('settings').innerHTML = json.french.menubar.settings;
+        document.getElementById('safety').innerHTML = json.french.menubar.safety;
+        document.getElementById('report').innerHTML = json.french.menubar.reportAnIssue;
+        document.getElementById('aboutus').innerHTML = json.french.menubar.aboutUs;
       }
 
     });

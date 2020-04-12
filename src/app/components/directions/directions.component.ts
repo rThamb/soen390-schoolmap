@@ -7,8 +7,6 @@ import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NearbyPointsOfInterestComponent} from '../../components/nearby-points-of-interest/nearby-points-of-interest.component';
-import { SharedService } from '../../services/shared/shared.service';
 
 // models
 import { Building } from '../../models/Building';
@@ -40,8 +38,6 @@ export class DirectionsComponent {
   tripCost = '';
   map: any;
   favorited: boolean = false;
-  private testStorage;
-  private address : string;
 
   // Possible key words that would be searched to get either of the campuses
   sgwCampus = ['concordia', 'concordia university', 'concordia downtown', 'downtown concordia', 'sir george william', 'sir george williams', 'hall building', 'hall', 'concordia montreal', 'montreal concordia', 'H3G 1M8', '1455 boulevard de maisonneuve o', '1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8'];
@@ -54,11 +50,8 @@ export class DirectionsComponent {
               private buildFactoryService: BuildingFactoryService,
               private gpsMapService: GpsGridMappingService,
               private route: ActivatedRoute,
-              private router: Router,
-              private sharedService: SharedService) {
-    this.sharedService.sharedMessage.subscribe(message => this.address = message);
+              private router: Router) {
 
-    this.testStorage = storage;
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
         // console.log(value);
@@ -97,9 +90,6 @@ export class DirectionsComponent {
 
   toggleFavorite() {
     this.favorited = !this.favorited;
-  }
-
-  ngOnInit() {
   }
 
   setMap() {

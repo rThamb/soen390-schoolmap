@@ -38,8 +38,6 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   
   ngOnInit() 
   {
-    //this.sharedService.sharedMessage.subscribe(message => this.message = message)
-
     //Search for nearby poi
     this.nearbyPOI(this.restaurantType)
     this.nearbyPOI(this.bankType);
