@@ -12,7 +12,7 @@ import { getLocaleDateTimeFormat } from '@angular/common';
   styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
-toggleval:boolean=false;
+toggleval:boolean;
 timesel:number;
 events:any;
 
@@ -37,7 +37,6 @@ events:any;
         });
       });
 
-      this.refreshEvents();
 
    }
    scheduleNotif(){
@@ -61,11 +60,11 @@ events:any;
    Clicked(){
      this.toggleval=!this.toggleval;
      if(this.toggleval)
-     {this.onChange(15);
-      this.refreshEvents()}
+     {this.onChange(15);}
    }
    onChange(value){
     this.timesel=value;
+    this.refreshEvents()
     console.log(this.timesel);
   }
 
@@ -83,12 +82,17 @@ events:any;
 
         console.log(eventDate);
         console.log(todayDate);
-
+        var eventTrigger = (eventDate/1000 - todayDate/1000 - this.timesel*60);
+        if(eventTrigger<=0)
+        {
+          eventTrigger = 1;
+        }
+        console.log(eventTrigger);
         this.localNotification.schedule({
           id:1,
           title: this.events[i].summary,
           text: this.events[i].description,
-          trigger: { in: (eventDate/1000 - todayDate/1000 - this.timesel*60), unit: ELocalNotificationTriggerUnit.SECOND }
+          trigger: { in: (eventTrigger), unit: ELocalNotificationTriggerUnit.SECOND }
         });
       }
         

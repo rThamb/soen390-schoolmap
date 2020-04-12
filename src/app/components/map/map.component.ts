@@ -6,7 +6,6 @@ import { Floor } from '../../models/Floor';
 import { BuildingFactoryService } from '../../services/BuildingFactory/building-factory.service';
 import { Campus } from '../../models/Campus';
 import { empty } from 'rxjs';
-import { isTabSwitch } from '@ionic/angular/dist/directives/navigation/stack-utils';
 import { overlays } from './BuildingOverlayPoints';
 import { Variable, Content } from '@angular/compiler/src/render3/r3_ast';
 import { Building } from '../../models/Building';
