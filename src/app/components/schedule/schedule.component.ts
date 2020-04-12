@@ -40,11 +40,16 @@ export class ScheduleComponent implements OnInit {
         this.events = data;
         this.email = this.events[0].creator.email;
 
+        this.storage.ready().then(() => {
+          this.storage.set('events', this.events);
+        });
+
         for(var i = 0; i < this.events.length; i++){
           if(this.events[i].start.dateTime || this.events[i].end.dateTime)
           {
-            // Convert the dateTime string into more readable format
+            
           }
+
         }
 
       }
