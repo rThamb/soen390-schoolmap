@@ -366,11 +366,41 @@ export class MapComponent implements AfterViewInit {
     let FCMarker = this.createMarker(fcCenter, "FC");
     this.createinfoWindow(FCMarker, fcID);
 
+    //Array of data (id, polygon, marker, name, enterButton true/false, usePOI true/false) for each building
+    let hallData = [hallID, hallP, hallMarker, "Hall Building", true, true];
+    let molsonData = [mbID, molsonP, MBMarker, "John Molson Building", true, false];
+    let evData = [evID, EVP, EVMarker, "Engineering, Computer Science and Visual Arts Integrated Complex", true, false];
+    let lbData = [lbID, lbP, LBMarker, "J.W. McConnel Building", true, false];
+    let vaData = [vaID, visualArtsP, VAMarker, "Visual Arts Building", true, false];
+    let fgData = [fgID, faubourgP, FGMarker, "Faubourg Building", true, false];
+    let gnData = [gnID, greyNunsP, GNMarker, "Grey Nuns Building", true, false];
+    let cjData = [cjID, journalismP, CJMarker, "Communication Studies and Journalism Building", true, false];
+    let scData = [scID, scienceComplexP, SCMarker, "Richard J. Renaud Science Complex", true, false];
+    let ljData = [ljID, jesuitP, LJMarker, "Loyola Jesuit Hall and Conference Centre", true, false];
+    let cbData = [cbID, centralBuildingP, CBMarker, "Central Building", true, false];
+    let adData = [adID, adminP, ADMarker, "Administration Building", true, false];
+    let pyData = [pyID, psyP, PYMarker, "Psychology Building", true, false];
+    let vlData = [vlID, vanierLibraryP, VLMarker, "Vanier Library", true, false];
+    let cdData = [csID, stingerStadiumP, CSMarker, "Concordia Stadium", false, false];
+    let sdData = [sdID, stingerDomeP, SDMarker, "Stinger Dome", false, false];
+    let pcData = [pcID, athleticCampP, PCMarker, "PERFORM Centre", false, false];
+    let cgData = [cgID, loyolaGymP, CGMarker, "Concordia Gymnasium", false, false];
+    let psData = [psID, phyServiceP, PSMarker, "Physical Services Building", true, false];
+    let tbData = [tbID, centerArtsP, TBMarker, "Terrebonne Building", false, false];
+    let siData = [siID, saintIgnatiusP, SIMarker, "Saint Ignatius of Loyola", false, false];
+    let geData = [geID, structuralCenterP, GEMarker, "Centre for Structural and Functional Genomics", true, false];
+    let jrData = [jrID, jesuitResidenceP, JRMarker, "Jesuit Residence", false, false];
+    let srData = [srID, studentResidencesP, SRMarker, "Student Residence", false, false];
+    let fcData = [fcID, chapelP, FCMarker, "F.C. Smith Building", true, false];
+
+    var buildingsData = [hallData, molsonData, evData, lbData, vaData, fgData, gnData, cjData, scData, ljData, cbData, adData, pyData, vlData, cdData, sdData, pcData, cgData, psData, tbData, siData, geData, jrData, srData, fcData];
+    
+    let inBuilding = false; //Checks if user is inside a building
     // let hallTest = new google.maps.LatLng(45.497194, -73.578886) //variable to test containsLocation
-    // For current location
-    let currentLoc = this.getCurrentLocation();
     let currentBuilding = ''; // For Content of user marker info window
     let currentCampus = '';
+    // For current location
+    let currentLoc = this.getCurrentLocation();
 
     // Listener to the user location marker
     self.userMarker.addListener('click', function() {
@@ -382,59 +412,20 @@ export class MapComponent implements AfterViewInit {
       } else {
         currentCampus = 'N/A';
       }
-
-      // Check if user location is inside a Concordia building
-      if (google.maps.geometry.poly.containsLocation(currentLoc, hallP) == true) {
-        currentBuilding = 'Hall Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, molsonP) == true)) {
-        currentBuilding = 'John Molson Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, EVP) == true)) {
-        currentBuilding = 'Engineering, Computer Science and Visual Arts Integrated Complex';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, lbP) == true)) {
-        currentBuilding = 'J.W. McConnel Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, visualArtsP) == true)) {
-        currentBuilding = 'Visual Arts Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, faubourgP) == true)) {
-        currentBuilding = 'Faubourg Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, greyNunsP) == true)) {
-        currentBuilding = 'Grey Nuns Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, journalismP) == true)) {
-        currentBuilding = 'Communication Studies and Journalism Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, scienceComplexP) == true)) {
-        currentBuilding = 'Richard J. Renaud Science Complex';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, jesuitP) == true)) {
-        currentBuilding = 'Loyola Jesuit Hall and Conference Centre';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, centralBuildingP) == true)) {
-        currentBuilding = 'Central Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, adminP) == true)) {
-        currentBuilding = 'Administration Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, psyP) == true)) {
-        currentBuilding = 'Psychology Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, vanierLibraryP) == true)) {
-        currentBuilding = 'Vanier Library';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, stingerStadiumP) == true)) {
-        currentBuilding = 'Concordia Stadium';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, stingerDomeP) == true)) {
-        currentBuilding = 'Stinger Dome';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, athleticCampP) == true)) {
-        currentBuilding = 'PERFORM Centre';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, loyolaGymP) == true)) {
-        currentBuilding = 'Concordia Gymnasium';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, phyServiceP) == true)) {
-        currentBuilding = 'Physical Services Building<';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, centerArtsP) == true)) {
-        currentBuilding = 'Terrebonne Building';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, saintIgnatiusP) == true)) {
-        currentBuilding = 'Saint Ignatius of Loyola';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, structuralCenterP) == true)) {
-        currentBuilding = 'Centre for Structural and Functional Genomics';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, jesuitResidenceP) == true)) {
-        currentBuilding = 'Jesuit Residence';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, studentResidencesP) == true)) {
-        currentBuilding = 'Student Residence';
-      } else if ((google.maps.geometry.poly.containsLocation(currentLoc, chapelP) == true)) {
-        currentBuilding = 'F.C. Smith Building<';
-      } else {
+      
+      //Check if user location is inside a Concordia building
+      for(let i = 0; i < buildingsData.length; i++)
+      {
+        if (google.maps.geometry.poly.containsLocation(currentLoc, buildingsData[i][1]) == true) 
+        {
+          currentBuilding = buildingsData[i][3];
+          inBuilding = true;
+          break;
+        }
+      }
+      //user is not in a building
+      if(inBuilding == false)
+      {
         currentBuilding = 'N/A';
       }
 
@@ -448,74 +439,15 @@ export class MapComponent implements AfterViewInit {
 
     // Listener for the "enter building" button of info window
     this.infoWindow.addListener('domready', () => {
-      if(document.getElementById(hallID))
+
+      for(let i = 0; i < buildingsData.length; i++)
       {
-        this.enterBuildingEventListener(hallID, hallP, hallMarker, true);
+        //Checks which building is clicked and if it has an enter building button
+        if(document.getElementById(buildingsData[i][0]) && buildingsData[i][4] == true)
+        {
+          this.enterBuildingEventListener(buildingsData[i][0], buildingsData[i][1], buildingsData[i][2], buildingsData[i][5]);
+        }
       }
-      else if(document.getElementById(evID))
-      {
-        this.enterBuildingEventListener(evID, EVP, EVMarker, false);
-      }
-      else if(document.getElementById(lbID))
-      {
-        this.enterBuildingEventListener(lbID, lbP, LBMarker, false);
-      }     
-      else if(document.getElementById(fgID))
-      {
-        this.enterBuildingEventListener(fgID, faubourgP, FGMarker, false);
-      }
-      else if(document.getElementById(mbID))
-      {
-        this.enterBuildingEventListener(mbID, molsonP, MBMarker, false);
-      }     
-      else if(document.getElementById(vaID))
-      {
-        this.enterBuildingEventListener(vaID, visualArtsP, VAMarker, false);
-      }
-      else if(document.getElementById(gnID))
-      {
-        this.enterBuildingEventListener(gnID, greyNunsP, GNMarker, false);
-      }     
-      else if(document.getElementById(cjID))
-      {
-        this.enterBuildingEventListener(cjID, journalismP, CJMarker, false);
-      }
-      else if(document.getElementById(scID))
-      {
-        this.enterBuildingEventListener(scID, scienceComplexP, SCMarker, false);
-      }     
-      else if(document.getElementById(ljID))
-      {
-        this.enterBuildingEventListener(ljID, jesuitP, LJMarker, false);
-      }
-      else if(document.getElementById(cbID))
-      {
-        this.enterBuildingEventListener(cbID, centralBuildingP, CBMarker, false);
-      }     
-      else if(document.getElementById(adID))
-      {
-        this.enterBuildingEventListener(adID, adminP, ADMarker, false);
-      }
-      else if(document.getElementById(pyID))
-      {
-        this.enterBuildingEventListener(pyID, psyP, PYMarker, false);
-      }     
-      else if(document.getElementById(vlID))
-      {
-        this.enterBuildingEventListener(vlID, vanierLibraryP, VLMarker, false);
-      }
-      else if(document.getElementById(psID))
-      {
-        this.enterBuildingEventListener(psID, phyServiceP, PSMarker, false);
-      }     
-      else if(document.getElementById(geID))
-      {
-        this.enterBuildingEventListener(geID, structuralCenterP, GEMarker, false);
-      }
-      else if(document.getElementById(fcID))
-      {
-        this.enterBuildingEventListener(fcID, chapelP, FCMarker, false);
-      }     
     });
 
     // Closes info window when clicking somewhere else on map

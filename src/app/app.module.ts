@@ -20,7 +20,6 @@ import { IndoorPathingService } from './services/indoorPathing/indoor-pathing.se
 import { ReadGridService } from './services/readGrid/read-grid.service' 
 import { GpsGridMappingService } from './services/gps-grid-mapping/gps-grid-mapping.service' 
 import { BuildingFactoryService } from './services/BuildingFactory/building-factory.service'
-import { SharedService } from './services/shared/shared.service' 
 import { HistoryService } from './services/history/history.service';
 import {LocalNotifications} from '@ionic-native/local-notifications/ngx';
 
@@ -75,9 +74,9 @@ import { HTTP } from '@ionic-native/http/ngx';
     GpsGridMappingService,
     BuildingFactoryService,
     EmailComposer,
-    SharedService,
     LocalNotifications,
     HTTP
+  
   ],
   bootstrap: [AppComponent]
 })
