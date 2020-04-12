@@ -47,6 +47,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {IonicStorageModule} from '@ionic/storage';
 import { EventComponent } from './components/event/event.component';
 import { HTTP } from '@ionic-native/http/ngx';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -60,7 +61,7 @@ import { HTTP } from '@ionic-native/http/ngx';
                 NotificationsComponent,EventComponent,ScheduleComponent, NearbyPointsOfInterestComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
-  imports: [ BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule ,IonicStorageModule.forRoot({      name: 'appDB',
+  imports: [ BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, NgxDatatableModule ,IonicStorageModule.forRoot({      name: 'appDB',
   driverOrder: ['sqlite', 'websql', 'indexeddb']})],
   providers: [
     StatusBar,

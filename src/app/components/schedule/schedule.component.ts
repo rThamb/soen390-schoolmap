@@ -16,7 +16,7 @@ export class ScheduleComponent implements OnInit {
   public email: string;
   public today;
 
-  constructor(private http: HTTP, private storage: Storage, public navCtrl: NavController) 
+  constructor(private http: HttpClient, private storage: Storage, public navCtrl: NavController) 
   {
     this.today = Date.now();
     this.getNextEvents();
@@ -33,10 +33,12 @@ export class ScheduleComponent implements OnInit {
    */
   getNextEvents()
   {
-  this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents',{},{}).then(data => {
-      console.log(data);
-      if(data[0])
+  this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
+  console.log(data);  
+
+      if(data)
       {
+        console.log(data);
         this.events = data;
         this.email = this.events[0].creator.email;
 

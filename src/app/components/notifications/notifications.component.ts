@@ -62,12 +62,10 @@ events:any;
      }).then(alert=>alert.present());
    }
    Clicked(){
-     this.toggleval=!this.toggleval;
-     if(this.toggleval)
-     {this.onChange(15);}
+    this.storage.set('toggleval',this.toggleval)
    }
    onChange(value){
-    this.timesel=value;
+    this.storage.set('timesel',value)
     this.refreshEvents()
     console.log(this.timesel);
   }
@@ -86,17 +84,16 @@ events:any;
         console.log('You have this event after ' + this.timesel +' minutes')
         console.log(eventDate);
         console.log(todayDate);
-        var eventTrigger = (eventDate/1000 - todayDate/1000 - this.timesel*60);
-        if(eventTrigger<=0)
-        {
-          eventTrigger = 1;
-        }
-        console.log(eventTrigger);
+        console.log(eventDate/1000 - todayDate/1000 - this.timesel*60)
+
+
         this.localNotification.schedule({
           
           title: this.events[i].summary,
-          text: this.events[i].description,
-          trigger: { in: (eventTrigger), unit: ELocalNotificationTriggerUnit.SECOND }
+          text: 'You have this event after ' + this.timesel +' minutes',
+          trigger: { in: (eventDate/1000 - todayDate/1000 - this.timesel*60), unit: ELocalNotificationTriggerUnit.SECOND },
+          vibrate:true,
+          foreground:true
         });
       }
         
