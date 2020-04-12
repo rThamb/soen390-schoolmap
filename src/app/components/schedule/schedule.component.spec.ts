@@ -17,7 +17,7 @@ const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ ScheduleComponent ],
       imports: [IonicModule.forRoot()]
-    }).configureTestingModule({ providers: [{ provide: HTTP, useValue: a.http },
+    }).configureTestingModule({ providers: [
             { provide: Storage, useValue: a.storage },
             { provide: NavController, useValue: a.navCtrl }] }).compileComponents();
 
@@ -33,7 +33,7 @@ const a = setup().default();
 });
 
 function setup() {
-    const http = autoSpy(HTTP);
+    const http = autoSpy(HttpClient);
         const storage = autoSpy(Storage);
         const navCtrl = autoSpy(NavController);
         const builder = {
