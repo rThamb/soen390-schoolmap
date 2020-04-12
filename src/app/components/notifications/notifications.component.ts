@@ -1,7 +1,10 @@
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native/local-notifications/ngx';
+import {Storage} from '@ionic/storage';
+import { HttpClient } from '@angular/common/http';
+import { getLocaleDateTimeFormat } from '@angular/common';
 
 @Component({
   selector: 'app-notifications',
@@ -9,33 +12,47 @@ import { LocalNotifications, ELocalNotificationTriggerUnit } from '@ionic-native
   styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
-toggleval:boolean=false;
+toggleval:boolean;
 timesel:number;
+events:any;
 
-  constructor(private plt:Platform,private localNotification:LocalNotifications,
-    private alertCtrl: AlertController ) {
+
+  constructor(public navCtrl: NavController,private plt:Platform,private localNotification:LocalNotifications,
+    private alertCtrl: AlertController, private http:HttpClient, private storage:Storage) {
+      console.log(this.timesel)
+      storage.ready().then(() => {
+        // get a key/value pair
+         storage.get('toggleval').then((val) => {
+         this.toggleval=val;
+         console.log('Status = ', val)
+         })
+         storage.get('timesel').then((v) => {     
+          this.storage.set('timesel',15);
+            this.timesel=v;
+          console.log('timeselected = ',v)});
+        });  
+
+        this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
+        
+          this.events = data;
+        
+        });
+     
+
       this.plt.ready().then(()=> {
         this.localNotification.on('trigger').subscribe(res => {
           console.log('trigger: ',res);
           let msg=res.data ? res.data.mydata : '';
-          this.showAlert(res.title,res.text,msg)
-
-        });
-        this.localNotification.on('click').subscribe(res => {
-
+          this.showAlert(res.title,res.text,msg);
+          
+          
         });
       });
-   }
-   scheduleNotif(){
-     if(this.toggleval){
-     this.localNotification.schedule({
-       id:1,
-       title: 'Attention ',
-       text: 'Notifications are enabled',
-       trigger: { in: this.timesel, unit: ELocalNotificationTriggerUnit.SECOND  }
 
-     })};
+     
+
    }
+   
    showAlert(header,sub,msg){
      this.alertCtrl.create({
        header:header,
@@ -45,15 +62,42 @@ timesel:number;
      }).then(alert=>alert.present());
    }
    Clicked(){
-     this.toggleval=!this.toggleval;
-     if(this.toggleval)
-     {this.onChange(15);}
+    this.storage.set('toggleval',this.toggleval)
    }
    onChange(value){
-    this.timesel=value;
-    this.scheduleNotif();
+    this.storage.set('timesel',value)
+    this.refreshEvents()
     console.log(this.timesel);
   }
+
+  refreshEvents()
+  {
+    this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
+        
+      this.events = data;
+
+      for(let i = 0; i < this.events.length; i++)
+      {
+
+        let eventDate = Date.parse(this.events[i].start.dateTime);
+        let todayDate = new Date().getTime();
+        console.log('You have this event after ' + this.timesel +' minutes')
+        console.log(eventDate);
+        console.log(todayDate);
+        console.log(eventDate/1000 - todayDate/1000 - this.timesel*60)
+
+
+        this.localNotification.schedule({
+          
+          title: this.events[i].summary,
+          text: 'You have this event after ' + this.timesel +' minutes',
+          trigger: { in: (eventDate/1000 - todayDate/1000 - this.timesel*60), unit: ELocalNotificationTriggerUnit.SECOND }
+        });
+      }
+        
+    });
+  }
+
   ngOnInit() {}
   
 }

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { authorizeAndGetEvents } from '../../../assets/calendar';
 import { HttpClient } from '@angular/common/http';
 import {Storage} from '@ionic/storage';
-import { NavController } from '@ionic/angular'; 
+import { NavController } from '@ionic/angular';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Component({
   selector: 'app-schedule',
@@ -15,7 +16,7 @@ export class ScheduleComponent implements OnInit {
   public email: string;
   public today;
 
-  constructor(private http: HttpClient, private storage: Storage, public navCtrl: NavController) 
+  constructor(private http: HTTP, private storage: Storage, public navCtrl: NavController) 
   {
     this.today = Date.now();
     this.getNextEvents();
@@ -32,19 +33,23 @@ export class ScheduleComponent implements OnInit {
    */
   getNextEvents()
   {
-    this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
-
+  this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents',{},{}).then(data => {
       console.log(data);
       if(data[0])
       {
         this.events = data;
         this.email = this.events[0].creator.email;
 
+        this.storage.ready().then(() => {
+          this.storage.set('events', this.events);
+        });
+
         for(var i = 0; i < this.events.length; i++){
           if(this.events[i].start.dateTime || this.events[i].end.dateTime)
           {
-            // Convert the dateTime string into more readable format
+            
           }
+
         }
 
       }
@@ -73,7 +78,6 @@ export class ScheduleComponent implements OnInit {
 
   async translatePage()
   {
-    console.log("languageSet called");
     let res = await fetch("./assets/Languages/language.json");
     let json = await res.json();
 
