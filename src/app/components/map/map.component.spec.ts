@@ -129,7 +129,7 @@ fixture.detectChanges();
   it('ngAfterViewInit should be called', async(() => {
   spyOn(component, 'ngAfterViewInit');
   fixture.detectChanges(); // trigger ngOnInit here
-    expect(component.ngAfterViewInit);
+  expect(component.ngAfterViewInit);
 }));
 
   it('should check that ion-content is loaded', async(() => {
@@ -192,7 +192,7 @@ expect(spy).toHaveBeenCalled();
     // const user = User;
     // c.user.getLocation().getGoogleLatLng();
     spyOn(component, 'getCurrentLocation');
-    let expected = component.getCurrentLocation();
+    const expected = component.getCurrentLocation();
     // assert
     expect(expected).toEqual(undefined);
 });

@@ -33,7 +33,7 @@
             </ion-segment-button>
         </ion-segment>
 
-        <ion-button collapse="true" type="submit" expand="full" (click)="getTransportation()"><span id="getDirectionBtn">Get Directions</span></ion-button>
+        <ion-button collapse="true" type="submit" expand="full" (click)="getTransportation()"><span id="getDirectionsBtn">Get Directions</span></ion-button>
     </ion-header>
 </form>
 
@@ -59,4 +59,4 @@
 <!-- Div to display step by step direction in text for any given route -->
 
 <div id="directionsPanel" [style.display]="'none'"></div>
-<ion-button id="clearDirBtn" [style.display]="'none'" collapse="true" id="clearDirections" type="submit" expand="full" (click)="clearDirections()">Clear Directions</ion-button>
+<ion-button [style.display]="'none'" collapse="true" id="clearDirections" type="submit" expand="full" (click)="clearDirections()"><span id="clearDirBtn">Clear Directions</span></ion-button>
