@@ -15,6 +15,7 @@ export class NotificationsComponent implements OnInit {
 toggleval:boolean;
 timesel:number;
 events:any;
+notifs = [];
 
 
   constructor(public navCtrl: NavController,private plt:Platform,private localNotification:LocalNotifications,
@@ -91,15 +92,20 @@ events:any;
           eventTrigger = 1;
         }
 
-        this.localNotification.schedule({
-          
+        let notif = {
           title: this.events[i].summary,
           text: 'You have an upcoming event in ' + this.timesel +' minutes',
           trigger: { in: (5*(i+1)), unit: ELocalNotificationTriggerUnit.SECOND },
           vibrate:true,
           foreground:true
-        });
+        }
+
+        this.notifs.push(notif);
+
+
       }
+
+      this.localNotification.schedule(this.notifs);
         
     });
   }
