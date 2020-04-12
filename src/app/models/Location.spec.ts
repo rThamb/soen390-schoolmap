@@ -1,6 +1,6 @@
 import { Location} from './Location';
 
-fdescribe('Location', () => {
+describe('Location', () => {
 it('when getLng is called it should', () => {
     // arrange
     const { build } = setup().default();
