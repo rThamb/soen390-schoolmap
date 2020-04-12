@@ -17,7 +17,7 @@
         <!-- if ON, display the following, else dont display anything.-->
            <ion-label> Notify me before</ion-label>
            
-            <ion-select #S (ionChange)="onChange(S.value)" [(ngModel)]="timesel">
+            <ion-select  (ionChange)="onChange(timesel)" [(ngModel)]="timesel" placeholder="Select one">
                 <ion-select-option value="5" >5 minutes</ion-select-option>
                 <ion-select-option value="10" >10 minutes</ion-select-option>
                 <ion-select-option value="15" >15 minutes</ion-select-option>
