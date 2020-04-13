@@ -26,14 +26,7 @@ describe('LocateMeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('translate the page ', () => {
-    const { build } = setup().default();
-    const c = build();
 
-    const  spyTemp  =  spyOn(c , 'translatePage');
-    c.translatePage();
-    expect(spyTemp).toHaveBeenCalled();
-  });
   it('should call the function callparentlocate() when user click on locate me button', async(() => {
     spyOn(component, 'callparentlocate');
     const button = fixture.debugElement.nativeElement.querySelector('ion-fab-button');
@@ -45,15 +38,4 @@ describe('LocateMeComponent', () => {
   }));
 
 });
-function setup() {
-  const storage = autoSpy(Storage);
-  const builder = {
-    default() {
-      return builder;
-    },
-    build() {
-      return new AboutUsComponent(storage);
-    }
-  };
-  return builder;
-}
+

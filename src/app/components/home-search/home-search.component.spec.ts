@@ -26,14 +26,21 @@ describe('HomeSearchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('translate the page ', () => {
-    const { build } = setup().default();
-    const c = build();
 
-    const  spyTemp  =  spyOn(c , 'translatePage');
-    c.translatePage();
-    expect(spyTemp).toHaveBeenCalled();
+  it('should emit location of indoorPOI when goToSearchResult is called', () =>{
+    spyOn(component, 'goToSearchResult');
+    component.goToSearchResult('HB840');
+    expect(component.goToSearchResult).toHaveBeenCalledWith('HB840');
+  })
+
+  it('should translate the page based on language preference', () => {
+    spyOn(component, 'translatePage');
+
+    component.translatePage();
+    expect(component.translatePage).toHaveBeenCalled();
   });
+
+
   it('should check if user can search "Concordia" address', async(() => {
     const bar = fixture.debugElement.nativeElement.querySelector('ion-searchbar');
     expect(bar.innerHTML).not.toEqual('Hello');
@@ -41,16 +48,6 @@ describe('HomeSearchComponent', () => {
   }));
 
 
+
+
 });
-function setup() {
-  const storage = autoSpy(Storage);
-  const builder = {
-    default() {
-      return builder;
-    },
-    build() {
-      return new AboutUsComponent(storage);
-    }
-  };
-  return builder;
-}

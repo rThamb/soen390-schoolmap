@@ -27,6 +27,7 @@ describe('MapComponent', () => {
 
   beforeEach(async(() => {
 const a = setup().default();
+
 TestBed.configureTestingModule({
       declarations: [ MapComponent],
       schemas: [NO_ERRORS_SCHEMA],
@@ -126,11 +127,14 @@ fixture.detectChanges();
 //     expect(component.clearAllPOIMarkers).toBeTruthy();
 // }));
 
-  it('ngAfterViewInit should be called', async(() => {
+  it('ngAfterViewInit should be called', () => {
   spyOn(component, 'ngAfterViewInit');
+  component.ngAfterViewInit();
   fixture.detectChanges(); // trigger ngOnInit here
-  expect(component.ngAfterViewInit);
-}));
+  
+  
+  expect(component.ngAfterViewInit).toHaveBeenCalled();
+});
 
   it('should check that ion-content is loaded', async(() => {
   const mapSearch = fixture.debugElement.query(By.css('ion-content'));
@@ -166,16 +170,16 @@ fixture.detectChanges();
 
   it('when getCurrentLocation is called it should Get the current location of user and focus map to that point', async () => {
     // arrange
-    const { build } = setup().default();
-    const c = build();
+    //const { build } = setup().default();
+    //const c = build();
     // act
     // let currentLoc = this.getCurrentLocation();
     // const user = User;
     // c.user.getLocation().getGoogleLatLng();
     spyOn(component, 'getCurrentLocation');
-    const expected = component.getCurrentLocation();
+    component.getCurrentLocation();
     // assert
-    expect(expected).toEqual(undefined);
+    expect(component.getCurrentLocation).toHaveBeenCalled();
 });
 
   it('when focusMap is called it should Re-center the map based on location parameter', () => {
@@ -200,14 +204,6 @@ fixture.detectChanges();
     //  assert
     expect(c).toBeDefined();
   });
-
-  it('should call markerLabelVisibility from initOverlays', async(() => {
-
-    let m = new MapComponent(new Geolocation, new MapService, new BuildingFactoryService(new ReadGridService));
-    m.markerLabelVisibility = jasmine.createSpy("markerLabelVisibility spy");
-    m.initOverlays();
-    expect(m.markerLabelVisibility).toHaveBeenCalled();
-  }));
 
 
   it('should call removePreviouslyDrawnPath from drawPath', async(() => {
@@ -272,8 +268,8 @@ fixture.detectChanges();
 
   it('when enterBuildingEventListener is called it should', () => {
     // arrange
-    const { build } = setup().default();
-    const c = build();
+    //const { build } = setup().default();
+    //const c = build();
     // act
     const id = 'HB';
     const pathCoordinates = [];
@@ -284,12 +280,12 @@ fixture.detectChanges();
         strokeOpacity: 1.0,
         strokeWeight: 2
       });
-    const polygon = c.createPolygon(path, 'building');
+    const polygon = component.createPolygon(path, 'building');
     const hallCenter = {lat: 45.497092, lng: -73.578974};
-    const marker =  c.createMarker(hallCenter, 'HALL');
-    c.enterBuildingEventListener(id, polygon, marker, false);
+    const marker =  component.createMarker(hallCenter, 'HALL');
+    component.enterBuildingEventListener(id, polygon, marker, false);
     // assert
-    expect(c.enterBuildingEventListener(id, polygon, marker, false)).toBeTruthy();
+    expect(component.enterBuildingEventListener).toHaveBeenCalled();
 });
 
   it('when createinfoWindow is called it should display a popup containing building info', () => {
@@ -328,14 +324,14 @@ fixture.detectChanges();
 });
 
 
-  it('when addFloorOverlay is called it should add floor layer', () => {
+  it('when addFloorOverlay is called it should add floor layer', async() => {
     // arrange
     const { build } = setup().default();
     const c = build();
     // act
     //this.buildingFactory= BuildingFactoryService;
-    //const b: Building = this.buildingFactory.loadBuilding('HB');
-    //const buildingInfo = b.getBuildingInfo();
+    const b: Building = await component.buildingFactory.loadBuilding('HB');
+    const buildingInfo = b.getBuildingInfo();
     const imageBound = {
         north: 45.497735,
         south: 45.496807,
@@ -403,10 +399,6 @@ fixture.detectChanges();
     expect(c.quitIndoorMode).toHaveBeenCalled();
 });
 
-
-    // it('IndoorView should work', () => {
-    //   expect(component.indoorView("", "", "", "", "HB", true)).toBeTruthy();
-    // });
 
 });
 
