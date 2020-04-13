@@ -34,41 +34,37 @@ describe('HistoryComponent', () => {
     spyOn(window, 'confirm');
     const btn = fixture.debugElement.nativeElement.querySelector('#clearHistoryBtn');
     btn.click();
-    expect(window.confirm).toHaveBeenCalled()
-    
+    expect(window.confirm).toHaveBeenCalled();
+
   });
 
   it('should have history in storage on init', async () => {
-    let storage = TestBed.get(Storage);
+    const storage = TestBed.get(Storage);
     let hist;
 
     storage.ready().then(() => {
       hist = storage.get('history');
     });
-    
-    if(hist)
+
+    if (hist) {
       expect(hist).toBeTruthy();
-    else
+    } else {
       expect(hist).toBeFalsy();
+    }
   });
 
   it('should have the date of the searches on the view', () => {
-    let storage = TestBed.get(Storage);
+    const storage = TestBed.get(Storage);
     let hist;
-    let date = fixture.debugElement.query(By.css('.dates'));
-    console.log(date)
+    const date = fixture.debugElement.query(By.css('.dates'));
+    console.log(date);
     storage.ready().then(() => {
       hist = storage.get('history');
     });
-
-    if(hist) 
+    if (hist) {
       expect(date.nativeElement.textContent).toContain(', 2020');
-    else
+    } else {
       expect(date).toBeFalsy();
-
-
-    
+    }
   });
-
-  
 });
