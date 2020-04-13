@@ -1,6 +1,6 @@
 <!-- List of my events retrieved from my google calendar -->
 <!--show user info-->
-<div class="myEvents">
+<div class="myEvents" overflow="auto">
     <ion-card>
         <ion-item>
           <ion-avatar slot="start">
@@ -26,7 +26,8 @@
       </ion-card>
   
   <!--Class info-->
-  <div class="event" *ngFor="let event of events;" (click)="goToEventLocation(event.location)">
+  <ion-content>
+  <div class="event" *ngFor="let event of events;" (click)="goToEventLocation(event.location)" >
     <ion-card>
         <ion-card-header>
             <ion-label>{{ event.summary }}</ion-label>
@@ -39,6 +40,6 @@
         </ion-card-content>
       </ion-card>
     </div>
-
+</ion-content>
   
   </div>
