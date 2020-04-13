@@ -15,7 +15,7 @@ describe('HomeSearchComponent', () => {
       declarations: [ HomeSearchComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [IonicModule.forRoot(), IonicStorageModule.forRoot()],
-      providers: [Storage]
+      providers: []
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeSearchComponent);

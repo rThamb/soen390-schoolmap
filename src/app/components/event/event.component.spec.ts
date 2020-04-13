@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { IonicStorageModule } from '@ionic/storage';
 import { EventComponent } from './event.component';
 import { By } from '@angular/platform-browser';
 import {autoSpy} from '../../../../auto-spy';
@@ -14,7 +14,7 @@ describe('EventComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EventComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), IonicStorageModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(EventComponent);
@@ -45,19 +45,19 @@ describe('EventComponent', () => {
     expect(de.nativeElement.textContent).toContain('COVID-19 alert!');
       });
 
-  it('should show information of the page', () => {
+  it('should show information of the page1', () => {
     const de = fixture.debugElement.query(By.css('.info1'));
     expect(de.nativeElement.textContent).toContain('Please note that any access to the University');
       });
-  it('should show information of the page', () => {
+  it('should show information of the page2', () => {
         const de = fixture.debugElement.query(By.css('.info2'));
         expect(de.nativeElement.textContent).toContain('Until further notice');
           });
-  it('should show information of the page', () => {
+  it('should show information of the page3', () => {
             const de = fixture.debugElement.query(By.css('.info3'));
             expect(de.nativeElement.textContent).toContain('For more assistance');
               });
-  it('should show information of the page', () => {
+  it('should show information of the page4', () => {
                 const de = fixture.debugElement.query(By.css('.info4'));
                 expect(de.nativeElement.textContent).toContain('Concordia');
                   });
