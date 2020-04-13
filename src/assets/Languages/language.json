@@ -71,9 +71,8 @@
             "notif": "Notifications"
         },
         "shuttle": {
+            "departure": "Departure Time",
             "monToThur": "Monday to Thursday bus schedule",
-            "depLoy": "Departure from Loyola",
-            "depSGW": "Departure from SGW",
             "friday": "Friday bus schedule"
         },
         "nearbyPOI": {
@@ -162,8 +161,7 @@
         },
         "shuttle": {
             "monToThur": "Horaires du Lundi au Jeudi",
-            "depLoy": "Départ de Loyola",
-            "depSGW": "Départ de SGW",
+            "departure": "Heures de Départ",
             "friday": "Horaire du Vendredi"
         },
         "nearbyPOI": {

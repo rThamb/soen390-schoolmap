@@ -9,7 +9,7 @@ import { ScheduleComponent } from './schedule.component';
 import {autoSpy} from '../../../../auto-spy';
 import { HTTP } from '@ionic-native/http/ngx';
 
-fdescribe('ScheduleComponent', () => {
+describe('ScheduleComponent', () => {
     // tslint:disable-next-line:prefer-const
     let component: ScheduleComponent;
     // tslint:disable-next-line:prefer-const

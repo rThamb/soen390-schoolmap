@@ -35,6 +35,9 @@ describe('ShuttleBusScheduleComponent', () => {
 
     const fri = fixture.debugElement.query(By.css('.friday'));
     expect(fri.nativeElement.textContent).toContain('Friday');
+
+    const dep = fixture.debugElement.query(By.css('.departure'));
+    expect(dep.nativeElement.textContent).toContain('Departure');
   });
 
   it('when ngOnInit is called it should create the tablestyle with bootstrap', () => {
