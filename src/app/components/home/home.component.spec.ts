@@ -49,8 +49,8 @@ describe('HomeComponent', () => {
     expect(locateMe).toBeTruthy();
     expect(goButton).toBeTruthy();
   });
-
 });
+
 function setup() {
   const storage = autoSpy(Storage);
   const builder = {

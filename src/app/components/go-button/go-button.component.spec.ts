@@ -17,7 +17,9 @@ TestBed.configureTestingModule({
       declarations: [ GoButtonComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [RouterTestingModule , IonicModule.forRoot()],
-    }).configureTestingModule({ providers: [{ provide: NavController, useValue: a.navCtrl }] }).compileComponents();
+    }).configureTestingModule({ providers:
+        [{ provide: NavController, useValue: a.navCtrl }] }).configureTestingModule(
+            { providers: [{ provide: NavController, useValue: a.navCtrl }] }).compileComponents();
 
 fixture = TestBed.createComponent(GoButtonComponent);
 component = fixture.componentInstance;
