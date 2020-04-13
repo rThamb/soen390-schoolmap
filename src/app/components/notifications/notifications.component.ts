@@ -20,6 +20,7 @@ export class NotificationsComponent implements OnInit {
 
   constructor(public navCtrl: NavController,private plt:Platform,private localNotification:LocalNotifications,
     private alertCtrl: AlertController, private http:HttpClient, private storage:Storage) {
+      this.translatePage();
       console.log(this.timesel)
       storage.ready().then(() => {
         // get a key/value pair
@@ -62,7 +63,8 @@ export class NotificationsComponent implements OnInit {
      }).then(alert=>alert.present());
    }
    Clicked(){
-     debugger;
+     
+     this.translatePage();
      console.log(this.toggleval);
     this.storage.set('toggleval', this.toggleval)
     
@@ -120,5 +122,42 @@ export class NotificationsComponent implements OnInit {
   }
 
   ngOnInit() {}
-  
+  async translatePage()
+  {
+    const res = await fetch('/assets/Languages/language.json');
+    const json = await res.json();
+
+    this.storage.ready().then(() => {
+
+      this.storage.get('languagePreference').then((lP) => {
+
+      // If no setting has been set, default is english
+      if(lP == null)
+      {
+        lP = 'English';
+        this.storage.set('languagePreference', 'English');
+
+      }
+      if(lP === 'English')
+      {
+        document.getElementById('toggle').innerHTML = json.english.notifications.toggle;
+        if(this.toggleval)
+        document.getElementById('options').innerHTML = json.english.notifications.options;
+        
+        
+      }
+      else if(lP === 'French')
+      {
+        document.getElementById('toggle').innerHTML = json.french.notifications.toggle;
+        if(this.toggleval)
+        document.getElementById('options').innerHTML = json.french.notifications.options;
+        
+        
+      }
+
+     
+      });
+    });
+  }
+
 }

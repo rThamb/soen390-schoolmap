@@ -85,6 +85,11 @@
             "info2": " Until further notice, all events on Loyola and Sir George Campus has been canceled due to the actual situation that we are facing.",
             "info3": "For more assistance and information about the &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; current situation, please visit: ",
             "info4": "Concordia's COVID-19 updates"
+        },
+        "notifications":{
+            "toggle": "Allow notifications",
+            "options":"Notify me before"
+            
         }
     },
 
@@ -175,6 +180,13 @@
             "info3": "Pour plus d'assistance et d'informations sur la &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; situation actuelle, veuillez visiter ",
             "info4": "Mises à jour COVID-19 de Concordia"
 
+        },
+        "notifications":{
+            "toggle": "Autoriser les notifications",
+            "options":"prévenez moi avant"
+            
         }
+
+
     }
 }
