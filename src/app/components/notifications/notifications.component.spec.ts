@@ -46,10 +46,9 @@ fixture.detectChanges();
     const { build } = setup().default();
     const c = build();
     // act
-    c.Clicked();
+    const b = c.Clicked();
     // assert
-    // tslint:disable-next-line:no-unused-expression
-    expect(c).toBeTruthy;
+    expect(b).toBeDefined();
 });
 
   it('when refreshEvents is called it should', () => {
@@ -57,24 +56,24 @@ fixture.detectChanges();
     const { build } = setup().default();
     const c = build();
     // act
-    c.refreshEvents();
+    const b = c.refreshEvents();
     // assert
-    // tslint:disable-next-line:no-unused-expression
-    expect(c).toBeTruthy;
+
+    expect(b).toBeDefined();
 });
 
   it('when ngOnInit is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();
-    //act
-    c.ngOnInit();
+    // act
+    const b =  c.ngOnInit();
    // assert
     // tslint:disable-next-line:no-unused-expression
-    expect(c).toBeTruthy;
+    expect(b).toBeDefined();
 });
 
-})
+});
 
 function setup() {
     const navCtrl = autoSpy(NavController);
