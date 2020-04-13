@@ -27,20 +27,20 @@ export class EventComponent implements OnInit {
           lP = 'English';
           this.storage.set('languagePreference', 'English');
         }
-        if (lP === 'English') {
-          document.getElementById('title').innerHTML = json.english.events.title;
+        if (lP == 'English') {
+          document.getElementById('maintitle').innerHTML = json.english.events.title;
           document.getElementById('alertButton').innerHTML = json.english.events.alertButton;
           document.getElementById('info1').innerHTML = json.english.events.info1;
           document.getElementById('info2').innerHTML = json.english.events.info2;
           document.getElementById('info3').innerHTML = json.english.events.info3;
-          // document.getElementById('info4').innerHTML = json.english.events.info4;
-   } else if (lP === 'French') {
-          document.getElementById('title').innerHTML = json.french.events.title;
+          document.getElementById('info4').innerHTML = json.english.events.info4;
+   } else if (lP == 'French') {
+          document.getElementById('maintitle').innerHTML = json.french.events.title;
           document.getElementById('alertButton').innerHTML = json.french.events.alertButton;
           document.getElementById('info1').innerHTML = json.french.events.info1;
           document.getElementById('info2').innerHTML = json.french.events.info2;
           document.getElementById('info3').innerHTML = json.french.events.info3;
-          // document.getElementById('info4').innerHTML = json.french.events.info4;
+          document.getElementById('info4').innerHTML = json.french.events.info4;
        }
 
       });

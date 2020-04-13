@@ -16,7 +16,6 @@ tableStyle='bootstrap';
 
 
   constructor(private storage: Storage) { 
-    debugger;
     this.translatePage();
   }
   arro=data.monday;
@@ -52,19 +51,19 @@ tableStyle='bootstrap';
       if(lP === 'English')
       {
         document.getElementById('textMonToThur').innerHTML = json.english.shuttle.monToThur;
-        document.getElementById('textDepLoy1').innerHTML = json.english.shuttle.depLoy;
-        document.getElementById('textDepSGW1').innerHTML = json.english.shuttle.depSGW;
-        document.getElementById('textDepLoy2').innerHTML = json.english.shuttle.depLoy;
-        document.getElementById('textDepSGW2').innerHTML = json.english.shuttle.depSGW;
+        document.getElementsByClassName('datatable-header-cell-label')[0].innerHTML = json.english.shuttle.depLoy;
+        document.getElementsByClassName('datatable-header-cell-label')[1].innerHTML = json.english.shuttle.depSGW;
+        document.getElementsByClassName('datatable-header-cell-label')[2].innerHTML = json.english.shuttle.depLoy;
+        document.getElementsByClassName('datatable-header-cell-label')[3].innerHTML = json.english.shuttle.depSGW;
         document.getElementById('textFriday').innerHTML = json.english.shuttle.friday;
       }
       else if(lP === 'French')
       {
         document.getElementById('textMonToThur').innerHTML = json.french.shuttle.monToThur;
-        document.getElementById('textDepLoy1').innerHTML = json.french.shuttle.depLoy;
-        document.getElementById('textDepSGW1').innerHTML = json.french.shuttle.depSGW;
-        document.getElementById('textDepLoy2').innerHTML = json.french.shuttle.depLoy;
-        document.getElementById('textDepSGW2').innerHTML = json.french.shuttle.depSGW;
+        document.getElementsByClassName('datatable-header-cell-label')[0].innerHTML = json.french.shuttle.depLoy;
+        document.getElementsByClassName('datatable-header-cell-label')[1].innerHTML = json.french.shuttle.depSGW;
+        document.getElementsByClassName('datatable-header-cell-label')[2].innerHTML = json.french.shuttle.depLoy;
+        document.getElementsByClassName('datatable-header-cell-label')[3].innerHTML = json.french.shuttle.depSGW;
         document.getElementById('textFriday').innerHTML = json.french.shuttle.friday;
 
       }

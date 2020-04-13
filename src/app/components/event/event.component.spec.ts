@@ -24,7 +24,7 @@ describe('EventComponent', () => {
   });
 
   it('should show the title of the page', () => {
-    const de = fixture.debugElement.query(By.css('.title'));
+    const de = fixture.debugElement.query(By.css('.maintitle'));
     expect(de.nativeElement.textContent).toContain('ALL EVENTS ARE CANCELLED !');
       });
 
