@@ -8,18 +8,19 @@ import { ScheduleComponent } from './schedule.component';
 import {autoSpy} from "../../../../auto-spy";
 import { HTTP } from '@ionic-native/http/ngx';
 
-describe('ScheduleComponent', () => {
+fdescribe('ScheduleComponent', () => {
   let component: ScheduleComponent;
   let fixture: ComponentFixture<ScheduleComponent>;
 
   beforeEach(async(() => {
-const a = setup().default();
+    const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ ScheduleComponent ],
       imports: [IonicModule.forRoot()]
     }).configureTestingModule({ providers: [
             { provide: Storage, useValue: a.storage },
-            { provide: NavController, useValue: a.navCtrl }] }).compileComponents();
+            { provide: NavController, useValue: a.navCtrl },
+        {provide: HttpClient, useValue: a.http} ]}).compileComponents();
 
     fixture = TestBed.createComponent(ScheduleComponent);
     component = fixture.componentInstance;
@@ -27,13 +28,15 @@ const a = setup().default();
   }));
 
   it('should create the schedule component', () => {
-    expect(component).toBeTruthy();
+    const { build } = setup().default();
+    const c = build();
+    expect(c).toBeTruthy();
   });
 
 });
 
 function setup() {
-    const http = autoSpy(HttpClient);
+        const http = autoSpy(HttpClient);
         const storage = autoSpy(Storage);
         const navCtrl = autoSpy(NavController);
         const builder = {

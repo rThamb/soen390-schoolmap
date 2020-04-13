@@ -20,12 +20,11 @@ export class ScheduleComponent implements OnInit {
   {
     this.today = Date.now();
     this.getNextEvents();
-    this.translatePage();
   }
 
   ngOnInit() 
   {
-
+    
   }
 
   /**
@@ -34,7 +33,7 @@ export class ScheduleComponent implements OnInit {
   getNextEvents()
   {
   this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
-  console.log(data);  
+  console.log(data);
 
       if(data)
       {
@@ -49,15 +48,18 @@ export class ScheduleComponent implements OnInit {
         for(var i = 0; i < this.events.length; i++){
           if(this.events[i].start.dateTime || this.events[i].end.dateTime)
           {
+            this.events[i].start.dateTimeString = new Date(this.events[i].start.dateTime).toLocaleString();
+            this.events[i].end.dateTimeString = new Date(this.events[i].end.dateTime).toLocaleString();
             
           }
-
         }
 
       }
       else{
         console.log('No events available');
       }
+
+      this.translatePage();
       
     })
   }
@@ -73,9 +75,7 @@ export class ScheduleComponent implements OnInit {
     });
 
     this.navCtrl.navigateRoot('/NewRoute');
-
     console.log(location);
-
   }
 
   async translatePage()
@@ -99,14 +99,22 @@ export class ScheduleComponent implements OnInit {
         document.getElementById("email").innerHTML = json.english.schedule.email;
         document.getElementById("date").innerHTML = json.english.schedule.date;
         document.getElementById("upcoming").innerHTML = json.english.schedule.event;
-        for (var i=0; i < document.getElementsByClassName("eventStart").length; i++)
+
+        let startCollection = document.getElementsByClassName("eventStart");
+        let endCollection = document.getElementsByClassName("eventEnd");
+
+
+        for(let i = 0; i < startCollection.length; i++)
         {
-          document.getElementsByClassName("eventStart")[i].innerHTML = json.english.schedule.start;
+          startCollection.item(i).innerHTML = json.english.schedule.start;
         }
-        for (var i=0; i < document.getElementsByClassName("eventEnd").length; i++)
+
+        for(let i = 0; i < endCollection.length; i++)
         {
-          document.getElementsByClassName("eventEnd")[i].innerHTML = json.english.schedule.end;
+          endCollection.item(i).innerHTML = json.english.schedule.end;
         }
+
+
       }
       //check if language is french with storage
       else if (lP == 'French')
@@ -114,17 +122,22 @@ export class ScheduleComponent implements OnInit {
         document.getElementById("email").innerHTML = json.french.schedule.email;
         document.getElementById("date").innerHTML = json.french.schedule.date;
         document.getElementById("upcoming").innerHTML = json.french.schedule.event;
-        console.log(document.getElementsByClassName("eventStart").length);
-        var len = document.getElementsByClassName("eventStart");
-        console.log(len.length);
-        for (var i=0; i < document.getElementsByClassName("eventStart").length; i++)
+      
+        let startCollection = document.getElementsByClassName("eventStart");
+        let endCollection = document.getElementsByClassName("eventEnd");
+
+
+        for(let i = 0; i < startCollection.length; i++)
         {
-          document.getElementsByClassName("eventStart")[i].innerHTML = json.french.schedule.start;
+          startCollection.item(i).innerHTML = json.french.schedule.start;
         }
-        for (var i=0; i < document.getElementsByClassName("eventEnd").length; i++)
+
+        for(let i = 0; i < endCollection.length; i++)
         {
-          document.getElementsByClassName("eventEnd")[i].innerHTML = json.french.schedule.end;
+          endCollection.item(i).innerHTML = json.french.schedule.end;
         }
+
+        
       }
 
     });
