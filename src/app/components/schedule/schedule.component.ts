@@ -16,8 +16,12 @@ export class ScheduleComponent implements OnInit {
   public email: string;
   public today;
 
-  constructor(private http: HttpClient, private storage: Storage, public navCtrl: NavController) 
-  {
+  constru;
+  private http: any;
+  private storage: any;
+  private navCtrl: any;
+  a: string;
+  ctor(http: HttpClient, storage: Storage, navCtrl: NavController) {
     this.today = Date.now();
     this.getNextEvents();
   }
@@ -26,17 +30,17 @@ export class ScheduleComponent implements OnInit {
   {
     
   }
-
+  setEvent(a) {
+    this.events = a;
+  }
   /**
    * Sends a request to the websever for retrieving upcoming calendar events from the gmail account
    */
-  getNextEvents()
-  {
+  getNextEvents() {
   this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
   console.log(data);
 
-      if(data)
-      {
+  if (data) {
         console.log(data);
         this.events = data;
         this.email = this.events[0].creator.email;
@@ -54,8 +58,7 @@ export class ScheduleComponent implements OnInit {
           }
         }
 
-      }
-      else{
+      } else {
         console.log('No events available');
       }
 
@@ -65,11 +68,10 @@ export class ScheduleComponent implements OnInit {
   }
 
   /**
-   * When user clicks on an event, redirects them to the New Route page with the event's location set as the destination. 
+   * When user clicks on an event, redirects them to the New Route page with the event's location set as the destination.
    * @param location
    */
-  goToEventLocation(location)
-  {
+  goToEventLocation(location) {
     this.storage.ready().then(() => {
       this.storage.set('newRouteDest', location);
     });
@@ -78,19 +80,17 @@ export class ScheduleComponent implements OnInit {
     console.log(location);
   }
 
-  async translatePage()
-  {
-    let res = await fetch("./assets/Languages/language.json");
-    let json = await res.json();
+  async translatePage() {
+    const res = await fetch('./assets/Languages/language.json');
+    const json = await res.json();
 
-    //check if language is english with storage
+    // check if language is english with storage
     this.storage.ready().then(() => {
 
-      this.storage.get('languagePreference').then((lP)=> {
+      this.storage.get('languagePreference').then((lP) => {
 
       // If no setting has been set, default is english
-      if(lP == null)
-      {
+      if (lP == null) {
         lP = 'English';
         this.storage.set('languagePreference', 'English');
       }
@@ -142,7 +142,7 @@ export class ScheduleComponent implements OnInit {
 
     });
 
-    })
+    });
   }
 
 }

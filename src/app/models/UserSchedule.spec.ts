@@ -1,7 +1,7 @@
 import { UserSchedule } from './UserSchedule';
-import {Course} from "./Course";
+import {Course} from './Course';
 
-describe('UserSchedule', () => {
+fdescribe('UserSchedule', () => {
   it('when getCourses is called it should', () => {
     // arrange
     const { build } = setup().default();
@@ -17,19 +17,19 @@ describe('UserSchedule', () => {
     const { build } = setup().default();
     const c = build();
     // act
-    const Courses= Course[''];
+    const Courses = Course[''];
     c.setCourses(Courses);
     // assert
-    expect(c.setCourses).toBeDefined;
+    expect(c.setCourses).toBeDefined();
   });
 
-  
+
 });
 
 function setup() {
-  
+
   const builder = {
-    
+
     default() {
       return builder;
     },
