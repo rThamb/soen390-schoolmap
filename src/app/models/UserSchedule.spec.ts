@@ -1,7 +1,7 @@
 import { UserSchedule } from './UserSchedule';
 import {Course} from './Course';
 
-fdescribe('UserSchedule', () => {
+describe('UserSchedule', () => {
   it('when getCourses is called it should', () => {
     // arrange
     const { build } = setup().default();

@@ -22,11 +22,25 @@ describe('SafetyComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('should contain information and phone numbers for different emergencies', () => {
     const de = fixture.debugElement.query(By.css('.title'));
     expect(de.nativeElement.textContent).toContain('YOUR SAFETY');

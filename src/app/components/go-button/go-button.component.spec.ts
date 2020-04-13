@@ -51,7 +51,6 @@ fixture.detectChanges();
     // assert
     // expect(c).toEqual
 });
-
   it('when ngOnInit is called it should', () => {
     // arrange
     const { build } = setup().default();

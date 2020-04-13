@@ -13,6 +13,30 @@ describe('ScheduleComponent', () => {
 
 
     const events = 'data';
+    it('translate the page ', () => {
+        const { build } = setup().default();
+        const c = build();
+
+        const  spyTemp  =  spyOn(c , 'translatePage');
+        c.translatePage();
+        expect(spyTemp).toHaveBeenCalled();
+    });
+    it('translate the page ', () => {
+        const { build } = setup().default();
+        const c = build();
+
+        const  spyTemp  =  spyOn(c , 'translatePage');
+        c.translatePage();
+        expect(spyTemp).toHaveBeenCalled();
+    });
+    it('translate the page ', () => {
+        const { build } = setup().default();
+        const c = build();
+
+        const  spyTemp  =  spyOn(c , 'translatePage');
+        c.translatePage();
+        expect(spyTemp).toHaveBeenCalled();
+    });
     it('should create the schedule component', () => {
       const { build } = setup().default();
       const c = build();

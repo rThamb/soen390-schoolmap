@@ -46,7 +46,22 @@ describe('ShuttleBusScheduleComponent', () => {
     // assert
     expect(c.tableStyle).toEqual('bootstrap');
 });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
+
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('when changeStyle is called it should change the color to dark', () => {
     // arrange
     const { build } = setup().default();

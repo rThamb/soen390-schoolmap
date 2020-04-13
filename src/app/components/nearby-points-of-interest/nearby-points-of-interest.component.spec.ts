@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { IonicStorageModule } from '@ionic/storage';
+import {IonicStorageModule, Storage} from '@ionic/storage';
 import { NearbyPointsOfInterestComponent } from './nearby-points-of-interest.component';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -10,6 +10,8 @@ import { MapComponent } from '../map/map.component';
 import {MapService} from '../../services/map/map.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import {autoSpy} from '../../../../auto-spy';
+import {AboutUsComponent} from '../about-us/about-us.component';
 
 declare var google;
 
@@ -33,31 +35,38 @@ describe('NearbyPointsOfInterestComponent', () => {
   it('should create', async () => {
       expect(component).toBeTruthy();
   });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('nearbyPOI should be called', () => {
 
-    component.nearbyPOI = jasmine.createSpy("nearbyPOI spy");
+    component.nearbyPOI = jasmine.createSpy('nearbyPOI spy');
     component.ngOnInit();
-    //expect(component.nearbyPOI).toHaveBeenCalled();
+    // expect(component.nearbyPOI).toHaveBeenCalled();
     expect(component.nearbyPOI).toHaveBeenCalledTimes(4);
   });
 
   it('LoadNewRoute should work', () => {
-    expect(component.LoadNewRoute("NewRoute", "150 Rue Sainte-Catherine Ouest, Montréal")).toBeTruthy();
+    expect(component.LoadNewRoute('NewRoute', '150 Rue Sainte-Catherine Ouest, Montréal')).toBeTruthy();
   });
 
   it('listPOI ', () => {
-    expect(component.listPOI("", "", "restaurant")).toBeFalsy();
+    expect(component.listPOI('', '', 'restaurant')).toBeFalsy();
   });
 
   // it('translatePage should work', () => {
   //   expect(component.translatePage).toBeTruthy();
   // });
 
-  
+
 
   it('should return a distance', () => {
-    expect(component.calculateDistance("(45.4977417, -73.58028329999999)")).toBeTruthy();
+    expect(component.calculateDistance('(45.4977417, -73.58028329999999)')).toBeTruthy();
   });
 
   // it('should contain "Nearby Points of Interest"', () => {
@@ -78,3 +87,15 @@ describe('NearbyPointsOfInterestComponent', () => {
   //   expect(btn.innerHTML).toBe('Destination');
   // });
 });
+function setup() {
+  const storage = autoSpy(Storage);
+  const builder = {
+    default() {
+      return builder;
+    },
+    build() {
+      return new AboutUsComponent(storage);
+    }
+  };
+  return builder;
+}
