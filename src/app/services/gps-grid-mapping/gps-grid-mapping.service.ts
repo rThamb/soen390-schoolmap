@@ -51,7 +51,7 @@ export class GpsGridMappingService {
 
     let i = 0;
     let value = distance - gpsDeltaPerCell;
-    while(!(value <= 0)){
+    while(value > 0){
       i++;
       value = value - gpsDeltaPerCell;
     }
@@ -73,7 +73,7 @@ export class GpsGridMappingService {
 
     let i = 0;
     let value = distance - gpsDeltaPerCell;
-    while(!(value <= 0)){
+    while(value > 0){
       i++;
       value = value - gpsDeltaPerCell;
     }

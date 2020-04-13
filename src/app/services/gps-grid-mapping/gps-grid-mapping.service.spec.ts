@@ -14,7 +14,6 @@ describe('GpsGridMappingService', () => {
 
   it('should be created', () => {
     const service: GpsGridMappingService = TestBed.get(GpsGridMappingService);
-    let result = service != null; 
     expect(service).toBeTruthy();
   });
 

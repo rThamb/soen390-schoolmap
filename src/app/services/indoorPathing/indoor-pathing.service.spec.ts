@@ -38,7 +38,7 @@ var resultChecker = function(obtained, expected){
     let entry = curLoc.getLat() + "," + curLoc.getLng();
     let expect = expected[i];
 
-    if(!(entry === expect))
+    if(entry !== expect)
       return false;
   }
   return true;
@@ -68,7 +68,7 @@ describe('IndoorPathingService', () => {
     let start: string = "HB840";
     let end: string = "HB890";
     let building: Building = await buildingService.loadBuilding(buildKey);
-    let startFloor: Floor = await building.getFloorLevel("8");
+    let startFloor: Floor = building.getFloorLevel("8");
     let transition: Transitions = Transitions.Escalator;
 
     let expected = [
@@ -108,7 +108,7 @@ describe('IndoorPathingService', () => {
     let start: string = "HB840";
     let end: string = "HB922";
     let building: Building = await buildingService.loadBuilding(buildKey);
-    let startFloor: Floor = await building.getFloorLevel("8");
+    let startFloor: Floor = building.getFloorLevel("8");
     let transition: Transitions = Transitions.Escalator;
 
     let expectedFloor8 = ['45.49712451578947,-73.57927763355264','45.49715171578948,-73.57925228355263',
@@ -143,7 +143,7 @@ describe('IndoorPathingService', () => {
     let start: string = "HB922";
     let end: string = "HB840";
     let building: Building = await buildingService.loadBuilding(buildKey);
-    let startFloor: Floor = await building.getFloorLevel("9");
+    let startFloor: Floor = building.getFloorLevel("9");
     let transition: Transitions = Transitions.Escalator;
 
     
@@ -173,7 +173,7 @@ describe('IndoorPathingService', () => {
     let start: Location = new Location(45.497347, -73.579178, 0);
     let end: string = "HB840";
     let building: Building = await buildingService.loadBuilding(buildKey);
-    let startFloor: Floor = await building.getFloorLevel("8");
+    let startFloor: Floor = building.getFloorLevel("8");
     let transition: Transitions = Transitions.Escalator;
     
     let expectedFloor8 = ['45.497350284210526,-73.57917334144737','45.49732308421053,-73.57919869144737','45.49729588421053,-73.57922404144736','45.497268684210525,-73.57924939144736','45.49724148421053,-73.57927474144736','45.49721428421053,-73.57930009144737','45.4971966,-73.57926351249999','45.497178915789476,-73.57922693355263','45.49715171578948,-73.57925228355263','45.49712451578947,-73.57927763355264'];
@@ -195,8 +195,7 @@ describe('IndoorPathingService', () => {
 
     let start: Location = new Location(45.497347, -73.579178, 0);
     let building: Building = await buildingService.loadBuilding(buildKey);
-    let startFloor: Floor = await building.getFloorLevel("8");
-    let transition: Transitions = Transitions.Escalator;
+    let startFloor: Floor = building.getFloorLevel("8");
 
     let expected = ['45.497350284210526,-73.57917334144737','45.4973326,-73.5791367625','45.497314915789474,-73.57910018355264','45.49729723157895,-73.57906360460527','45.49727954736842,-73.5790270256579','45.497261863157895,-73.57899044671053','45.49724417894737,-73.57895386776316','45.49722649473684,-73.57891728881579','45.49720881052632,-73.57888070986843','45.49719112631579,-73.57884413092106','45.497173442105264,-73.5788075519737','45.49715575789473,-73.57877097302632','45.497138073684205,-73.57873439407895','45.49711087368421,-73.57875974407895','45.49708367368421,-73.57878509407894'];
     let obtained = indoorService.getPathToClosestWashroom(start, startFloor, "M");
@@ -216,8 +215,7 @@ describe('IndoorPathingService', () => {
 
     let start: Location = new Location(45.497347, -73.579178, 0);
     let building: Building = await buildingService.loadBuilding(buildKey);
-    let startFloor: Floor = await building.getFloorLevel("8");
-    let transition: Transitions = Transitions.Escalator;
+    let startFloor: Floor = building.getFloorLevel("8");
 
     let expectedSize = 17;
     let obtained = indoorService.getPathToClosestWashroom(start, startFloor, "F");
@@ -234,7 +232,7 @@ it('should determine shortest path from classroom to point of interest (HB832 =>
     const buildingService: BuildingFactoryService = TestBed.get(BuildingFactoryService);
     const buildKey = "HB";
     let building: Building = await buildingService.loadBuilding(buildKey);
-    let startFloor: Floor = await building.getFloorLevel("8");
+    let startFloor: Floor = building.getFloorLevel("8");
     let transition: Transitions = Transitions.Escalator;
 
     let start: string = "HB832";
