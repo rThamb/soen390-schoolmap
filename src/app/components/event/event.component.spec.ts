@@ -60,15 +60,7 @@ describe('EventComponent', () => {
   it('should show information of the page4', () => {
                 const de = fixture.debugElement.query(By.css('.info4'));
                 expect(de.nativeElement.textContent).toContain('Concordia');
-                  });
-
-  it('should have a clickable button to concordias COVID19 website', async(() => {
-      const button = fixture.debugElement.nativeElement.querySelector('link');
-      button.click();
-      fixture.whenStable().then(() => {
-        expect(location.href).toBe('http://www.concordia.ca/covid19info.html?utm_source=vanity&utm_campaign=covid19');
-       });
-      }));
+  });
 
 
 });

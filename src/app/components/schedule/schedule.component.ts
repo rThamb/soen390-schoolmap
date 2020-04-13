@@ -25,13 +25,11 @@ export class ScheduleComponent implements OnInit {
   ngOnInit() {
 
   }
-  setEvent(a) {
-    this.events = a;
-  }
+
   /**
    * Sends a request to the websever for retrieving upcoming calendar events from the gmail account
    */
-  getNextEvents() {
+  public getNextEvents() {
   this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
   console.log(data);
 
@@ -56,7 +54,7 @@ export class ScheduleComponent implements OnInit {
         console.log('No events available');
       }
 
-  this.translatePage();
+      this.translatePage();
 
     });
   }
@@ -65,7 +63,7 @@ export class ScheduleComponent implements OnInit {
    * When user clicks on an event, redirects them to the New Route page with the event's location set as the destination.
    * @ param location
    */
-  goToEventLocation(location) {
+  public goToEventLocation(location) {
     this.storage.ready().then(() => {
       this.storage.set('newRouteDest', location);
     });

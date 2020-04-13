@@ -71,7 +71,7 @@ export class MapComponent implements AfterViewInit {
   // Injects the component class with imported services
  constructor(private geolocation: Geolocation, 
               private mapService: MapService, 
-              private buildingFactory: BuildingFactoryService) 
+              public buildingFactory: BuildingFactoryService) 
   {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
@@ -723,7 +723,6 @@ markerListener(marker: any, content: string)
 //Listener for enter building button
 enterBuildingEventListener(id: string, polygon: any, marker: any, usePOI: boolean)
 {
-  debugger;
   const self = this;
   document.getElementById(id).addEventListener("click", () => {
     self.infoWindow.close();

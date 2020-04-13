@@ -18,7 +18,7 @@ export class MenubarComponent implements OnInit {
     private menu: MenuController,
     private storage: Storage) {
 
-      this.languageSet();
+      this.translatePage();
     }
 
   // Method allows user to navigate between pages using menu component
@@ -27,24 +27,8 @@ export class MenubarComponent implements OnInit {
     this.menu.toggle();
   }
 
-  // MenuBar Methods
-  openFirst() {
 
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }
-
-  openEnd() {
-    this.menu.open('end');
-  }
-
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
-  }
-
-  async languageSet() {
-    console.log('languageSet called');
+  async translatePage() {
     const res = await fetch('./assets/Languages/language.json');
     const json = await res.json();
 
