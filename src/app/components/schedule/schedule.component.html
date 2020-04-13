@@ -31,12 +31,12 @@
     <ion-card>
         <ion-card-header>
             <ion-label>{{ event.summary }}</ion-label>
-            <ion-label class="alignright"><span class="eventStart"></span>{{ event.start.dateTime }} {{ event.start.date }}</ion-label>
+            <ion-label class="alignright"><span class="eventStart">Start: </span>{{ event.start.dateTimeString }} {{ event.start.date }}</ion-label>
         </ion-card-header>
     
         <ion-card-content class="adjust">
           <ion-label>{{ event.location }}</ion-label>
-          <ion-label class="alignright"><span class="eventEnd">End: </span>{{ event.end.dateTime }} {{ event.end.date }}</ion-label>
+          <ion-label class="alignright"><span class="eventEnd">End: </span>{{ event.end.dateTimeString }} {{ event.end.date }}</ion-label>
         </ion-card-content>
       </ion-card>
     </div>

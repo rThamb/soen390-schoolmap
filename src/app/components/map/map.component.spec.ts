@@ -411,6 +411,7 @@ fixture.detectChanges();
 });
 
 function setup() {
+  
     const geolocation = autoSpy(Geolocation);
     const mapService = autoSpy(MapService);
     const buildingFactory = autoSpy(BuildingFactoryService);
