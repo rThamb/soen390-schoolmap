@@ -50,9 +50,9 @@ describe('FavoritesComponent', () => {
     }
   });
 
-  it('when deleteFavorite is called it should prompt a confimation message', () => {
+  it('when deleteFavorite is called it should prompt a confimation message', async () => {
     spyOn(window, 'confirm');
-    component.deleteFavorite('concordia loyola');
+    await component.deleteFavorite('concordia loyola');
     expect(window.confirm).toHaveBeenCalled();
   });
 
