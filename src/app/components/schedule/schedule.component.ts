@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import {Storage} from '@ionic/storage';
 import { NavController } from '@ionic/angular';
 import { HTTP } from '@ionic-native/http/ngx';
-
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -26,9 +25,8 @@ export class ScheduleComponent implements OnInit {
     this.getNextEvents();
   }
 
-  ngOnInit() 
-  {
-    
+  ngOnInit() {
+
   }
   setEvent(a) {
     this.events = a;
@@ -49,12 +47,11 @@ export class ScheduleComponent implements OnInit {
           this.storage.set('events', this.events);
         });
 
-        for(var i = 0; i < this.events.length; i++){
-          if(this.events[i].start.dateTime || this.events[i].end.dateTime)
-          {
+        for (let i = 0; i < this.events.length; i++) {
+          if (this.events[i].start.dateTime || this.events[i].end.dateTime) {
             this.events[i].start.dateTimeString = new Date(this.events[i].start.dateTime).toLocaleString();
             this.events[i].end.dateTimeString = new Date(this.events[i].end.dateTime).toLocaleString();
-            
+
           }
         }
 
@@ -62,14 +59,14 @@ export class ScheduleComponent implements OnInit {
         console.log('No events available');
       }
 
-      this.translatePage();
-      
-    })
+  this.translatePage();
+
+    });
   }
 
   /**
    * When user clicks on an event, redirects them to the New Route page with the event's location set as the destination.
-   * @param location
+   * @ param location
    */
   goToEventLocation(location) {
     this.storage.ready().then(() => {
@@ -94,50 +91,42 @@ export class ScheduleComponent implements OnInit {
         lP = 'English';
         this.storage.set('languagePreference', 'English');
       }
-      if( lP === 'English')
-      {
-        document.getElementById("email").innerHTML = json.english.schedule.email;
-        document.getElementById("date").innerHTML = json.english.schedule.date;
-        document.getElementById("upcoming").innerHTML = json.english.schedule.event;
+      if ( lP === 'English') {
+        document.getElementById('email').innerHTML = json.english.schedule.email;
+        document.getElementById('date').innerHTML = json.english.schedule.date;
+        document.getElementById('upcoming').innerHTML = json.english.schedule.event;
 
-        let startCollection = document.getElementsByClassName("eventStart");
-        let endCollection = document.getElementsByClassName("eventEnd");
+        const startCollection = document.getElementsByClassName('eventStart');
+        const endCollection = document.getElementsByClassName('eventEnd');
 
 
-        for(let i = 0; i < startCollection.length; i++)
-        {
+        for (let i = 0; i < startCollection.length; i++) {
           startCollection.item(i).innerHTML = json.english.schedule.start;
         }
 
-        for(let i = 0; i < endCollection.length; i++)
-        {
+        for (let i = 0; i < endCollection.length; i++) {
           endCollection.item(i).innerHTML = json.english.schedule.end;
         }
 
 
-      }
-      //check if language is french with storage
-      else if (lP == 'French')
-      {
-        document.getElementById("email").innerHTML = json.french.schedule.email;
-        document.getElementById("date").innerHTML = json.french.schedule.date;
-        document.getElementById("upcoming").innerHTML = json.french.schedule.event;
-      
-        let startCollection = document.getElementsByClassName("eventStart");
-        let endCollection = document.getElementsByClassName("eventEnd");
+      } else if (lP === 'French') {
+        document.getElementById('email').innerHTML = json.french.schedule.email;
+        document.getElementById('date').innerHTML = json.french.schedule.date;
+        document.getElementById('upcoming').innerHTML = json.french.schedule.event;
+
+        const startCollection = document.getElementsByClassName('eventStart');
+        const endCollection = document.getElementsByClassName('eventEnd');
 
 
-        for(let i = 0; i < startCollection.length; i++)
-        {
+        for (let i = 0; i < startCollection.length; i++) {
           startCollection.item(i).innerHTML = json.french.schedule.start;
         }
 
-        for(let i = 0; i < endCollection.length; i++)
-        {
+        for (let i = 0; i < endCollection.length; i++) {
           endCollection.item(i).innerHTML = json.french.schedule.end;
         }
 
-        
+
       }
 
     });

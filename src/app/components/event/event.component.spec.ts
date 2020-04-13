@@ -3,6 +3,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { EventComponent } from './event.component';
 import { By } from '@angular/platform-browser';
+import {autoSpy} from '../../../../auto-spy';
+import {Storage} from '@ionic/storage';
+import {AboutUsComponent} from '../about-us/about-us.component';
 
 describe('EventComponent', () => {
   let component: EventComponent;
@@ -21,6 +24,15 @@ describe('EventComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
+
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
   });
 
   it('should show the title of the page', () => {
@@ -60,3 +72,15 @@ describe('EventComponent', () => {
 
 
 });
+function setup() {
+  const storage = autoSpy(Storage);
+  const builder = {
+    default() {
+      return builder;
+    },
+    build() {
+      return new AboutUsComponent(storage);
+    }
+  };
+  return builder;
+}

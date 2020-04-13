@@ -14,6 +14,7 @@ import { DirectionsComponent } from './directions.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
+import {AboutUsComponent} from '../about-us/about-us.component';
 
 describe('DirectionsComponent', () => {
   let component: DirectionsComponent;
@@ -63,7 +64,14 @@ describe('DirectionsComponent', () => {
   it('when getTransportation is called it should get selected transportation', () => {
     expect(component.getTransportation).toBeTruthy();
 });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('when displayTravelInfo is called it should display travel time and distance', () => {
     const response =  { routes: [ {
         legs: [ {
@@ -131,3 +139,15 @@ it('when clearDirections is called it should', () => {
 });
 
 });
+function setup() {
+  const storage = autoSpy(Storage);
+  const builder = {
+    default() {
+      return builder;
+    },
+    build() {
+      return new AboutUsComponent(storage);
+    }
+  };
+  return builder;
+}

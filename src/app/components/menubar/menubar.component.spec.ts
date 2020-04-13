@@ -4,7 +4,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import { MenubarComponent } from './menubar.component';
 import {By} from '@angular/platform-browser';
-import { IonicStorageModule } from '@ionic/storage';
+import {IonicStorageModule, Storage} from '@ionic/storage';
+import {autoSpy} from '../../../../auto-spy';
+import {AboutUsComponent} from '../about-us/about-us.component';
 
 describe('MenubarComponent', () => {
   let component: MenubarComponent;
@@ -91,7 +93,14 @@ describe('MenubarComponent', () => {
     expect(component.LoadNewPage).toHaveBeenCalledWith('/AboutUs');
    });
   }));
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('should contain the name of the application', () => {
     const de = fixture.debugElement.query(By.css('ion-title:nth-child(2)'));
     expect(de.nativeElement.textContent).toContain('ConcordiaGo');
@@ -103,3 +112,15 @@ describe('MenubarComponent', () => {
 
 
 });
+function setup() {
+  const storage = autoSpy(Storage);
+  const builder = {
+    default() {
+      return builder;
+    },
+    build() {
+      return new AboutUsComponent(storage);
+    }
+  };
+  return builder;
+}
