@@ -58,13 +58,17 @@ describe('FavoritesComponent', () => {
 
   it('when openNewRouteWithDestination is called it should redirect to NewRoute with argument', async(inject([Router], (router) => {
     spyOn(router, 'navigate');
+    
     component.openNewRouteWithDestination('concordia university');
+    
     const directions = {destination: 'concordia university'};
+    
     const navigationExtras: NavigationExtras = {
       queryParams: {
         special: JSON.stringify(directions)
       }
     };
+
     expect(router.navigate).toHaveBeenCalledWith(['NewRoute'], navigationExtras);
   })));
 

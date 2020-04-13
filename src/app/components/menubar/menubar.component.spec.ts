@@ -93,34 +93,27 @@ describe('MenubarComponent', () => {
     expect(component.LoadNewPage).toHaveBeenCalledWith('/AboutUs');
    });
   }));
-  it('translate the page ', () => {
-    const { build } = setup().default();
-    const c = build();
 
-    const  spyTemp  =  spyOn(c , 'translatePage');
-    c.translatePage();
-    expect(spyTemp).toHaveBeenCalled();
+
+  it('translate the page ', async() => {
+    spyOn(component, 'translatePage');
+
+    component.translatePage();
+
+    expect(component.translatePage).toHaveBeenCalled();
   });
+
+  
+
   it('should contain the name of the application', () => {
     const de = fixture.debugElement.query(By.css('ion-title:nth-child(2)'));
     expect(de.nativeElement.textContent).toContain('ConcordiaGo');
   });
   it('should contain the menu title', () => {
-    const de = fixture.debugElement.query(By.css('ion-title:nth-child(1)'));
-    expect(de.nativeElement.textContent).toContain('Main Menu');
+    let title = document.getElementById('title').innerHTML;
+    expect(title).toEqual('Main Menu');
   });
 
 
 });
-function setup() {
-  const storage = autoSpy(Storage);
-  const builder = {
-    default() {
-      return builder;
-    },
-    build() {
-      return new AboutUsComponent(storage);
-    }
-  };
-  return builder;
-}
+

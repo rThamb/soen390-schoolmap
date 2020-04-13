@@ -8,10 +8,13 @@ import {Storage} from '@ionic/storage';
 })
 export class AboutUsComponent implements OnInit {
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) { 
+    this.translatePage();
+
+  }
 
   ngOnInit() {
-    this.translatePage();
+    
   }
 
   // Handles translating content on the page depending on languagePreference value set in storage.

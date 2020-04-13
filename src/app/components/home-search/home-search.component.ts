@@ -17,7 +17,7 @@ export class HomeSearchComponent implements OnInit {
 
   constructor(private bf: BuildingFactoryService, private storage: Storage) 
   {
-    this.languageSet();
+    this.translatePage();
   }
 
   ngOnInit() {
@@ -50,7 +50,7 @@ export class HomeSearchComponent implements OnInit {
     });
   }
   
-  async languageSet() {
+  async translatePage() {
     console.log('languageSet called');
     const res = await fetch('./assets/Languages/language.json');
     const json = await res.json();

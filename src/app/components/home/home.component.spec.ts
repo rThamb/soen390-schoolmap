@@ -24,14 +24,7 @@ describe('HomeComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
-  it('translate the page ', () => {
-    const { build } = setup().default();
-    const c = build();
 
-    const  spyTemp  =  spyOn(c , 'translatePage');
-    c.translatePage();
-    expect(spyTemp).toHaveBeenCalled();
-  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -51,15 +44,4 @@ describe('HomeComponent', () => {
   });
 });
 
-function setup() {
-  const storage = autoSpy(Storage);
-  const builder = {
-    default() {
-      return builder;
-    },
-    build() {
-      return new AboutUsComponent(storage);
-    }
-  };
-  return builder;
-}
+
