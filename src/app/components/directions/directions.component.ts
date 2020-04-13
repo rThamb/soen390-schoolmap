@@ -145,7 +145,7 @@ export class DirectionsComponent {
     if (this.sgwCampus.includes(inputField) || this.loyolaCampus.includes(inputField)) {
       return true;
     } else {
-      false;
+      return false;
     }
   }
 
