@@ -5,8 +5,8 @@ import {MapService} from '../../services/map/map.service';
 import {Storage} from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
+declare var google:any;
 
-declare var google
 
 @Component({
   selector: 'app-nearby-points-of-interest',
@@ -14,6 +14,7 @@ declare var google
   styleUrls: ['./nearby-points-of-interest.component.scss'],
 })
 export class NearbyPointsOfInterestComponent implements OnInit {
+
 
   mapHandle: MapComponent;
   map:any;

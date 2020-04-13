@@ -13,7 +13,7 @@ import { DebugElement } from '@angular/core';
 import {autoSpy} from '../../../../auto-spy';
 import {AboutUsComponent} from '../about-us/about-us.component';
 
-declare var google;
+declare var google:any;
 
 describe('NearbyPointsOfInterestComponent', () => {
   let component: NearbyPointsOfInterestComponent;
@@ -24,7 +24,8 @@ describe('NearbyPointsOfInterestComponent', () => {
       declarations: [ NearbyPointsOfInterestComponent],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       imports: [IonicModule.forRoot(), IonicStorageModule.forRoot(), RouterModule.forRoot([])],
-      providers: [MapService, Geolocation, { provide: APP_BASE_HREF, useValue : '/' } ]
+      providers: [MapService, Geolocation, { provide: APP_BASE_HREF, useValue : '/' }, 
+       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NearbyPointsOfInterestComponent);
@@ -33,16 +34,15 @@ describe('NearbyPointsOfInterestComponent', () => {
   }));
 
   it('should create', async () => {
-      expect(component).toBeTruthy();
+    expect(component).toBeTruthy();
   });
-  it('translate the page ', () => {
-    const { build } = setup().default();
-    const c = build();
 
-    const  spyTemp  =  spyOn(c , 'translatePage');
-    c.translatePage();
-    expect(spyTemp).toHaveBeenCalled();
+  it('translate the page ', () => {
+    spyOn(component, 'translatePage');
+
+    expect(component.translatePage).toHaveBeenCalled();
   });
+
   it('nearbyPOI should be called', () => {
 
     component.nearbyPOI = jasmine.createSpy('nearbyPOI spy');
@@ -59,43 +59,15 @@ describe('NearbyPointsOfInterestComponent', () => {
     expect(component.listPOI('', '', 'restaurant')).toBeFalsy();
   });
 
-  // it('translatePage should work', () => {
-  //   expect(component.translatePage).toBeTruthy();
-  // });
-
-
-
   it('should return a distance', () => {
     expect(component.calculateDistance('(45.4977417, -73.58028329999999)')).toBeTruthy();
   });
 
-  // it('should contain "Nearby Points of Interest"', () => {
-  //   const bannerElement: HTMLElement = fixture.nativeElement;
-  //   const p = bannerElement.querySelector('p');
-  //   expect(p.textContent).toEqual('Nearby Points of Interest');
-  // });
+  it('should load all UI elements to the screen', () => {
+    fixture.autoDetectChanges();
+    let el = fixture.debugElement.query(By.all());
+    console.log(el);
+    expect(el).toBeTruthy();
+  });
 
-  // it('should find the <p> with fixture.debugElement.query(By.css)', () => {
-  //   const bannerDe: DebugElement = fixture.debugElement;
-  //   const paragraphDe = bannerDe.query(By.css('p'));
-  //   const p: HTMLElement = paragraphDe.nativeElement;
-  //   expect(p.textContent).toEqual('Nearby Points of Interest');
-  // });
-
-  // it('should have Destination in "openButton"', () => {
-  //   const btn = fixture.debugElement.nativeElement.query(By.css('.openButton')).nativeElement;
-  //   expect(btn.innerHTML).toBe('Destination');
-  // });
-});
-function setup() {
-  const storage = autoSpy(Storage);
-  const builder = {
-    default() {
-      return builder;
-    },
-    build() {
-      return new AboutUsComponent(storage);
-    }
-  };
-  return builder;
-}
+})

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { authorizeAndGetEvents } from '../../../assets/calendar';
 import { HttpClient } from '@angular/common/http';
 import {Storage} from '@ionic/storage';
 import { NavController } from '@ionic/angular';

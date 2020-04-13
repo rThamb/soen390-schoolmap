@@ -18,8 +18,8 @@ export class NotificationsComponent implements OnInit {
   public events:any;
   public notifs = [];
 
-  constructor(public navCtrl: NavController,private plt:Platform,private localNotification:LocalNotifications,
-    private alertCtrl: AlertController, private http:HttpClient, private storage:Storage) {
+  constructor(public navCtrl: NavController,public plt:Platform,private localNotification:LocalNotifications,
+    private alertCtrl: AlertController, public http:HttpClient, public storage:Storage) {
       console.log(this.timesel)
       storage.ready().then(() => {
         // get a key/value pair

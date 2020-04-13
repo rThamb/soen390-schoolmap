@@ -34,7 +34,7 @@ fixture.detectChanges();
 
         const  spyTemp  =  spyOn(c , 'translatePage');
         c.translatePage();
-        expect(spyTemp).toHaveBeenCalled();
+        expect(component.translatePage()).toBeTruthy();
     });
   // covering both lines
   it('should contain a paragraph describing the app', () => {

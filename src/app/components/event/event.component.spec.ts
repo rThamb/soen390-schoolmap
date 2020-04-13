@@ -32,7 +32,7 @@ describe('EventComponent', () => {
 
     const  spyTemp  =  spyOn(c , 'translatePage');
     c.translatePage();
-    expect(spyTemp).toHaveBeenCalled();
+    expect(component.translatePage()).toBeTruthy();
   });
 
   it('should show the title of the page', () => {

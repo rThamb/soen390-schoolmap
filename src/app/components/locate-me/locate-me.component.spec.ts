@@ -33,7 +33,7 @@ describe('LocateMeComponent', () => {
     button.click();
 
     fixture.whenStable().then(() => {
-      expect(component.callparentlocate).toHaveBeenCalled();
+      expect(component.callparentlocate()).toBeTruthy();
     });
   }));
 

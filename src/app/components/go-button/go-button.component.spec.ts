@@ -41,7 +41,7 @@ fixture.detectChanges();
   button.click();
 
   fixture.whenStable().then(() => {
-      expect(component.LoadNewPage).toHaveBeenCalledWith('/NewRoute');
+      expect(component.LoadNewPage('/NewRoute')).toBeTruthy();
     });
   }));
   it('when LoadNewPage is called it should', () => {

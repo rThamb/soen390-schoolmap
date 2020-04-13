@@ -10,22 +10,24 @@ import { HTTP } from '@ionic-native/http/ngx';
 import {IonicStorageModule} from '@ionic/storage';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
 
 
 
 describe('ScheduleComponent', () => {
 
+    let fixture, component;
 
 
 beforeEach(() => {
                 TestBed.configureTestingModule({
-
                     declarations: [ScheduleComponent],
                     imports: [IonicModule.forRoot(), IonicStorageModule.forRoot(), RouterModule.forRoot([]), HttpClientModule]
                 }).configureTestingModule({
                     providers: [HttpClient]
                 }).compileComponents();
-
+                fixture = TestBed.createComponent(ScheduleComponent);
+                component = fixture.componentInstance;
             });
 
 
@@ -35,6 +37,13 @@ beforeEach(() => {
                 expect(component).toBeTruthy();
 
             });
+
+            it('should load all UI elements to the screen', () => {
+                fixture.autoDetectChanges();
+                let el = fixture.debugElement.query(By.all());
+                console.log(el);
+                expect(el).toBeTruthy();
+              });
 
 
 

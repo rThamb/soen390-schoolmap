@@ -28,16 +28,11 @@ describe('HomeSearchComponent', () => {
   });
 
   it('should emit location of indoorPOI when goToSearchResult is called', () =>{
-    spyOn(component, 'goToSearchResult');
-    component.goToSearchResult('HB840');
-    expect(component.goToSearchResult).toHaveBeenCalledWith('HB840');
+    expect(component.goToSearchResult('HB840')).toBeTruthy('');
   })
 
   it('should translate the page based on language preference', () => {
-    spyOn(component, 'translatePage');
-
-    component.translatePage();
-    expect(component.translatePage).toHaveBeenCalled();
+    expect(component.translatePage()).toBeTruthy();
   });
 
 

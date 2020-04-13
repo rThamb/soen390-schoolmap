@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { NewRouteComponent } from './new-route.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {autoSpy} from '../../../../auto-spy';
 import {Storage} from '@ionic/storage';
 import {AboutUsComponent} from '../about-us/about-us.component';
+import { By } from '@angular/platform-browser';
 
 describe('NewRouteComponent', () => {
   let component: NewRouteComponent;
@@ -22,27 +22,15 @@ describe('NewRouteComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
-  it('translate the page ', () => {
-    const { build } = setup().default();
-    const c = build();
 
-    const  spyTemp  =  spyOn(c , 'translatePage');
-    c.translatePage();
-    expect(spyTemp).toHaveBeenCalled();
-  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load all UI elements to the screen', () => {
+    fixture.autoDetectChanges();
+    let el = fixture.debugElement.query(By.all());
+    console.log(el);
+    expect(el).toBeTruthy();
+  });
 });
-function setup() {
-  const storage = autoSpy(Storage);
-  const builder = {
-    default() {
-      return builder;
-    },
-    build() {
-      return new AboutUsComponent(storage);
-    }
-  };
-  return builder;
-}

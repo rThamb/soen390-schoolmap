@@ -1,34 +1,33 @@
 import { NavController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
-import { Storage } from '@ionic/storage';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Storage, IonicStorageModule } from '@ionic/storage';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import {LocalNotifications} from '@ionic-native/local-notifications/ngx';
 import { NotificationsComponent } from './notifications.component';
-import { autoSpy } from 'auto-spy';
 import {By} from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 describe('NotificationsComponent', () => {
   let component: NotificationsComponent;
   let fixture: ComponentFixture<NotificationsComponent>;
 
   beforeEach(async(() => {
-const a = setup().default();
 TestBed.configureTestingModule({
       declarations: [ NotificationsComponent ],
-      imports: [IonicModule.forRoot()],
-      providers: [ LocalNotifications]
-    }).configureTestingModule({ providers: [{ provide: NavController, useValue: a.navCtrl },
-            { provide: Platform, useValue: a.plt },
-            { provide: AlertController, useValue: a.alertCtrl },
-            { provide: HttpClient, useValue: a.http },
-            { provide: Storage, useValue: a.storage }] }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [IonicModule.forRoot(), IonicStorageModule.forRoot(), RouterModule.forRoot([]), HttpClientModule],
+      providers: [HttpClient, LocalNotifications]
+    }).compileComponents();
 
-fixture = TestBed.createComponent(NotificationsComponent);
-component = fixture.componentInstance;
-fixture.detectChanges();
+  fixture = TestBed.createComponent(NotificationsComponent);
+  component = fixture.componentInstance;
+  fixture.autoDetectChanges();
+
+
   }));
 
   it('should create', () => {
@@ -36,65 +35,52 @@ fixture.detectChanges();
   });
 
   it('should contain a the able/disable text', () => {
-  const de = fixture.debugElement.query(By.css('.lines'));
-  expect(de.nativeElement.textContent).toContain('Allow notifications');
-
+   const de = fixture.debugElement.query(By.css('.lines'));
+    expect(de.nativeElement.textContent).toContain('Allow notifications');
   });
 
   it('when Clicked is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    const b = c.Clicked();
-    // assert
-    expect(b).toBeDefined();
+    spyOn(component, 'Clicked');
+    component.Clicked();
+    expect(component.Clicked).toHaveBeenCalled();
 });
 
   it('when refreshEvents is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    const b = c.refreshEvents();
-    // assert
-
-    expect(b).toBeDefined();
+    spyOn(component, 'refreshEvents');
+    component.refreshEvents();
+    expect(component.refreshEvents).toHaveBeenCalled();
 });
 
   it('when ngOnInit is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    const b =  c.ngOnInit();
-   // assert
-    // tslint:disable-next-line:no-unused-expression
-    expect(b).toBeDefined();
+    spyOn(component, 'ngOnInit');
+
+    component.ngOnInit();
+
+    expect(component.ngOnInit).toHaveBeenCalled();
 });
+
+it('when onChange is called it should', () => {
+  spyOn(component, 'onChange');
+
+  component.onChange(15);
+
+  expect(component.onChange).toHaveBeenCalledWith(15);
+});
+
+  it('should create a sample notification alert using showAlert()', () => {
+    spyOn(component, 'showAlert');
+    component.showAlert('ex','ex','ex');
+
+    expect(component.showAlert).toHaveBeenCalled();
+  });
+
+  it('should load all UI elements to the screen', () => {
+    fixture.autoDetectChanges();
+    let el = fixture.debugElement.query(By.all());
+    console.log(el);
+    expect(el).toBeTruthy();
+  });
 
 });
 
-function setup() {
-    const navCtrl = autoSpy(NavController);
-    const plt = autoSpy(Platform);
-    const localNotification = autoSpy(LocalNotifications);
-    const alertCtrl = autoSpy(AlertController);
-    const http = autoSpy(HttpClient);
-    const storage = autoSpy(Storage);
-    const builder = {
-        navCtrl,
-        plt,
-        localNotification,
-        alertCtrl,
-        http,
-        storage,
-        default() {
-            return builder;
-        },
-        build() {
-            return new NotificationsComponent(navCtrl, plt, localNotification, alertCtrl, http, storage);
-        }
-    };
-    return builder;
-}
+
