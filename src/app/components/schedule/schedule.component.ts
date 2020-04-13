@@ -15,12 +15,9 @@ export class ScheduleComponent implements OnInit {
   public email: string;
   public today;
 
-  constru;
-  private http: any;
-  private storage: any;
-  private navCtrl: any;
   a: string;
-  ctor(http: HttpClient, storage: Storage, navCtrl: NavController) {
+
+  constructor(public http: HttpClient, public storage: Storage, public navCtrl: NavController) {
     this.today = Date.now();
     this.getNextEvents();
   }

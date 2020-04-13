@@ -65,7 +65,7 @@ function setup() {
                 return builder;
             },
             build() {
-                return new ScheduleComponent();
+                return new ScheduleComponent(http,storage,navCtrl);
             }
         };
         return builder;
