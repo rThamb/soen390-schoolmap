@@ -12,11 +12,11 @@ import { getLocaleDateTimeFormat } from '@angular/common';
   styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
-toggleval:boolean;
-timesel:number;
-events:any;
-notifs = [];
 
+  public toggleval:boolean;
+  public timesel:number;
+  public events:any;
+  public notifs = [];
 
   constructor(public navCtrl: NavController,private plt:Platform,private localNotification:LocalNotifications,
     private alertCtrl: AlertController, private http:HttpClient, private storage:Storage) {
@@ -24,19 +24,21 @@ notifs = [];
       storage.ready().then(() => {
         // get a key/value pair
          storage.get('toggleval').then((val) => {
-         this.toggleval=val;
-         console.log('Status = ', val)
+           if(val == undefined)
+           {
+             this.toggleval = false;
+             storage.set('toggleval', false);
+           }
+           else if(val == true)
+           {
+             storage.get('timesel').then((ts) => {
+              this.timesel = ts;
+             });
+             this.toggleval = val;
+           }
+          
          })
-         storage.get('timesel').then((v) => {     
-          this.storage.set('timesel',15);
-            this.timesel=v;
-          console.log('timeselected = ',v)});
-        });  
 
-        this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
-        
-          this.events = data;
-        
         });
      
 
@@ -49,9 +51,6 @@ notifs = [];
           
         });
       });
-
-     
-
    }
    
    showAlert(header,sub,msg){
@@ -63,10 +62,20 @@ notifs = [];
      }).then(alert=>alert.present());
    }
    Clicked(){
-    this.storage.set('toggleval',this.toggleval)
+     debugger;
+     console.log(this.toggleval);
+    this.storage.set('toggleval', this.toggleval)
+    
+    if(this.toggleval == false)
+    {
+      this.timesel = null;
+      this.storage.set('timesel', null);
+    }
+
    }
-   onChange(value){
-    this.storage.set('timesel',value)
+   onChange(timesel){
+    this.storage.set('timesel', timesel)
+    this.timesel = timesel;
     this.refreshEvents()
     console.log(this.timesel);
   }
@@ -96,13 +105,12 @@ notifs = [];
           id: i,
           title: this.events[i].summary,
           text: 'You have an upcoming event in ' + this.timesel +' minutes',
-          trigger: { in: (5*(i+1)), unit: ELocalNotificationTriggerUnit.SECOND },
+          trigger: { in: eventTrigger, unit: ELocalNotificationTriggerUnit.SECOND },
           vibrate:true,
           foreground:true
         }
 
         this.notifs.push(notif);
-
 
       }
 
