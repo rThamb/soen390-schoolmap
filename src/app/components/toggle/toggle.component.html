@@ -1,10 +1,10 @@
 
-<ion-toolbar class="toolbar">
+<ion-toolbar class="toolbar" (ionChange)="callToggleEvent($event)">
   <ion-segment>
-    <ion-segment-button value="loyola"(ionSelect)="callparentloy()">
+    <ion-segment-button value="loyola">
       <ion-label>LOYOLA</ion-label>
     </ion-segment-button>
-    <ion-segment-button  value="sgw" (ionSelect)="callparentsgw()">
+    <ion-segment-button  value="sgw">
       <ion-label>SIR GEORGE</ion-label>
     </ion-segment-button>
   </ion-segment>

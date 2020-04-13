@@ -723,6 +723,7 @@ markerListener(marker: any, content: string)
 //Listener for enter building button
 enterBuildingEventListener(id: string, polygon: any, marker: any, usePOI: boolean)
 {
+  debugger;
   const self = this;
   document.getElementById(id).addEventListener("click", () => {
     self.infoWindow.close();

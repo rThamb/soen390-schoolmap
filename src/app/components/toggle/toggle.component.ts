@@ -20,11 +20,26 @@ export class ToggleComponent implements OnInit {
   }
 
   callparentloy(){
+    console.log('yo');
     this.toggleevent.emit(new Location(45.458234, -73.640493, 0));
   }
 
   callparentsgw(){
+    console.log('yo');
+
     this.toggleevent.emit(new Location(45.494711, -73.577871, 0));
+  }
+
+  callToggleEvent(event)
+  {
+    if(event.detail.value == 'loyola')
+    {
+      this.toggleevent.emit(new Location(45.458234, -73.640493, 0));
+    }
+    else if(event.detail.value == 'sgw')
+    {
+      this.toggleevent.emit(new Location(45.494711, -73.577871, 0));
+    }
   }
 
   }
