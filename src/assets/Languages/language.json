@@ -54,8 +54,8 @@
             "email": "E-mail: ",
             "date": "Today: ",
             "event": "Upcoming classes / Events:",
-            "start":"Start: ",
-            "end":"End: "
+            "start": "Start: ",
+            "end": "End: "
         },
         "settings": {
             "title": "Settings",
@@ -78,6 +78,14 @@
         },
         "nearbyPOI": {
             "title": "Nearby Points of Interest"
+        },
+        "events": {
+            "title": "ALL EVENTS ARE CANCELLED !",
+            "alertButton": "COVID-19 alert!",
+            "info1": "Please note that any access to the University will be forbidden up to May 4th.",
+            "info2": " Until further notice, all events on Loyola and Sir George Campus has been canceled due to the actual situation that we are facing.",
+            "info3": "For more assistance and information about the actual situation, please visit ",
+            "info4": "Concordia's COVID-19 updates"
         }
     },
 
@@ -136,8 +144,8 @@
             "email": "Courriel: ",
             "date": "Aujourd'hui: ",
             "event": "Cours / événements à venir:",
-            "start":"Debut: ",
-            "end":"Fin: "
+            "start": "Debut: ",
+            "end": "Fin: "
         },
         "settings": {
             "title": "Paramètres",
@@ -160,6 +168,15 @@
         },
         "nearbyPOI": {
             "title": "Points d'Intérêt à Proximité"
+        },
+        "events": {
+            "title": "ÉVENEMENTS ANNULÉS",
+            "alertButton": "Avertissement COVID-19!",
+            "info1": "Veuillez noter que tout accès à l'Université sera interdit jusqu'au 4 mai.",
+            "info2": "Jusqu'à nouvel ordre, tous les événements sur le campus Loyola et Sir George ont été annulés en raison de la situation actuelle à laquelle nous sommes confrontés.",
+            "info3": "Pour plus d'assistance et d'informations sur la situation actuelle, veuillez visiter ",
+            "info4": "Mises à jour COVID-19 de Concordia"
+
         }
     }
 }

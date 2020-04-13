@@ -46,9 +46,21 @@ describe('EventComponent', () => {
       });
 
   it('should show information of the page', () => {
-    const de = fixture.debugElement.query(By.css('.info'));
+    const de = fixture.debugElement.query(By.css('.info1'));
     expect(de.nativeElement.textContent).toContain('Please note that any access to the University');
       });
+  it('should show information of the page', () => {
+        const de = fixture.debugElement.query(By.css('.info2'));
+        expect(de.nativeElement.textContent).toContain('Until further notice');
+          });
+  it('should show information of the page', () => {
+            const de = fixture.debugElement.query(By.css('.info3'));
+            expect(de.nativeElement.textContent).toContain('For more assistance');
+              });
+  it('should show information of the page', () => {
+                const de = fixture.debugElement.query(By.css('.info4'));
+                expect(de.nativeElement.textContent).toContain('Concordia');
+                  });
 
   it('should have a clickable button to concordias COVID19 website', async(() => {
       const button = fixture.debugElement.nativeElement.querySelector('link');
