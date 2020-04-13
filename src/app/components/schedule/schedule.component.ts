@@ -16,28 +16,31 @@ export class ScheduleComponent implements OnInit {
   public email: string;
   public today;
 
-  constructor(private http: HttpClient, private storage: Storage, public navCtrl: NavController) 
-  {
+  constru;
+  private http: any;
+  private storage: any;
+  private navCtrl: any;
+  a: string;
+  ctor(http: HttpClient, storage: Storage, navCtrl: NavController) {
     this.today = Date.now();
     this.getNextEvents();
-    this.translatePage();
   }
 
   ngOnInit() 
   {
-
+    
   }
-
+  setEvent(a) {
+    this.events = a;
+  }
   /**
    * Sends a request to the websever for retrieving upcoming calendar events from the gmail account
    */
-  getNextEvents()
-  {
+  getNextEvents() {
   this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
-  console.log(data);  
+  console.log(data);
 
-      if(data)
-      {
+  if (data) {
         console.log(data);
         this.events = data;
         this.email = this.events[0].creator.email;
@@ -49,48 +52,45 @@ export class ScheduleComponent implements OnInit {
         for(var i = 0; i < this.events.length; i++){
           if(this.events[i].start.dateTime || this.events[i].end.dateTime)
           {
+            this.events[i].start.dateTimeString = new Date(this.events[i].start.dateTime).toLocaleString();
+            this.events[i].end.dateTimeString = new Date(this.events[i].end.dateTime).toLocaleString();
             
           }
-
         }
 
-      }
-      else{
+      } else {
         console.log('No events available');
       }
+
+      this.translatePage();
       
     })
   }
 
   /**
-   * When user clicks on an event, redirects them to the New Route page with the event's location set as the destination. 
+   * When user clicks on an event, redirects them to the New Route page with the event's location set as the destination.
    * @param location
    */
-  goToEventLocation(location)
-  {
+  goToEventLocation(location) {
     this.storage.ready().then(() => {
       this.storage.set('newRouteDest', location);
     });
 
     this.navCtrl.navigateRoot('/NewRoute');
-
     console.log(location);
-
   }
 
-  async translatePage()
-  {
-    let res = await fetch("./assets/Languages/language.json");
-    let json = await res.json();
+  async translatePage() {
+    const res = await fetch('./assets/Languages/language.json');
+    const json = await res.json();
 
-    //check if language is english with storage
+    // check if language is english with storage
     this.storage.ready().then(() => {
 
-      this.storage.get('languagePreference').then((lP)=> {
+      this.storage.get('languagePreference').then((lP) => {
 
       // If no setting has been set, default is english
-      if(lP == null)
-      {
+      if (lP == null) {
         lP = 'English';
         this.storage.set('languagePreference', 'English');
       }
@@ -99,14 +99,22 @@ export class ScheduleComponent implements OnInit {
         document.getElementById("email").innerHTML = json.english.schedule.email;
         document.getElementById("date").innerHTML = json.english.schedule.date;
         document.getElementById("upcoming").innerHTML = json.english.schedule.event;
-        for (var i=0; i < document.getElementsByClassName("eventStart").length; i++)
+
+        let startCollection = document.getElementsByClassName("eventStart");
+        let endCollection = document.getElementsByClassName("eventEnd");
+
+
+        for(let i = 0; i < startCollection.length; i++)
         {
-          document.getElementsByClassName("eventStart")[i].innerHTML = json.english.schedule.start;
+          startCollection.item(i).innerHTML = json.english.schedule.start;
         }
-        for (var i=0; i < document.getElementsByClassName("eventEnd").length; i++)
+
+        for(let i = 0; i < endCollection.length; i++)
         {
-          document.getElementsByClassName("eventEnd")[i].innerHTML = json.english.schedule.end;
+          endCollection.item(i).innerHTML = json.english.schedule.end;
         }
+
+
       }
       //check if language is french with storage
       else if (lP == 'French')
@@ -114,22 +122,27 @@ export class ScheduleComponent implements OnInit {
         document.getElementById("email").innerHTML = json.french.schedule.email;
         document.getElementById("date").innerHTML = json.french.schedule.date;
         document.getElementById("upcoming").innerHTML = json.french.schedule.event;
-        console.log(document.getElementsByClassName("eventStart").length);
-        var len = document.getElementsByClassName("eventStart");
-        console.log(len.length);
-        for (var i=0; i < document.getElementsByClassName("eventStart").length; i++)
+      
+        let startCollection = document.getElementsByClassName("eventStart");
+        let endCollection = document.getElementsByClassName("eventEnd");
+
+
+        for(let i = 0; i < startCollection.length; i++)
         {
-          document.getElementsByClassName("eventStart")[i].innerHTML = json.french.schedule.start;
+          startCollection.item(i).innerHTML = json.french.schedule.start;
         }
-        for (var i=0; i < document.getElementsByClassName("eventEnd").length; i++)
+
+        for(let i = 0; i < endCollection.length; i++)
         {
-          document.getElementsByClassName("eventEnd")[i].innerHTML = json.french.schedule.end;
+          endCollection.item(i).innerHTML = json.french.schedule.end;
         }
+
+        
       }
 
     });
 
-    })
+    });
   }
 
 }

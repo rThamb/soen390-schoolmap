@@ -26,7 +26,6 @@ export class ToggleComponent implements OnInit {
 
   callparentsgw(){
     console.log('yo');
-
     this.toggleevent.emit(new Location(45.494711, -73.577871, 0));
   }
 
