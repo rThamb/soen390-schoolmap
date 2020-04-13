@@ -12,10 +12,13 @@ export class FavoritesComponent implements OnInit {
   favorite;
   favorites;
 
-  constructor(private storage: Storage, private router: Router) { }
+  constructor(private storage: Storage, private router: Router) {
+    this.translatePage();
+   }
 
   ngOnInit() {
     this.getFavorites();
+    this.translatePage();
   }
 
   // When the form is submitted the new favorite location is added to local storage.
@@ -47,21 +50,30 @@ export class FavoritesComponent implements OnInit {
   }
 
   // Prompts the user with a confirmation message before removing an item from their favorites.
-  deleteFavorite(favoriteName: string) {
-    if (confirm('Are you sure you would like remove this item from your favorites?') === true) {
-      this.storage.get('favorites').then((val) => {
-        if (val) {
-          const value = JSON.parse(val);
-          const index = value.indexOf(favoriteName, 0);
-          if (index > -1) {
-            value.splice(index, 1);
-            this.storage.set('favorites', JSON.stringify(value));
+  async deleteFavorite(favoriteName: string) {
+    let userConfirm
+    await this.storage.get('languagePreference').then((lP) => {
+      if (lP === 'French') {
+        userConfirm = confirm('Voulez-vous supprimer cet article?');
+      } else {
+        userConfirm = confirm('Are you sure you would like remove this item from your favorites?');
+      }
+
+      if (userConfirm === true) {
+        this.storage.get('favorites').then((val) => {
+          if (val) {
+            const value = JSON.parse(val);
+            const index = value.indexOf(favoriteName, 0);
+            if (index > -1) {
+              value.splice(index, 1);
+              this.storage.set('favorites', JSON.stringify(value));
+            }
           }
-        }
-        // Reload page
-        this.ngOnInit();
-      });
-    }
+          // Reload page
+          this.ngOnInit();
+        });
+      }
+    });
   }
 
   // Launches the new route page with a specific location set as the destination.
@@ -73,6 +85,29 @@ export class FavoritesComponent implements OnInit {
       }
     };
     this.router.navigate(['NewRoute'], navigationExtras);
+  }
+
+  async translatePage() {
+
+    this.storage.ready().then(() => {
+      this.storage.get('languagePreference').then((lP) => {
+
+        if (lP == null) {
+          this.storage.set('languagePreference', 'English');
+        }
+        if ( lP === 'French') {
+          document.getElementById('addFavText').innerHTML = 'Ajouter favori';
+          document.getElementsByName('favoriteLocation')[0].setAttribute('placeholder', 'Localisation');
+          if(this.favorites && this.favorites.length && document.getElementById('myFavText') != null)
+            document.getElementById('myFavText').innerHTML = 'Mes Favoris';
+        } else {
+          document.getElementById('addFavText').innerHTML = 'Add Favorite';
+          document.getElementsByName('favoriteLocation')[0].setAttribute('placeholder', 'Location');
+          if(this.favorites && this.favorites.length && document.getElementById('myFavText') != null)
+            document.getElementById('myFavText').innerHTML = 'My Favorites';         
+        }
+      });
+    });
   }
 
 }

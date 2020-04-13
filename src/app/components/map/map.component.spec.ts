@@ -169,13 +169,7 @@ fixture.detectChanges();
 
 
   it('when getCurrentLocation is called it should Get the current location of user and focus map to that point', async () => {
-    // arrange
-    //const { build } = setup().default();
-    //const c = build();
-    // act
-    // let currentLoc = this.getCurrentLocation();
-    // const user = User;
-    // c.user.getLocation().getGoogleLatLng();
+
     spyOn(component, 'getCurrentLocation');
     component.getCurrentLocation();
     // assert
@@ -267,10 +261,7 @@ fixture.detectChanges();
 });
 
   it('when enterBuildingEventListener is called it should', () => {
-    // arrange
-    //const { build } = setup().default();
-    //const c = build();
-    // act
+
     const id = 'HB';
     const pathCoordinates = [];
     const path = new google.maps.Polyline({
@@ -350,11 +341,7 @@ fixture.detectChanges();
     // arrange
     const { build } = setup().default();
     const c = build();
-    // act
-    //c.showHallBuildingIndoor(true);
-    // assert
-    //expect(c.showHallBuildingIndoor(true)).toBeTruthy();
-
+    
     spyOn(component, 'showHallBuildingIndoor');
     c.showHallBuildingIndoor(false);
     fixture.detectChanges(); // trigger ngOnInit here
