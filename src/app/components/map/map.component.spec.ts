@@ -18,7 +18,7 @@ import {User} from '../../models/User';
 import { expressionType } from '@angular/compiler/src/output/output_ast';
 declare var google;
 
-fdescribe('MapComponent', () => {
+describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
   let spy: any;
