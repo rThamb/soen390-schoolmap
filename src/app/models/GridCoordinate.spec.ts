@@ -1,6 +1,6 @@
 
 import {GridCoordinate} from './GridCoordinate';
-fdescribe('GridCoordinate', () => {
+describe('GridCoordinate', () => {
 it('should create GridCoordinate', () => {
     const { build } = setup().default();
     const c = build();
