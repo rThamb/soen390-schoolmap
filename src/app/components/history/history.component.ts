@@ -79,7 +79,7 @@ export class HistoryComponent implements OnInit {
     });
 
     history = JSON.parse(history)
-    let numDates = history["dates"].length
+    // let numDates = history["dates"].length
     this.historyLocations = []
   
     let date = Object.keys(history["dates"][index])[0]

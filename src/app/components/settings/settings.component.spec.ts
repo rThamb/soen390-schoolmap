@@ -15,7 +15,6 @@ describe('SettingsComponent', () => {
   let fixture: ComponentFixture<SettingsComponent>;
 
   beforeEach(async(() => {
-const a = setup().default();
 TestBed.configureTestingModule({
       declarations: [ SettingsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -72,8 +71,8 @@ fixture.detectChanges();
 
   it('when onChangeSetting is called it should change settings based on user choice', () => {
   // arrange
-  const { build } = setup().default();
-  const c = build();
+  //const { build } = setup().default();
+  //const c = build();
   // act
   const useStairs = true;
   spyOn(component, 'onChangeSetting');

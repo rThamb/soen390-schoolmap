@@ -167,7 +167,7 @@ fixture.detectChanges();
   it('when getCurrentLocation is called it should Get the current location of user and focus map to that point', async () => {
     // arrange
     const { build } = setup().default();
-    const c = build();
+    //const c = build();
     // act
     // let currentLoc = this.getCurrentLocation();
     // const user = User;
@@ -298,7 +298,6 @@ fixture.detectChanges();
     const c = build();
     // act
     const hallID = 'HB';
-    const hallCenter = {lat: 45.497092, lng: -73.578974};
     const marker = new google.maps.Marker
     ({
       position: '',
@@ -330,8 +329,8 @@ fixture.detectChanges();
 
   it('when addFloorOverlay is called it should add floor layer', () => {
     // arrange
-    const { build } = setup().default();
-    const c = build();
+    // const { build } = setup().default();
+    // const c = build();
     // act
     //this.buildingFactory= BuildingFactoryService;
     //const b: Building = this.buildingFactory.loadBuilding('HB');

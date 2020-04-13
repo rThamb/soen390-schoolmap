@@ -51,7 +51,7 @@ export class ScheduleComponent implements OnInit {
 
         for (let i = 0; i < this.events.length; i++) {
           if (this.events[i].start.dateTime || this.events[i].end.dateTime) {
-
+            //to fill or delete if no longer needed
           }
 
         }

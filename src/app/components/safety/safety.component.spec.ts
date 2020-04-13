@@ -12,7 +12,6 @@ describe('SafetyComponent', () => {
   let fixture: ComponentFixture<SafetyComponent>;
 
   beforeEach(async(() => {
-    const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ SafetyComponent ],
       imports: [IonicModule.forRoot(), IonicStorageModule.forRoot()  ]

@@ -11,7 +11,6 @@ describe('ToggleComponent', () => {
   let fixture: ComponentFixture<ToggleComponent>;
 
   beforeEach(async(() => {
-    const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ ToggleComponent, MapComponent ],
       schemas: [NO_ERRORS_SCHEMA],

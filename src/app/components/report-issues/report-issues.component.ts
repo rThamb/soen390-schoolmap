@@ -32,8 +32,7 @@ export class ReportIssuesComponent {
   send() {
 
     this.emailComposer.isAvailable().then((available: boolean) => {
-      if (available) {
-      }
+      
     });
 
     let email = {

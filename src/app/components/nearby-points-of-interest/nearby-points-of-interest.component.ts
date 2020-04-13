@@ -57,7 +57,7 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   }
 
   //Sends a request for a poi type
-  nearbyPOI(type: String)
+  nearbyPOI(type: string)
   {
     let self = this;
 
@@ -105,7 +105,7 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   }
 
   //Calculate distance between 2 latlng points
-  calculateDistance(dest: String): Number
+  calculateDistance(dest: string): number
   {
     var distance = google.maps.geometry.spherical.computeDistanceBetween(this.mapHandle.getCurrentLocation(), dest);
     return distance;

@@ -10,9 +10,7 @@ import {autoSpy} from '../../../../auto-spy';
 import { HTTP } from '@ionic-native/http/ngx';
 
 describe('ScheduleComponent', () => {
-
-
-    const events = 'data';
+    
     it('should create the schedule component', () => {
       const { build } = setup().default();
       const c = build();

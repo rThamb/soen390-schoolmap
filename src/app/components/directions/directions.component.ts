@@ -614,14 +614,14 @@ export class DirectionsComponent {
 
     if(!result){
         buildingObject = await this.buildFactoryService.loadBuilding("HB");
-        result = await buildingObject.getIndoorPOIInBuilding(dest) != null;
+        result = buildingObject.getIndoorPOIInBuilding(dest) != null;
     }
 
     if(result){//if not null he wants to go to a valid classroom
 
       if(!this.gpsMapService.userInBuilding(user, buildingObject)){
         //should pass GoogleLngLat instead, hardcode start for now
-        await this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
+        this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
         let userIndoorStartLocation = buildingObject.getBuildingLocation();
         this.mapHandle.showHallBuildingIndoor(false);
         // hacky solution, need to set the start location for ground floor when arrived

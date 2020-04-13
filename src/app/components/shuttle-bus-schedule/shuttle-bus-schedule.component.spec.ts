@@ -13,7 +13,6 @@ describe('ShuttleBusScheduleComponent', () => {
   let fixture: ComponentFixture<ShuttleBusScheduleComponent>;
 
   beforeEach(async(() => {
-    const a = setup().default();
     TestBed.configureTestingModule({
       declarations: [ ShuttleBusScheduleComponent ],
       schemas: [NO_ERRORS_SCHEMA],

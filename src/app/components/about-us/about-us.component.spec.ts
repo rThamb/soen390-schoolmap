@@ -13,7 +13,6 @@ describe('AboutUsComponent', () => {
   let fixture: ComponentFixture<AboutUsComponent>;
 
   beforeEach(async(() => {
-const a = setup().default();
 TestBed.configureTestingModule({
       declarations: [ AboutUsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
