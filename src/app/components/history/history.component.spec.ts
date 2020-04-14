@@ -13,7 +13,7 @@ describe('HistoryComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HistoryComponent ],
-      imports: [IonicModule.forRoot(), IonicStorageModule.forRoot()]
+      imports: [IonicModule.forRoot(), IonicStorageModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HistoryComponent);
