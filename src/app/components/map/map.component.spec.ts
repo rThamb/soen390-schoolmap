@@ -77,56 +77,6 @@ fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
-//   it('should create a marker and return it', async() => {
-//     fixture.detectChanges();
-//     const map = component.map;
-//     const locations = '';
-//     const obtainedMarker = component.createMarker(locations, 'Test');
-
-//     const expectedMarker = new google.maps.Marker
-//     ({
-//       position: locations,
-//       map: map,
-//       icon: '',
-//       label:
-//       {
-//           color: 'black',
-//           fontWeight: 'bold',
-//           text: 'Test',
-//           fontSize: '21px'
-//       },
-//     });
-//     expect(obtainedMarker).toEqual(expectedMarker);
-//   });
-
-//   it('should create a polygon and return it', async() => {
-//     fixture.detectChanges();
-//     const map = component.map;
-
-//     const testPath =
-//     [
-//       {lat: 45.497372, lng: -73.578338},
-//       {lat: 45.496826, lng: -73.578859}
-//     ];
-
-//     const obtainedPolygon = component.createPolygon('', 'building');
-
-//     let expectedPolygon;
-//     expectedPolygon = new google.maps.Polygon({
-//       paths: '',
-//       fillColor: 'deepskyblue',
-//     });
-//     expectedPolygon.setMap(map);
-//     expect(obtainedPolygon).toEqual(expectedPolygon);
-//   });
-
-//   it('method should be called', async (() => {
-//     spyOn(component, 'clearAllPOIMarkers');
-//     expect(component).toBeDefined();
-//     expect(spy);
-//     expect(component.clearAllPOIMarkers).toBeTruthy();
-// }));
-
   it('ngAfterViewInit should be called', () => {
   component.ngAfterViewInit();
   fixture.detectChanges(); // trigger ngOnInit here
