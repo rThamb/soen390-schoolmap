@@ -18,7 +18,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-textarea id="body" [(ngModel)]="body" placeholder="Message" formControlName="message"></ion-textarea>
+      <ion-textarea id="body" [(ngModel)]="body" placeholder="Message" formControlName="message" rows="13"></ion-textarea>
     </ion-item><br>
 
     <button class="reportIssue" id="submit" type="submit" [disabled]="!issue.valid" (click)="send()">Submit</button>

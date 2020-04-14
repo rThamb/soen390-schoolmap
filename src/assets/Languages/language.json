@@ -54,8 +54,8 @@
             "email": "E-mail: ",
             "date": "Today: ",
             "event": "Upcoming classes / Events:",
-            "start":"Start: ",
-            "end":"End: "
+            "start": "Start: ",
+            "end": "End: "
         },
         "settings": {
             "title": "Settings",
@@ -71,13 +71,26 @@
             "notif": "Notifications"
         },
         "shuttle": {
+            "departure": "Departure Time",
             "monToThur": "Monday to Thursday bus schedule",
-            "depLoy": "Departure from Loyola",
-            "depSGW": "Departure from SGW",
             "friday": "Friday bus schedule"
         },
         "nearbyPOI": {
             "title": "Nearby Points of Interest"
+        },
+        "events": {
+            "title": "ALL EVENTS ARE CANCELLED !",
+            "alertButton": "COVID-19 alert!",
+            "info1": "Please note that any access to the University will be forbidden up to May 4th.",
+            "info2": " Until further notice, all events on Loyola and Sir George Campus has been canceled due to the actual situation that we are facing.",
+            "info3": "For more assistance and information about the &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; current situation, please visit: ",
+            "info4": "Concordia's COVID-19 updates"
+        },
+        "notifications":{
+            "toggle": "Allow notifications",
+            "select": "Choose a value",
+            "options":"Notify me before"
+            
         }
     },
 
@@ -136,8 +149,8 @@
             "email": "Courriel: ",
             "date": "Aujourd'hui: ",
             "event": "Cours / événements à venir:",
-            "start":"Debut: ",
-            "end":"Fin: "
+            "start": "Debut: ",
+            "end": "Fin: "
         },
         "settings": {
             "title": "Paramètres",
@@ -154,12 +167,28 @@
         },
         "shuttle": {
             "monToThur": "Horaires du Lundi au Jeudi",
-            "depLoy": "Départ de Loyola",
-            "depSGW": "Départ de SGW",
+            "departure": "Heures de Départ",
             "friday": "Horaire du Vendredi"
         },
         "nearbyPOI": {
             "title": "Points d'Intérêt à Proximité"
+        },
+        "events": {
+            "title": "ÉVENEMENTS ANNULÉS",
+            "alertButton": "Avertissement COVID-19!",
+            "info1": "Veuillez noter que tout accès à l'Université sera interdit jusqu'au 4 mai.",
+            "info2": "Jusqu'à nouvel ordre, tous les événements sur le campus Loyola et Sir George ont été annulés en raison de la situation actuelle à laquelle nous sommes confrontés.",
+            "info3": "Pour plus d'assistance et d'informations sur la &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; situation actuelle, veuillez visiter ",
+            "info4": "Mises à jour COVID-19 de Concordia"
+
+        },
+        "notifications":{
+            "toggle": "Autoriser les notifications",
+            "select": "Choisissez une valeur",
+            "options":"prévenez moi avant"
+            
         }
+
+
     }
 }

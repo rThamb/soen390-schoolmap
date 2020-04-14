@@ -84,6 +84,13 @@ fixture.detectChanges();
     });
 });
 
+it('should load all UI elements to the screen', () => {
+  fixture.autoDetectChanges();
+  let el = fixture.debugElement.query(By.all());
+  console.log(el);
+  expect(el).toBeTruthy();
+});
+
 });
 
 function setup() {

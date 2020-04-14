@@ -324,7 +324,6 @@ export class DirectionsComponent {
       travelMode,
     }, (response, status) => {
       if (status === 'OK') {
-        console.log(response);
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
         directionsForm.style.display = 'none';

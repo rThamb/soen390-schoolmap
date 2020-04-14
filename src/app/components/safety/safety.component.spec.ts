@@ -22,11 +22,25 @@ describe('SafetyComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('should contain information and phone numbers for different emergencies', () => {
     const de = fixture.debugElement.query(By.css('.title'));
     expect(de.nativeElement.textContent).toContain('YOUR SAFETY');
@@ -64,6 +78,13 @@ describe('SafetyComponent', () => {
     const de37 = fixture.debugElement.query(By.css('.info'));
     expect(de37.nativeElement.textContent).toContain('option 2');
 
+  });
+
+  it('should load all UI elements to the screen', () => {
+    fixture.autoDetectChanges();
+    let el = fixture.debugElement.query(By.all());
+    console.log(el);
+    expect(el).toBeTruthy();
   });
 });
 

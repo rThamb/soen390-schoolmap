@@ -1,27 +1,28 @@
 <head></head>
+
 <body>
-<ion-content>
-  <ion-toolbar style="padding-top: 1.5cm;">
-    <ion-buttons slot="end">
-    <ion-button (click)="changeStyle()">
-      <ion-icon name="bulb"slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-  
-  </ion-toolbar>
+    <ion-content>
+        <ion-toolbar style="padding-top: 1.5cm;">
+            <ion-buttons slot="end">
+                <ion-button (click)="changeStyle()">
+                    <ion-icon name="bulb" slot="icon-only"></ion-icon>
+                </ion-button>
+            </ion-buttons>
 
-  <h3 class="monday" id="textMonToThur" >Monday to Thursday bus schedule</h3>
-  
-  <ngx-datatable [rows]="arro" [ngClass]="tableStyle" [rowHeight]="'auto'" [headerHeight]="50" [columnMode]="'force'">
-    <ngx-datatable-column id="textDepLoy1" name="Departure from Loyola" prop="loym" [sortable]="false"></ngx-datatable-column>
-    <ngx-datatable-column id="textDepSGW1" name="Departure from SGW" prop="sgwm" [sortable]="false"></ngx-datatable-column>
-  </ngx-datatable>
+        </ion-toolbar>
+        <h2 class="departure" id="departure">Departure Time</h2>
+        <h3 class="monday" id="textMonToThur">Monday to Thursday bus schedule</h3>
 
-  <h3 id="textFriday" class="friday">Friday bus schedule</h3>
+        <ngx-datatable [rows]="arro" [ngClass]="tableStyle" [rowHeight]="'auto'" [headerHeight]="50" [columnMode]="'force'">
+            <ngx-datatable-column name="Loyola" prop="loym" [sortable]="false"><span id="depLoy">Loyola</span></ngx-datatable-column>
+            <ngx-datatable-column name="Sir George" prop="sgwm" [sortable]="false"><span id="depSGW">Sir George</span></ngx-datatable-column>
+        </ngx-datatable>
 
-  <ngx-datatable [rows]="arr1" [ngClass]="tableStyle" [rowHeight]="'auto'" [headerHeight]="50" [columnMode]="'force'">
-    <ngx-datatable-column id="textDepLoy2" name="Departure from Loyola" prop="loyf" [sortable]="false"></ngx-datatable-column>
-    <ngx-datatable-column id="textDepSGW2" name="Departure from SGW" prop="sgwf" [sortable]="false"></ngx-datatable-column>
-  </ngx-datatable>
-</ion-content>
+        <h3 id="textFriday" class="friday">Friday bus schedule</h3>
+
+        <ngx-datatable [rows]="arr1" [ngClass]="tableStyle" [rowHeight]="'auto'" [headerHeight]="50" [columnMode]="'force'">
+            <ngx-datatable-column name="Loyola" prop="loyf" [sortable]="false"><span id="depLoy">Loyola</span></ngx-datatable-column>
+            <ngx-datatable-column name="Sir George" prop="sgwf" [sortable]="false"><span id="depSGW">Sir George</span></ngx-datatable-column>
+        </ngx-datatable>
+    </ion-content>
 </body>

@@ -18,6 +18,7 @@ export class NotificationsComponent implements OnInit {
   public events: any;
   public notifs = [];
 
+<<<<<<< HEAD
   constructor(public navCtrl: NavController, private plt: Platform, private localNotification: LocalNotifications,
     private alertCtrl: AlertController, private http: HttpClient, private storage: Storage) {
     console.log(this.timesel)
@@ -61,6 +62,56 @@ export class NotificationsComponent implements OnInit {
   Clicked() {
     debugger;
     console.log(this.toggleval);
+=======
+  constructor(public navCtrl: NavController,private plt:Platform,private localNotification:LocalNotifications,
+    private alertCtrl: AlertController, private http:HttpClient, private storage:Storage) {
+      this.translatePage();
+      console.log(this.timesel)
+      storage.ready().then(() => {
+        // get a key/value pair
+         storage.get('toggleval').then((val) => {
+           if(val == undefined)
+           {
+             this.toggleval = false;
+             storage.set('toggleval', false);
+           }
+           else if(val == true)
+           {
+             storage.get('timesel').then((ts) => {
+              this.timesel = ts;
+             });
+             this.toggleval = val;
+           }
+          
+         })
+
+        });
+     
+
+      this.plt.ready().then(()=> {
+        this.localNotification.on('trigger').subscribe(res => {
+          console.log('trigger: ',res);
+          let msg=res.data ? res.data.mydata : '';
+          this.showAlert(res.title,res.text,msg);
+          
+          
+        });
+      });
+   }
+   
+   showAlert(header,sub,msg){
+     this.alertCtrl.create({
+       header:header,
+       subHeader:sub,
+       message:msg,
+       buttons:['Ok']
+     }).then(alert=>alert.present());
+   }
+   Clicked(){
+     
+     this.translatePage();
+     console.log(this.toggleval);
+>>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
     this.storage.set('toggleval', this.toggleval)
 
     if (this.toggleval == false) {
@@ -116,5 +167,47 @@ export class NotificationsComponent implements OnInit {
   }
 
   ngOnInit() {}
+<<<<<<< HEAD
+=======
+  async translatePage()
+  {
+    const res = await fetch('/assets/Languages/language.json');
+    const json = await res.json();
+
+    this.storage.ready().then(() => {
+
+      this.storage.get('languagePreference').then((lP) => {
+
+      // If no setting has been set, default is english
+      if(lP == null)
+      {
+        lP = 'English';
+        this.storage.set('languagePreference', 'English');
+
+      }
+      if(lP === 'English')
+      {
+        document.getElementById('toggle').innerHTML = json.english.notifications.toggle;
+        document.getElementsByName('select')[0].setAttribute('placeholder', json.english.notifications.select);
+        if(this.toggleval)
+        document.getElementById('options').innerHTML = json.english.notifications.options;
+        
+        
+      }
+      else if(lP === 'French')
+      {
+        document.getElementById('toggle').innerHTML = json.french.notifications.toggle;
+        document.getElementsByName('select')[0].setAttribute('placeholder', json.french.notifications.select);
+        if(this.toggleval)
+        document.getElementById('options').innerHTML = json.french.notifications.options;
+        
+        
+      }
+
+     
+      });
+    });
+  }
+>>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
 
 }

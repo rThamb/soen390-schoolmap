@@ -70,9 +70,10 @@ export class MapComponent implements AfterViewInit {
   private firstTime: boolean; //Checks for the first time a ground overlay (indoorOverlay) is created for a building
 
   // Injects the component class with imported services
-  constructor(private geolocation: Geolocation,
-    private mapService: MapService,
-    private buildingFactory: BuildingFactoryService) {
+ constructor(private geolocation: Geolocation, 
+              private mapService: MapService, 
+              public buildingFactory: BuildingFactoryService) 
+  {
     this.loyola = new Campus(new Location(45.458234, -73.640493, 0));
     this.sgw = new Campus(new Location(45.494711, -73.577871, 0));
 
@@ -795,8 +796,6 @@ export class MapComponent implements AfterViewInit {
       self.infoWindow.close();
       this.enterBuilding(id, polygon, marker, usePOI);
     });
-
-
   }
 
   //Method to set the content of info window for each building

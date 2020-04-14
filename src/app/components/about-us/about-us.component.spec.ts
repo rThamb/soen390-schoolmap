@@ -28,7 +28,14 @@ fixture.detectChanges();
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('translate the page ', () => {
+        const { build } = setup().default();
+        const c = build();
 
+        const  spyTemp  =  spyOn(c , 'translatePage');
+        c.translatePage();
+        expect(component.translatePage()).toBeTruthy();
+    });
   // covering both lines
   it('should contain a paragraph describing the app', () => {
     const de = fixture.debugElement.query(By.css('.infoAboutUs'));

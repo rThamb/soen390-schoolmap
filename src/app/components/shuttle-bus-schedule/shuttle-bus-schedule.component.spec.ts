@@ -35,6 +35,9 @@ describe('ShuttleBusScheduleComponent', () => {
 
     const fri = fixture.debugElement.query(By.css('.friday'));
     expect(fri.nativeElement.textContent).toContain('Friday');
+
+    const dep = fixture.debugElement.query(By.css('.departure'));
+    expect(dep.nativeElement.textContent).toContain('Departure');
   });
 
   it('when ngOnInit is called it should create the tablestyle with bootstrap', () => {
@@ -46,7 +49,22 @@ describe('ShuttleBusScheduleComponent', () => {
     // assert
     expect(c.tableStyle).toEqual('bootstrap');
 });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
+
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('when changeStyle is called it should change the color to dark', () => {
     // arrange
     const { build } = setup().default();
@@ -64,6 +82,13 @@ describe('ShuttleBusScheduleComponent', () => {
      expect(component.changeStyle).toBeTruthy();
  });
 }));
+
+it('should load all UI elements to the screen', () => {
+  fixture.autoDetectChanges();
+  let el = fixture.debugElement.query(By.all());
+  console.log(el);
+  expect(el).toBeTruthy();
+});
 
 });
 

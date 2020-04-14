@@ -103,8 +103,11 @@ export class HistoryComponent implements OnInit {
       let dest = history["dates"][index][date][j].Destinations
       let location;
 
-      if (lang == 'French')
-        location = "Départ: <strong>" + start + "</strong><br />Destination: <strong>" + dest + "</strong>"
+      if(!(start && dest))
+        continue
+
+      if(lang == 'French')
+        location = "Départ: <strong>" + start + "</strong><br />Destination: <strong>" + dest +"</strong>"
       else
         location = "Start: <strong>" + start + "</strong><br />Destination: <strong>" + dest + "</strong>"
 
@@ -120,21 +123,36 @@ export class HistoryComponent implements OnInit {
 
   //Clear the current search history
   clearHistory() {
+<<<<<<< HEAD
     /*let lang = await this.storage.get('languagePreference').catch((error) => {
       console.log('Error getting history', error);
     });
     */
     let lang = 'English';
     if (lang == 'French') {
+=======
+    // let lang = await this.storage.get('languagePreference').catch((error) => {
+    //   console.log('Error getting history', error);
+    // });
+    let lang = 'English'
+    if(lang == 'French'){
+>>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
       if (confirm("Voulez-vous effacer votre historique de recherche?") == true) {
-        // this.storage.remove('history')
-        // this.ngOnInit()
+         this.storage.remove('history')
+         this.historyService.historyInit()
       }
+<<<<<<< HEAD
     } else {
+=======
+    }
+    else{
+>>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
       if (confirm("Are you sure you would like to clear your search history?") == true) {
-        // this.storage.remove('history')
-        // this.ngOnInit()
+         this.storage.remove('history')
+         this.historyService.historyInit()
       }
     }
+
+    location.reload(true)
   }
 }

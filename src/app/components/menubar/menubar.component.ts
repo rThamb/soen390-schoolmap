@@ -2,8 +2,6 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
-
-
 /**
  * Represents the main menu feature of the app
  */
@@ -23,21 +21,21 @@ export class MenubarComponent implements OnInit {
       this.translatePage();
     }
 
-  // Method allows user to navigate between pages using menu component
-  LoadNewPage(page: string): void {
+  // Method allows user to navigate between pages using menu component.
+  LoadNewPage(page: string): void 
+  {
     this.navCtrl.navigateRoot(page);
     this.menu.toggle();
   }
 
   /**
-   * Handles translation of the page
+   * Handles translating the page.
    */
   async translatePage() {
-    console.log('languageSet called');
     const res = await fetch('./assets/Languages/language.json');
     const json = await res.json();
 
-    // check if language is english with storage
+    // Check if language is english with storage.
     this.storage.ready().then(() => {
 
       this.storage.get('languagePreference').then((lP) => {

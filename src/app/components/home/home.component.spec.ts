@@ -4,7 +4,9 @@ import { IonicModule } from '@ionic/angular';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HomeComponent } from './home.component';
 import {By} from '@angular/platform-browser';
-import { IonicStorageModule } from '@ionic/storage';
+import {IonicStorageModule, Storage} from '@ionic/storage';
+import {autoSpy} from '../../../../auto-spy';
+import {AboutUsComponent} from '../about-us/about-us.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -40,5 +42,6 @@ describe('HomeComponent', () => {
     expect(locateMe).toBeTruthy();
     expect(goButton).toBeTruthy();
   });
-
 });
+
+

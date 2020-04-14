@@ -5,8 +5,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EmailComposer} from '@ionic-native/email-composer/ngx';
 import {By} from '@angular/platform-browser';
-import {IonicStorageModule} from '@ionic/storage';
+import {IonicStorageModule, Storage} from '@ionic/storage';
 import {IonicModule} from "@ionic/angular";
+import {autoSpy} from '../../../../auto-spy';
+import {AboutUsComponent} from '../about-us/about-us.component';
 
 describe('ReportIssuesComponent', () => {
   let component: ReportIssuesComponent;
@@ -26,7 +28,14 @@ describe('ReportIssuesComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('should create the report-issue component', () => {
     expect(component).toBeTruthy();
   });
@@ -50,4 +59,23 @@ describe('ReportIssuesComponent', () => {
     expect(de.nativeElement.textContent).toContain('describe the issue');
   });
 
+  it('should load all UI elements to the screen', () => {
+    fixture.autoDetectChanges();
+    let el = fixture.debugElement.query(By.all());
+    console.log(el);
+    expect(el).toBeTruthy();
+  });
+
 });
+function setup() {
+  const storage = autoSpy(Storage);
+  const builder = {
+    default() {
+      return builder;
+    },
+    build() {
+      return new AboutUsComponent(storage);
+    }
+  };
+  return builder;
+}

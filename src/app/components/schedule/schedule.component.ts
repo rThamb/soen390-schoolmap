@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { authorizeAndGetEvents } from '../../../assets/calendar';
 import { HttpClient } from '@angular/common/http';
 import {Storage} from '@ionic/storage';
 import { NavController } from '@ionic/angular';
 import { HTTP } from '@ionic-native/http/ngx';
-
-
-
-
-
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -32,9 +26,9 @@ export class ScheduleComponent implements OnInit {
   /**
    * Sends a request to the websever for retrieving upcoming calendar events from the gmail account
    */
-  getNextEvents() {
-    this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
-      console.log(data);
+  public getNextEvents() {
+  this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
+  console.log(data);
 
       if (data) {
         console.log(data);
@@ -45,7 +39,7 @@ export class ScheduleComponent implements OnInit {
           this.storage.set('events', this.events);
         });
 
-        for (var i = 0; i < this.events.length; i++) {
+        for (let i = 0; i < this.events.length; i++) {
           if (this.events[i].start.dateTime || this.events[i].end.dateTime) {
             this.events[i].start.dateTimeString = new Date(this.events[i].start.dateTime).toLocaleString();
             this.events[i].end.dateTimeString = new Date(this.events[i].end.dateTime).toLocaleString();
@@ -59,14 +53,14 @@ export class ScheduleComponent implements OnInit {
 
       this.translatePage();
 
-    })
+    });
   }
 
   /**
    * When user clicks on an event, redirects them to the New Route page with the event's location set as the destination.
-   * @param location
+   * @ param location
    */
-  goToEventLocation(location) {
+  public goToEventLocation(location) {
     this.storage.ready().then(() => {
       this.storage.set('newRouteDest', location);
     });
@@ -87,40 +81,50 @@ export class ScheduleComponent implements OnInit {
 
       this.storage.get('languagePreference').then((lP) => {
 
-        // If no setting has been set, default is english
-        if (lP == null) {
-          lP = 'English';
-          this.storage.set('languagePreference', 'English');
+      // If no setting has been set, default is english
+      if (lP == null) {
+        lP = 'English';
+        this.storage.set('languagePreference', 'English');
+      }
+      if ( lP === 'English') {
+        document.getElementById('email').innerHTML = json.english.schedule.email;
+        document.getElementById('date').innerHTML = json.english.schedule.date;
+        document.getElementById('upcoming').innerHTML = json.english.schedule.event;
+
+        const startCollection = document.getElementsByClassName('eventStart');
+        const endCollection = document.getElementsByClassName('eventEnd');
+
+
+        for (let i = 0; i < startCollection.length; i++) {
+          startCollection.item(i).innerHTML = json.english.schedule.start;
         }
-        if (lP === 'English') {
-          document.getElementById("email").innerHTML = json.english.schedule.email;
-          document.getElementById("date").innerHTML = json.english.schedule.date;
-          document.getElementById("upcoming").innerHTML = json.english.schedule.event;
 
-          let startCollection = document.getElementsByClassName("eventStart");
-          let endCollection = document.getElementsByClassName("eventEnd");
+        for (let i = 0; i < endCollection.length; i++) {
+          endCollection.item(i).innerHTML = json.english.schedule.end;
+        }
 
 
-          for (let i = 0; i < startCollection.length; i++) {
-            startCollection.item(i).innerHTML = json.english.schedule.start;
-          }
+      } else if (lP === 'French') {
+        document.getElementById('email').innerHTML = json.french.schedule.email;
+        document.getElementById('date').innerHTML = json.french.schedule.date;
+        document.getElementById('upcoming').innerHTML = json.french.schedule.event;
 
-          for (let i = 0; i < endCollection.length; i++) {
-            endCollection.item(i).innerHTML = json.english.schedule.end;
-          }
+        const startCollection = document.getElementsByClassName('eventStart');
+        const endCollection = document.getElementsByClassName('eventEnd');
 
 
+        for (let i = 0; i < startCollection.length; i++) {
+          startCollection.item(i).innerHTML = json.french.schedule.start;
         }
         //check if language is french with storage
-        else if (lP == 'French') {
+      }else if (lP == 'French') {
           document.getElementById("email").innerHTML = json.french.schedule.email;
           document.getElementById("date").innerHTML = json.french.schedule.date;
           document.getElementById("upcoming").innerHTML = json.french.schedule.event;
 
           let startCollection = document.getElementsByClassName("eventStart");
           let endCollection = document.getElementsByClassName("eventEnd");
-
-
+          
           for (let i = 0; i < startCollection.length; i++) {
             startCollection.item(i).innerHTML = json.french.schedule.start;
           }
