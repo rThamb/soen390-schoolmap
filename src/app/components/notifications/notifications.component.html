@@ -9,7 +9,7 @@
         <ion-item class="lines" lines="inset">
             <span id="toggle">Allow notifications</span>
             <ion-label>
-                <ion-toggle class="alignleft" [(ngModel)]="toggleval" (ionChange)="Clicked()"> </ion-toggle>
+                <ion-toggle class="alignleft" [(ngModel)]="toggleval" (ionChange)="Clicked(); translatePage()"> </ion-toggle>
                 <!-- add the function to disable notification-->
             </ion-label>
         </ion-item>

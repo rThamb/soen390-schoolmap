@@ -60,7 +60,7 @@ export class NotificationsComponent implements OnInit {
     }).then(alert => alert.present());
   }
   Clicked() {
-    debugger;
+    
     console.log(this.toggleval);
     this.storage.set('toggleval', this.toggleval)
 
