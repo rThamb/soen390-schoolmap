@@ -4,7 +4,9 @@ import { Storage } from '@ionic/storage';
 
 
 
-
+/**
+ * Represents the main menu feature of the app
+ */
 @Component({
   selector: 'app-menubar',
   templateUrl: './menubar.component.html',
@@ -18,7 +20,7 @@ export class MenubarComponent implements OnInit {
     private menu: MenuController,
     private storage: Storage) {
 
-      this.languageSet();
+      this.translatePage();
     }
 
   // Method allows user to navigate between pages using menu component
@@ -27,23 +29,10 @@ export class MenubarComponent implements OnInit {
     this.menu.toggle();
   }
 
-  // MenuBar Methods
-  openFirst() {
-
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }
-
-  openEnd() {
-    this.menu.open('end');
-  }
-
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
-  }
-
-  async languageSet() {
+  /**
+   * Handles translation of the page
+   */
+  async translatePage() {
     console.log('languageSet called');
     const res = await fetch('./assets/Languages/language.json');
     const json = await res.json();

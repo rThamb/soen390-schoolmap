@@ -12,8 +12,6 @@ import { Storage } from '@ionic/storage';
 import { GridCoordinate } from '../../models/GridCoordinate';
 import {HistoryService} from '../../services/history/history.service';
 
-
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -22,12 +20,12 @@ import {HistoryService} from '../../services/history/history.service';
 export class HomeComponent implements OnInit {
 
 
-  constructor(private gridservice: GpsGridMappingService, private bfact: BuildingFactoryService, private historyService: HistoryService) {    
-    
+  constructor(private gridservice: GpsGridMappingService, private bfact: BuildingFactoryService, private historyService: HistoryService) {
+
   }
 
   ngOnInit() {
-    
+
     //Initializes a users history in the storage on startup
     this.historyService.historyInit()
   }
