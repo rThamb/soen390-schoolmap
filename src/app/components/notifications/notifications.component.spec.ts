@@ -23,35 +23,41 @@ TestBed.configureTestingModule({
       providers: [HttpClient, LocalNotifications]
     }).compileComponents();
 
-  fixture = TestBed.createComponent(NotificationsComponent);
-  component = fixture.componentInstance;
-  fixture.autoDetectChanges();
+    try{
+      fixture = TestBed.createComponent(NotificationsComponent);
+      component = fixture.componentInstance;
+      fixture.autoDetectChanges();
+    }catch(e)
+    {
+      console.log(e);
+    }
+
 
 
   }));
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('should contain a the able/disable text', () => {
+  it('should contain a the able/disable text', () => {
    const de = fixture.debugElement.query(By.css('.lines'));
     expect(de.nativeElement.textContent).toContain('Allow notifications');
   });
 
-  xit('when Clicked is called it should', () => {
+  it('when Clicked is called it should', () => {
     spyOn(component, 'Clicked');
     component.Clicked();
     expect(component.Clicked).toHaveBeenCalled();
 });
 
-  xit('when refreshEvents is called it should', () => {
+  it('when refreshEvents is called it should', () => {
     spyOn(component, 'refreshEvents');
     component.refreshEvents();
     expect(component.refreshEvents).toHaveBeenCalled();
 });
 
-  xit('when ngOnInit is called it should', () => {
+  it('when ngOnInit is called it should', () => {
     spyOn(component, 'ngOnInit');
 
     component.ngOnInit();
@@ -59,7 +65,7 @@ TestBed.configureTestingModule({
     expect(component.ngOnInit).toHaveBeenCalled();
 });
 
-xit('when onChange is called it should', () => {
+it('when onChange is called it should', () => {
   spyOn(component, 'onChange');
 
   component.onChange(15);
@@ -67,14 +73,14 @@ xit('when onChange is called it should', () => {
   expect(component.onChange).toHaveBeenCalledWith(15);
 });
 
-  xit('should create a sample notification alert using showAlert()', () => {
+  it('should create a sample notification alert using showAlert()', () => {
     spyOn(component, 'showAlert');
     component.showAlert('ex','ex','ex');
 
     expect(component.showAlert).toHaveBeenCalled();
   });
 
-  xit('should load all UI elements to the screen', () => {
+  it('should load all UI elements to the screen', () => {
     fixture.autoDetectChanges();
     let el = fixture.debugElement.query(By.all());
     console.log(el);

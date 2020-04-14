@@ -32,17 +32,17 @@ describe('NearbyPointsOfInterestComponent', () => {
     fixture.detectChanges();
   }));
 
-  xit('should create', async () => {
+  it('should create', async () => {
     expect(component).toBeTruthy();
   });
 
-  xit('translate the page ', () => {
+  it('translate the page ', () => {
     spyOn(component, 'translatePage');
 
     expect(component.translatePage).toHaveBeenCalled();
   });
 
-  xit('nearbyPOI should be called', () => {
+  it('nearbyPOI should be called', () => {
 
     component.nearbyPOI = jasmine.createSpy('nearbyPOI spy');
     component.ngOnInit();
@@ -50,19 +50,19 @@ describe('NearbyPointsOfInterestComponent', () => {
     expect(component.nearbyPOI).toHaveBeenCalledTimes(4);
   });
 
-  xit('LoadNewRoute should work', () => {
+  it('LoadNewRoute should work', () => {
     expect(component.LoadNewRoute('NewRoute', '150 Rue Sainte-Catherine Ouest, Montréal')).toBeTruthy();
   });
 
-  xit('listPOI ', () => {
+  it('listPOI ', () => {
     expect(component.listPOI('', '', 'restaurant')).toBeFalsy();
   });
 
-  xit('should return a distance', () => {
+  it('should return a distance', () => {
     expect(component.calculateDistance('(45.4977417, -73.58028329999999)')).toBeTruthy();
   });
 
-  xit('should load all UI elements to the screen', () => {
+  it('should load all UI elements to the screen', () => {
     fixture.autoDetectChanges();
     let el = fixture.debugElement.query(By.all());
     console.log(el);
