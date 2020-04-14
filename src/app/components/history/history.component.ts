@@ -95,6 +95,9 @@ export class HistoryComponent implements OnInit {
       let dest = history["dates"][index][date][j].Destinations
       let location;
 
+      if(!(start && dest))
+        continue
+
       if(lang == 'French')
         location = "Départ: <strong>" + start + "</strong><br />Destination: <strong>" + dest +"</strong>"
       else
@@ -119,13 +122,16 @@ export class HistoryComponent implements OnInit {
     if(lang == 'French'){
       if (confirm("Voulez-vous effacer votre historique de recherche?") == true) {
          this.storage.remove('history')
-         this.ngOnInit()
-      }
-    }else{
-      if (confirm("Are you sure you would like to clear your search history?") == true) {
-         this.storage.remove('history')
-         this.ngOnInit()
+         this.historyService.historyInit()
       }
     }
+    else{
+      if (confirm("Are you sure you would like to clear your search history?") == true) {
+         this.storage.remove('history')
+         this.historyService.historyInit()
+      }
+    }
+
+    location.reload(true)
   }
 }
