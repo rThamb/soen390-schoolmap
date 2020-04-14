@@ -145,4 +145,13 @@ export class Floor
         let coor = new GridCoordinate(this.pointsOfInterest[key]["x"], this.pointsOfInterest[key]["y"]);
         return coor;
     }
+
+    getPOI(key: string): IndoorPOI{
+        for(let i = 0; i < this.pois.length; i++){
+            let curPOI: IndoorPOI = this.pois[i];
+            if(curPOI.getKey() == key)
+                return curPOI;
+        }
+        return null;
+    }
 }

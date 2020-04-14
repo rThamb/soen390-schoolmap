@@ -1,0 +1,34 @@
+<!--Notification Header-->
+<div class="notification">
+    <!--Settings Header-->
+    <ion-item lines="full" class="Linescolor">
+
+    </ion-item>
+
+    <ion-list>
+        <ion-item class="lines" lines="inset">
+            <span id="toggle">Allow notifications</span>
+            <ion-label>
+                <ion-toggle class="alignleft" [(ngModel)]="toggleval" (ionChange)="Clicked(); translatePage()"> </ion-toggle>
+                <!-- add the function to disable notification-->
+            </ion-label>
+        </ion-item>
+        <ion-item   *ngIf="toggleval" class="lines" lines="inset">
+        <!-- if ON, display the following, else dont display anything.-->
+           <ion-label > <span id="options">Notify me before</span></ion-label>
+           
+            <ion-select (ionChange)="onChange(timesel)" [(ngModel)]="timesel" name="select" placeholder="Choose a value">
+                <ion-select-option value="5">5 minutes</ion-select-option>
+                <ion-select-option value="10">10 minutes</ion-select-option>
+                <ion-select-option value="15">15 minutes</ion-select-option>
+                <ion-select-option value="20">20 minutes</ion-select-option>
+                <ion-select-option value="25" >25 minutes</ion-select-option>
+                <ion-select-option value="30">30 minutes</ion-select-option>
+            </ion-select>
+            
+        </ion-item>
+        
+
+
+    </ion-list>
+</div>

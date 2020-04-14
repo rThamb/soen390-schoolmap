@@ -1,10 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import {autoSpy} from '../../../../auto-spy';
 import { ShuttleBusScheduleComponent } from './shuttle-bus-schedule.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import {Storage} from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 
 describe('ShuttleBusScheduleComponent', () => {
   let component: ShuttleBusScheduleComponent;
@@ -15,7 +17,7 @@ describe('ShuttleBusScheduleComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ShuttleBusScheduleComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [RouterTestingModule, IonicModule.forRoot()]
+      imports: [RouterTestingModule, IonicModule.forRoot(), IonicStorageModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ShuttleBusScheduleComponent);
@@ -33,6 +35,9 @@ describe('ShuttleBusScheduleComponent', () => {
 
     const fri = fixture.debugElement.query(By.css('.friday'));
     expect(fri.nativeElement.textContent).toContain('Friday');
+
+    const dep = fixture.debugElement.query(By.css('.departure'));
+    expect(dep.nativeElement.textContent).toContain('Departure');
   });
 
   it('when ngOnInit is called it should create the tablestyle with bootstrap', () => {
@@ -44,7 +49,22 @@ describe('ShuttleBusScheduleComponent', () => {
     // assert
     expect(c.tableStyle).toEqual('bootstrap');
 });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
 
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
+  it('translate the page ', () => {
+    const { build } = setup().default();
+    const c = build();
+
+    const  spyTemp  =  spyOn(c , 'translatePage');
+    c.translatePage();
+    expect(spyTemp).toHaveBeenCalled();
+  });
   it('when changeStyle is called it should change the color to dark', () => {
     // arrange
     const { build } = setup().default();
@@ -63,16 +83,24 @@ describe('ShuttleBusScheduleComponent', () => {
  });
 }));
 
+it('should load all UI elements to the screen', () => {
+  fixture.autoDetectChanges();
+  let el = fixture.debugElement.query(By.all());
+  console.log(el);
+  expect(el).toBeTruthy();
+});
+
 });
 
 function setup() {
-    const builder = {
+  const storage = autoSpy(Storage);
+  const builder = {
         default() {
             return builder;
         },
         build() {
-            return new ShuttleBusScheduleComponent();
+            return new ShuttleBusScheduleComponent(storage);
         }
     };
-    return builder;
+  return builder;
 }

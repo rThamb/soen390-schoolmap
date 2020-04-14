@@ -1,0 +1,194 @@
+{
+    "english": {
+        "aboutUs": {
+            "info": "This app is developed by the ConcordiaGo team with the goal of helping new Concordia students to navigate through the campus as well as providing them with the location of their points of interest."
+        },
+        "directions": {
+            "getDirBtn": "Get Directions",
+            "clearBtn": "Clear Directions"
+        },
+        "history": {
+            "": ""
+        },
+        "menubar": {
+            "title": "Main Menu",
+            "home": "Home",
+            "newRoute": "New Route",
+            "history": "History",
+            "favorites": "Favorites",
+            "shuttleBusSchedule": "Shuttle Bus Schedule",
+            "mySchedule": "My Schedule",
+            "nearbyPOI": "Nearby Points Of Interest",
+            "events": "Events",
+            "settings": "Settings",
+            "safety": "Safety",
+            "reportAnIssue": "Report An Issue",
+            "aboutUs": "About Us"
+        },
+        "placeholders": {
+            "homeSearch": "Search",
+            "start": "Start",
+            "destination": "Destination",
+            "email": "E-mail",
+            "subject": "Subjet",
+            "message": "Message"
+        },
+        "report": {
+            "title": "Report an Issue",
+            "description": "Please, describe the issue you’ve encountered in detail, so our technical team could have all the relevant information to solve your problem.",
+            "submit": "Submit"
+        },
+        "safety": {
+            "title": "WE CARE ABOUT YOUR SAFETY",
+            "emergencyNum": "Emergency numbers:",
+            "text1": "Please call Security at ",
+            "text2": " or ",
+            "text3": ", ext. 3717 before calling 911 ; These agents are trained to rapidly respond to your needs and provide critical services. They will connect you with 911, if needed, saving valuable time.",
+            "option1": "SafeWalk Program",
+            "option2": "Assault, Sexual Violence & Harassment",
+            "option3": "Injury",
+            "option4": "Theft",
+            "option5": "Hazardous material spill/accident"
+        },
+        "schedule": {
+            "email": "E-mail: ",
+            "date": "Today: ",
+            "event": "Upcoming classes / Events:",
+            "start": "Start: ",
+            "end": "End: "
+        },
+        "settings": {
+            "title": "Settings",
+            "language": "Language",
+            "optionL1": "English",
+            "optionL2": "French",
+            "preferences": "Preferences",
+            "accessibility": "Accessibility",
+            "elevators": "Elevators",
+            "stairs": "Stairs",
+            "escalators": "Escalators",
+            "google": "Google Calendar Sync",
+            "notif": "Notifications"
+        },
+        "shuttle": {
+            "departure": "Departure Time",
+            "monToThur": "Monday to Thursday bus schedule",
+            "friday": "Friday bus schedule"
+        },
+        "nearbyPOI": {
+            "title": "Nearby Points of Interest"
+        },
+        "events": {
+            "title": "ALL EVENTS ARE CANCELLED !",
+            "alertButton": "COVID-19 alert!",
+            "info1": "Please note that any access to the University will be forbidden up to May 4th.",
+            "info2": " Until further notice, all events on Loyola and Sir George Campus has been canceled due to the actual situation that we are facing.",
+            "info3": "For more assistance and information about the &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; current situation, please visit: ",
+            "info4": "Concordia's COVID-19 updates"
+        },
+        "notifications":{
+            "toggle": "Allow notifications",
+            "select": "Choose a value",
+            "options":"Notify me before"
+            
+        }
+    },
+
+    "french": {
+        "aboutUs": {
+            "info": "Cette application est développée par l'équipe ConcordiaGo dans le but d'aider les nouveaux étudiants de Concordia à naviguer sur le campus ainsi que de leur fournir l'emplacement de leurs points d'intérêt."
+        },
+        "directions": {
+            "getDirBtn": "Obtien l'Itinéraire",
+            "clearBtn": "Retirer les Directions"
+        },
+        "history": {
+            "": ""
+        },
+        "menubar": {
+            "title": "Menu Principal",
+            "home": "Accueil",
+            "newRoute": "Nouvelle Route",
+            "history": "Historique",
+            "favorites": "Favoris",
+            "shuttleBusSchedule": "Horaire Des Navettes",
+            "mySchedule": "Mon Horaire",
+            "nearbyPOI": "Points d'Intérêt à Proximité",
+            "events": "Événements",
+            "settings": "Paramètres",
+            "safety": "Sécurité",
+            "reportAnIssue": "Signalez un Problème",
+            "aboutUs": "À Propos de Nous"
+        },
+        "placeholders": {
+            "homeSearch": "Rechercher",
+            "start": "Début",
+            "destination": "Destination",
+            "email": "Courriel",
+            "subject": "Sujet",
+            "message": "Message"
+        },
+        "report": {
+            "title": "Signalez un Problème",
+            "description": "Veuillez décrire en détail le problème que vous avez rencontré, afin que notre équipe technique puisse disposer de toutes les informations utiles pour résoudre votre problème.",
+            "submit": "Envoyer"
+        },
+        "safety": {
+            "title": "NOUS PENSONS À VOTRE SÉCURITÉ",
+            "emergencyNum": "Numéros d'Urgence:",
+            "text1": "Veuillez appeler la sécurité au ",
+            "text2": " ou ",
+            "text3": ", ext. 3717 avant d'appeler le 911; Ces agents sont formés pour répondre rapidement à vos besoins et fournir des services essentiels. Ils vous connecteront au 911, si nécessaire, vous faisant gagner du temps précieux.",
+            "option1": "Programme 'SafeWalk'",
+            "option2": "Agression, violence sexuelle et harcèlement",
+            "option3": "Blessure",
+            "option4": "Vol",
+            "option5": "Déversement / accident de matières dangereuses"
+        },
+        "schedule": {
+            "email": "Courriel: ",
+            "date": "Aujourd'hui: ",
+            "event": "Cours / événements à venir:",
+            "start": "Debut: ",
+            "end": "Fin: "
+        },
+        "settings": {
+            "title": "Paramètres",
+            "language": "Langue",
+            "optionL1": "Anglais",
+            "optionL2": "Français",
+            "preferences": "Préférences",
+            "accessibility": "Accessibilité",
+            "elevators": "Ascenseurs",
+            "stairs": "Escaliers",
+            "escalators": "Escaliers mécaniques",
+            "google": "Google Agenda Sync",
+            "notif": "Notifications"
+        },
+        "shuttle": {
+            "monToThur": "Horaires du Lundi au Jeudi",
+            "departure": "Heures de Départ",
+            "friday": "Horaire du Vendredi"
+        },
+        "nearbyPOI": {
+            "title": "Points d'Intérêt à Proximité"
+        },
+        "events": {
+            "title": "ÉVENEMENTS ANNULÉS",
+            "alertButton": "Avertissement COVID-19!",
+            "info1": "Veuillez noter que tout accès à l'Université sera interdit jusqu'au 4 mai.",
+            "info2": "Jusqu'à nouvel ordre, tous les événements sur le campus Loyola et Sir George ont été annulés en raison de la situation actuelle à laquelle nous sommes confrontés.",
+            "info3": "Pour plus d'assistance et d'informations sur la &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; situation actuelle, veuillez visiter ",
+            "info4": "Mises à jour COVID-19 de Concordia"
+
+        },
+        "notifications":{
+            "toggle": "Autoriser les notifications",
+            "select": "Choisissez une valeur",
+            "options":"Prévenez moi avant"
+            
+        }
+
+
+    }
+}

@@ -1,0 +1,25 @@
+#clearHistoryBtn{
+    position: absolute;
+    bottom: 0px;
+    z-index: 1;
+    width: 100%;
+}
+
+#history{
+    position: absolute;
+    top: 50px;
+    overflow:scroll;
+    height: 90%;
+    max-width: 96%;
+}
+#history::-webkit-scrollbar {
+    display: none;
+}
+
+
+.dates{
+    font-size: large;
+    font-weight: bold;
+    color: #3880ff;
+    text-transform: capitalize;
+}

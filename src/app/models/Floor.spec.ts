@@ -3,7 +3,6 @@ import {FloorTile} from './FloorTile';
 import { IndoorPOI } from './IndoorPOI';
 import {GridCoordinate} from './GridCoordinate';
 
-
 describe('Floor', () => {
   it('when getFloorLevel is called it should return floor level', () => {
     // arrange
@@ -15,6 +14,11 @@ describe('Floor', () => {
     // assert
     expect(floor).toEqual(8);
   });
+
+
+
+
+
 
   it('when setFloorLevel is called it should set floor level', () => {
     // arrange
@@ -89,9 +93,9 @@ describe('Floor', () => {
     const c = build();
     // act
     const height = 80;
-    c.setHeight(height);
+    const b = c.setHeight(height);
     // assert
-    expect(c.setHeight).toBeDefined();
+    expect(b).toEqual(c.setHeight(80));
   });
 
   it('when getPois is called it should', () => {
@@ -142,25 +146,7 @@ describe('Floor', () => {
   //   // assert
   //   expect(c.getBinaryGrid()).toEqual(binaryGrid);
   // });
-
-  /*it('when getMensWashroom is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // @ts-ignore
-    const pointsOfInterest: any;
-    const key = 'Washroom-men';
-    const washroomCoor = pointsOfInterest[key];
-
-    const wash = new GridCoordinate(washroomCoor['x'], washroomCoor['y']);
-    c.getMensWashroom();
-
-    // assert
-    expect(c.getMensWashroom()).toEqual(wash);
-
-  });
-
-  it('when getWomensWashroom is called it should', () => {
+ /* it('when getWomensWashroom is called it should', () => {
     // arrange
     const { build } = setup().default();
     const c = build();

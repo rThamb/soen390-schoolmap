@@ -1,0 +1,45 @@
+<!-- List of my events retrieved from my google calendar -->
+<!--show user info-->
+<div class="myEvents" overflow="auto">
+    <ion-card>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="assets/icon/profile-icon.png">
+          </ion-avatar>
+          <ion-label><span id="email">Email: </span>{{ email }}</ion-label>
+        </ion-item>
+    </ion-card>
+    <hr>
+  
+  <!--Today's Date-->
+    <ion-card>
+      <ion-card-header>
+        <ion-label><span id="date">Date: </span> {{today | date: 'dd/MM/yyyy' }}</ion-label>
+      </ion-card-header>
+    </ion-card>
+  
+  <!--Title for the list of events-->
+      <ion-card>
+        <ion-item>
+          <ion-label><span id="upcoming">Upcoming classes/ Events:</span></ion-label>
+        </ion-item>
+      </ion-card>
+  
+  <!--Class info-->
+  <ion-content>
+  <div class="event" *ngFor="let event of events;" (click)="goToEventLocation(event.location)" >
+    <ion-card>
+        <ion-card-header>
+            <ion-label>{{ event.summary }}</ion-label>
+            <ion-label class="alignright"><span class="eventStart">Start: </span>{{ event.start.dateTimeString }} {{ event.start.date }}</ion-label>
+        </ion-card-header>
+    
+        <ion-card-content class="adjust">
+          <ion-label>{{ event.location }}</ion-label>
+          <ion-label class="alignright"><span class="eventEnd">End: </span>{{ event.end.dateTimeString }} {{ event.end.date }}</ion-label>
+        </ion-card-content>
+      </ion-card>
+    </div>
+</ion-content>
+  
+  </div>

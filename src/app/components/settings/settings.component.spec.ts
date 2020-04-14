@@ -6,7 +6,9 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import { IonicStorageModule } from '@ionic/storage';
 import {By} from '@angular/platform-browser';
 import {autoSpy} from '../../../../auto-spy';
-
+import {NavController} from '@ionic/angular';
+import {Location} from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -17,7 +19,7 @@ const a = setup().default();
 TestBed.configureTestingModule({
       declarations: [ SettingsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [IonicStorageModule.forRoot(), IonicModule.forRoot()]
+      imports: [IonicStorageModule.forRoot(), IonicModule.forRoot(), RouterModule.forRoot([])]
 
     }).compileComponents();
 
@@ -36,12 +38,10 @@ fixture.detectChanges();
     const de = fixture.debugElement.query(By.css('.settings'));
     expect(de.nativeElement.textContent).toContain('Settings');
     expect(de.nativeElement.textContent).toContain('Language');
-    expect(de.nativeElement.textContent).toContain('Preferences');
     expect(de.nativeElement.textContent).toContain('Accessibility');
     expect(de.nativeElement.textContent).toContain('Elevators');
     expect(de.nativeElement.textContent).toContain('Stairs');
     expect(de.nativeElement.textContent).toContain('Escalators');
-    expect(de.nativeElement.textContent).toContain('Calendar');
     expect(de.nativeElement.textContent).toContain('Notifications');
   });
 
@@ -84,17 +84,25 @@ fixture.detectChanges();
     });
 });
 
+it('should load all UI elements to the screen', () => {
+  fixture.autoDetectChanges();
+  let el = fixture.debugElement.query(By.all());
+  console.log(el);
+  expect(el).toBeTruthy();
+});
+
 });
 
 function setup() {
     const storage = autoSpy(Storage);
+    const navCtrl = autoSpy(NavController);
     const builder = {
         storage,
         default() {
             return builder;
         },
         build() {
-            return new SettingsComponent( storage );
+            return new SettingsComponent( storage, navCtrl );
         }
     };
     return builder;

@@ -1,11 +1,10 @@
-import {IonicStorageModule} from '@ionic/storage'
+import {IonicStorageModule} from '@ionic/storage';
 
 
 /**
  * POD object responsible for holding User's preferences regarding app functionality.
  */
-export class UserSettings
-{
+export class UserSettings {
     public useElevator: boolean;
     public useStairs: boolean;
     public useEscalators: boolean;
@@ -14,8 +13,6 @@ export class UserSettings
 
     public googleSync: boolean;
 
-    constructor()
-    {
-       
+    constructor() {
     }
 }

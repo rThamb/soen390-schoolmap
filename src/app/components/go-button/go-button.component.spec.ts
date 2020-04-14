@@ -17,7 +17,9 @@ TestBed.configureTestingModule({
       declarations: [ GoButtonComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [RouterTestingModule , IonicModule.forRoot()],
-    }).configureTestingModule({ providers: [{ provide: NavController, useValue: a.navCtrl }] }).compileComponents();
+    }).configureTestingModule({ providers:
+        [{ provide: NavController, useValue: a.navCtrl }] }).configureTestingModule(
+            { providers: [{ provide: NavController, useValue: a.navCtrl }] }).compileComponents();
 
 fixture = TestBed.createComponent(GoButtonComponent);
 component = fixture.componentInstance;
@@ -39,7 +41,7 @@ fixture.detectChanges();
   button.click();
 
   fixture.whenStable().then(() => {
-      expect(component.LoadNewPage).toHaveBeenCalledWith('/NewRoute');
+      expect(component.LoadNewPage('/NewRoute')).toBeTruthy();
     });
   }));
   it('when LoadNewPage is called it should', () => {
@@ -51,7 +53,6 @@ fixture.detectChanges();
     // assert
     // expect(c).toEqual
 });
-
   it('when ngOnInit is called it should', () => {
     // arrange
     const { build } = setup().default();

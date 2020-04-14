@@ -41,7 +41,7 @@ describe('BuildingFactoryService', () => {
       [1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1]
   ];
 
-  let firstPoi: IndoorPOI = new IndoorPOI(45.497386, -73.578535, 1, 5, "HB840"); 
+  let firstPoi: IndoorPOI = new IndoorPOI(45.497386, -73.578535, 1, 5, "HB840", null, null); 
 
     // Assert building values
     expect(building.getBuildingName()).toEqual("Concordia University Hall Building");

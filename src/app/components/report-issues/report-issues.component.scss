@@ -30,9 +30,6 @@ ion-input, ion-textarea{
   border-radius: 1px;
   box-sizing: border-box;
 }
-ion-textarea{
-  height: 250px;
-}
 
 button {
   background-color: #3a8cf0;
@@ -41,7 +38,6 @@ button {
   text-align: center;
   text-decoration: none;
   border-radius: 5px;
-  display: inline-block;
   font-size: 16px;
   margin: -7px 17px;
   cursor: pointer;

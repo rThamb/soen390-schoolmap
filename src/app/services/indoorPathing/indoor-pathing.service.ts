@@ -7,6 +7,7 @@ import { Location } from '../../models/Location';
 import { GpsGridMappingService } from '../../services/gps-grid-mapping/gps-grid-mapping.service' 
 import { GridCoordinate } from '../../models/GridCoordinate'
 import { Transitions } from '../../models/Transitions'
+import { IndoorPOI } from '../../models/IndoorPOI'
 
 
 
@@ -120,7 +121,9 @@ export class IndoorPathingService {
   }
 
 
-  
+
+
+
   /**
    * Generates a transition route for an indoor destination given the user's current position.
    */
@@ -128,7 +131,9 @@ export class IndoorPathingService {
     currentFloor: Floor, destination: string, option: Transitions){
     
     let userPos: GridCoordinate = this.gpsmapping.getFloorGridCoordinate(userPosition, currentFloor);
-    return this.determineRouteToDestination(userPos, building, currentFloor, destination, option); 
+    let destPOI: IndoorPOI = building.getIndoorPOIInBuilding(destination);
+
+    return this.determineRouteToDestination(userPos, building, currentFloor, destPOI, option); 
   }
   
   /**
@@ -140,24 +145,27 @@ export class IndoorPathingService {
    * @param currentFloor 
    * @param option 
    */
-  public determineRouteClassroomToClassroom(classStart: string, classDest: string, 
+  public determineRoutePOIToPOI(classStart: string, classDest: string, 
     building: Building, currentFloor: Floor, option: Transitions){
 
-      let startingFloor = this.getFloorLevelFromDestination(building.getBuildingKey(), classStart);
-      let classStartCoordinate: GridCoordinate = building.getFloorLevel(startingFloor + "").getClassroomCoordinate(classStart);
-      return this.determineRouteToDestination(classStartCoordinate, building, currentFloor, classDest, option); 
+      debugger;
+      let poi = building.getIndoorPOIInBuilding(classDest);
+      let classStartCoordinate: GridCoordinate = building.getIndoorPOIInBuilding(classStart).getGridCoordinate();
+      return this.determineRouteToDestination(classStartCoordinate, building, currentFloor, poi, option); 
   }
 
 
   private determineRouteToDestination(startPostition: GridCoordinate, building: Building, 
-    currentFloor: Floor, destination: string, option: Transitions): any{
+    currentFloor: Floor, destinationPOI: IndoorPOI, option: Transitions): any{
+
+    let destination: string = destinationPOI.getKey();
 
     let startFloor = currentFloor.getFloorLevel();
-    let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
-
+    let destinationLevel = destinationPOI.getFloorNum();
+    //let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
 
     if(startFloor > destinationLevel){
-      return this.determineRouteToDestinationDownwards(startPostition, building, currentFloor, destination, option);
+      return this.determineRouteToDestinationDownwards(startPostition, building, currentFloor, destinationPOI, option);
     }  
 
       //key (str, floor#) => Location[]
@@ -236,15 +244,17 @@ export class IndoorPathingService {
   }
 
   private determineRouteToDestinationDownwards(startPostition: GridCoordinate, building: Building, 
-    currentFloor: Floor, destination: string, option: Transitions): any{
+    currentFloor: Floor, destinationPOI: IndoorPOI, option: Transitions): any{
     
     let startFloor = currentFloor.getFloorLevel();
-    let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
+    let destinationLevel = destinationPOI.getFloorNum();
+    //let destinationLevel = this.getFloorLevelFromDestination(building.getBuildingKey(), destination);
 
 
       //key (str, floor#) => Location[]
       let journey = {};
 
+      let destination = destinationPOI.getKey();
       let currentGridLocation = startPostition;
       let currentFloorNum = startFloor; 
 

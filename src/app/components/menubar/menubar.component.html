@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
+            <ion-menu-button (click)="translatePage()"></ion-menu-button>
         </ion-buttons>
         <ion-title>ConcordiaGo</ion-title>
 
@@ -11,31 +11,35 @@
 <ion-menu side="start" menuId="custom" class="my-custom-menu">
     <ion-header>
         <ion-toolbar>
-            <ion-title color="primary">Main Menu</ion-title>
+            <ion-title color="primary" id="title"></ion-title>
         </ion-toolbar>
     </ion-header>
     <ion-content>
         <ion-list>
             <ion-item button (click)="LoadNewPage('/Home')">
-                <ion-icon name="home" id="home" class="item-spacing"></ion-icon> Home </ion-item>
+                <ion-icon name="home-outline" class="item-spacing"></ion-icon> <span id="home"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/NewRoute')">
-                <ion-icon name="map" class="item-spacing"></ion-icon> New Route </ion-item>
+                <ion-icon name="map-outline" class="item-spacing"></ion-icon> <span id="newroute"></span> </ion-item>
+            <ion-item button (click)="LoadNewPage('/History')">
+                <ion-icon name="time-outline" class="item-spacing"></ion-icon> <span id="history"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/Favorites')">
-                <ion-icon name="star" class="item-spacing"></ion-icon> Favorites </ion-item>
+                <ion-icon name="star-outline" class="item-spacing"></ion-icon> <span id="favorites"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/ShuttleBusSchedule')">
-                <ion-icon name="bus" class="item-spacing"></ion-icon> Shuttle Bus Schedule </ion-item>
+                <ion-icon name="bus-outline" class="item-spacing"></ion-icon> <span id="shuttlebus"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/Schedule')">
-                <ion-icon name="calendar" class="item-spacing"></ion-icon> My Schedule </ion-item>
+                <ion-icon name="calendar-outline" class="item-spacing"></ion-icon> <span id="schedule"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/NearbyPointsOfInterest')">
-                <ion-icon name="business" class="item-spacing"></ion-icon> Nearby Points Of Interest </ion-item>
+                <ion-icon name="business-outline" class="item-spacing"></ion-icon> <span id="nearbyPOI"></span> </ion-item>
+            <ion-item button (click)="LoadNewPage('/EventOnCampus')">
+                <ion-icon name="megaphone-outline" class="item-spacing"></ion-icon> <span id="events"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/Settings')">
-                <ion-icon name="settings" class="item-spacing"></ion-icon> Settings </ion-item>
+                <ion-icon name="settings-outline" class="item-spacing"></ion-icon> <span id="settings"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/Safety')">
-                <ion-icon name="medical" class="item-spacing"></ion-icon> Safety </ion-item>
+                <ion-icon name="medical-outline" class="item-spacing"></ion-icon> <span id="safety"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/ReportIssue')">
-                <ion-icon name="warning" class="item-spacing"></ion-icon> Report an Issue </ion-item>
+                <ion-icon name="warning-outline" class="item-spacing"></ion-icon> <span id="report"></span> </ion-item>
             <ion-item button (click)="LoadNewPage('/AboutUs')">
-                <ion-icon name="information-circle" class="item-spacing"></ion-icon> About Us </ion-item>
+                <ion-icon name="information-circle-outline" class="item-spacing"></ion-icon> <span id="aboutus"></span> </ion-item>
         </ion-list>
     </ion-content>
 </ion-menu>
