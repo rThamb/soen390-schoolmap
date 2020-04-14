@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import {IonicStorageModule, Storage} from '@ionic/storage';
 import { NearbyPointsOfInterestComponent } from './nearby-points-of-interest.component';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
@@ -11,7 +11,6 @@ import {MapService} from '../../services/map/map.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import {autoSpy} from '../../../../auto-spy';
-import {AboutUsComponent} from '../about-us/about-us.component';
 
 declare var google:any;
 

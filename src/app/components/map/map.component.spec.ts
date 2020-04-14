@@ -256,10 +256,7 @@ fixture.detectChanges();
 });
 
   it('when enterBuildingEventListener is called it should', () => {
-    // arrange
-    //const { build } = setup().default();
-    //const c = build();
-    // act
+
     const id = 'HB';
     const pathCoordinates = [];
     const path = new google.maps.Polyline({
@@ -338,11 +335,17 @@ fixture.detectChanges();
     // arrange
     const { build } = setup().default();
     const c = build();
+<<<<<<< HEAD
     // act
     //c.showHallBuildingIndoor(true);
     // assert
     //expect(c.showHallBuildingIndoor(true)).toBeTruthy();
 
+=======
+    
+    spyOn(component, 'showHallBuildingIndoor');
+    c.showHallBuildingIndoor(false);
+>>>>>>> 5e81fe8f57bd469ece3ac706b23183a061db16df
     fixture.detectChanges(); // trigger ngOnInit here
 
     component.showHallBuildingIndoor(false);

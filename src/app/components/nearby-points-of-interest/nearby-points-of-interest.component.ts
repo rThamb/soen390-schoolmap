@@ -1,9 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output} from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { MapComponent} from '../../components/map/map.component'
 import {MapService} from '../../services/map/map.service';
 import {Storage} from '@ionic/storage';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 declare var google:any;
 
