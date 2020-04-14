@@ -14,8 +14,6 @@ export class ScheduleComponent implements OnInit {
   public email: string;
   public today;
 
-  a: string;
-
   constructor(public http: HttpClient, public storage: Storage, public navCtrl: NavController) {
     this.today = Date.now();
     this.getNextEvents();
@@ -32,7 +30,7 @@ export class ScheduleComponent implements OnInit {
   this.http.get('http://concordiagocalendar.herokuapp.com/getNextEvents').subscribe(data => {
   console.log(data);
 
-  if (data) {
+      if (data) {
         console.log(data);
         this.events = data;
         this.email = this.events[0].creator.email;
@@ -71,6 +69,9 @@ export class ScheduleComponent implements OnInit {
     console.log(location);
   }
 
+  /**
+   * Handles translation of the page
+   */
   async translatePage() {
     const res = await fetch('./assets/Languages/language.json');
     const json = await res.json();
@@ -115,15 +116,26 @@ export class ScheduleComponent implements OnInit {
         for (let i = 0; i < startCollection.length; i++) {
           startCollection.item(i).innerHTML = json.french.schedule.start;
         }
+        //check if language is french with storage
+      }else if (lP == 'French') {
+          document.getElementById("email").innerHTML = json.french.schedule.email;
+          document.getElementById("date").innerHTML = json.french.schedule.date;
+          document.getElementById("upcoming").innerHTML = json.french.schedule.event;
 
-        for (let i = 0; i < endCollection.length; i++) {
-          endCollection.item(i).innerHTML = json.french.schedule.end;
+          let startCollection = document.getElementsByClassName("eventStart");
+          let endCollection = document.getElementsByClassName("eventEnd");
+          
+          for (let i = 0; i < startCollection.length; i++) {
+            startCollection.item(i).innerHTML = json.french.schedule.start;
+          }
+
+          for (let i = 0; i < endCollection.length; i++) {
+            endCollection.item(i).innerHTML = json.french.schedule.end;
+          }
+
         }
 
-
-      }
-
-    });
+      });
 
     });
   }

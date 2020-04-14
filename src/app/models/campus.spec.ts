@@ -25,13 +25,6 @@ describe('Campus', () => {
     expect( c.setCampusLocation(newlocation)).toEqual(x);
   });
 
-
-
-
-
-
-
-
 });
 
 function setup() {

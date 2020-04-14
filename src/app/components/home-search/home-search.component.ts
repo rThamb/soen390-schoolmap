@@ -6,6 +6,10 @@ import { Floor } from '../../models/Floor';
 import { IndoorPOI } from '../../models/IndoorPOI';
 import {Storage} from '@ionic/storage';
 
+
+/**
+ * Takes care of handling the search at the home screen of the app.
+ */
 @Component({
   selector: 'app-home-search',
   templateUrl: './home-search.component.html',
@@ -24,20 +28,17 @@ export class HomeSearchComponent implements OnInit {
   }
 
   // Loads the hall building (for now) and iterates through all classrooms to find a match. If success, send event to map component.
-  goToSearchResult(sr: string)
-  {
-    this.bf.loadBuilding("HB").then((hb) =>{
+  goToSearchResult(sr: string) {
+    this.bf.loadBuilding("HB").then((hb) => {
 
       let floorLevel: number = Math.trunc(parseInt(sr.replace("HB", "")) / 100);
       let floor: Floor = hb.getFloorLevel(floorLevel + "");
-      
+
       let floorPois: IndoorPOI[] = floor.getPois();
       console.log(floorPois);
 
-      for(var i = 0; i < floorPois.length; i++)
-      {
-        if(floorPois[i].getKey() == sr)
-        {
+      for (var i = 0; i < floorPois.length; i++) {
+        if (floorPois[i].getKey() == sr) {
           console.log(floorPois[i].getKey());
           this.searchIndoorPOIEvent.emit(floorPois[i]);
 

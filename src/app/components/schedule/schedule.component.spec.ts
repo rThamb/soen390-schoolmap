@@ -17,9 +17,8 @@ import { By } from '@angular/platform-browser';
 describe('ScheduleComponent', () => {
 
     let fixture, component;
-
-
-beforeEach(() => {
+    
+    beforeEach(() => {
                 TestBed.configureTestingModule({
                     declarations: [ScheduleComponent],
                     imports: [IonicModule.forRoot(), IonicStorageModule.forRoot(), RouterModule.forRoot([]), HttpClientModule]
@@ -45,9 +44,7 @@ beforeEach(() => {
                 expect(el).toBeTruthy();
               });
 
-
-
-
 });
+
 
 

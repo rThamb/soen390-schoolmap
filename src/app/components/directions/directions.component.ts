@@ -15,7 +15,6 @@ import { Location } from '../../models/Location';
 import { Transitions } from '../../models/Transitions';
 import { NewRouteComponent } from '../new-route/new-route.component';
 
-
 declare var google;
 
 @Component({
@@ -44,13 +43,13 @@ export class DirectionsComponent {
   loyolaCampus = ['concordia loyola', 'loyola concordia', 'campus loyola', 'loyola campus', 'loyola', 'layola', 'H4B 1R6', '7141 sherbrooke', '7141 Sherbrooke St W, Montreal, Quebec H4B 1R6'];
 
   constructor(private geolocation: Geolocation,
-              private mapSrevice : MapService,
-              private storage: Storage,
-              private indoorService: IndoorPathingService,
-              private buildFactoryService: BuildingFactoryService,
-              private gpsMapService: GpsGridMappingService,
-              private route: ActivatedRoute,
-              private router: Router) {
+    private mapSrevice: MapService,
+    private storage: Storage,
+    private indoorService: IndoorPathingService,
+    private buildFactoryService: BuildingFactoryService,
+    private gpsMapService: GpsGridMappingService,
+    private route: ActivatedRoute,
+    private router: Router) {
 
     storage.ready().then(() => {
       storage.get('newRouteDest').then((value) => {
@@ -136,8 +135,8 @@ export class DirectionsComponent {
   }
 
   /*
-  *determines if give input field is one of the 2 schools
-  */
+   *determines if give input field is one of the 2 schools
+   */
   isSchool(inputField: string): boolean {
     if (inputField) {
       inputField = inputField.toLowerCase();
@@ -217,11 +216,11 @@ export class DirectionsComponent {
   // Determines which of the 3 available modes of transportation was selected
   getTransportation(): string {
     if (this.isWalking() === 'WALKING' || this.isShuttle() === 'SHUTTLE') {
-      return('WALKING');
+      return ('WALKING');
     } else if (this.isTransit() === 'TRANSIT') {
-      return('TRANSIT');
+      return ('TRANSIT');
     } else {
-      return('DRIVING');
+      return ('DRIVING');
     }
   }
 
@@ -242,12 +241,12 @@ export class DirectionsComponent {
     if (this.isTransit() === 'TRANSIT') {
       this.getTripCost(response);
       document.getElementById('tripCost').style.display = 'block';
-    } else  {
+    } else {
       this.tripCost = '';
       document.getElementById('tripCost').style.display = 'none';
     }
     infoPanel.style.display = 'block';
-    }
+  }
 
   // Verifies if the returned google response has a fare cost available and call a method to display it
   getTripCost(directionsResponse: JSON) {
@@ -263,9 +262,9 @@ export class DirectionsComponent {
       return '1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8';
     } else if (this.isLoyola(input)) {
       return '7141 Sherbrooke St W, Montreal, Quebec H4B 1R6';
- } else {
+    } else {
       return input;
- }
+    }
   }
 
   // Uses the google API to determine the route and draws the path on the map or
@@ -276,18 +275,21 @@ export class DirectionsComponent {
 
     let start = this.directions['start'];
     const destination = this.directions['destination'];
-    const directions = {Start: start, Destinations: destination};
+    const directions = {
+      Start: start,
+      Destinations: destination
+    };
 
     if (await this.useIndoorDirections(start, destination)) {
       this.preformIndoorDirectionsActivity(start, destination, true);
       this.addToHistory(JSON.stringify(directions));
     } else if ((start === 'My Location' || start === 'Ma Position') && await this.isCampusIndoorPOI(destination)) {
-        // indoor and outdoor will only be supported when using user position
-        this.useBothIndoorAndOutdoor(destination);
-        this.addToHistory(JSON.stringify(directions));
+      // indoor and outdoor will only be supported when using user position
+      this.useBothIndoorAndOutdoor(destination);
+      this.addToHistory(JSON.stringify(directions));
     } else {
 
-      if((start === 'My Location' || start === 'Ma Position')){
+      if ((start === 'My Location' || start === 'Ma Position')) {
         let loc: Location = await this.gpsMapService.getUserCurrentPosition();
         start = loc.getLat() + "," + loc.getLng();
       }
@@ -312,12 +314,15 @@ export class DirectionsComponent {
     const directionsPanel = document.getElementById('directionsPanel');
     // var clearDirections = document.getElementById('clearDirections')
     const directionsForm = document.getElementById('form');
-    const directions = {Start: start, Destinations: destination};
+    const directions = {
+      Start: start,
+      Destinations: destination
+    };
     this.directionsService.route({
       origin: this.validateInput(start),
       destination: this.validateInput(destination),
       travelMode,
-      }, (response, status) => {
+    }, (response, status) => {
       if (status === 'OK') {
         this.displayTravelInfo(response);
         this.directionsRenderer.setDirections(response);
@@ -335,8 +340,13 @@ export class DirectionsComponent {
 
   // Returns the current date in the following format: Day, Month Date, Year
   getDate(): string {
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const currentDate  = new Date().toLocaleDateString('en-US', options);
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    const currentDate = new Date().toLocaleDateString('en-US', options);
 
     return currentDate;
   }
@@ -348,12 +358,16 @@ export class DirectionsComponent {
     const date = this.getDate();
 
     if (length === 0) {
-      history['dates'][0] = {[date]: [{}]};
+      history['dates'][0] = {
+        [date]: [{}]
+      };
       this.storage.set('history', JSON.stringify(history));
     } else {
       for (const key in history['dates'][length - 1]) {
         if (key !== date) {
-          history['dates'][length] = {[date]: [{}]};
+          history['dates'][length] = {
+            [date]: [{}]
+          };
           this.storage.set('history', JSON.stringify(history));
         } else {
           console.log('date already stored at last index: ' + (length - 1));
@@ -413,11 +427,11 @@ export class DirectionsComponent {
   }
 
   showClearDirectionControls() {
-      const clearDirections = document.getElementById('clearDirections');
-      clearDirections.style.display = 'block';
+    const clearDirections = document.getElementById('clearDirections');
+    clearDirections.style.display = 'block';
 
-      const getDirBtn = document.getElementById('getDirectionsBtn');
-      getDirBtn.style.display = 'none';
+    const getDirBtn = document.getElementById('getDirectionsBtn');
+    getDirBtn.style.display = 'none';
   }
 
 
@@ -482,15 +496,15 @@ export class DirectionsComponent {
       if (dayOfWeek > 0 && dayOfWeek < 5) {
         times = json.mondayToThursday.fromLoyola;
       } else
-        if (dayOfWeek === 5) {
-          times = json.friday.fromLoyola;
+      if (dayOfWeek === 5) {
+        times = json.friday.fromLoyola;
       }
     } else {
       if (dayOfWeek > 0 && dayOfWeek < 5) {
         times = json.mondayToThursday.fromSGW;
       } else
-        if (dayOfWeek === 5) {
-          times = json.friday.fromSGW;
+      if (dayOfWeek === 5) {
+        times = json.friday.fromSGW;
       }
     }
 
@@ -563,9 +577,9 @@ export class DirectionsComponent {
    * @param start
    * @param dest
    */
-  async useIndoorDirections(start: string, dest: string){
-    
-    if((start === 'My Location' || start === 'Ma Position'))
+  async useIndoorDirections(start: string, dest: string) {
+
+    if ((start === 'My Location' || start === 'Ma Position'))
       return false;
 
     //check if start and end are both 2 classrooms in the same building
@@ -578,17 +592,16 @@ export class DirectionsComponent {
    * Checks destination string to determine whether is exists in a concordia campus building.
    * @param dest
    */
-  private async isCampusIndoorPOI(dest: string){
+  private async isCampusIndoorPOI(dest: string) {
     //get building key from des
     let buildingCode = this.getBuildingCode(dest);
     let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
 
-    if(buildingObject == null){
+    if (buildingObject == null) {
       let building: Building = await this.buildFactoryService.loadBuilding("HB");
       let poi = building.getIndoorPOIInBuilding(dest);
       return poi != null;
-    }
-    else
+    } else
       return true;
   }
 
@@ -600,10 +613,10 @@ export class DirectionsComponent {
    * @param userPosition
    * @param dest
    */
-  private async useBothIndoorAndOutdoor(dest: string){
-  
+  private async useBothIndoorAndOutdoor(dest: string) {
+
     //get user position
-    let user: Location = await this.gpsMapService.getUserCurrentPosition(); 
+    let user: Location = await this.gpsMapService.getUserCurrentPosition();
 
     debugger;
     //get building key from des
@@ -611,14 +624,14 @@ export class DirectionsComponent {
     let buildingObject: Building = await this.buildFactoryService.loadBuilding(buildingCode);
     let result = buildingObject != null;
 
-    if(!result){
-        buildingObject = await this.buildFactoryService.loadBuilding("HB");
-        result = await buildingObject.getIndoorPOIInBuilding(dest) != null;
+    if (!result) {
+      buildingObject = await this.buildFactoryService.loadBuilding("HB");
+      result = await buildingObject.getIndoorPOIInBuilding(dest) != null;
     }
 
-    if(result){//if not null he wants to go to a valid classroom
+    if (result) { //if not null he wants to go to a valid classroom
 
-      if(!this.gpsMapService.userInBuilding(user, buildingObject)){
+      if (!this.gpsMapService.userInBuilding(user, buildingObject)) {
         //should pass GoogleLngLat instead, hardcode start for now
         await this.preformOutdoorDirectionsActivity(user.getLat() + "," + user.getLng(), buildingObject.getBuildingName());
         let userIndoorStartLocation = buildingObject.getBuildingLocation();
@@ -639,24 +652,24 @@ export class DirectionsComponent {
    * @param start
    * @param end
    */
-  async drawIndoorPath(start: string, end: string, userPosition: Location){
-    
+  async drawIndoorPath(start: string, end: string, userPosition: Location) {
+
     let buildingCode = this.getBuildingCode(start);
     let floorLevel = this.getFloorNum(start, buildingCode);
 
-    let building : Building = await this.buildFactoryService.loadBuilding(buildingCode);
-    
-    if(building == null){
+    let building: Building = await this.buildFactoryService.loadBuilding(buildingCode);
+
+    if (building == null) {
       building = await this.buildFactoryService.loadBuilding("HB");
       floorLevel = building.getIndoorPOIInBuilding(start).getFloorNum();
     }
-    
+
     let currentFloor: Floor = building.getFloorLevel(floorLevel + "");
     let path = null;
 
     const transition: Transitions = await this.getPreferedTransition();
 
-    if(userPosition == null)
+    if (userPosition == null)
       path = this.indoorService.determineRoutePOIToPOI(start, end, building, currentFloor, transition);
     else
       path = this.indoorService.determineRouteToDestinationBasedOnUserPosition(userPosition, building, currentFloor, end, transition);
@@ -711,12 +724,12 @@ export class DirectionsComponent {
           lP = 'English';
           this.storage.set('languagePreference', 'English');
         }
-        if ( lP === 'English') {
+        if (lP === 'English') {
           document.getElementsByName('start')[0].setAttribute('placeholder', json.english.placeholders.start);
           document.getElementsByName('destination')[0].setAttribute('placeholder', json.english.placeholders.destination);
           document.getElementById('getBtnText').innerHTML = json.english.directions.getDirBtn;
           document.getElementById('getClrText').innerHTML = json.english.directions.clearBtn;
-        } else if ( lP === 'French') {
+        } else if (lP === 'French') {
           document.getElementsByName('start')[0].setAttribute('placeholder', json.french.placeholders.start);
           document.getElementsByName('destination')[0].setAttribute('placeholder', json.french.placeholders.destination);
           document.getElementById('getBtnText').innerHTML = json.french.directions.getDirBtn;
@@ -728,9 +741,9 @@ export class DirectionsComponent {
     });
   }
 
-  private async isIndoorPOI(building: Building,  poiKey: string){
-      let poi = building.getIndoorPOIInBuilding(poiKey);
-      return poi != null;
+  private async isIndoorPOI(building: Building, poiKey: string) {
+    let poi = building.getIndoorPOIInBuilding(poiKey);
+    return poi != null;
   }
 
 }
