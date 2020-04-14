@@ -20,6 +20,7 @@ export class NotificationsComponent implements OnInit {
 
   constructor(public navCtrl: NavController, private plt: Platform, private localNotification: LocalNotifications,
     private alertCtrl: AlertController, private http: HttpClient, private storage: Storage) {
+      this.translatePage();
     console.log(this.timesel)
     storage.ready().then(() => {
       // get a key/value pair
@@ -115,7 +116,7 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {this.translatePage()}
   async translatePage()
   {
     const res = await fetch('/assets/Languages/language.json');
