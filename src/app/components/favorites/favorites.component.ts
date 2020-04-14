@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Storage} from '@ionic/storage';
+import { Storage } from '@ionic/storage';
 import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
@@ -78,7 +78,9 @@ export class FavoritesComponent implements OnInit {
 
   // Launches the new route page with a specific location set as the destination.
   openNewRouteWithDestination(location: string) {
-    const directions = {destination: location};
+    const directions = {
+      destination: location
+    };
     const navigationExtras: NavigationExtras = {
       queryParams: {
         special: JSON.stringify(directions)
