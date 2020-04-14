@@ -123,30 +123,18 @@ export class HistoryComponent implements OnInit {
 
   //Clear the current search history
   clearHistory() {
-<<<<<<< HEAD
     /*let lang = await this.storage.get('languagePreference').catch((error) => {
       console.log('Error getting history', error);
     });
     */
     let lang = 'English';
     if (lang == 'French') {
-=======
-    // let lang = await this.storage.get('languagePreference').catch((error) => {
-    //   console.log('Error getting history', error);
-    // });
-    let lang = 'English'
-    if(lang == 'French'){
->>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
       if (confirm("Voulez-vous effacer votre historique de recherche?") == true) {
          this.storage.remove('history')
          this.historyService.historyInit()
       }
-<<<<<<< HEAD
-    } else {
-=======
     }
     else{
->>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
       if (confirm("Are you sure you would like to clear your search history?") == true) {
          this.storage.remove('history')
          this.historyService.historyInit()

@@ -34,9 +34,7 @@ describe('Building', () => {
     var loc=new Location(1, 1, 1);
     
     c.setBuildingLocation(loc);
-    expect(c.getBuildingLocation()).toEqual(loc);
-    
-    
+    expect(c.getBuildingLocation()).toEqual(loc); 
   });
 
   it('when setBuildingLocation is called it should define a building location', () => {
@@ -72,67 +70,6 @@ describe('Building', () => {
     // assert
     expect(c.setFloors).toBeDefined;
   });
-
-  /*it('when addFloor is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    c.addFloor();
-    // assert
-    // expect(c).toEqual
-  });
-
-  it('when getFloorLevel is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    c.getFloorLevel();
-    // assert
-    // expect(c).toEqual
-  });
-
-  it('when getAllClassroomCodes is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    c.getAllClassroomCodes();
-    // assert
-    // expect(c).toEqual
-  });
-
-  it('when getAllIndoorPOI is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    c.getAllIndoorPOI();
-    // assert
-    // expect(c).toEqual
-  });
-
-  it('when setBuildingInfo is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    c.setBuildingInfo();
-    // assert
-    // expect(c).toEqual
-  });
-
-  it('when getBuildingInfo is called it should', () => {
-    // arrange
-    const { build } = setup().default();
-    const c = build();
-    // act
-    c.getBuildingInfo();
-    // assert
-    // expect(c).toEqual
-  });*/
-
   
 });
 

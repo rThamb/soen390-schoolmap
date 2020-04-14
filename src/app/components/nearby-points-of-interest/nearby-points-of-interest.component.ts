@@ -3,14 +3,9 @@ import { NavController } from '@ionic/angular';
 import { MapComponent} from '../../components/map/map.component'
 import {MapService} from '../../services/map/map.service';
 import {Storage} from '@ionic/storage';
-<<<<<<< HEAD
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-declare var google
-=======
 
 declare var google:any;
 
->>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
 
 @Component({
   selector: 'app-nearby-points-of-interest',
@@ -33,12 +28,8 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   private clothesType = "clothing_store";
   private hospitalType = "hospital";
 
-<<<<<<< HEAD
-  constructor(private geolocation: Geolocation, private storage: Storage, public navCtrl: NavController, private mapSrevice: MapService) {
-=======
   constructor(private storage: Storage, public navCtrl: NavController, private mapSrevice : MapService) 
   {
->>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
     this.translatePage();
     this.map = this.mapSrevice.getMap();
     this.mapHandle = this.mapSrevice.getActiveMapComponent();
@@ -64,12 +55,8 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   }
 
   //Sends a request for a poi type
-<<<<<<< HEAD
-  nearbyPOI(type: String) {
-=======
   nearbyPOI(type: string)
   {
->>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
     let self = this;
 
     var service = new google.maps.places.PlacesService(this.map);
@@ -107,12 +94,8 @@ export class NearbyPointsOfInterestComponent implements OnInit {
   }
 
   //Calculate distance between 2 latlng points
-<<<<<<< HEAD
-  calculateDistance(dest: String): Number {
-=======
   calculateDistance(dest: string): number
   {
->>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
     var distance = google.maps.geometry.spherical.computeDistanceBetween(this.mapHandle.getCurrentLocation(), dest);
     return distance;
   }

@@ -18,7 +18,6 @@ export class NotificationsComponent implements OnInit {
   public events: any;
   public notifs = [];
 
-<<<<<<< HEAD
   constructor(public navCtrl: NavController, private plt: Platform, private localNotification: LocalNotifications,
     private alertCtrl: AlertController, private http: HttpClient, private storage: Storage) {
     console.log(this.timesel)
@@ -62,56 +61,6 @@ export class NotificationsComponent implements OnInit {
   Clicked() {
     debugger;
     console.log(this.toggleval);
-=======
-  constructor(public navCtrl: NavController,private plt:Platform,private localNotification:LocalNotifications,
-    private alertCtrl: AlertController, private http:HttpClient, private storage:Storage) {
-      this.translatePage();
-      console.log(this.timesel)
-      storage.ready().then(() => {
-        // get a key/value pair
-         storage.get('toggleval').then((val) => {
-           if(val == undefined)
-           {
-             this.toggleval = false;
-             storage.set('toggleval', false);
-           }
-           else if(val == true)
-           {
-             storage.get('timesel').then((ts) => {
-              this.timesel = ts;
-             });
-             this.toggleval = val;
-           }
-          
-         })
-
-        });
-     
-
-      this.plt.ready().then(()=> {
-        this.localNotification.on('trigger').subscribe(res => {
-          console.log('trigger: ',res);
-          let msg=res.data ? res.data.mydata : '';
-          this.showAlert(res.title,res.text,msg);
-          
-          
-        });
-      });
-   }
-   
-   showAlert(header,sub,msg){
-     this.alertCtrl.create({
-       header:header,
-       subHeader:sub,
-       message:msg,
-       buttons:['Ok']
-     }).then(alert=>alert.present());
-   }
-   Clicked(){
-     
-     this.translatePage();
-     console.log(this.toggleval);
->>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
     this.storage.set('toggleval', this.toggleval)
 
     if (this.toggleval == false) {
@@ -167,8 +116,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   ngOnInit() {}
-<<<<<<< HEAD
-=======
   async translatePage()
   {
     const res = await fetch('/assets/Languages/language.json');
@@ -208,6 +155,5 @@ export class NotificationsComponent implements OnInit {
       });
     });
   }
->>>>>>> ccf754dfdcb03e7ff6c22fed2990d1de641b8c40
 
 }
