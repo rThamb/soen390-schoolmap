@@ -19,7 +19,7 @@ export class ReportIssuesComponent {
   private issue: FormGroup;
 
 
-  constructor(private formBuilder: FormBuilder, private emailComposer: EmailComposer, private alertCtrl: AlertController, private storage: Storage) {
+  constructor(public formBuilder: FormBuilder, public emailComposer: EmailComposer, private alertCtrl: AlertController, private storage: Storage) {
     this.issue = this.formBuilder.group({
       email: ['', Validators.required],
       subject: ['', Validators.required],
