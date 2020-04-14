@@ -141,6 +141,7 @@ export class NotificationsComponent implements OnInit {
       if(lP === 'English')
       {
         document.getElementById('toggle').innerHTML = json.english.notifications.toggle;
+        document.getElementsByName('select')[0].setAttribute('placeholder', json.english.notifications.select);
         if(this.toggleval)
         document.getElementById('options').innerHTML = json.english.notifications.options;
         
@@ -149,6 +150,7 @@ export class NotificationsComponent implements OnInit {
       else if(lP === 'French')
       {
         document.getElementById('toggle').innerHTML = json.french.notifications.toggle;
+        document.getElementsByName('select')[0].setAttribute('placeholder', json.french.notifications.select);
         if(this.toggleval)
         document.getElementById('options').innerHTML = json.french.notifications.options;
         

@@ -88,6 +88,7 @@
         },
         "notifications":{
             "toggle": "Allow notifications",
+            "select": "Choose a value",
             "options":"Notify me before"
             
         }
@@ -183,6 +184,7 @@
         },
         "notifications":{
             "toggle": "Autoriser les notifications",
+            "select": "Choisissez une valeur",
             "options":"prévenez moi avant"
             
         }
